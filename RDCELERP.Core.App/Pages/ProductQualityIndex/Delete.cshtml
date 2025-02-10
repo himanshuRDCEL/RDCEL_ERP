@@ -1,0 +1,38 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ProductQualityIndex.DeletProductQualityIndexById
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "_Layout";
+}
+
+<div class="row content-area">
+    <!--For Lead details-->
+    <div class="col-12">
+        <div class="box">
+            <hr />
+            <dl class="row">
+                <h5>
+                    Are you sure you want to delete <b>@Html.DisplayFor(model => model.TblProductQualityIndex.Name)</b>
+
+                </h5>
+            </dl>
+            <form method="post">
+                <input type="hidden" asp-for="TblProductQualityIndex.ProductQualityIndexId" />
+                <input type="hidden" asp-for="TblProductQualityIndex.ProductCategoryId" />
+                <input type="hidden" asp-for="TblProductQualityIndex.CreatedBy" />
+                <input type="hidden" asp-for="TblProductQualityIndex.CreatedDate" />
+                <input type="hidden" asp-for="TblProductQualityIndex.ModifiedBy" />
+                <input type="hidden" asp-for="TblProductQualityIndex.ModifiedDate" />
+                <input type="hidden" asp-for="TblProductQualityIndex.IsActive" />
+                <input type="hidden" asp-for="TblProductQualityIndex.GoodDesc" />
+                <input type="hidden" asp-for="TblProductQualityIndex.ExcellentDesc" />
+                <input type="hidden" asp-for="TblProductQualityIndex.AverageDesc" />
+                <input type="hidden" asp-for="TblProductQualityIndex.NonWorkingDesc" />
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+                <a asp-page="./Index" class="btn btn-primary mainshadow">Back to List</a>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,51 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC.IndexModel
+@{ 
+    ViewData["Title"] = "EVC";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+@if (accessRule != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="border-0">
+                        <div class="">
+                            <div class="row" id="btnswrapper">
+                                <div class="col-md-4 mb-4">
+                                    <div class="card border-0 shadow rounded optionbtnwrap">
+                                        <a class="card-body border-0 mh-100 rounded fw-bold btn-purple-gradient" href="~/EVC/EVC_Registration" id="btnPickup">EVC Registration</a>
+                                        <i class="fa-solid fa-user-plus"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <div class="card border-0 shadow rounded optionbtnwrap">
+                                        <a class="card-body border-0 mh-100 rounded fw-bold btn-purple-gradient" href="~/EVC_Allocation/Not_Allocated" id="btnPickup">Assign EVC</a>
+                                        <i class="fa-regular fa-square-plus"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <div class="card border-0 shadow rounded optionbtnwrap">
+                                        <a class="card-body border-0 mh-100 rounded fw-bold btn-purple-gradient" href="~/EVC_Admin_Dispute/EVC_AdminDisputeList" id="btnPickup">Dispute List</a>
+                                        <i class="fa-solid fa-triangle-exclamation"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

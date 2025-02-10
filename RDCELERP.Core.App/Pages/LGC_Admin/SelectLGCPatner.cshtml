@@ -1,0 +1,269 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.LGC_Admin.SelectLGCPatnerModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int i = 0;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+const {@ViewData["UserAuth"]</script>
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mx-auto">
+                        <label class="" for="">Select Service Partner<span style="color:red;">*</span></label>
+                        <!--<select Onchange="ServicePatner(this.value)" id="ddlempid" class="form-control form-select" asp-items="ViewBag.SelectService">
+                            <option value=''>--All--</option>-->
+                            @*<option value="" disabled>Select Service Partner</option>*@
+                        <!--</select>-->
+                        <input id="ddlservicepartner" asp-for="ServicePartnerLogin.ServicePartnerName" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="py-4">
+</div>
+<div class="row companyselectwrap">
+    <div class="col-12 col-md-3 mb-4 companyselectbox">
+        <a id="AReadyForPickup" href="#">
+            <div class="card border-0 shadow">
+
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-people-carry-box"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+
+                            <h2 class="h6 text-gray-400 mb-0">Ready For Pickup</h2>
+                            <h3 class="fw-extrabold mb-2" id="txtRedyForPickup">@Model.servicePartnerDashboardViewModel.ReadyForPickup</h3>
+                            @*<input asp-for="servicePartnerDashboardViewModel.ReadyForPickup" id="txtRedyForPickup" class="form-control" readonly />*@
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-12 col-md-3 mb-4 companyselectbox">
+        <a id="APickupDone" href="#">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-dolly"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+                            <h2 class="h6 text-gray-400 mb-0">Pickup Done</h2>
+                            <h3 class="fw-extrabold mb-2" id="txtPickupdone">@Model.servicePartnerDashboardViewModel.PickupDone</h3>
+                            @*<input asp-for="servicePartnerDashboardViewModel.PickupDone" id="txtPickupdone" class="form-control" readonly />*@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-12 col-md-3 mb-4 companyselectbox">
+        <a id="ALoadDone" href="#">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-truck-ramp-box"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+
+                            <h2 class="h6 text-gray-400 mb-0">Load Complete</h2>
+                            <h3 class="fw-extrabold mb-2" id="txtLoadDone">@Model.servicePartnerDashboardViewModel.LoadDone</h3>
+                            @*<input asp-for="servicePartnerDashboardViewModel.PickupDecline" id="txtpickupdecline" class="form-control" readonly />*@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-12 col-md-3 mb-4 companyselectbox">
+        <a id="APickupdecline" href="#">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-truck-ramp-box"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+
+                            <h2 class="h6 text-gray-400 mb-0">Pickup Decline</h2>
+                            <h3 class="fw-extrabold mb-2" id="txtpickupdecline">@Model.servicePartnerDashboardViewModel.PickupDecline</h3>
+                            @*<input asp-for="servicePartnerDashboardViewModel.PickupDecline" id="txtpickupdecline" class="form-control" readonly />*@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-12 col-md-3 mb-4 companyselectbox">
+        <a id="ADrop" href="#">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-ban"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+                            <h2 class="h6 text-gray-400 mb-0">Drop</h2>
+                            <h3 class="fw-extrabold mb-2" id="txtdrop">@Model.servicePartnerDashboardViewModel.Drop</h3>
+                            @*<input asp-for="servicePartnerDashboardViewModel.Drop" id="txtdrop" class="form-control" readonly />*@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+
+<script>
+    //var servicePartnerId = null;
+
+    $(document).ready(function () {
+        $("#AReadyForPickup").attr("href", "@URLPrefixforProd/LGC_Admin/ReadyforPickupList");
+        $("#APickupDone").attr("href", "@URLPrefixforProd/LGC_Admin/PickupDoneList");
+        $("#ALoadDone").attr("href", "@URLPrefixforProd/LGC_Admin/LoadDoneList");
+        $("#APickupdecline").attr("href", "@URLPrefixforProd/LGC_Admin/PickupDeclineList");
+        $("#ADrop").attr("href", "@URLPrefixforProd/LGC_Admin/DropList");
+
+    });
+    //use for
+    function ServicePatner(servicePartnerId) {
+        $.get("@URLPrefixforProd/LGC_Admin/SelectLGCPatner?handler=SelectLGCPartner&ServicePartnerId=" + servicePartnerId).done(function (data) {
+            $("#txtRedyForPickup").text(data.readyForPickup);
+            $("#AReadyForPickup").attr("href", "@URLPrefixforProd/LGC_Admin/ReadyforPickupList?ServicePartnerId=" + servicePartnerId);
+            $("#txtPickupdone").text(data.pickupDone);
+            $("#APickupDone").attr("href", "@URLPrefixforProd/LGC_Admin/PickupDoneList?ServicePartnerId=" + servicePartnerId);
+            $("#txtLoadDone").text(data.loadDone);
+            $("#ALoadDone").attr("href", "@URLPrefixforProd/LGC_Admin/LoadDoneList?ServicePartnerId=" + servicePartnerId);
+            $("#txtpickupdecline").text(data.pickupDecline);
+            $("#APickupdecline").attr("href", "@URLPrefixforProd/LGC_Admin/PickupDeclineList?ServicePartnerId=" + servicePartnerId);
+            $("#txtdrop").text(data.drop);
+            $("#ADrop").attr("href", "@URLPrefixforProd/LGC_Admin/DropList?ServicePartnerId=" + servicePartnerId);
+
+        });
+       // window.location.href = '@ViewData["URLPrefixforProd"]/LGC_Admin/SelectLGCPatner?handler=SelectedServicePerter&ServicePartnerId=' + servicePartnerId;
+    }
+
+     @*$(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+         $("#ddlempid").on("keydown", function (event) {
+                if (event.keyCode === $.ui.keyCode.TAB &&
+                    $(this).autocomplete("instance").menu.active)
+                {
+                    event.preventDefault();
+                }
+            })
+            .autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/LGC_Admin/SelectLGCPatner?handler=SearchLGCServicePartner", {
+                        term: extractLast(request.term)
+                    },
+                        response
+                    );
+                },
+                focus: function () {
+                    // prevent value inserted on focus
+                    return false;
+                },
+                open: function (event, ui) {
+                    // Get the menu element
+                    var menu = $(this).autocomplete("widget");
+
+                    // Set max-height and overflow properties
+                    menu.css("max-height", "200px");
+                    menu.css("overflow-y", "auto");
+                },
+                select: function (event, ui) {
+                    var terms = split(this.value);
+                    terms.pop();
+                    // add the selected item
+                    terms.push(ui.item.value);
+                    this.value = terms;
+                    // Get the ID of the selected state
+                    servicePartnerId = ui.item.text;
+                    return false;
+                }
+            });
+     })*@
+
+     $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+           }
+
+         $("#ddlservicepartner").on("click", function () {
+               $(this).autocomplete("search", "#");
+           }).autocomplete({
+                minLength: 0,
+                scroll: true,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/LGC_Admin/SelectLGCPatner?handler=SearchLGCServicePartner", {
+                    term: extractLast(request.term)
+                    }, function (data) {
+                        response(data.slice(0, 20));
+                    });
+                },
+                focus: function (event, ui) {
+                },
+                open: function (event, ui) {
+                    var menu = $(this).autocomplete("widget");
+                    menu.css({ "max-height": "200px", "overflow": "hidden", "overflow-y": "scroll" });
+                },
+               select: function (event, ui) {
+                   var terms = split(this.value);
+                   terms.pop();
+                   // add the selected item
+                   terms.push(ui.item.value);
+                   this.value = terms;
+                   // Get the ID of the selected servicePartner
+                   var servicePartnerId = ui.item.text;
+                   ServicePatner(servicePartnerId);
+                   return false;
+               }
+            });
+       })
+
+
+</script>

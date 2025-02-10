@@ -1,0 +1,704 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.CompanyDashBoard.PendingOrdersModel
+@{
+    ViewData["Title"] = "Pending Orders";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0">Pending Orders</h2>
+                            </div>
+                            <div class="col">
+                                @if (ViewBag.CompanyId == 1007 && accessRule != null && accessRule?.CanAdd)
+                                {
+                                    <div class="d-inline my-3" style="text-align : right">
+                                        <form method="post">
+                                            <button type="submit" class="btn btn-primary" asp-page-handler="MailPendingOrders"> <i class="fa-solid fa-paper-plane"></i> &nbsp; Send by Email</button>
+                                        </form>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          
+            <div class="col">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active shadow" id="nav-home-tab1" data-bs-toggle="tab"
+                           href="#pendingForQC" role="tab" aria-controls="nav-home1" aria-selected="true">
+                            Pending for QC
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab" data-bs-toggle="tab"
+                           href="#pendingForPriceAcceptance" role="tab" aria-controls="nav-home" aria-selected="true">
+                            Pending for Price Acceptance
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab" data-bs-toggle="tab"
+                           href="#pendingForPickup" role="tab" aria-controls="nav-home" aria-selected="true">
+                            Pending For Pickup
+                        </a>
+
+                      
+                    </div>
+
+                   
+                       
+                </nav>
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-4">
+                <!-- Tab -->
+                <div class="card border-0 shadow noborderradius">
+                    <div class="card-body">
+                        <div class="tab-content" id="nav-tabContent">
+                            <!-- Pending for QC -->
+                            <div class="tab-pane fade show active" id="pendingForQC" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <div class="table-responsive">
+                                    <table id="DT_PendingForQC" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="all notexport">Id</th>
+                                                <th class="all notexport">Actions</th>
+                                                <th class="all">Company</th>
+                                                <th class="all">Regd No.</th>
+                                                <th class="all">Customer City</th>
+                                                <th class="all">Product Group</th>
+                                                <th class="all">Cust. Declare Quality</th>
+                                                <th class="all">Status Code</th>
+                                                <th class="all">Order Date & Time</th>
+                                                <th class="all">Preferred QC Date & Time</th>
+                                                <th class="all">QC Reschedule Date</th>
+                                                <th class="all">Reschedule Count</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- Pending for Price Acceptance -->
+                            <div class="tab-pane fade show" id="pendingForPriceAcceptance" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <div class="table-responsive">
+                                    <table id="DT_PendingForPriceAcceptance" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="all notexport">Id</th>
+                                                @* <th class="all"><input type='checkbox' id='select_all' /></th> *@
+                                                <th class="all notexport">Actions</th>
+                                                <th class="all">Company</th>
+                                                <th class="all">Regd No.</th>
+                                                <th class="all">Customer City</th>
+                                                <th class="all">Product Group</th>
+                                                <th class="all">Cust. Declare Quality</th>
+                                                <th class="all">Status Code</th>
+                                                <th class="all">Order Due Date & Time</th>
+                                                @* <th class="all">Preferred QC Date & Time</th>
+                                                <th class="all">QC Reschedule Date</th>
+                                                <th class="all">Reschedule Count</th>
+                                                <th class="all">Link Send Date&Time</th> *@
+                                                <th class="all">Order Date & Time</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- Pending for Pickup -->
+                            <div class="tab-pane fade show" id="pendingForPickup" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <div class="table-responsive">
+                                <table id="DT_PendingForPickup" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="border-bottom all notexport" scope="col">Id</th>
+                                                <th class="border-bottom all notexport" scope="col">Action</th>
+                                                <th class="border-bottom all" scope="col">Company Name</th>
+                                                <th class="border-bottom all" scope="col">Regd No.</th>
+                                                <th class="border-bottom all" scope="col">Service Partner Name</th>
+                                                <th class="border-bottom all" scope="col">Ticket Number</th>
+                                                <th class="border-bottom all" scope="col">Pickup Schedule Date</th>
+                                                <th class="border-bottom all" scope="col">Pickup Schedule Time</th>
+                                                <th class="border-bottom all" scope="col">Product Category</th>
+                                                <th class="border-bottom all" scope="col">Product Type</th>
+                                                <th class="border-bottom all" scope="col">Product Condition</th>
+                                                <th class="border-bottom all" scope="col">Status Code</th>
+                                                <th class="border-bottom all" scope="col">Customer City</th>
+                                                <th class="border-bottom all" scope="col">Order Due Date & Time</th>
+                                                <th class="border-bottom all" scope="col">Created Date</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        @*List Page Common Filters Code VK 15-Nov*@
+                        <div class="filters">
+                            <div class="p-4">
+                                <h4 class="">Filters</h4>
+                                @* Order Date Range Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkOrderDateRange">
+                                    <label for="chkOrderDateRange">Order Date Range</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline mb-2" id="orderStartDate" readonly placeholder="Start Date" autocomplete="off">
+                                    <input type="text" class="form-control d-inline mb-2" id="orderEndDate" readonly placeholder="End Date" autocomplete="off">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Company Filter *@
+                                @if(ViewBag.CompanyId == 1007){
+                                    <p class="filterheading">
+                                        <input type="checkbox" name="" id="chkcompanyName">
+                                        <label for="chkcompanyName">Company Name</label>
+                                    </p>
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="companyName" placeholder="Search Company Name">
+                                    </div>
+                                    <div class="filter-seprator"></div>
+                                }
+
+                                @* Regd No Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkregdNo">
+                                    <label for="chkregdNo">Regd No</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Product Group Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkProductCategory">
+                                    <label for="chkProductCategory">Product Group</label>
+                                </p>
+                                <div class="filterbox">
+                                    <select asp-for="searchFilterVM.ProductCatId" id="ddlprodcatid" class="form-control d-inline" asp-items="ViewBag.ProductGroup">
+                                        <option value='0'>--Product Cat--</option>
+                                    </select>
+                                    <span asp-validation-for="searchFilterVM.ProductCatId" class="text-danger"></span>
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkProductType">
+                                    <label for="chkProductType">Product Type</label>
+                                </p>
+                                <div class="filterbox">
+                                    <select asp-for="searchFilterVM.ProductTypeId" id="ddlprodcattypeid" class="form-control d-inline" asp-items="ViewBag.productTypeList">
+                                        <option value='0'>--Product Type--</option>
+                                    </select>
+                                    <span asp-validation-for="searchFilterVM.ProductTypeId" class="text-danger"></span>
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Order Type Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkOrderType">
+                                    <label for="chkOrderType">Order Type</label>
+                                </p>
+                                <div class="filterbox">
+                                    <select id="ddlOrderType" class="form-control d-inline">
+                                        <option value='0' selected>--Select Order Type--</option>
+                                        <option value='17'>Exchange</option>
+                                        <option value='16'>ABB</option>
+                                    </select>
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Service Partner Name Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkservicepartneName">
+                                    <label for="chkservicepartneName">Service Partner Name</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline ddlServicePartner" id="servicepartnerName" placeholder="Search Service Partner Name">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Ticket Number Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkticketnumber">
+                                    <label for="chkticketnumber">Ticket Number</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="ticketnumber" placeholder="Search Ticket Number">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Cust City Filter *@
+                                <p class="filterheading"><input type="checkbox" name="" id="chkCustCity"><label for="chkCustCity">Customer City</label></p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="custCity" placeholder="Search City">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Submit Filter *@
+                                <div class="filterbtnwrap">
+                                    <a id="btnFilter" class="btn btn-primary">Filter</a>
+                                    <a id="btnCloseFilter" class="btn btn-sm btn-secondary py-2">Clear</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of tab -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+
+@* Search filters *@
+<script type="text/javascript">    
+     var table = null;
+    $(document).ready(function () {
+        //Date Picker
+        $("#orderStartDate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                $("#orderEndDate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#orderEndDate").datepicker({
+            defaultDate: null,
+        });
+
+        CommonFilter();
+        //Hide Filters Dive
+        $('.filters').hide();
+        // $('.form-control').hide();
+    });
+
+    //Filter Close Button Click Event
+    $('#btnCloseFilter').click(function () {
+        $('#orderStartDate').val("");
+        $('#orderEndDate').val("");
+        $('#companyName').val("");
+        $('#regdNo').val("");
+        $('#ddlprodcatid').val(0);
+        $('#ddlprodcattypeid').empty();
+        $('#ddlprodcattypeid').append("<option value='0'>--Product Type--</option>");
+        $('#ddlOrderType').val(0);
+        $('#servicepartnerName').val("");
+        $('#ticketnumber').val("");
+        $('#custCity').val("");
+        // Unchecks it
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        CommonFilter();
+    });
+
+    //Check Box Date Range change Event
+    $("#chkOrderDateRange").click(function () {
+        if (!this.checked) {
+            $('#orderStartDate').val("");
+            $('#orderEndDate').val("");
+        }
+    });
+    //Check Box Date Range change Event
+
+    //Check Box Brand Name change Event
+    $("#chkcompanyName").click(function () {
+        if (!this.checked) {
+            $('#companyName').val("");
+        }
+    });
+
+    //Check Box Regd Number change Event
+    $("#chkregdNo").click(function () {
+        if (!this.checked) {
+            $('#regdNo').val("");
+        }
+    });
+
+    //Check Box Product Category change Event
+    $("#chkProductCategory").click(function () {
+        if (!this.checked) {
+            $('#ddlprodcatid').val(0);
+        }
+    });
+
+    //On Change Event for Get Product type by Product Category
+    $("#ddlprodcatid").change(function () {
+        $.get("@URLPrefixforProd/api/Dropdown/OnGetProductCategoryTypeAsync?productCatId=" + $(this).val()).done(function (data) {
+
+            $("#ddlprodcattypeid").empty();
+            $("#ddlprodcattypeid").append($("<option></option>").val('0').html('Select ProductType'));
+            $.each(data, function (i, producttype) {
+                $("#ddlprodcattypeid").append($("<option></option>").val(producttype.text).html(producttype.value));
+            });
+        });
+    });
+
+    //Check Box Product Type change Event
+    $("#chkProductType").click(function () {
+        if (!this.checked) {
+            $('#ddlprodcattypeid').val(0);
+        }
+    });
+
+    //Check Box Product Type change Event
+    $("#chkOrderType").click(function () {
+        if (!this.checked) {
+            $('#ddlOrderType').val(0);
+        }
+    });
+
+    //Check Box Service Partne Name change Event
+    $("#chkservicepartneName").click(function () {
+        if (!this.checked) {
+            $('#servicepartnerName').val("");
+        }
+    });
+
+    //Check Box Ticket Number change Event
+    $("#chkticketnumber").click(function () {
+        if (!this.checked) {
+            $('#ticketnumber').val("");
+        }
+    });
+
+    //Check Box Customer City change Event
+    $("#chkCustCity").click(function () {
+            if (!this.checked) {
+                $('#custCity').val("");
+            }
+    });
+
+    // Follow-up list multi Search Filter
+    $('#btnFilter').click(function () {
+        $('.filters').hide();
+        ApplyFilters();
+    });
+
+    function GetURLData(orderStartDate = null, orderEndDate = null, companyName = null, regdNo = null, productCatId = null, productTypeId = null, orderTypeId = null, servicepartnerName = null, ticketnumber = null, custCity = null) {
+      var urlData = "";
+        if (orderStartDate != null && orderEndDate != null) {
+            urlData += '&orderStartDate=' + orderStartDate + '&orderEndDate=' + orderEndDate;
+        }
+        if (companyName != null) {
+            urlData += '&companyName=' + companyName;
+        }
+        if (regdNo != null) {
+            urlData += '&regdNo=' + regdNo;
+        }
+        if (productCatId != null && productCatId > 0) {
+            urlData += '&productCatId=' + productCatId;
+        }
+        if (productTypeId != null && productTypeId > 0) {
+            urlData += '&productTypeId=' + productTypeId;
+        }
+        if (orderTypeId != null && orderTypeId > 0) {
+            urlData += '&orderTypeId=' + orderTypeId;
+        }
+        if (servicepartnerName != null) {
+            urlData += '&SPName=' + servicepartnerName;
+        }
+        if (ticketnumber != null) {
+            urlData += '&ticketNo=' + ticketnumber;
+        }
+        if (custCity != null) {
+            urlData += '&custCity=' + custCity;
+        }
+        return urlData;
+    }
+
+    function CommonFilter(_urlData = "") {
+        var url_pendingForQC = "@URLPrefixforProd/api/BusinessUnit/PendingForQC?companyId=@ViewBag.CompanyId" + _urlData;
+        var url_DT_PendingForPriceAcceptance = "@URLPrefixforProd/api/BusinessUnit/PendingForPriceAcceptance?companyId=@ViewBag.CompanyId" + _urlData;
+        var url_pendingForPickup = "@URLPrefixforProd/api/BusinessUnit/PendingForPickup?companyId=@ViewBag.CompanyId" + _urlData;
+
+        // Destroy the existing DataTable
+        table = $('#DT_PendingForQC').DataTable();
+        // Destroy the existing DataTable
+        table.clear().destroy();
+        //Re-Initialize Datatable
+        DT_PendingForQC(url_pendingForQC);
+        //-------------------------------
+        table = $('#DT_PendingForPriceAcceptance').DataTable();
+        table.clear().destroy();
+        DT_PendingForPriceAcceptance(url_DT_PendingForPriceAcceptance);
+        //-------------------------------
+        table = $('#DT_PendingForPickup').DataTable();
+        table.clear().destroy();
+        DT_PendingForPickup(url_pendingForPickup);
+        //-------------------------------
+        $('.filters').hide();
+    }
+
+    //Filter Function
+    function ApplyFilters() {
+        var orderStartDate = $('#orderStartDate').val() == "" ? null : $('#orderStartDate').val();
+        var orderEndDate = $('#orderEndDate').val() == "" ? null : $('#orderEndDate').val();
+        var companyName = $('#companyName').val() == "" ? null : $('#companyName').val();
+        var regdNo = $('#regdNo').val() == "" ? null : $('#regdNo').val();
+        var productCatId = $('#ddlprodcatid').val() == "" ? 0 : $('#ddlprodcatid').val();
+        var productTypeId = $('#ddlprodcattypeid').val() == "" ? 0 : $('#ddlprodcattypeid').val();
+        var orderTypeId = $('#ddlOrderType').val() == "" ? 0 : $('#ddlOrderType').val();
+        var servicepartnerName = $('#servicepartnerName').val() == "" ? null : $('#servicepartnerName').val();
+        var ticketnumber = $('#ticketnumber').val() == "" ? null : $('#ticketnumber').val();
+        var custCity = $('#custCity').val() == "" ? null : $('#custCity').val();
+        
+        var urlData = GetURLData(orderStartDate, orderEndDate, companyName, regdNo, productCatId, productTypeId, orderTypeId,servicepartnerName, ticketnumber, custCity);
+
+        CommonFilter(urlData);
+        $('.filterbox').hide();
+    }
+</script>
+@* Data tables *@
+<script type="text/javascript">
+    //This Datatable function is calling for Method
+    function DT_PendingForQC(url, data = null) {
+        table = $('#DT_PendingForQC').DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    text: '<button class="btn btn-primary datatablebtn" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters').toggle();
+                        //$('.content').toggleClass('maincontent');
+                        //$('.filters').insertBefore('table.dataTable');
+                    }
+                },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Pending for QC List',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Data found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": true
+            }],
+
+            "responsive": true,
+            "columns": [
+                { "data": "id", "name": "Id", "autoWidth": true },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "companyName", "name": "CompanyName", "autoWidth": true },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true },
+                { "data": "custCity", "name": "CustCity", "autoWidth": true },
+                { "data": "productCategory", "name": "ProductCategory", "autoWidth": true },
+                { "data": "productCondition", "name": "ProductCondition", "autoWidth": true },
+                { "data": "statusCode", "name": "StatusCode", "autoWidth": true },
+                { "data": "orderCreatedDateString", "name": "OrderCreatedDateString", "autoWidth": true },
+                { "data": "preferredQCDateString", "name": "PreferredQCDateString", "autoWidth": true },
+                { "data": "rescheduleDate", "name": "RescheduleDate", "autoWidth": true },
+                { "data": "reschedulecount", "name": "Reschedulecount", "autoWidth": true },
+            ]
+        });
+    }
+    //This Datatable function is calling for Method
+    function DT_PendingForPriceAcceptance(url, data = null) {
+        table = $('#DT_PendingForPriceAcceptance').DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    text: '<button class="btn btn-primary datatablebtn" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters').toggle();
+                        //$('.content').toggleClass('maincontent');
+                        //$('.filters').insertBefore('table.dataTable');
+                    }
+                },
+                // {
+                //     text: '<div class="datatablebtn viewableWithAddPermission" id="GenerateCancelOrder"><button class="btn btn-primary" onclick="CancelConfirm()" id="CancelOrder"><i class="fa-solid fa-arrow-rotate-left"></i>&nbsp; Cancel Selected Order</button></div>', id: "CancelOrder",
+                //     title: 'Cancel Order',
+                // },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Pending for Price Acceptance List',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Data found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": true
+            }],
+
+            "responsive": true,
+            "columns": [
+                { "data": "id", "name": "Id", "autoWidth": true },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                // { "data": "edit", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "companyName", "CompanyName": "SponsorName", "autoWidth": true },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true },
+                { "data": "custCity", "name": "CustCity", "autoWidth": true },
+                { "data": "productCategory", "name": "ProductCategory", "autoWidth": true },
+                { "data": "productCondition", "name": "ProductCondition", "autoWidth": true },
+                { "data": "statusCode", "name": "StatusCode", "autoWidth": true },
+                { "data": "orderDueDateTime", "name": "OrderDueDateTime", "autoWidth": true },
+                // { "data": "preferredQCDate", "name": "PreferredQCDate", "autoWidth": true },
+                // { "data": "rescheduleDate", "name": "RescheduleDate", "autoWidth": true },
+                // { "data": "reschedulecount", "name": "Reschedulecount", "autoWidth": true },
+                // { "data": "linksendDate", "name": "LinksendDate", "autoWidth": true },
+                { "data": "orderCreatedDateString", "name": "OrderCreatedDateString", "autoWidth": true },
+            ]
+        });
+    }
+    //This Datatable function is calling for Method
+    function DT_PendingForPickup(url, data = null) {
+        table = $('#DT_PendingForPickup').DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    text: '<button class="btn btn-primary datatablebtn" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters').toggle();
+                        //$('.content').toggleClass('maincontent');
+                        //$('.filters').insertBefore('table.dataTable');
+                    }
+                },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Pending for Pickup List',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Data found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": true
+            }],
+
+            "responsive": true,
+            "columns": [
+                { "data": "id", "name": "Id", "autoWidth": true },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "companyName", "name": "CompanyName", "autoWidth": true },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true },
+                { "data": "servicePartnerName", "name": "ServicePartnerName", "autoWidth": true },
+                { "data": "ticketNumber", "name": "TicketNumber", "autoWidth": true },
+                { "data": "pickupScheduleDate", "name": "PickupScheduleDate", "autoWidth": true },
+                { "data": "pickupScheduleTime", "name": "PickupScheduleTime", "autoWidth": true },
+                { "data": "productCategory", "name": "ProductCategory", "autoWidth": true },
+                { "data": "productType", "name": "ProductType", "autoWidth": true },
+                { "data": "productCondition", "name": "ProductCondition", "autoWidth": true },
+                { "data": "statusCode", "name": "StatusCode", "autoWidth": true },
+                { "data": "custCity", "name": "CustCity", "autoWidth": true },
+                { "data": "orderDueDateTime", "name": "OrderDueDateTime", "autoWidth": true },
+                { "data": "orderCreatedDateString", "name": "OrderCreatedDateString", "autoWidth": true },
+            ]
+        });
+    }
+    //All Data Export from the Datatable--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+    //For Export Buttons available inside jquery-datatable "server side processing" - End
+</script>

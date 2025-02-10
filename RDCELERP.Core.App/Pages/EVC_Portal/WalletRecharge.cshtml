@@ -1,0 +1,103 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC_Portal.WalletRechargeModel
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+
+
+<div class="row ">
+    <div class="col-12 mb-4">
+        <div class="card shadow border-0">
+            <div class="card-header">
+                <h2 class="fs-5 mb-0 card-title">Payment Initiated</h2>
+            </div>
+
+            <div class="card-body payment-page">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="paymentinnerbox">
+                                <i class="fas fa-user"></i>
+                                <span><label id="customername"></label></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="paymentinnerbox">
+                                <i class="fas fa-envelope"></i>
+                                <span><label id="custEmail"></label></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="paymentinnerbox">
+                                <i class="fas fa-phone"></i>
+                                <span><label id="phoneNumber"></label></span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="paymentinnerbox">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span><label id="address"></label></span>
+                            </div>
+                        </div>
+
+
+
+                        <input type="hidden" id="HidEvcregistrationId" asp-for="PaymentInitiateModels.EvcregistrationId" />
+                        <input type="hidden" id="HidBussinessName" asp-for="PaymentInitiateModels.BussinessName" />
+                        <input type="hidden" id="HidEVCemail" asp-for="PaymentInitiateModels.EVCemail" />
+                        <input type="hidden" id="HidEVCcontactNumber" asp-for="PaymentInitiateModels.EVCcontactNumber" />
+                        <input type="hidden" id="HidEVCaddress" asp-for="PaymentInitiateModels.EVCaddress" />
+                        <input type="hidden" id="HidEVCRegdNo" asp-for="PaymentInitiateModels.EVCRegdNo" />
+
+                        <div class="col-md-6">
+                            <div class="paymentinnerbox">
+                                <i class="fa-solid fa-indian-rupee-sign"></i>
+                                <span class="d-inline"><input asp-for="PaymentInitiateModels.amount" id="txtAmont" type="text" class="form-control d-inline"></span>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6 text-right mb-4">
+                            <button type="submit" id="Proceed" class="btn btn-primary mt-2 paymentbtn" disabled="disabled">Proceed <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+
+        var Bussiness = $("#HidBussinessName").val();
+        var email = $("#HidEVCemail").val();
+        var phoneno = $("#HidEVCcontactNumber").val();
+        var address = $("#HidEVCaddress").val();
+        var username = $("#HidEVCRegdNo").val();
+
+        $("#customername").text(username);
+        $("#bussinessName").text(Bussiness);
+        $("#custEmail").text(email);
+        $("#phoneNumber").text(phoneno);
+        $("#address").text(address);
+    });
+    $('#txtAmont').keyup(function () {
+        var num = $('#txtAmont').val();
+        if (num != null && num != "" && parseInt(num) > 0) {
+            $('#Proceed').prop('disabled', false);
+        }
+        else {
+            $('#Proceed').prop('disabled', true);
+        }
+    });
+</script>

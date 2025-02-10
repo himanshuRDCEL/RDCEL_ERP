@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css'
+        integrity='sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=='
+        crossorigin='anonymous' referrerpolicy='no-referrer' />
+    <title>Cash Voucher</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            line-height: normal;
+            color: #fff;
+            line-height: 1.4rem;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: #f36f2c;
+
+        }
+
+        .box {
+            display: inline-block;
+            height: 100%;
+            vertical-align: top;
+            height: auto;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+
+
+        .box-inner {
+            position: relative;
+            padding: 25px;
+
+            border-radius: 12px;
+            border: 1px dashed #787878;
+        }
+
+        .box-right {
+            border-left: none;
+            background-color: #466c3b;
+            padding: 10px;
+            border-radius: 0 12px 12px 0;
+            background: linear-gradient(109deg, #2a2a5a 30%, #6d1cd9 100%) no-repeat padding-box;
+        }
+
+        .box-right:after {
+            /* content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: #ccc;
+            right: 20px;
+            bottom: -1px; */
+        }
+
+        .box-right .box-inner {
+            padding: 10px 40px;
+        }
+
+        .box-left {
+            margin-left: -6px;
+            padding: 10px;
+            padding-left: 18px;
+            background-color: #610bb3;
+            position: relative;
+            border-radius: 12px 0 0 12px;
+        }
+
+        .box-left .box-inner {
+            background: #4c2890;
+            width: 100%;
+        }
+
+        /* .box-left:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: auto;
+            top: 40%;
+            right: -82px;
+            z-index: 999;
+            border-left: 45px solid #610bb3;
+            border-top: 30px solid transparent;
+            border-bottom: 30px solid transparent;
+        } */
+
+        .vouchercode {
+            margin: 14px 0 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            border: 1px dashed #dfc7b2;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            color: #fff1e4;
+        }
+
+        .pattern {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .pattern-left {
+            margin-left: -45px;
+
+        }
+
+        .pattern-right {
+            margin-left: -45px;
+            left: 0px;
+            z-index: 99;
+        }
+
+        .pattern ul {
+            list-style: none;
+            height: 100%;
+        }
+
+
+        .pattern ul li {
+            height: 16px;
+            width: 16px;
+            border-radius: 50px;
+            margin: 8px 0;
+            background-color: #fff;
+        }
+
+        .amount {
+            font-size: 20px;
+            padding-bottom: 20px;
+            background-color: #2a2a5a;
+            padding: 10px 16px;
+            font-weight: bold;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: fit-content;
+            margin: 10px auto 30px;
+            border-radius: 6px;
+           
+            color: #fff;
+            width: 100%;
+        }
+
+        .logowrap {
+            width: 200px;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            position: absolute;
+            right: 3%;
+            top: -4%;
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .logowrap img {
+            width: 100%;
+        }
+
+        i {
+            color: #dbb264;
+        }
+
+        .fa-indian-rupee-sign {
+            font-size: 14px;
+            background-color: #4c2890;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .maintitle {
+            font-size: 28px;
+            font-weight: bold;
+            background: rgb(162, 104, 42);
+            background: -moz-linear-gradient(left, rgba(162, 104, 42, 1) 0%, rgba(190, 140, 60, 1) 8%, rgba(190, 140, 60, 1) 18%, rgba(211, 177, 95, 1) 27%, rgba(250, 240, 160, 1) 35%, rgba(255, 255, 194, 1) 40%, rgba(250, 240, 160, 1) 50%, rgba(211, 177, 95, 1) 58%, rgba(190, 140, 60, 1) 67%, rgba(177, 123, 50, 1) 77%, rgba(187, 131, 50, 1) 83%, rgba(212, 162, 69, 1) 88%, rgba(225, 180, 83, 1) 93%, rgba(164, 105, 42, 1) 100%);
+            background: -webkit-linear-gradient(left, rgba(162, 104, 42, 1) 0%, rgba(190, 140, 60, 1) 8%, rgba(190, 140, 60, 1) 18%, rgba(211, 177, 95, 1) 27%, rgba(250, 240, 160, 1) 35%, rgba(255, 255, 194, 1) 40%, rgba(250, 240, 160, 1) 50%, rgba(211, 177, 95, 1) 58%, rgba(190, 140, 60, 1) 67%, rgba(177, 123, 50, 1) 77%, rgba(187, 131, 50, 1) 83%, rgba(212, 162, 69, 1) 88%, rgba(225, 180, 83, 1) 93%, rgba(164, 105, 42, 1) 100%);
+            background: linear-gradient(to right, rgba(162, 104, 42, 1) 0%, rgba(190, 140, 60, 1) 8%, rgba(190, 140, 60, 1) 18%, rgba(211, 177, 95, 1) 27%, rgba(250, 240, 160, 1) 35%, rgba(255, 255, 194, 1) 40%, rgba(250, 240, 160, 1) 50%, rgba(211, 177, 95, 1) 58%, rgba(190, 140, 60, 1) 67%, rgba(177, 123, 50, 1) 77%, rgba(187, 131, 50, 1) 83%, rgba(212, 162, 69, 1) 88%, rgba(225, 180, 83, 1) 93%, rgba(164, 105, 42, 1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a2682a', endColorstr='#a4692a', GradientType=1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 1px rgba(255, 200, 0, .3));
+            padding-bottom: 14px;
+            border-bottom: 1px solid #ffffff14;
+            display: inline-block;
+
+        }
+
+        .copyirght {
+            background: #fff;
+            padding: 10px 6px 4px 10px;
+            position: absolute;
+            bottom: -31px;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+            bottom: 0;
+            left: 0;
+            right: 0;
+           
+            border-radius: 0 0 12px 12px;
+        }
+        .brandlogo {
+            background-color: #fff;
+    position: relative;
+    width: 100%;
+    top: -38px;
+    padding: 20px 18px 10px;
+    margin-bottom: -26px;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 25%);
+        }
+        .brandlogo img {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div style='background:#fff; width: 1240px; height: auto; display: flex; justify-content: center;' id='capture'>
+        <div class='pattern pattern-right'>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <div class='box box-left' style=' width: 26%; text-align: center;'>
+            <div class='box-inner'>
+                <div style='width: 100%;'>
+                    <div class='brandlogo'><img src='img/Bosch-01.png' alt=''></div>
+                    <h1 style='font-size:22px; color: #ffffff !important; text-align: center;'>Voucher Worth</h1>
+                    <p class='amount'><i class='fa-solid fa-indian-rupee-sign'></i>&nbsp; [voucherAmount]</p>
+                    <p style='margin: -20px 0 0px 0; font-size: 12px; color: #ffffff85; line-height: 16px; text-align: center;'>Voucher is valid for 7 days from the Quality Check of the Old Appliance.</p>
+
+
+                    <div class='copyirght'>
+                        
+                        <p style='font-size:13px; line-height: normal; font-style: italic; font-weight: 400; margin: 0; color: #a8a8a8; display: flex; justify-content: center; align-items: center;'> Powered by <img src='https://digi2l.in/wp-content/uploads/2022/09/logo.svg' alt=''
+                            style='width: 60px; border-radius: 6px; margin-left: 6px;'> 
+                        </p>
+                       
+                        <a href='www.digi2l.in'
+                                style='color: #2a2a5a; text-decoration: none; color: #575757; font-size: 12px; margin: 8px 0 0 0; display: block;'>digi2l.in</a>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class='box box-right' style=' width: 80%; '>
+            <div class='box-inner'>
+                <div class='logowrap'><img src='https://digi2l.in/wp-content/uploads/2023/01/transparent-logo-01.png' alt=''></div>
+                <h1 class='maintitle'>RENEWED CASH VOUCHER</h1>
+                <div style='font-size: 22px; font-weight:bold;'>Voucher Code</div>
+                <div class='vouchercode'>[voucherCode]</div>
+                <p style='font-size:12px; line-height: 16px; color: #ccc; font-style: italic;'>* This voucher is issued against the old voucher after change in value of old appliance after the quality check. The old voucher stands cancelled. Voucher value is based on the true conditions of the old appliance confirmed by the Quality Check Analyst of Digi2L. The value ascertained by Digi2L after the Quality check is deemed to be the final price and customer accepts the same.
+                    Voucher can only be redeemed/ exchanged for cash (via online transfer) by Digi2L and its Partners in exchange of Old Appliance on purchase of a New BOSCH Product.Voucher is valid for only single transaction. Voucher is used against exchange of old appliance which shall become property of Digi2L, the moment this voucher is encashed. Voucher is valid for 7 days from the Quality Check of the Old Appliance. Voucher cannot be clubbed with any other existing offer or discount. Voucher is not for sale. Management reserves the right to identify the authenticity of the voucher.</p>
+                    <p style='float: right; margin: 0; font-size: 10px; font-style: italic;'>UTC Digital Technologies Pvt. Ltd.</p>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class='previewIMG'></div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js'></script>
+
+</body>
+
+</html>

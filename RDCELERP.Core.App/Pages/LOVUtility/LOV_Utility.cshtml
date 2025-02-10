@@ -1,0 +1,2864 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.LOV_Utility.LOV_UtilityModel
+
+@{
+    ViewData["Title"] = "LOV_Utility";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    var BaseUrl = ViewData["BaseUrl"];
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row align-items-center">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h2 class="fs-5 mb-0 card-title">LOV Utility</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active shadow" id="nav-home-tab1" data-bs-toggle="tab"
+                           href="#CityListTab" role="tab" aria-controls="nav-home1" aria-selected="true">
+                            City
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab" data-bs-toggle="tab"
+                           href="#StateListTab" role="tab" aria-controls="nav-home" aria-selected="true">
+                            State
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab2" data-bs-toggle="tab"
+                           href="#PinCodeListTab" role="tab" aria-controls="nav-home2" aria-selected="true">
+                            PinCode
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab3" data-bs-toggle="tab"
+                           href="#ProductCategoryListTab" role="tab" aria-controls="nav-home3" aria-selected="true">
+                            Product Category
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab4" data-bs-toggle="tab"
+                           href="#ProductTypeListTab" role="tab" aria-controls="nav-home4" aria-selected="true">
+                            Product Type
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab5" data-bs-toggle="tab"
+                           href="#BrandListTab" role="tab" aria-controls="nav-home5" aria-selected="true">
+                            Brand
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab6" data-bs-toggle="tab"
+                           href="#BusinessPartnerListTab" role="tab" aria-controls="nav-home6" aria-selected="true">
+                            Business Partner
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab7" data-bs-toggle="tab"
+                           href="#ABBPlanMasterListTab" role="tab" aria-controls="nav-home7" aria-selected="true">
+                            ABB Plan Master
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab8" data-bs-toggle="tab"
+                           href="#ABBPriceMasterListTab" role="tab" aria-controls="nav-home8" aria-selected="true">
+                            ABB Price Master
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab9" data-bs-toggle="tab"
+                           href="#ModelNubmerListTab" role="tab" aria-controls="nav-home9" aria-selected="true">
+                            Model Number
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab10" data-bs-toggle="tab"
+                           href="#PriceMasterListTab" role="tab" aria-controls="nav-home10" aria-selected="true">
+                            Price Master
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab11" data-bs-toggle="tab"
+                           href="#ExchangeListTab" role="tab" aria-controls="nav-home11" aria-selected="true">
+                            Exchange
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab12" data-bs-toggle="tab"
+                           href="#ABBListTab" role="tab" aria-controls="nav-home12" aria-selected="true">
+                            ABB
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab12" data-bs-toggle="tab"
+                           href="#ServicePartnerListTab" role="tab" aria-controls="nav-home12" aria-selected="true">
+                            Service Partner
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab12" data-bs-toggle="tab"
+                           href="#VehicleIncentiveListTab" role="tab" aria-controls="nav-home12" aria-selected="true">
+                            Vehicle Incentive
+                        </a>
+
+                        <a class="nav-item nav-link shadow" id="nav-home-tab12" data-bs-toggle="tab"
+                           href="#ImageLabelMasterListTab" role="tab" aria-controls="nav-home12" aria-selected="true">
+                            Image Label Master
+                        </a>
+
+                    </div>
+                </nav>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow noborderradius">
+                    <div class="card-body">
+                        <div class="tab-content" id="nav-tabContent">
+
+                            <div class="tab-pane fade show active" id="CityListTab" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <form method="post" enctype="multipart/form-data" id="CityForm">
+                                    <input type="hidden" asp-for="CityVM.CityId" class="hdnId" />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row my-4">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="border p-3 rounded">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label for="">Upload List of Cities</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+
+                                                            <input type="file" asp-for="CityVM.UploadCity" class="form-control" />
+                                                            <span asp-validation-for="CityVM.UploadCity" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @if (accessRule != null && accessRule.CanAdd)
+                                                            {
+                                                                <input type="submit" id="btnSubmit" asp-page-handler="CityExcelImport" value="Save" class="btn btn-primary mainshadow" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <a href="~/ExcelUploadFormat/CityExcelFormat.xlsx" download class="btn btn-primary my-2">
+                                                    <i class="fa-solid fa-download"></i> &nbsp;Download Excel Format
+                                                </a>
+
+                                            </div>
+
+                                        }
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <table id="CityDatatable" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="all">CityId</th>
+                                                <th class="all">Actions</th>
+                                                <th class="all">City Name</th>
+                                                <th class="all">City Code</th>
+                                                <th class="all">State Name</th>
+                                                <th class="all">Active</th>
+                                                <th class="all">Date</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show" id="StateListTab" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <form method="post" enctype="multipart/form-data" id="StateForm">
+                                    <input type="hidden" asp-for="StateVM.StateId" class="hdnId" />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row my-4">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="border p-3 rounded">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label for="">Upload List of States</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+
+                                                            <input type="file" asp-for="StateVM.UploadState" class="form-control" />
+                                                            <span asp-validation-for="StateVM.UploadState" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @if (accessRule != null && accessRule.CanAdd)
+                                                            {
+                                                                <input type="submit" id="btnSubmit" asp-page-handler="StateExcelImport" value="Save" class="btn btn-primary mainshadow" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <a href="~/ExcelUploadFormat/StateExcelFormat.xlsx" download class="btn btn-primary my-2">
+                                                    <i class="fa-solid fa-download"></i> &nbsp;Download Excel Format
+                                                </a>
+
+                                            </div>
+
+                                        }
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <table id="StateDatatable" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="all">StateId</th>
+                                                <th class="all">Actions</th>
+                                                <th class="all">Name</th>
+                                                <th class="all">State Code</th>
+                                                <th class="all">Active</th>
+                                                <th class="all">Date</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                       
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show" id="PinCodeListTab" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <form method="post" enctype="multipart/form-data" id="PinCodeForm">
+                                    <input type="hidden" asp-for="PinCodeVM.Id" class="hdnId" />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row my-4">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="border p-3 rounded">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label for="">Upload List of PinCodes</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+
+                                                            <input type="file" asp-for="PinCodeVM.UploadPinCode" class="form-control" />
+                                                            <span asp-validation-for="PinCodeVM.UploadPinCode" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @if (accessRule != null && accessRule.CanAdd)
+                                                            {
+                                                                <input type="submit" id="btnSubmit" asp-page-handler="PinCodeExcelImport" value="Save" class="btn btn-primary mainshadow" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <a href="~/ExcelUploadFormat/PinCodeExcelFormat.xlsx" download class="btn btn-primary my-2">
+                                                    <i class="fa-solid fa-download"></i> &nbsp;Download Excel Format
+                                                </a>
+
+                                            </div>
+
+                                        }
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <table id="PinCodeDatatable" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="all">ZohoPinCodeId</th>
+                                                <th class="all">Actions</th>
+                                                <th class="all">Zip Code</th>
+                                                <th class="all">Location</th>
+                                                <th class="all">Is ABB</th>
+                                                <th class="all">Is Exchage</th>
+                                                <th class="all">Is Active</th>
+                                                <th class="all">State</th>
+                                                <th class="all">Date</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade show" id="ProductCategoryListTab" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <form method="post" enctype="multipart/form-data" id="PinCodeForm">
+                                    <input type="hidden" asp-for="ProductCategoryVM.Id" class="hdnId" />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row my-4">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="border p-3 rounded">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label for="">Upload List of Product Categories</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+
+                                                            <input type="file" asp-for="ProductCategoryVM.UploadProductCategory" class="form-control" />
+                                                            <span asp-validation-for="ProductCategoryVM.UploadProductCategory" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @if (accessRule != null && accessRule.CanAdd)
+                                                            {
+                                                                <input type="submit" id="btnSubmit" asp-page-handler="ProductCategoryExcelImport" value="Save" class="btn btn-primary mainshadow" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <a href="~/ExcelUploadFormat/ProductCategoryExcelFormat.xlsx" download class="btn btn-primary my-2">
+                                                    <i class="fa-solid fa-download"></i> &nbsp;Download Excel Format
+                                                </a>
+
+                                            </div>
+
+                                        }
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <table id="productCategoryDatatable" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="all">Id</th>
+                                                <th class="all">Actions</th>
+                                                <th class="all">Name</th>
+                                                <th class="all">Description</th>
+                                                <th class="all">Code</th>
+                                                <th class="all">Active</th>
+                                                
+                                                <th class="all">Date</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade show" id="ProductTypeListTab" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <form method="post" enctype="multipart/form-data" id="PinCodeForm">
+                                    <input type="hidden" asp-for="ProductTypeVM.Id" class="hdnId" />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row my-4">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="border p-3 rounded">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label for="">Upload List of Product Types</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+
+                                                            <input type="file" asp-for="ProductTypeVM.UploadProductType" class="form-control" />
+                                                            <span asp-validation-for="ProductTypeVM.UploadProductType" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @if (accessRule != null && accessRule.CanAdd)
+                                                            {
+                                                                <input type="submit" id="btnSubmit" asp-page-handler="ProductTypeExcelImport" value="Save" class="btn btn-primary mainshadow" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <a href="~/ExcelUploadFormat/ProductTypeExcelFormat.xlsx" download class="btn btn-primary my-2">
+                                                    <i class="fa-solid fa-download"></i> &nbsp;Download Excel Format
+                                                </a>
+
+                                            </div>
+
+                                        }
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <table id="ProductTypeDatatable" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="all">Id</th>
+                                                <th class="all">Actions</th>
+                                                <th class="all">Name</th>
+                                                <th class="all">Description</th>
+                                                <th class="all">Code</th>
+                                                <th class="all">Size</th>
+                                                <th class="all">Product Category</th>
+                                                <th class="all">Active</th>
+                                                <th class="all">Date</th>
+                                               
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade show" id="BrandListTab" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <form method="post" enctype="multipart/form-data" id="PinCodeForm">
+                                    <input type="hidden" asp-for="BrandVM.Id" class="hdnId" />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row my-4">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="border p-3 rounded">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label for="">Upload List of Brands</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+
+                                                            <input type="file" asp-for="BrandVM.UploadBrand" class="form-control" />
+                                                            <span asp-validation-for="BrandVM.UploadBrand" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @if (accessRule != null && accessRule.CanAdd)
+                                                            {
+                                                                <input type="submit" id="btnSubmit" asp-page-handler="BrandExcelImport" value="Save" class="btn btn-primary mainshadow" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <a href="~/ExcelUploadFormat/BrandExcelFormat.xlsx" download class="btn btn-primary my-2">
+                                                    <i class="fa-solid fa-download"></i> &nbsp;Download Excel Format
+                                                </a>
+
+                                            </div>
+
+                                        }
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <table id="BrandDatatable" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+
+                                                <th class="all">Id</th>
+                                                <th class="all">Action</th>
+                                                <th class="all">Brand Image</th>
+                                                <th class="all">Brand Name</th>
+                                                <th class="all">Date</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade show" id="BusinessPartnerListTab" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <form method="post" enctype="multipart/form-data" id="PinCodeForm">
+                                    <input type="hidden" asp-for="BusinessPartnerVM.BusinessPartnerId" class="hdnId" />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row my-4">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="border p-3 rounded">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label for="">Upload List of BusinessPartners</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+
+                                                            <input type="file" asp-for="BusinessPartnerVM.UploadBusinessPartner" class="form-control" />
+                                                            <span asp-validation-for="BusinessPartnerVM.UploadBusinessPartner" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @if (accessRule != null && accessRule.CanAdd)
+                                                            {
+                                                                <input type="submit" id="btnSubmit" asp-page-handler="BusinessPartnerExcelImport" value="Save" class="btn btn-primary mainshadow" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <a href="~/ExcelUploadFormat/BusinessPartnerExcelFormat.xlsx" download class="btn btn-primary my-2">
+                                                    <i class="fa-solid fa-download"></i> &nbsp;Download Excel Format
+                                                </a>
+
+                                            </div>
+
+                                        }
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <table id="BusinessPartnerDatatable" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+
+                                                <th class="all">Business Partner Id</th>
+                                                <th class="all">Actions</th>
+                                                <th class="all">Name</th>
+                                                <th class="all">Email</th>
+                                                <th class="all">Store Code</th>
+                                                <th class="all">Company Name</th>
+                                                <th class="all">State</th>
+                                                <th class="all">City</th>
+                                                <th class="all">Address</th>
+                                                <th class="all">Contact Person First Name</th>
+                                                <th class="all">Contact Person Last Name</th>
+                                                <th class="all">Phone Number</th>
+                                                <th class="all">BP Password</th>
+                                                <th class="all">Associate Code</th>
+                                                <th class="all">Date</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show" id="ABBPlanMasterListTab" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <form method="post" enctype="multipart/form-data" id="PinCodeForm">
+                                    <input type="hidden" asp-for="ABBPlanMasterVM.PlanMasterId" class="hdnId" />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row my-4">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="border p-3 rounded">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label for="">Upload List of ABBPlanMasters</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+
+                                                            <input type="file" asp-for="ABBPlanMasterVM.UploadABBPlanMaster" class="form-control" />
+                                                            <span asp-validation-for="ABBPlanMasterVM.UploadABBPlanMaster" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @if (accessRule != null && accessRule.CanAdd)
+                                                            {
+                                                                <input type="submit" id="btnSubmit" asp-page-handler="ABBPlanMasterExcelImport" value="Save" class="btn btn-primary mainshadow" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <a href="~/ExcelUploadFormat/ABBPlanMasterExcelFormat.xlsx" download class="btn btn-primary my-2">
+                                                    <i class="fa-solid fa-download"></i> &nbsp;Download Excel Format
+                                                </a>
+
+                                            </div>
+
+                                        }
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <table id="ABBPlanMasterDatatable" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+
+                                                <th class="all">Plan Master Id</th>
+                                                <th class="all">Actions</th>
+                                                <th class="all">Company Name</th>
+                                                <th class="all">Sponsor</th>
+                                                <th class="all">From Month</th>
+                                                <th class="all">To Month</th>
+                                                <th class="all">Assured Buy Back Percentage</th>
+                                                <th class="all">Plan Period InMonth</th>
+                                                <th class="all">Product Category</th>
+                                                <th class="all">ProductType</th>
+                                                <th class="all">Abb plan Name</th>
+                                                <th class="all">No Claim Period</th>
+                                                <th class="all">Date</th>
+                                               
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade show" id="ABBPriceMasterListTab" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <form method="post" enctype="multipart/form-data" id="PinCodeForm">
+                                    <input type="hidden" asp-for="ABBPriceMasterVM.PriceMasterId" class="hdnId" />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row my-4">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="border p-3 rounded">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label for="">Upload List of ABBPriceMasters</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+
+                                                            <input type="file" asp-for="ABBPriceMasterVM.UploadABBPriceMaster" class="form-control" />
+                                                            <span asp-validation-for="ABBPriceMasterVM.UploadABBPriceMaster" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @if (accessRule != null && accessRule.CanAdd)
+                                                            {
+                                                                <input type="submit" id="btnSubmit" asp-page-handler="ABBPriceMasterExcelImport" value="Save" class="btn btn-primary mainshadow" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <a href="~/ExcelUploadFormat/ABBPriceMasterExcelFormat.xlsx" download class="btn btn-primary my-2">
+                                                    <i class="fa-solid fa-download"></i> &nbsp;Download Excel Format
+                                                </a>
+
+                                            </div>
+
+                                        }
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <table id="ABBPriceMasterDatatable" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+
+                                                <th class="all">Price Master Id</th>
+                                                <th class="all">Actions</th>
+                                                <th class="all">Company Name</th>
+                                                <th class="all">Product Category</th>
+                                                <th class="all">Product Type</th>
+                                                <th class="all">Sponsor</th>
+                                                <th class="all">Price Start Range</th>
+                                                <th class="all">Price End Range</th>
+                                                <th class="all">Fee Type</th>
+                                                <th class="all">Fees Applicable Percentage</th>
+                                                <th class="all">Plan Period In Months</th>
+                                                <th class="all">Date</th>
+                                                
+
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade show" id="ModelNubmerListTab" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <form method="post" enctype="multipart/form-data" id="PinCodeForm">
+                                    <input type="hidden" asp-for="ModelNumberVM.ModelNumberId" class="hdnId" />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row my-4">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="border p-3 rounded">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label for="">Upload List of Model Numbers</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+
+                                                            <input type="file" asp-for="ModelNumberVM.UploadModelNumber" class="form-control" />
+                                                            <span asp-validation-for="ModelNumberVM.UploadModelNumber" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @if (accessRule != null && accessRule.CanAdd)
+                                                            {
+                                                                <input type="submit" id="btnSubmit" asp-page-handler="ModelNumberExcelImport" value="Save" class="btn btn-primary mainshadow" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <a href="~/ExcelUploadFormat/ModelNumberExcelFormat.xlsx" download class="btn btn-primary my-2">
+                                                    <i class="fa-solid fa-download"></i> &nbsp;Download Excel Format
+                                                </a>
+
+                                            </div>
+                                        }
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <table id="ModelNumberDatatable" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="all">ModelNumberId</th>
+                                                <th class="all">Action</th>
+                                                <th class="all">Company Name</th>
+                                                <th class="all">Model Name</th>
+                                                <th class="all">Description</th>
+                                                <th class="all">Model Number</th>
+                                                <th class="all">Brand</th>
+                                                <th class="all">Product Category</th>
+                                                <th class="all">Product Type</th>
+                                                <th class="all">Sweetner For D to D</th>
+                                                <th class="all">Sweetner For D to C</th>
+                                                <th class="all">Date</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade show" id="PriceMasterListTab" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <form method="post" enctype="multipart/form-data" id="PinCodeForm">
+                                    <input type="hidden" asp-for="PriceMasterVM.Id" class="hdnId" />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row my-4">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="border p-3 rounded">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label for="">Upload List of Price Masters</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+
+                                                            <input type="file" asp-for="PriceMasterVM.UploadPriceMaster" class="form-control" />
+                                                            <span asp-validation-for="PriceMasterVM.UploadPriceMaster" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @if (accessRule != null && accessRule.CanAdd)
+                                                            {
+                                                                <input type="submit" id="btnSubmit" asp-page-handler="PriceMasterExcelImport" value="Save" class="btn btn-primary mainshadow" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <a href="~/ExcelUploadFormat/PriceMasterExcelFormat.xlsx" download class="btn btn-primary my-2">
+                                                    <i class="fa-solid fa-download"></i> &nbsp;Download Excel Format
+                                                </a>
+
+                                            </div>
+                                        }
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <table id="PriceMasterDatatable" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="all">Id</th>
+                                                <th class="all">Action</th>
+                                                <th class="all">Exch Price Code</th>
+                                                <th class="all">Product Category</th>
+                                                <th class="all">Product Type</th>
+                                                <th class="all">Product Type Code</th>
+                                                <th class="all">Brand Name 1</th>
+                                                <th class="all">Brand Name 2</th>
+                                                <th class="all">Brand Name 3</th>
+                                                <th class="all">Brand Name 4</th>
+                                                <th class="all">Quote P High</th>
+                                                <th class="all">Quote Q High</th>
+                                                <th class="all">Quote R High</th>
+                                                <th class="all">Quote S High</th>
+                                                <th class="all">Quote P</th>
+                                                <th class="all">Quote Q</th>
+                                                <th class="all">Quote R</th>
+                                                <th class="all">Quote S</th>
+                                                <th class="all">Price Start Date</th>
+                                                <th class="all">Price End Date</th>
+                                                <th class="all">Date</th>
+                                               
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade show" id="ExchangeListTab" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <form method="post" enctype="multipart/form-data" id="PinCodeForm">
+                                    <input type="hidden" asp-for="ExchangeVM.Id" class="hdnId" />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row my-4">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="border p-3 rounded">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label for="">Upload List of Exchange Orders</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+
+                                                            <input type="file" asp-for="ExchangeVM.UploadExchange" class="form-control" />
+                                                            <span asp-validation-for="ExchangeVM.UploadExchange" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @if (accessRule != null && accessRule.CanAdd)
+                                                            {
+                                                                <input type="submit" id="btnSubmit" asp-page-handler="ExchangeExcelImport" value="Save" class="btn btn-primary mainshadow" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <a href="~/ExcelUploadFormat/ExchangeExcelFormat.xlsx" download class="btn btn-primary my-2">
+                                                    <i class="fa-solid fa-download"></i> &nbsp;Download Excel Format
+                                                </a>
+
+                                            </div>
+                                        }
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <table id="ExchangeDatatable" class="table align-items-center" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="all notexport">Id</th>
+                                                <th class="all">Company</th>
+                                                <th class="all">Regd No.</th>
+                                                <th class="all">Pin Code</th>
+                                                <th class="all">Product Details</th>
+                                                <th class="all">Status</th>
+                                                <th class="all">Order Date</th>
+                                                <th class="all">Final Price</th>
+                                                <th class="all">POD</th>
+                                                <th class="all notexport">Actions</th>
+                                                <th class="all">OrderStatus</th>
+                                                <th class="all">CustomerFullName</th>
+                                                <th class="all">CustomerAddress</th>
+                                                <th class="all">CustomerCity</th>
+                                                <th class="all">CustomerState</th>
+                                                <th class="all">ProductTypeId</th>
+                                                <th class="all">BrandId</th>
+                                                <th class="all">Bonus</th>
+                                                <th class="all">SponsorOrderNumber</th>
+                                                <th class="all">EstimatedDeliveryDate</th>
+                                                <th class="all">ProductCondition</th>
+                                                <th class="all">LoginID</th>
+                                                <th class="all">StoreCode</th>
+                                                <th class="all">VoucherCode</th>
+                                                <th class="all">IsDtoC</th>
+                                                <th class="all">BusinessPartnerId</th>
+                                                <th class="all">IsVoucherused</th>
+                                                <th class="all">VoucherCodeExpDate</th>
+                                                <th class="all">ExchangePrice</th>
+                                                <th class="all">NewProductCategoryId</th>
+                                                <th class="all">NewProductTypeId</th>
+                                                <th class="all">NewBrandId</th>
+                                                <th class="all">ModelNumberId</th>
+                                                <th class="all">QCDate</th>
+                                                <th class="all">StartTime</th>
+                                                <th class="all">EndTime</th>
+                                                <th class="all">StatusId</th>
+                                                <th class="all">VoucherStatusId</th>
+                                                <th class="all">Sweetener</th>
+                                                <th class="all">SerialNumber</th>
+                                                <th class="all">FinalExchangePrice</th>
+                                                <th class="all">IsDefferedSettlement</th>
+                                                <th class="all">CreatedDate</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade show" id="ABBListTab" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <form method="post" enctype="multipart/form-data" id="PinCodeForm">
+                                    <input type="hidden" asp-for="AbbVM.ABBRedemptionId" class="hdnId" />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row my-4">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="border p-3 rounded">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label for="">Upload List of Abb Registrations</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+
+                                                            <input type="file" asp-for="AbbVM.UploadAbb" class="form-control" />
+                                                            <span asp-validation-for="AbbVM.UploadAbb" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @if (accessRule != null && accessRule.CanAdd)
+                                                            {
+                                                                <input type="submit" id="btnSubmit" asp-page-handler="AbbExcelImport" value="Save" class="btn btn-primary mainshadow" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <a href="~/ExcelUploadFormat/AbbExcelFormat.xlsx" download class="btn btn-primary my-2">
+                                                    <i class="fa-solid fa-download"></i> &nbsp;Download Excel Format
+                                                </a>
+
+                                            </div>
+                                        }
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <div class="table-responsive">
+                                        <table id="ABBDatatable" class="table align-items-center table-flush" border="1">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="all notexport">AbbregistrationId</th>
+                                                    <th class="all notexport">Actions</th>
+                                                    <th class="all">Company Name</th>
+                                                    <th class="all">Regd No.</th>
+                                                    <th class="all">Customer FullName</th>
+                                                    <th class="all">Product Type</th>
+                                                    <th class="all">Registration Date</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade show" id="ServicePartnerListTab" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <form method="post" enctype="multipart/form-data" id="PinCodeForm">
+                                    <input type="hidden" asp-for="ServicePartnerVM.ServicePartnerId" class="hdnId" />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row my-4">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="border p-3 rounded">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label for="">Upload List of Service Partners</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+
+                                                            <input type="file" asp-for="ServicePartnerVM.UploadServicePartner" class="form-control" />
+                                                            <span asp-validation-for="ServicePartnerVM.UploadServicePartner" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @if (accessRule != null && accessRule.CanAdd)
+                                                            {
+                                                                <input type="submit" id="btnSubmit" asp-page-handler="ServicePartnerExcelImport" value="Save" class="btn btn-primary mainshadow" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <a href="~/ExcelUploadFormat/ServicePartnerExcelFormat.xlsx" download class="btn btn-primary my-2">
+                                                    <i class="fa-solid fa-download"></i> &nbsp;Download Excel Format
+                                                </a>
+
+                                            </div>
+                                        }
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <div class="table-responsive">
+                                        <table id="servicePartnerDatatable" class="table align-items-center table-flush" border="1">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="all">ServicePartnerId</th>
+                                                    <th class="all">Actions</th>
+                                                    <th class="all">Service Partner Name</th>
+                                                    <th class="all">Service Partner Description</th>
+                                                    <th class="all">Service Partner Reg No.</th>
+                                                    <th class="all">Service Partner Mobile No.</th>
+                                                    <th class="all">Service Partner Email</th>
+                                                    <th class="all">Active</th>
+                                                    <th class="all">Date</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade show" id="VehicleIncentiveListTab" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <form method="post" enctype="multipart/form-data" id="PinCodeForm">
+                                    <input type="hidden" asp-for="VehicleIncentiveVM.IncentiveId" class="hdnId" />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row my-4">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="border p-3 rounded">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label for="">Upload List of Vehicle Incentives</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+
+                                                            <input type="file" asp-for="VehicleIncentiveVM.UploadVehicleIncentive" class="form-control" />
+                                                            <span asp-validation-for="VehicleIncentiveVM.UploadVehicleIncentive" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @if (accessRule != null && accessRule.CanAdd)
+                                                            {
+                                                                <input type="submit" id="btnSubmit" asp-page-handler="VehicleIncentiveExcelImport" value="Save" class="btn btn-primary mainshadow" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <a href="~/ExcelUploadFormat/VehicleIncentiveExcelFormat.xlsx" download class="btn btn-primary my-2">
+                                                    <i class="fa-solid fa-download"></i> &nbsp;Download Excel Format
+                                                </a>
+
+                                            </div>
+                                        }
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <div class="table-responsive">
+                                        <table id="VehicleIndecntiveDatatable" class="table align-items-center table-flush" border="1">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="all">IncentiveId</th>
+                                                    <th class="all">Actions</th>
+                                                    <th class="all">Product Category</th>
+                                                    <th class="all">Product Type</th>
+                                                    <th class="all">Company</th>
+                                                    <th class="all">Base Price</th>
+                                                    <th class="all">Pickup Tat in Hr</th>
+                                                    <th class="all">Pickup Inc Amount</th>
+                                                    <th class="all">Drop Tat in Hr</th>
+                                                    <th class="all">Drop Inc Amount</th>
+                                                    <th class="all">Date</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade show" id="ImageLabelMasterListTab" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <form method="post" enctype="multipart/form-data" id="PinCodeForm">
+                                    <input type="hidden" asp-for="ImageLabelVM.ImageLabelid" class="hdnId" />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row my-4">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <div class="col-md-6">
+                                                <div class="border p-3 rounded">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label for="">Upload List of Image Labels</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+
+                                                            <input type="file" asp-for="ImageLabelVM.UploadImageLabel" class="form-control" />
+                                                            <span asp-validation-for="ImageLabelVM.UploadImageLabel" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @if (accessRule != null && accessRule.CanAdd)
+                                                            {
+                                                                <input type="submit" id="btnSubmit" asp-page-handler="ImageLabelExcelImport" value="Save" class="btn btn-primary mainshadow" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <a href="~/ExcelUploadFormat/ImageLabelExcelFormat.xlsx" download class="btn btn-primary my-2">
+                                                    <i class="fa-solid fa-download"></i> &nbsp;Download Excel Format
+                                                </a>
+
+                                            </div>
+                                        }
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <table id="ImageLabelDatatable" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="all">ImageLabelid</th>
+                                                <th class="all">Actions</th>
+                                                <th class="all">Product Name</th>
+                                                <th class="all">Product Image Label</th>
+                                                <th class="all">Product Image Description</th>
+                                                <th class="all">Pattern</th>
+                                                <th class="all">Product Category Name</th>
+                                                <th class="all">Date</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="modal fade" id="delete-conformation" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="delete-conformation">
+                    Inactive Confirmation
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="TblCityObj.CityId" id="hdnId" />
+                            <div class="col-sm-12">
+                                <span>
+                                    Are you sure you want to make this City Inactive ?
+                                </span>
+                                @*<strong class="deletedValueName">
+                                </strong>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="Delete" class="btn btn-danger" value="Make Inactive" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="active-conformation" tabindex="-1" role="dialog" aria-labelledby="activeconformation">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="active-conformation1">
+                    Active Confirmation
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="TblCityObj.CityId" id="hdnId1" />
+                            <div class="col-sm-12">
+                                <span>
+                                    Are you sure you want to Active this City?
+                                </span>
+                                @*<strong class="deletedValueName">
+                                </strong>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="Delete" class="btn btn-success" value="Make Active" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="delete-conformationState" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="delete-conformation">
+                    Inactive Confirmation
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="TblStateObj.StateId" id="Ids" />
+                            <div class="col-sm-12">
+                                <span>
+                                    Are you sure you want to make this State Inactive ?
+                                </span>
+                                @*<strong class="deletedValueName">
+                                </strong>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="StateDelete" class="btn btn-danger" value="Make Inactive" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="active-conformationState" tabindex="-1" role="dialog" aria-labelledby="activeconformation">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="active-conformation1">
+                    Active Confirmation
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="TblStateObj.StateId" id="Id1" />
+                            <div class="col-sm-12">
+                                <span>
+                                    Are you sure you want to Active State Type?
+                                </span>
+                                @*<strong class="deletedValueName">
+                                </strong>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="StateDelete" class="btn btn-success" value="Make Active" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="delete-conformationPincode" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="delete-conformation">
+                    Inactive Confirmation
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="TblPinCodeObj.Id" id="IdP" />
+                            <div class="col-sm-12">
+                                <span>
+                                    Are you sure you want to make this Pincode Inactive ?
+                                </span>
+                                @*<strong class="deletedValueName">
+                                </strong>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="PinCodeDelete" class="btn btn-danger" value="Make Inactive" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="active-conformationPincode" tabindex="-1" role="dialog" aria-labelledby="activeconformation">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="active-conformation1">
+                    Active Confirmation
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="TblPinCodeObj.Id" id="IdP1" />
+                            <div class="col-sm-12">
+                                <span>
+                                    Are you sure you want to Active this Pincode?
+                                </span>
+                                @*<strong class="deletedValueName">
+                                </strong>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="PinCodeDelete" class="btn btn-success" value="Make Active" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delete-conformationProductCategory" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="delete-conformation">
+                    Inactive Confirmation
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="TblProductCategoryObj.Id" id="IdPC" />
+                            <div class="col-sm-12">
+                                <span>
+                                    Are you sure you want to make this Product Category Inactive ?
+                                </span>
+                                @*<strong class="deletedValueName">
+                                </strong>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="ProductCategoryDelete" class="btn btn-danger" value="Make Inactive" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="active-conformationProductCategory" tabindex="-1" role="dialog" aria-labelledby="activeconformation">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="active-conformation1">
+                    Active Confirmation
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="TblProductCategoryObj.Id" id="IdPC1" />
+                            <div class="col-sm-12">
+                                <span>
+                                    Are you sure you want to Active this Product Category?
+                                </span>
+                                @*<strong class="deletedValueName">
+                                </strong>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="ProductCategoryDelete" class="btn btn-success" value="Make Active" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delete-conformationProductType" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="delete-conformation">
+                    Inactive Confirmation
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="TblProductTypeObj.Id" id="IdPT" />
+                            <div class="col-sm-12">
+                                <span>
+                                    Are you sure you want to make this Product Type Inactive ?
+                                </span>
+                                @*<strong class="deletedValueName">
+                                </strong>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="ProductTypeDelete" class="btn btn-danger" value="Make Inactive" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="active-conformationProductType" tabindex="-1" role="dialog" aria-labelledby="activeconformation">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="active-conformation1">
+                    Active Confirmation
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="TblProductTypeObj.Id" id="IdPT1" />
+                            <div class="col-sm-12">
+                                <span>
+                                    Are you sure you want to Active this Product Type?
+                                </span>
+                                @*<strong class="deletedValueName">
+                                </strong>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="ProductTypeDelete" class="btn btn-success" value="Make Active" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <div class="modal fade" id="delete-conformationBusinessPartner" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+        <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+            <div class="modal-content">
+                <div class="modal-header" style="background:#d9534f;color:white;">
+                    <h4 class="modal-title" id="delete-conformation">
+                        Delete Confirmation
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+
+                        <div class="row">
+                            <div class="form-group">
+                                <input type="hidden" asp-for="TblBusinessPartnerObj.BusinessPartnerId" id="hdnId5" />
+                                <div class="col-sm-12">
+                                    <span>
+                                        Are you sure you want to delete?
+                                    </span>
+                                    @*<strong class="deletedValueName">
+                                        </strong>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <input type="submit" asp-page-handler="BusinessPartnerDelete" class="btn btn-danger" value="Delete" />
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="delete-conformationPlanMaster" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+        <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+            <div class="modal-content">
+                <div class="modal-header" style="background:#d9534f;color:white;">
+                    <h4 class="modal-title" id="delete-conformation">
+                        Delete Confirmation
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+
+                        <div class="row">
+                            <div class="form-group">
+                                <input type="hidden" asp-for="TblAbbplanMasterObj.PlanMasterId" id="hdnId6" />
+                                <div class="col-sm-12">
+                                    <span>
+                                        Are you sure you want to delete?
+                                    </span>
+                                    @*<strong class="deletedValueName">
+                                        </strong>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <input type="submit" asp-page-handler="ABBPlanMasterDelete" class="btn btn-danger" value="Delete" />
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="delete-conformationABBPlanMaster" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+        <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+            <div class="modal-content">
+                <div class="modal-header" style="background:#d9534f;color:white;">
+                    <h4 class="modal-title" id="delete-conformation">
+                        Delete Confirmation
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+
+                        <div class="row">
+                            <div class="form-group">
+                                <input type="hidden" asp-for="TblAbbpriceMasterObj.PriceMasterId" id="hdnId7" />
+                                <div class="col-sm-12">
+                                    <span>
+                                        Are you sure you want to delete?
+                                    </span>
+                                    @*<strong class="deletedValueName">
+                                        </strong>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <input type="submit" asp-page-handler="ABBPriceMasterDelete" class="btn btn-danger" value="Delete" />
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="delete-conformationPriceMaster" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+        <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+            <div class="modal-content">
+                <div class="modal-header" style="background:#d9534f;color:white;">
+                    <h4 class="modal-title" id="delete-conformation">
+                        Delete Confirmation
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+
+                        <div class="row">
+                            <div class="form-group">
+                                <input type="hidden" asp-for="TblPriceMasterObj.Id" id="hdnId8" />
+                                <div class="col-sm-12">
+                                    <span>
+                                        Are you sure you want to delete?
+                                    </span>
+                                    @*<strong class="deletedValueName">
+                                        </strong>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <input type="submit" asp-page-handler="PriceMasterDelete" class="btn btn-danger" value="Delete" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="delete-conformationServicePartner" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+        <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+            <div class="modal-content">
+                <div class="modal-header" style="background:#d9534f;color:white;">
+                    <h4 class="modal-title" id="delete-conformation">
+                        Delete Confirmation
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+
+                        <div class="row">
+                            <div class="form-group">
+                                <input type="hidden" asp-for="TblServicePartnerObj.ServicePartnerId" id="hdnId11" />
+                                <div class="col-sm-12">
+                                    <span>
+                                        Are you sure you want to delete?
+                                    </span>
+                                    @*<strong class="deletedValueName">
+                                        </strong>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <input type="submit" asp-page-handler="ServicePartnerDelete" class="btn btn-danger" value="Delete" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="delete-conformationVehicleIncentive" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+        <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+            <div class="modal-content">
+                <div class="modal-header" style="background:#d9534f;color:white;">
+                    <h4 class="modal-title" id="delete-conformation">
+                        Delete Confirmation
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+
+                        <div class="row">
+                            <div class="form-group">
+                                <input type="hidden" asp-for="TblVehicleIncentiveObj.IncentiveId" id="hdn9" />
+                                <div class="col-sm-12">
+                                    <span>
+                                        Are you sure you want to delete?
+                                    </span>
+                                    <strong class="deletedValueName">
+                                        </strong>
+                               </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <input type="submit" asp-page-handler="VehicleIncentiveDelete" class="btn btn-danger" value="Delete" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="modal fade" id="delete-conformationImageLabel" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="delete-conformation">
+                    Delete Confirmation
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="TblImageLabelMasterObj.ImageLabelid" id="hdn8" />
+                            <div class="col-sm-12">
+                                <span>
+                                    Are you sure you want to delete?
+                                </span>
+                                <strong class="deletedValueName">
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="ImageLabelDelete" class="btn btn-danger" value="Delete" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="delete-conformationBrand" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="delete-conformation">
+                    Delete Confirmation
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="TblBrandObj.Id" id="hdn7" />
+                            <div class="col-sm-12">
+                                <span>
+                                    Are you sure you want to delete?
+                                </span>
+                                <strong class="deletedValueName">
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="BrandDelete" class="btn btn-danger" value="Delete" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+    <script src="~/NewLayout/assets/js/exportTable.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var urlCity = "@URLPrefixforProd/api/ListPage/GetCityList";
+            var urlState = "@URLPrefixforProd/api/ListPage/GetStateList";
+            var urlPinCode = "@URLPrefixforProd/api/ListPage/GetPinCodeList";
+            var urlProductCategory = "@URLPrefixforProd/api/ListPage/GetProductCategoryList";
+            var urlProductType = "@URLPrefixforProd/api/ListPage/GetProductTypeList";
+            var urlBrand = "@URLPrefixforProd/api/ListPage/GetBrandList";
+            var urlBusinessPartner = "@URLPrefixforProd/api/ListPage/GetBusineesPartnerList";
+            var urlABBPlanMaster = "@URLPrefixforProd/api/ListPage/GetABBPlanMasterList";
+            var urlABBPriceMaster = "@URLPrefixforProd/api/ListPage/GetABBPriceMasterList";
+            var urlModelNumber = "@URLPrefixforProd/api/ListPage/GetModelNumberList";
+            var urlPriceMaster = "@URLPrefixforProd/api/ListPage/GetPriceMasterList";
+            var urlExchange = "@URLPrefixforProd/api/ExchangeOrders/ExchangeList?companyId=" + @ViewBag.CompanyId;
+            var urlAbb = "@ViewData["URLPrefixforProd"]/api/ABBList/ABBDataList?companyId=" + @ViewBag.CompanyId;
+            var urlServicePartner = "@ViewData["URLPrefixforProd"]/api/ListPage/GetServicePartnerList";
+            var urlVehicleIncentive = "@ViewData["URLPrefixforProd"]/api/ListPage/GetVehicleIncentiveList";
+              var urlImagelabelMaster = "@ViewData["URLPrefixforProd"]/api/ListPage/GetImageLabelList";
+            CityDT(urlCity);
+            StateDT(urlState);
+            PinCodeDT(urlPinCode);
+            ProductCategoryDT(urlProductCategory);
+            ProductTypeDT(urlProductType);
+            BrandDT(urlBrand);
+            BusinessPartnerDT(urlBusinessPartner);
+            ABBPlanMasterDT(urlABBPlanMaster);
+            ABBPriceMasterDT(urlABBPriceMaster);
+            ModelNumberDT(urlModelNumber);
+            PriceMasterDT(urlPriceMaster);
+            ExchangeDT(urlExchange);
+            AbbDT(urlAbb);
+            ServicePartnerDT(urlServicePartner);
+            VehicleIncentiveDT(urlVehicleIncentive);
+            ImageLabelMasterDT(urlImagelabelMaster);
+            //Auto Active Tab Backend Dynamically
+
+        });
+    function activeConfirmCity(_Id) {
+
+        $('#hdnId1').val(_Id);
+        $('#active-conformation').modal('show');
+    }
+
+    function deleteConfirmCity(_Id) {
+        // alert(_dealId);
+        $('#hdnId').val(_Id);
+        $('#delete-conformation').modal('show');
+    }
+
+    function activeConfirmState(_Id) {
+
+        $('#Id1').val(_Id);
+        $('#active-conformationState').modal('show');
+    }
+
+    function deleteConfirmState(_Id) {
+        // alert(_dealId);
+        $('#Ids').val(_Id);
+        $('#delete-conformationState').modal('show');
+    }
+
+    function activeConfirmPincode(_Id) {
+
+        $('#IdP1').val(_Id);
+        $('#active-conformationPincode').modal('show');
+    }
+
+    function deleteConfirmPincode(_Id) {
+        // alert(_dealId);
+        $('#IdP').val(_Id);
+        $('#delete-conformationPincode').modal('show');
+    }
+    function activeConfirmProductCategory(_Id) {
+
+        $('#IdPC1').val(_Id);
+        $('#active-conformationProductCategory').modal('show');
+    }
+
+    function deleteConfirmProductCategory(_Id) {
+        // alert(_dealId);
+        $('#IdPC').val(_Id);
+        $('#delete-conformationProductCategory').modal('show');
+    }
+    function activeConfirmProductType(_Id) {
+
+        $('#IdPT1').val(_Id);
+        $('#active-conformationProductType').modal('show');
+    }
+
+    function deleteConfirmProductType(_Id) {
+
+        $('#IdPT').val(_Id);
+        $('#delete-conformationProductType').modal('show');
+    }
+
+
+    function deleteConfirmBusinessPartner(_Id) {
+        // alert(_dealId);
+        $('#hdnId5').val(_Id);
+        $('#delete-conformationBusinessPartner').modal('show');
+    }
+    function deleteConfirmPlanMaster(_Id) {
+        // alert(_dealId);
+        $('#hdnId6').val(_Id);
+        $('#delete-conformationPlanMaster').modal('show');
+    }
+    function deleteConfirmABBPriceMaster(_Id) {
+        // alert(_dealId);
+        $('#hdnId7').val(_Id);
+        $('#delete-conformationABBPriceMaster').modal('show');
+    }
+    function deleteConfirmPriceMaster(_Id) {
+        // alert(_dealId);
+        $('#hdnId8').val(_Id);
+        $('#delete-conformationPriceMaster').modal('show');
+        }
+        function deleteConfirmServicePartner(_Id) {
+            // alert(_dealId);
+        
+            $('#hdnId11').val(_Id);
+            $('#delete-conformationServicePartner').modal('show');
+        
+        }
+        function deleteConfirmVehicleIncentive(_Id) {
+            // alert(_dealId);
+            $('#hdn9').val(_Id);
+            $('#delete-conformationVehicleIncentive').modal('show');
+        }
+    function deleteConfirmImageLabel(_Id) {
+        // alert(_dealId);
+        $('#hdn8').val(_Id);
+        $('#delete-conformationImageLabel').modal('show');
+    }
+    function deleteConfirmBrand(_Id) {
+        // alert(_dealId);
+        $('#hdn7').val(_Id);
+        $('#delete-conformationBrand').modal('show');
+    }
+    </script>
+
+
+    <script type="text/javascript">
+        //City Datatable
+        function CityDT(url) {
+            $('#CityDatatable').dataTable({
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "searching": true,
+                "filter": true,
+                "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                        title: 'City',
+                        action: newexportaction,
+                        exportOptions: {
+                            modifier: {
+                                // DataTables core
+                                order: 'index',  // 'current', 'applied', 'index',  'original'
+                                page: 'all',      // 'all',     'current' for export all pages data
+                                search: 'none'     // 'none',    'applied', 'removed'
+                            },
+                            columns: ':not(.notexport)'
+                        }
+                    },
+                ],
+                "oLanguage": {
+                    "sEmptyTable": "No City found"
+                },
+                
+                "info": true,
+                "paging": true,
+                "oLanguage": {
+                    "sEmptyTable": "No data found"
+                },
+
+                "ajax": {
+                    "url": url,
+                    "datatype": "json",
+                    "type": "POST"
+                },
+
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "responsive": true,
+            "columns": [
+                { "data": "cityId", "name": "CityId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "name", "name": "CityName", "autoWidth": true, "orderable": true },
+                { "data": "cityCode", "name": "CityCode", "autoWidth": true, "orderable": true },
+                { "data": "stateName", "name": "StateName", "autoWidth": true, "orderable": true },
+                { "data": "isActive", "name": "IsActive", "autoWidth": true, "orderable": true },
+                { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+            ]
+            });
+        }
+
+        //All Data Export--
+        function newexportaction(e, dt, button, config) {
+            var self = this;
+            var oldStart = dt.settings()[0]._iDisplayStart;
+            dt.one('preXhr', function (e, s, data) {
+                // Just this once, load all data from the server...
+                data.start = 0;
+                data.length = 2147483647;
+                dt.one('preDraw', function (e, settings) {
+                    // Call the original action function
+                    if (button[0].className.indexOf('buttons-copy') >= 0) {
+                        $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                        $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                    }
+                    dt.one('preXhr', function (e, s, data) {
+                        // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                        // Set the property to what it was before exporting.
+                        settings._iDisplayStart = oldStart;
+                        data.start = oldStart;
+                    });
+                    // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                    setTimeout(dt.ajax.reload, 0);
+                    // Prevent rendering of the full data to the DOM
+                    return false;
+                });
+            });
+            // Requery the server with the new one-time export settings
+            dt.ajax.reload();
+        };
+        //For Export Buttons available inside jquery-datatable "server side processing" - End
+
+
+
+        // state data table
+        function StateDT(url) {
+            table = $('#StateDatatable').dataTable({
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "searching": true,
+                "filter": true,
+                "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                        title: 'State List',
+                        action: newexportaction,
+                        exportOptions: {
+                            modifier: {
+                                // DataTables core
+                                order: 'index',  // 'current', 'applied', 'index',  'original'
+                                page: 'all',      // 'all',     'current' for export all pages data
+                                search: 'none'     // 'none',    'applied', 'removed'
+                            },
+                            columns: ':not(.notexport)'
+                        }
+                    }
+                ],
+                "oLanguage": {
+                    "sEmptyTable": "No State found"
+                },
+                "ajax": {
+                    "url": url,
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "responsive": true,
+            "columns": [
+                { "data": "stateId", "name": "StateId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Actions", "autoWidth": true, "orderable": false },
+                { "data": "name", "name": "Name", "autoWidth": true, "orderable": true },
+                { "data": "code", "name": "Code", "autoWidth": true, "orderable": true },
+                { "data": "isActive", "name": "IsActive", "autoWidth": true, "orderable": true },
+                { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+            ]
+            });
+        }
+
+        // PinCode data table
+        function PinCodeDT(url) {
+            table = $('#PinCodeDatatable').dataTable({
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "searching": true,
+                "filter": true,
+                "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                        title: 'PinCode List',
+                        action: newexportaction,
+                        exportOptions: {
+                            modifier: {
+                                // DataTables core
+                                order: 'index',  // 'current', 'applied', 'index',  'original'
+                                page: 'all',      // 'all',     'current' for export all pages data
+                                search: 'none'     // 'none',    'applied', 'removed'
+                            },
+                            columns: ':not(.notexport)'
+                        }
+                    }
+                ],
+                "oLanguage": {
+                    "sEmptyTable": "No pincode found"
+                },
+                "ajax": {
+                    "url": url,
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "responsive": true,
+            "columns": [
+                { "data": "zohoPinCodeId", "name": "ZohoPinCodeId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "zipCode", "name": "ZipCode", "autoWidth": true, "orderable": true },
+                { "data": "location", "name": "Location", "autoWidth": true, "orderable": true },
+                { "data": "isAbb", "name": "IsAbb", "autoWidth": true, "orderable": true },
+                { "data": "isExchange", "name": "IsExchange", "autoWidth": true, "orderable": true },
+                { "data": "isActive", "name": "IsActive", "autoWidth": true, "orderable": true },
+                { "data": "state", "name": "State", "autoWidth": true, "orderable": true },
+                { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+            ]
+            });
+        }
+
+
+        // Product Category data table
+        function ProductCategoryDT(url) {
+            table = $('#productCategoryDatatable').dataTable({
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "searching": true,
+                "filter": true,
+                "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                        title: 'Product Category List',
+                        action: newexportaction,
+                        exportOptions: {
+                            modifier: {
+                                // DataTables core
+                                order: 'index',  // 'current', 'applied', 'index',  'original'
+                                page: 'all',      // 'all',     'current' for export all pages data
+                                search: 'none'     // 'none',    'applied', 'removed'
+                            },
+                            columns: ':not(.notexport)'
+                        }
+                    }
+                ],
+                "oLanguage": {
+                    "sEmptyTable": "No pincode found"
+                },
+                "ajax": {
+                    "url": url,
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "responsive": true,
+                "columns": [
+                    { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                    { "data": "action", "name": "Actions", "autoWidth": true, "orderable": false },
+                    { "data": "name", "name": "Name", "autoWidth": true, "orderable": true },
+                    { "data": "description", "name": "Description", "autoWidth": true, "orderable": true },
+                    { "data": "code", "name": "Code", "autoWidth": true, "orderable": true },
+                    { "data": "isActive", "name": "IsActive", "autoWidth": true, "orderable": true },
+                    { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+                   
+                ]
+            });
+        }
+
+
+
+        // Product Type data table
+        function ProductTypeDT(url) {
+            table = $('#ProductTypeDatatable').dataTable({
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "searching": true,
+                "filter": true,
+                "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                        title: 'Product Type List',
+                        action: newexportaction,
+                        exportOptions: {
+                            modifier: {
+                                // DataTables core
+                                order: 'index',  // 'current', 'applied', 'index',  'original'
+                                page: 'all',      // 'all',     'current' for export all pages data
+                                search: 'none'     // 'none',    'applied', 'removed'
+                            },
+                            columns: ':not(.notexport)'
+                        }
+                    }
+                ],
+                "oLanguage": {
+                    "sEmptyTable": "No product type found"
+                },
+                "ajax": {
+                    "url": url,
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "responsive": true,
+                "columns": [
+                    { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                    { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                    { "data": "name", "name": "Name", "autoWidth": true, "orderable": true },
+                    { "data": "description", "name": "Description", "autoWidth": true, "orderable": true },
+                    { "data": "code", "name": "Code", "autoWidth": true, "orderable": true },
+                    { "data": "size", "name": "Size", "autoWidth": true, "orderable": true },
+                    { "data": "productCategoryName", "name": "ProductCategoryName", "autoWidth": true, "orderable": true },
+                    { "data": "isActive", "name": "IsActive", "autoWidth": true, "orderable": true },
+                    { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+                   
+                ]
+            });
+        }
+
+        // Brand data table
+        function BrandDT(url) {
+            table = $('#BrandDatatable').dataTable({
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "searching": true,
+                "filter": true,
+                "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                        title: 'Brand List',
+                        action: newexportaction,
+                        exportOptions: {
+                            modifier: {
+                                // DataTables core
+                                order: 'index',  // 'current', 'applied', 'index',  'original'
+                                page: 'all',      // 'all',     'current' for export all pages data
+                                search: 'none'     // 'none',    'applied', 'removed'
+                            },
+                            columns: ':not(.notexport)'
+                        }
+                    }
+                ],
+                "oLanguage": {
+                    "sEmptyTable": "No brand found"
+                },
+                "ajax": {
+                    "url": url,
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "responsive": true,
+                "columns": [
+
+                    { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                    { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                    { "data": "brandLogoUrl", "name": "BrandLogoUrl", "autoWidth": true, "orderable": true },
+                    { "data": "name", "name": "Name", "autoWidth": true, "orderable": true },
+                    { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+                   
+                ]
+            });
+        }
+
+        // Business Partner data table
+        function BusinessPartnerDT(url) {
+            table = $('#BusinessPartnerDatatable').dataTable({
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "searching": true,
+                "filter": true,
+                "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                        title: 'Business Partner List',
+                        action: newexportaction,
+                        exportOptions: {
+                            modifier: {
+                                // DataTables core
+                                order: 'index',  // 'current', 'applied', 'index',  'original'
+                                page: 'all',      // 'all',     'current' for export all pages data
+                                search: 'none'     // 'none',    'applied', 'removed'
+                            },
+                            columns: ':not(.notexport)'
+                        }
+                    }
+                ],
+                "oLanguage": {
+                    "sEmptyTable": "No business partner found"
+                },
+                "ajax": {
+                    "url": url,
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "responsive": true,
+                "columns": [
+
+                    { "data": "businessPartnerId", "name": "BusinessPartnerId", "autoWidth": true, "orderable": false },
+                    { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                    { "data": "name", "name": "Name", "autoWidth": true, "orderable": true },
+                    { "data": "email", "name": "Email", "autoWidth": true, "orderable": true },
+                    { "data": "storeCode", "name": "StoreCode", "autoWidth": true, "orderable": true },
+                    { "data": "sponsorName", "name": "SponsorName", "autoWidth": true, "orderable": true },
+                    { "data": "state", "name": "State", "autoWidth": true, "orderable": true },
+                    { "data": "city", "name": "City", "autoWidth": true, "orderable": true },
+                    { "data": "addressLine1", "name": "AddressLine1", "autoWidth": true, "orderable": true },
+                    { "data": "contactPersonFirstName", "name": "ContactPersonFirstName", "autoWidth": true, "orderable": true },
+                    { "data": "contactPersonLastName", "name": "ContactPersonLastName", "autoWidth": true, "orderable": true },
+                    { "data": "phoneNumber", "name": "PhoneNumber", "autoWidth": true, "orderable": true },
+                    { "data": "bppassword", "name": "BPPassword", "autoWidth": true, "orderable": true },
+                    { "data": "associateCode", "name": "AssociateCode", "autoWidth": true, "orderable": true },
+                    { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+                   
+                ]
+            });
+        }
+
+        // ABB Plan Master data table
+        function ABBPlanMasterDT(url) {
+            table = $('#ABBPlanMasterDatatable').dataTable({
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "searching": true,
+                "filter": true,
+                "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                        title: 'ABB Plan Master List',
+                        action: newexportaction,
+                        exportOptions: {
+                            modifier: {
+                                // DataTables core
+                                order: 'index',  // 'current', 'applied', 'index',  'original'
+                                page: 'all',      // 'all',     'current' for export all pages data
+                                search: 'none'     // 'none',    'applied', 'removed'
+                            },
+                            columns: ':not(.notexport)'
+                        }
+                    }
+                ],
+                "oLanguage": {
+                    "sEmptyTable": "No plan master found"
+                },
+                "ajax": {
+                    "url": url,
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "responsive": true,
+                "columns": [
+
+                    { "data": "planMasterId", "name": "PlanMasterId", "autoWidth": true, "orderable": false },
+                    { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                    { "data": "businessUnitName", "name": "BusinessUnitName", "autoWidth": true, "orderable": true },
+                    { "data": "sponsor", "name": "Sponsor", "autoWidth": true, "orderable": true },
+                    { "data": "fromMonth", "name": "FromMonth", "autoWidth": true, "orderable": true },
+                    { "data": "toMonth", "name": "ToMonth", "autoWidth": true, "orderable": true },
+                    { "data": "assuredBuyBackPercentage", "name": "AssuredBuyBackPercentage", "autoWidth": true, "orderable": true },
+                    { "data": "planPeriodInMonth", "name": "PlanPeriodInMonth", "autoWidth": true, "orderable": true },
+                    { "data": "productCategoryName", "name": "ProductCategoryName", "autoWidth": true, "orderable": true },
+                    { "data": "productTypeName", "name": "ProductTypeName", "autoWidth": true, "orderable": true },
+                    { "data": "abbplanName", "name": "AbbplanName", "autoWidth": true, "orderable": true },
+                    { "data": "noClaimPeriod", "name": "NoClaimPeriod", "autoWidth": true, "orderable": true },
+                    { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+                   
+                ]
+            });
+        }
+
+
+        // ABB Price Master data table
+        function ABBPriceMasterDT(url) {
+            table = $('#ABBPriceMasterDatatable').dataTable({
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "searching": true,
+                "filter": true,
+                "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                        title: 'ABB Price Master List',
+                        action: newexportaction,
+                        exportOptions: {
+                            modifier: {
+                                // DataTables core
+                                order: 'index',  // 'current', 'applied', 'index',  'original'
+                                page: 'all',      // 'all',     'current' for export all pages data
+                                search: 'none'     // 'none',    'applied', 'removed'
+                            },
+                            columns: ':not(.notexport)'
+                        }
+                    }
+                ],
+                "oLanguage": {
+                    "sEmptyTable": "No price master found"
+                },
+                "ajax": {
+                    "url": url,
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "responsive": true,
+                "columns": [
+
+
+                    { "data": "priceMasterId", "name": "PriceMasterId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                    { "data": "businessUnitName", "name": "BusinessUnitName", "autoWidth": true, "orderable": true },
+
+                    { "data": "productCategory", "name": "ProductCategory", "autoWidth": true, "orderable": true },
+                    { "data": "productSabcategory", "name": "ProductSabcategory", "autoWidth": true, "orderable": true },
+                    { "data": "sponsor", "name": "Sponsor", "autoWidth": true, "orderable": true },
+                    { "data": "priceStartRange", "name": "PriceStartRange", "autoWidth": true, "orderable": true },
+                    { "data": "priceEndRange", "name": "PriceEndRange", "autoWidth": true, "orderable": true },
+                    { "data": "feeType", "name": "FeeType", "autoWidth": true, "orderable": true },
+                    { "data": "feesApplicablePercentage", "name": "FeesApplicablePercentage", "autoWidth": true, "orderable": true },
+                    { "data": "planPeriodInMonths", "name": "PlanPeriodInMonths", "autoWidth": true, "orderable": true },
+                    { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+                    
+                ]
+            });
+        }
+
+        // Model Number data table
+        function ModelNumberDT(url) {
+            table = $('#ModelNumberDatatable').dataTable({
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "searching": true,
+                "filter": true,
+                "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                        title: 'Model Number List',
+                        action: newexportaction,
+                        exportOptions: {
+                            modifier: {
+                                // DataTables core
+                                order: 'index',  // 'current', 'applied', 'index',  'original'
+                                page: 'all',      // 'all',     'current' for export all pages data
+                                search: 'none'     // 'none',    'applied', 'removed'
+                            },
+                            columns: ':not(.notexport)'
+                        }
+                    }
+                ],
+                "oLanguage": {
+                    "sEmptyTable": "No model number found"
+                },
+                "ajax": {
+                    "url": url,
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "responsive": true,
+                "columns": [
+
+                    { "data": "modelNumberId", "name": "ModelNumberId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                    { "data": "businessUnitName", "name": "BusinessUnitName", "autoWidth": true, "orderable": true },
+                    { "data": "modelName", "name": "ModelName", "autoWidth": true, "orderable": true },
+                    { "data": "description", "name": "Description", "autoWidth": true, "orderable": true },
+                    { "data": "code", "name": "Code", "autoWidth": true, "orderable": true },
+                    { "data": "brandName", "name": "BrandName", "autoWidth": true, "orderable": true },
+                    { "data": "productCategoryName", "name": "ProductCategoryName", "autoWidth": true, "orderable": true },
+                    { "data": "productTypeName", "name": "ProductTypeName", "autoWidth": true, "orderable": true },
+
+                    { "data": "sweetnerForDtd", "name": "SweetnerForDtd", "autoWidth": true, "orderable": true },
+                    { "data": "sweetnerForDtc", "name": "SweetnerForDtc", "autoWidth": true, "orderable": true },
+
+                    { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+                    
+
+                ]
+            });
+        }
+
+        // Price Master data table
+        function PriceMasterDT(url) {
+            table = $('#PriceMasterDatatable').dataTable({
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "searching": true,
+                "filter": true,
+                "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                        title: 'Price Master List',
+                        action: newexportaction,
+                        exportOptions: {
+                            modifier: {
+                                // DataTables core
+                                order: 'index',  // 'current', 'applied', 'index',  'original'
+                                page: 'all',      // 'all',     'current' for export all pages data
+                                search: 'none'     // 'none',    'applied', 'removed'
+                            },
+                            columns: ':not(.notexport)'
+                        }
+                    }
+                ],
+                "oLanguage": {
+                    "sEmptyTable": "No model number found"
+                },
+                "ajax": {
+                    "url": url,
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "responsive": true,
+                "columns": [
+                    { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                    { "data": "action", "name": "Actions", "autoWidth": true, "orderable": false },
+                    { "data": "exchPriceCode", "name": "ExchPriceCode", "autoWidth": true, "orderable": true },
+                    { "data": "productCategoryDiscription", "name": "ProductCategoryDiscription", "autoWidth": true, "orderable": true },
+                    { "data": "productType", "name": "ProductType", "autoWidth": true, "orderable": true },
+                    { "data": "productTypeCode", "name": "ProductTypeCode", "autoWidth": true, "orderable": true },
+                    { "data": "brandName1", "name": "BrandName1", "autoWidth": true, "orderable": true },
+                    { "data": "brandName2", "name": "BrandName2", "autoWidth": true, "orderable": true },
+                    { "data": "brandName3", "name": "BrandName3", "autoWidth": true, "orderable": true },
+                    { "data": "brandName4", "name": "BrandName4", "autoWidth": true, "orderable": true },
+                    { "data": "quotePHigh", "name": "QuotePHigh", "autoWidth": true, "orderable": true },
+                    { "data": "quoteQHigh", "name": "QuoteQHigh", "autoWidth": true, "orderable": true },
+                    { "data": "quoteRHigh", "name": "QuoteRHigh", "autoWidth": true, "orderable": true },
+                    { "data": "quoteSHigh", "name": "QuoteSHigh", "autoWidth": true, "orderable": true },
+                    { "data": "quoteP", "name": "QuoteP", "autoWidth": true, "orderable": true },
+                    { "data": "quoteQ", "name": "QuoteQ", "autoWidth": true, "orderable": true },
+                    { "data": "quoteR", "name": "QuoteR", "autoWidth": true, "orderable": true },
+                    { "data": "quoteS", "name": "QuoteS", "autoWidth": true, "orderable": true },
+                    { "data": "priceStartDate", "name": "PriceStartDate", "autoWidth": true, "orderable": true },
+                    { "data": "priceEndDate", "name": "PriceEndDate", "autoWidth": true, "orderable": true },
+                    { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+                   
+                ]
+            });
+        }
+
+
+        // Exchange data table
+        function ExchangeDT(url) {
+            table = $('#ExchangeDatatable').dataTable({
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "searching": true,
+                "filter": true,
+                "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                        title: 'Exchange List',
+                        action: newexportaction,
+                        exportOptions: {
+                            modifier: {
+                                // DataTables core
+                                order: 'index',  // 'current', 'applied', 'index',  'original'
+                                page: 'all',      // 'all',     'current' for export all pages data
+                                search: 'none'     // 'none',    'applied', 'removed'
+                            },
+                            columns: ':not(.notexport)'
+                        }
+                    }
+                ],
+                "oLanguage": {
+                    "sEmptyTable": "No exchange order found"
+                },
+                "ajax": {
+                    "url": url,
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "responsive": true,
+                "columns": [
+                    { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                    { "data": "companyName", "name": "CompanyName", "autoWidth": true },
+                    { "data": "regdNo", "name": "RegdNo", "autoWidth": true },
+                    { "data": "zipCode", "name": "ZipCode", "autoWidth": true },
+                    { "data": "productDetail", "name": "ProductDetail", "autoWidth": true },
+                    { "data": "statusName", "name": "StatusName", "autoWidth": true },
+                    { "data": "createDateString", "name": "CreateDateString", "autoWidth": true },
+                    { "data": "finalExchangePrice", "name": "FinalExchangePrice", "autoWidth": true },
+                    /*{ "data": "invoiceImageName", "name": "InvoiceImageName", "autoWidth": true },*/
+                    { "data": "podURL", "name": "PodURL", "autoWidth": true },
+                    { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                    //Fields for Download Excel
+                    { "data": "orderStatus", "name": "OrderStatus", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "custFullname", "name": "CustFullname", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "custAddress", "name": "CustAddress", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "custCity", "name": "CustCity", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "custState", "name": "CustState", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "productTypeId", "name": "ProductTypeId", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "brandId", "name": "BrandId", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "bonus", "name": "Bonus", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "sponsorOrderNumber", "name": "SponsorOrderNumber", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "estimatedDeliveryDate", "name": "EstimatedDeliveryDate", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "productCondition", "name": "ProductCondition", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "loginId", "name": "LoginID", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "storeCode", "name": "StoreCode", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "voucherCode", "name": "VoucherCode", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "isDtoC", "name": "IsDtoC", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "businessPartnerId", "name": "BusinessPartnerId", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "isVoucherused", "name": "IsVoucherused", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "voucherCodeExpDate", "name": "VoucherCodeExpDate", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "exchangePrice", "name": "ExchangePrice", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "newProductCategoryId", "name": "NewProductCategoryId", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "newProductTypeId", "name": "NewProductTypeId", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "newBrandId", "name": "NewBrandId", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "modelNumberId", "name": "ModelNumberId", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "qcdate", "name": "QCDate", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "startTime", "name": "StartTime", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "endTime", "name": "EndTime", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "statusId", "name": "StatusId", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "voucherStatusId", "name": "VoucherStatusId", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "sweetener", "name": "Sweetener", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "serialNumber", "name": "SerialNumber", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "finalExchangePrice", "name": "FinalExchangePrice", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "isDefferedSettlement", "name": "IsDefferedSettlement", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": false, "visible": false }
+                ]
+            });
+        }
+
+        // Abb data table
+        function AbbDT(url) {
+            table = $('#ABBDatatable').dataTable({
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "searching": true,
+                "filter": true,
+                "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                        title: 'Price Master List',
+                        action: newexportaction,
+                        exportOptions: {
+                            modifier: {
+                                // DataTables core
+                                order: 'index',  // 'current', 'applied', 'index',  'original'
+                                page: 'all',      // 'all',     'current' for export all pages data
+                                search: 'none'     // 'none',    'applied', 'removed'
+                            },
+                            columns: ':not(.notexport)'
+                        }
+                    }
+                ],
+                "oLanguage": {
+                    "sEmptyTable": "No model number found"
+                },
+                "ajax": {
+                    "url": url,
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "responsive": true,
+                "columns": [
+                    { "data": "abbregistrationId", "name": "AbbregistrationId", "autoWidth": true },
+                    { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                    { "data": "companyName", "name": "companyName", "autoWidth": true },
+                    { "data": "regdNo", "name": "regdNo", "autoWidth": true },
+                    { "data": "custFullName", "name": "custFullName", "autoWidth": true },
+                    { "data": "newProductCategoryType", "name": "newProductCategoryType", "autoWidth": true },
+                    { "data": "registrationDate", "name": "registrationDate", "autoWidth": true },
+                ]
+            });
+        }
+
+        // Service Partner data table
+        function ServicePartnerDT(url) {
+            table = $('#servicePartnerDatatable').dataTable({
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "searching": true,
+                "filter": true,
+                "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                        title: 'Price Master List',
+                        action: newexportaction,
+                        exportOptions: {
+                            modifier: {
+                                // DataTables core
+                                order: 'index',  // 'current', 'applied', 'index',  'original'
+                                page: 'all',      // 'all',     'current' for export all pages data
+                                search: 'none'     // 'none',    'applied', 'removed'
+                            },
+                            columns: ':not(.notexport)'
+                        }
+                    }
+                ],
+                "oLanguage": {
+                    "sEmptyTable": "No model number found"
+                },
+                "ajax": {
+                    "url": url,
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "responsive": true,
+            "columns": [
+                { "data": "servicePartnerId", "name": "ServicePartnerId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Actions", "autoWidth": true, "orderable": false },
+                { "data": "servicePartnerName", "name": "ServicePartnerName", "autoWidth": true, "orderable": true },
+                { "data": "servicePartnerDescription", "name": "ServicePartnerDescription", "autoWidth": true, "orderable": true },
+                { "data": "servicePartnerRegdNo", "name": "ServicePartnerRegdNo", "autoWidth": true, "orderable": true },
+                { "data": "servicePartnerMobileNumber", "name": "ServicePartnerMobileNumber", "autoWidth": true, "orderable": true },
+                { "data": "servicePartnerEmailId", "name": "ServicePartnerEmailId", "autoWidth": true, "orderable": true },
+                { "data": "isActive", "name": "IsActive", "autoWidth": true, "orderable": true },
+                { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+
+            ]
+            });
+        }
+
+
+        // Vehicle Incentive data table
+        function VehicleIncentiveDT(url) {
+            table = $('#VehicleIndecntiveDatatable').dataTable({
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "searching": true,
+                "filter": true,
+                "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                        title: 'Vehicle Incentive List',
+                        action: newexportaction,
+                        exportOptions: {
+                            modifier: {
+                                // DataTables core
+                                order: 'index',  // 'current', 'applied', 'index',  'original'
+                                page: 'all',      // 'all',     'current' for export all pages data
+                                search: 'none'     // 'none',    'applied', 'removed'
+                            },
+                            columns: ':not(.notexport)'
+                        }
+                    }
+                ],
+                "oLanguage": {
+                    "sEmptyTable": "No model number found"
+                },
+                "ajax": {
+                    "url": url,
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "responsive": true,
+                "columns": [
+                    { "data": "incentiveId", "name": "IncentiveId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Actions", "autoWidth": true, "orderable": false },
+                    { "data": "productCategoryName", "name": "ProductCategoryName", "autoWidth": true, "orderable": true },
+                    { "data": "productTypeName", "name": "ProductTypeName", "autoWidth": true, "orderable": true },
+                    { "data": "businessUnitName", "name": "BusinessUnitName", "autoWidth": true, "orderable": true },
+                    { "data": "basePrice", "name": "BasePrice", "autoWidth": true, "orderable": true },
+                    { "data": "pickupTat", "name": "PickupTat", "autoWidth": true, "orderable": true },
+                    { "data": "pickupIncAmount", "name": "PickupIncAmount", "autoWidth": true, "orderable": true },
+                    { "data": "dropTat", "name": "DropTat", "autoWidth": true, "orderable": true },
+                    { "data": "dropIncAmount", "name": "DropIncAmount", "autoWidth": true, "orderable": true },
+
+                    { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+                    
+                ]
+            });
+        }
+
+
+        // Image Label data table
+        function ImageLabelMasterDT(url) {
+            table = $('#ImageLabelDatatable').dataTable({
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "searching": true,
+                "filter": true,
+                "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                        title: 'Image Label Master List',
+                        action: newexportaction,
+                        exportOptions: {
+                            modifier: {
+                                // DataTables core
+                                order: 'index',  // 'current', 'applied', 'index',  'original'
+                                page: 'all',      // 'all',     'current' for export all pages data
+                                search: 'none'     // 'none',    'applied', 'removed'
+                            },
+                            columns: ':not(.notexport)'
+                        }
+                    }
+                ],
+                "oLanguage": {
+                    "sEmptyTable": "No model number found"
+                },
+                "ajax": {
+                    "url": url,
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+                "responsive": true,
+                "columns": [
+
+
+                    { "data": "imageLabelid", "name": "ImageLabelid", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Actions", "autoWidth": true, "orderable": false },
+                    { "data": "productName", "name": "ProductName", "autoWidth": true, "orderable": true },
+                    { "data": "productImageLabel", "name": "ProductImageLabel", "autoWidth": true, "orderable": true },
+                    { "data": "productImageDescription", "name": "ProductImageDescription", "autoWidth": true, "orderable": true },
+                    { "data": "pattern", "name": "Pattern", "autoWidth": true, "orderable": true },
+                    { "data": "productCategoryName", "name": "ProductCategoryName", "autoWidth": true, "orderable": true },
+                    { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+                    
+                ]
+            });
+        }
+
+        //All Data Export--
+        function newexportaction(e, dt, button, config) {
+            var self = this;
+            var oldStart = dt.settings()[0]._iDisplayStart;
+            dt.one('preXhr', function (e, s, data) {
+                // Just this once, load all data from the server...
+                data.start = 0;
+                data.length = 2147483647;
+                dt.one('preDraw', function (e, settings) {
+                    // Call the original action function
+                    if (button[0].className.indexOf('buttons-copy') >= 0) {
+                        $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                        $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                    }
+                    dt.one('preXhr', function (e, s, data) {
+                        // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                        // Set the property to what it was before exporting.
+                        settings._iDisplayStart = oldStart;
+                        data.start = oldStart;
+                    });
+                    // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                    setTimeout(dt.ajax.reload, 0);
+                    // Prevent rendering of the full data to the DOM
+                    return false;
+                });
+            });
+            // Requery the server with the new one-time export settings
+            dt.ajax.reload();
+        };
+                        //For Export Buttons available inside jquery-datatable "server side processing" - End
+
+    </script>

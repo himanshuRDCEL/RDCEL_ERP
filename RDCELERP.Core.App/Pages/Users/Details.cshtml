@@ -1,0 +1,205 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.Users.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header card-header-wrapper">
+                        <div class="row align-items-center card-title">
+                            <div class="col-md-6">
+                                <h2 class="fs-5 mb-0">
+                                    User Info
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row detailed-reporting">
+                            <div class="col-md-12 text-center">
+                                @if (!string.IsNullOrEmpty(Model.TblUser.ImageName))
+                                {
+                                    <img src="~/DBFiles/Users/@Model.TblUser.ImageName" class="rounded-circle" id="imgprev" style="width:160px; height:150px;" alt="User Image">
+                                }
+                                else
+                                {
+                                    <img src="@ViewData["URLPrefixforProd"]/ds/img/default-user-image.png" class="rounded-circle" id="imgprev" style="width:160px; height:150px;" alt="User Image" />
+                                }
+                            </div>
+                            <div class="pt-4"></div>
+                            <div class="col-md-4 mb-3">
+                                <p>First Name : <span>@Html.DisplayFor(model => model.TblUser.FirstName)</span></p>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <p>Last Name : <span>@Html.DisplayFor(model => model.TblUser.LastName)</span></p>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <p>Email : <span>@Html.DisplayFor(model => model.TblUser.Email)</span></p>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <p>Phone Number : <span>@Html.DisplayFor(model => model.TblUser.Phone)</span></p>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <p>Last Login : <span>@Html.DisplayFor(model => model.TblUser.LastLogin)</span></p>
+                            </div>
+                            <div class="pt-4"></div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="sectitle">User Role</h5>
+                                </div>
+                                <div class="col-12">
+                                    <div class="datatablebox table-responsive">
+                                        <table id="leadtbl"
+                                               class="table align-items-center table-flush"
+                                               style="width:100%" border="0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="border-bottom" scope="col">Company Name</th>
+                                                    <th class="border-bottom" scope="col">Role</th>
+                                                    <th class="border-bottom" scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.TblUserRole)
+                                                {
+                                                    <tr>
+                                                        <td class="fw-bolder text-gray-500">@Html.DisplayFor(modelItem => item.Company.CompanyName)</td>
+                                                        <td class="fw-bolder text-gray-500">
+                                                            @Html.DisplayFor(modelItem => item.Role.RoleName)
+                                                        </td>
+                                                        <td class="fw-bolder text-gray-500">
+                                                            <a asp-page="./ManageUserRole" asp-route-id="@item.UserRoleId" asp-route-userId="@item.UserId">Edit</a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pt-4"></div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="float-right text-right">
+                                        
+                                        @if (accessRule != null && accessRule.CanView)
+                                        {
+                                            <a asp-page="./Index"
+                                               class="btn mainshadow"
+                                               style="background: #3d3d6e;color: #fff;">
+                                                Back to List
+                                            </a>
+                                        }
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <a asp-page="./ManageUserRole" asp-route-userId="@Model.TblUser.UserId"
+                                               class="btn mainshadow"
+                                               style="background: #3d3d6e;color: #fff;">
+                                                Assign Role
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-default" tabindex="-1" aria-labelledby="modal-default" style="display: none;"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="h6 modal-title">Photo at the time of QC</h2><button type="button" class="btn-close"
+                                                                                   data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row modalpics">
+                        <div class="col-md-4 mb-3">
+                            <img class="d-inline" src="https://images.unsplash.com/photo-1630459065645-549fe5a56db4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cmVmcmlnZXJhdG9yfGVufDB8fDB8fA%3D%3D&w=1000&q=80" alt="">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <img class="d-inline" src="https://images.unsplash.com/photo-1630459065645-549fe5a56db4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cmVmcmlnZXJhdG9yfGVufDB8fDB8fA%3D%3D&w=1000&q=80" alt="">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <img class="d-inline" src="https://images.unsplash.com/photo-1630459065645-549fe5a56db4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cmVmcmlnZXJhdG9yfGVufDB8fDB8fA%3D%3D&w=1000&q=80" alt="">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <img class="d-inline" src="https://images.unsplash.com/photo-1630459065645-549fe5a56db4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cmVmcmlnZXJhdG9yfGVufDB8fDB8fA%3D%3D&w=1000&q=80" alt="">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <img class="d-inline" src="https://images.unsplash.com/photo-1630459065645-549fe5a56db4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cmVmcmlnZXJhdG9yfGVufDB8fDB8fA%3D%3D&w=1000&q=80" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary ms-auto" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteuser" tabindex="-1"
+     role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mx-auto"
+                    id="exampleModalLabel">
+                    Are you sure to
+                    delete this user?
+                </h5>
+            </div>
+
+            <div class="modal-footer"
+                 style="justify-content: center;">
+                <button type="button"
+                        class="btn btn-primary">
+                    Delete
+                </button>
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function ShowImagePreview(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imgprev').prop('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

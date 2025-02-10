@@ -1,0 +1,206 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.QCIndex.AdminBonusModel
+@Html.AntiForgeryToken()
+@{
+    ViewData["Title"] = "QCAdmin";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+    alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<link href="~/NewLayout/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">QC Admin</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row datefilter mt-2 mb-4">
+                            <div class="col-md-4 mb-2">
+
+                            </div>
+
+                            <div class="col-md-8 text-right datefilter-right">
+                                <input type="text" class="form-control d-inline mb-2" id="startdate" placeholder="Start Date" readonly="readonly">
+                                <input type="text" class="form-control d-inline mb-2" id="enddate" placeholder="End Date" readonly="readonly">
+                                <button id="filter-dates" class="btn btn-primary mainshadow">Filter</button>
+                            </div>
+
+                        </div>
+                        <div class="table-responsive">
+                            <table id="UpperCapDatatable" class="table align-items-center table-flush" border="1">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="all notexport">Id</th>
+                                        <th class="all notexport">Actions</th>
+                                        <th class="all">Company</th>
+                                        <th class="all">Regd No.</th>
+                                        <th class="all">Customer Name</th>
+                                        <th class="all">Product Details</th>
+                                        <th class="all">QC Date</th>
+                                        <th class="all">Customer Phone Number</th>
+                                        <th class="all">Customer Email</th>
+                                        <th class="all">Customer Address</th>
+                                        <th class="all">Customer City</th>
+                                        <th class="all">Customer State</th>
+                                        <th class="all">Final Price</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+
+<script type="text/javascript">
+     var table = null;
+    $(document).ready(function () {
+        $("#startdate").datepicker({
+            defaultDate: null
+        });
+        $("#enddate").datepicker({
+            defaultDate: null
+        });
+
+        $('#filter-dates').prop('disabled', true);
+
+        var url = "@ViewData["URLPrefixforProd"]/api/ListPage/UpperLevelCapListForQCBonus?companyId=" + @ViewBag.CompanyId;
+        var startDate = $('#startdate').val();
+        var endDate = $('#enddate').val();
+        DataTable(url, startDate, endDate);
+
+        //date range Filter
+        $('#filter-dates').click(function () {
+            startDate = $('#startdate').val();
+            endDate = $('#enddate').val();
+            var url = "@ViewData["URLPrefixforProd"]/api/ListPage/UpperLevelCapListForQCBonus?companyId=" + @ViewBag.CompanyId + '&startDate=' + startDate + ' &endDate=' + endDate;
+            table = $('#UpperCapDatatable').DataTable();
+            // Destroy the existing DataTable
+            table.destroy();
+            DataTable(url,startDate,endDate);
+        });
+    });
+
+    $(document).change(function () {
+        if ($('#startdate').val() != '' && $('#enddate').val() != '') {
+            $('#filter-dates').prop('disabled', false);
+        } else {
+            $('#filter-dates').prop('disabled', true);
+        }
+    });
+
+    function DataTable(url, startDate, endDate) {
+        table = $('#UpperCapDatatable').DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "data": { startDate: startDate, endDate: endDate },
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Upper_Bonus_Cap_List',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Data found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": true
+            }],
+
+            "responsive": true,
+            "columns": [
+                { "data": "id", "name": "Id", "autoWidth": true },
+                { "data": "action", "name": "Action", "autoWidth": true },
+                { "data": "companyName", "name": "CompanyName", "autoWidth": true },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true },
+                { "data": "customerName", "name": "CustomerName", "autoWidth": true },
+                { "data": "productType", "name": "ProductType", "autoWidth": true },
+                { "data": "qcDate", "name": "QCDate", "autoWidth": true },
+                { "data": "customerPhoneNumber", "name": "CustomerPhoneNumber", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "customerEmail", "name": "CustomerEmail", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "customerAddress", "name": "CustomerAddress", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "customerCity", "name": "CustomerCity", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "customerState", "name": "CustomerState", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "finalPrice", "name": "FinalPrice", "autoWidth": true, "orderable": false, "visible": false },
+            ]
+        });
+    }
+    //});
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+    //For Export Buttons available inside jquery-datatable "server side processing" - End
+
+</script>
+

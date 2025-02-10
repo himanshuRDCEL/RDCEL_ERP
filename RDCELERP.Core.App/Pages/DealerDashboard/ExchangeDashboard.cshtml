@@ -1,0 +1,661 @@
+﻿@page
+@using RDCELERP.Model.DealerDashBoard;
+@model RDCELERP.Core.App.Pages.DealerDashboard.ExchangeDashboardModel
+@{
+    ViewData["Title"] = "Manager";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+    //<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css"
+}
+
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow border-0">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="fs-5 mb-0">
+                            Dealer Dashboard
+                        </h2>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+        <div class="card border-0 shadow">
+
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
+                    </div>
+                    <div class="col-xl-7 px-xl-0">
+
+                        <h2 class="h6 text-gray-400 mb-0">Total Orders</h2>
+                        <h3 class="fw-extrabold mb-2">@Html.DisplayFor(model => model.OrderCountViewModel.OderCount)</h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+        <div class="card border-0 shadow">
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                            <i class="fa-solid fa-ticket"></i>
+                        </div>
+                    </div>
+                    <div class="col-xl-7 px-xl-0">
+                        <h2 class="h6 text-gray-400 mb-0">Total Voucher Issued</h2>
+                        <h3 class="fw-extrabold mb-2">@Html.DisplayFor(model => model.OrderCountViewModel.VoucherIssued)</h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+        <div class="card border-0 shadow">
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                            <i class="fa-solid fa-check-to-slot"></i>
+                        </div>
+                    </div>
+                    <div class="col-xl-7 px-xl-0">
+                        <h2 class="h6 text-gray-400 mb-0">Total Voucher Redeemed</h2>
+                        <h3 class="fw-extrabold mb-2">@Html.DisplayFor(model => model.OrderCountViewModel.VoucherRedeemed)</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mr-2">
+    @* <div class="col-md-12 text-right mb-3">
+            <a href="@URLPrefixforProd/api/ListPage/ExportExcel_StoreData?AssociateCode=" class="btn btn-primary p-2 px-4">
+                <i class="fa-solid fa-download"></i> Export To Excel
+            </a>
+        </div>*@
+    <form method="post" enctype="multipart/form-data" id="lgcPickupForm">
+        <div class="row">
+            @*     <input type="submit" value="Export" asp-page-handler="ExportExcel_StoreData" id="SubmitButtonForExport" />*@
+            <input type="hidden" asp-for="OrderCountViewModel.AssociateCode" id="hdnAssociateCode" />
+            <input type="hidden" asp-for="OrderCountViewModel.BusinessUnitId" id="hdnBusinessUnitId" />
+            <input type="hidden" asp-for="OrderCountViewModel.CompanyName" id="hdnCompanyName" />
+            <input type="hidden" asp-for="OrderCountViewModel.UserCompanyName" id="hdnUserCompanyName" />
+            <input type="hidden" asp-for="OrderCountViewModel.userRole" id="hdnRoleAssigned" />
+
+        </div>
+        @*<div class="col-md-12 text-right mb-3">
+            <input type="submit" value="Export To Excel" class="btn btn-primary p-2 px-4" asp-page-handler="ExportExcel_StoreData" id="btnExportData">
+        </div>*@
+    </form>
+</div>
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow border-0">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="fs-5 mb-0">
+                            Get Details
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row detailed-reporting">
+                    @* @if (Model.OrderCountViewModel.BusinessUnitId == 0 || Model.OrderCountViewModel.UserCompanyName == Model.OrderCountViewModel.InternalCompanyName || Model.OrderCountViewModel.userRole == Model.OrderCountViewModel.RoleForSuperAdmin)
+                    {
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                                <label for="">Sponsor</label>
+                                <select asp-for="OrderCountViewModel.SelectedCompanyName" id="ddlCompany" class="form-select" asp-items="ViewBag.sponsorList">
+                                    <option value=''>--Select sponsor--</option>
+                                </select>
+                                <span asp-validation-for="OrderCountViewModel.SelectedCompanyName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    } *@
+
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="">State</label>
+                            <select id="ddlstate" name="StateId" class="form-select" asp-for="@Model.OrderCountViewModel.State" asp-items="@Model.OrderCountViewModel.StateList">
+                                <option>--Select state--</option>
+                            </select>
+                            <span asp-validation-for="OrderCountViewModel.State" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="">City</label>
+
+                            <select id="ddlCities" name="CityId" class="form-select" asp-for="@Model.OrderCountViewModel.City" asp-items="@Model.OrderCountViewModel.CityList">
+                                <option>--Select city--</option>
+                            </select>
+                            <span asp-validation-for="OrderCountViewModel.City" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="">Authorized Dealer Store</label>
+                            <select id="ddlBusinessPartner" name="BusinesspartnerId" class="form-select" asp-for="@Model.OrderCountViewModel.BusinessPartnerId" asp-items="@Model.OrderCountViewModel.BusinessPartnerList">
+                                <option>--Select store--</option>
+                            </select>
+                            <span asp-validation-for="OrderCountViewModel.BusinessPartnerId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                            <label for="">From date</label>
+                            <input type="text" class="form-control" id="daterangewrapper">
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                            <label for="">To date</label>
+                            <input type="text" class="form-control" id="daterangewrapperYear">
+                        </div>
+                    </div>
+                    <div class="col-12 text-end">
+                        <input type="button" value="Submit" class="btn btn-primary" id="btnValidate">
+                    </div>
+                </div>
+                <div class="my-4">
+                    <hr>
+                </div>
+                <div class="row mt-4 detailed-reporting">
+
+                    <div class="row datefilter mt-2 mb-4" id="FilterChanges" style="display:none">
+                        <div class="col-md-8 text-right datefilter-right">
+                            <input type="text" class="form-control d-inline mb-2" id="RegdNo" placeholder="RegdNo">
+                            @*<input type="text" class="form-control d-inline mb-2" id="custPhone" placeholder="Phone Number">*@
+                            <button id="filter-dates_DriverList" class="btn btn-primary">Filter</button>
+                        </div>
+                    </div>
+                    @*<div class="col-md-4">
+            <p>
+
+                <span>Order Count</span>
+            </p>
+        </div>
+        <div class="col-md-4">
+            <p>
+
+                <span>Pending Amount</span>
+            </p>
+        </div>
+        <div class="col-md-4">
+            <p>
+
+                <span>Recieved Amount</span>
+            </p>
+        </div>*@
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush" id="DealerDashBoardDataTable">
+                                <thead class="thead-light">
+                                    <tr>
+
+                                        <th class="border-bottom" scope="col">Id</th>
+                                        <th class="border-bottom" scope="col">Action</th>
+                                        <th class="border-bottom" scope="col">Company Name</th>
+                                        <th class="border-bottom" scope="col">RegdNo</th>
+                                        <th class="border-bottom" scope="col">Customer Name</th>
+                                        <th class="border-bottom" scope="col">Product Category</th>
+                                        <th class="border-bottom" scope="col">Product Type</th>
+                                        <th class="border-bottom" scope="col">settlement To</th>
+                                        <th class="border-bottom" scope="col">Voucher code</th>
+                                        <th class="border-bottom" scope="col">Voucher status</th>
+                                        <th class="border-bottom" scope="col">Exchange price</th>
+                                        <th class="border-bottom" scope="col">Sweetner</th>
+                                        <th class="border-bottom" scope="col">Order date</th>
+                                        <th class="border-bottom" scope="col">Reedemed date</th>
+                                        <th class="border-bottom" scope="col">Payment Status</th>
+                                        <th class="border-bottom" scope="col">Order Reference Id</th>
+                                    </tr>
+                                </thead>
+                                @* <tbody>
+                        <tr>
+
+                            <td data-label="RegdNo"></td>
+                            <td data-label="Voucher code"></td>
+                            <td data-label="Exchange price"></td>
+                            <td data-label="Sweetner"></td>
+                            <td data-label="Order date"></td>
+                            <td data-label="Reedemed date"></td>
+                            <td data-label="Payment Status"></td>
+                        </tr>
+                    </tbody>*@
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="formDiv">
+
+</div>
+
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/newlayout/assets/js/exporttable.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script type="text/javascript">
+
+
+
+    $(document).ready(function () {
+
+
+
+        $("#DealerDashBoardDataTable").hide();
+        var UserCompanyName = $("#hdnUserCompanyName").val();
+        var buid = $("#hdnBusinessUnitId").val();
+        var AssociateCode = $("#hdnAssociateCode").val();
+        $("#ddlCities").empty();
+        $.ajax({
+            type: "GET",
+            url: "@URLPrefixforProd/DealerDashboard/ExchangeDashboard?handler=StateList",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { buid: buid, UserCompanyName: UserCompanyName, AssociateCode: AssociateCode},
+            success: function (data) {
+                if (data) {
+
+                    //$("#ddlCity").empty();
+                    $("#ddlstate").empty(); // Clear the plese wait
+                    $("#ddlstate").append($("<option></option>").val('').html('--Select state--'));
+                    $.each(data, function (i, stateList) {
+                        $("#ddlstate").append($("<option></option>").val(stateList.value).html(stateList.text));
+                    });
+                } else {
+                    $("#ddlstate").empty();
+                }
+            },
+        });
+
+    });
+
+    //Get City By State
+    $("#ddlstate").change(function () {
+        var AssociateCode = $("#hdnAssociateCode").val();
+        var state = $("#ddlstate").val();
+        var buid = $("#hdnBusinessUnitId").val();
+        var userCompany = $("#hdnUserCompanyName").val();
+        var userRole = $("#hdnRoleAssigned").val();
+        $.ajax({
+            type: "GET",
+            url: "@URLPrefixforProd/DealerDashboard/ExchangeDashboard?handler=CityList",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { state: state, AssociateCode: AssociateCode, buid: buid, userCompany: userCompany, userRole: userRole},
+            success: function (data) {
+                if (data) {
+
+                    //$("#ddlCity").empty();
+                    $("#ddlCities").empty(); // Clear the plese wait
+                    $("#ddlCities").append($("<option></option>").val('').html('--Select City--'));
+                    $.each(data, function (i, cityList) {
+                        $("#ddlCities").append($("<option></option>").val(cityList.value).html(cityList.text));
+                    });
+                } else {
+                    $("#ddlCities").empty();
+                }
+            },
+        });
+    });
+
+    function GetState(businessunitid) {
+        var buid = businessunitid;
+        $.ajax({
+            type: "GET",
+            url: "@URLPrefixforProd/DealerDashboard/ExchangeDashboard?handler=StateList",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { buid: buid },
+            success: function (data) {
+                if (data) {
+
+                    //$("#ddlCity").empty();
+                    $("#ddlstate").empty(); // Clear the plese wait
+                    $("#ddlstate").append($("<option></option>").val('').html('--Select state--'));
+                    $.each(data, function (i, stateList) {
+                        $("#ddlstate").append($("<option></option>").val(stateList.value).html(stateList.text));
+                    });
+                } else {
+                    $("#ddlstate").empty();
+                }
+            },
+        });
+    }
+
+    $("#ddlCompany").change(function () {
+        var businessUNitid = $("#ddlCompany").val();
+        $("#hdnBusinessUnitId").val(businessUNitid);
+
+         $.ajax({
+            type: "GET",
+            url: "@URLPrefixforProd/DealerDashboard/ExchangeDashboard?handler=BusinessUnitName",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+             data: { buid: businessUNitid},
+            success: function (data) {
+                if (data) {
+                    var buname = data.name;
+                    $("#hdnCompanyName").val(buname);
+                    GetState(businessUNitid);
+                } else {
+                    
+                }
+            },
+        });
+        
+    });
+
+    //Get City By State
+    $("#ddlCities").change(function () {
+        var AssociateCode = $("#hdnAssociateCode").val();
+        var buid = $("#hdnBusinessUnitId").val();
+        var City = $("#ddlCities").val();
+        var userCompany = $("#hdnUserCompanyName").val();
+        var userRole = $("#hdnRoleAssigned").val();
+
+        $.ajax({
+            type: "GET",
+            url: "@URLPrefixforProd/DealerDashboard/ExchangeDashboard?handler=StoreList",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { buid: buid, AssociateCode: AssociateCode, City: City, userCompany: userCompany, userRole: userRole },
+            success: function (data) {
+                if (data) {
+                    $("#ddlBusinessPartner").empty(); // Clear the plese wait
+                    $("#ddlBusinessPartner").append($("<option></option>").val('').html('--Select store--'));
+                    $.each(data, function (i, storeList) {
+                        $("#ddlBusinessPartner").append($("<option></option>").val(storeList.value).html(storeList.text));
+                    });
+                } else {
+                    $("#ddlBusinessPartner").empty();
+                }
+            },
+        });
+    });
+
+
+   
+    //Click Function For Filter data
+     //Click Function To Call Data Table
+    $("#filter-dates_DriverList").click(function () {
+
+         var associateCodeValue = $("#hdnAssociateCode").val();
+         var selectedCompany = $("#hdnCompanyName").val();
+         var userCompany = $("#hdnUserCompanyName").val();
+         var userRole = $("#hdnRoleAssigned").val();
+         var regdNo= $("#RegdNo").val();
+        var phoneNumber = $("#custPhone").val();       
+        // LGC Driver List //date range Filter
+        var url = "@URLPrefixforProd/api/ListPage/SeacrhByRegdNoOrPhoneNumber?RegdNo=" + regdNo + "&PhoneNumber=" + phoneNumber + "&AssociateCode=" + associateCodeValue + "&userRole=" + userRole + "&UserCompany=" + userCompany + "&selectedcompany="+selectedCompany;
+        table = $('#DealerDashBoardDataTable').DataTable();
+            // Destroy the existing DataTable
+        table.destroy();
+        GetOrderCountByBusinessPartnerId(url);
+    });
+
+    function GetURLData(startdate = null, enddate = null, associateCodeValue = null, companyName = null, businessPartnerIdValue = null, userCompany = null, userRole = null, state = null, city = null) {
+        var urlData = "";
+        if (startdate != null && enddate != null) {
+            urlData += '&startdate=' + startdate + '&enddate=' + enddate;
+        }
+        if (associateCodeValue != null) {
+            urlData += '&AssociateCode=' + associateCodeValue;
+        }
+        if (companyName != null) {
+            urlData += '&CompanyName=' + companyName;
+        }
+        if (businessPartnerIdValue != null && businessPartnerIdValue > 0) {
+            urlData += '&BusinessPartnerId=' + businessPartnerIdValue;
+        }
+        if (userCompany != null) {
+            urlData += '&userCompany=' + userCompany;
+        }
+        if (userRole != null) {
+            urlData += '&userRole=' + userRole;
+        }
+        if (state != null) {
+            urlData += '&state=' + state;
+        }
+        if (city != null) {
+            urlData += '&city=' + city;
+        }
+        return urlData;
+    }
+
+    //Click Function To Call Data Table
+    $("#btnValidate").click(function () {
+        $("#RegdNo").val('');
+
+        var businessPartnerIdValue = $("#ddlBusinessPartner").val();
+        businessPartnerIdValue = $('#ddlBusinessPartner').val() == "" ? 0 : $('#ddlBusinessPartner').val();
+
+        var startdate = $("#daterangewrapper").val();
+        startdate = $('#daterangewrapper').val() == "" ? null : $('#daterangewrapper').val();
+
+        var enddate = $("#daterangewrapperYear").val();
+        enddate = $('#daterangewrapperYear').val() == "" ? null : $('#daterangewrapperYear').val();
+
+        var associateCodeValue = $("#hdnAssociateCode").val();
+        associateCodeValue = $('#hdnAssociateCode').val() == "" ? null : $('#hdnAssociateCode').val();
+
+        var companyName = $("#hdnCompanyName").val();
+        companyName = $('#hdnCompanyName').val() == "" ? null : $('#hdnCompanyName').val();
+
+        var buid = $("#hdnBusinessUnitId").val();
+        buid = $('#hdnBusinessUnitId').val() == "" ? 0 : $('#hdnBusinessUnitId').val();
+
+        var userCompany = $("#hdnUserCompanyName").val();
+        userCompany = $('#hdnUserCompanyName').val() == "" ? null : $('#hdnUserCompanyName').val();
+
+        var userRole = $("#hdnRoleAssigned").val();
+        userRole = $('#hdnRoleAssigned').val() == "" ? null : $('#hdnRoleAssigned').val();
+
+        var state = $("#ddlstate").val();
+        state = $('#ddlstate').val() == "" ? null : $('#ddlstate').val();
+
+        var city = $("#ddlCities").val();
+        city = $('#ddlCities').val() == "" ? null : $('#ddlCities').val();
+
+        $("#DealerDashBoardDataTable").show();
+        $("#FilterChanges").show();
+        // LGC Driver List //date range Filter
+
+        var urlData = GetURLData(startdate, enddate, associateCodeValue, companyName, businessPartnerIdValue, userCompany, userRole, state, city)
+        var url = "@URLPrefixforProd/api/ListPage/OrderDataTableForDealer?BusinessUnitId=" + buid + urlData;
+
+        //var url = "@URLPrefixforProd/api/ListPage/OrderDataTableForDealer?BusinessPartnerId=" + businessPartnerIdValue + "&startdate=" + startdate + "&enddate=" + enddate + "&AssociateCode=" + associateCodeValue + "&CompanyName=" + companyName + "&userCompany=" + userCompany + "&userRole=" + userRole + "&BusinessUnitId=" + buid;
+
+        table = $('#DealerDashBoardDataTable').DataTable();
+            // Destroy the existing DataTable
+            table.destroy();
+        GetOrderCountByBusinessPartnerId(url);
+    });
+
+
+
+  
+
+      function GetOrderCountByBusinessPartnerId(url) {
+        $("#DealerDashBoardDataTable").DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Order Details',
+                     action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "searching": false,
+            "info": true,
+            "paging": true,
+            "oLanguage": {
+                "sEmptyTable": "No data found"
+            },
+            "ajax": {
+
+                "url": url,
+                "type": "POST",
+                "datatype": "json",
+   },
+          "columnDefs": [{
+           "targets": [0],
+              "visible": false,
+              "searchable": false
+           }],
+        "responsive": true,
+
+            "columns": [
+                { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                { "data": "actionUrl", "name": "actionUrl", "autoWidth": true, "orderable": false },
+                { "data": "companyName", "name": "CompanyName", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                { "data": "customerName", "name": "CustomerName", "autoWidth": true, "orderable": false },
+                { "data": "oldProductCategory", "name": "OldProductCategory", "autoWidth": true, "orderable": false },
+                { "data": "oldProductType", "name": "OldProductType", "autoWidth": true, "orderable": false },
+                { "data": "typeOfSettelment", "name": "TypeOfSettelment", "autoWidth": true, "orderable": false },
+                { "data": "voucherCode", "name": "VoucherCode", "autoWidth": true, "orderable": false },
+                { "data": "voucherStatus", "name": "VoucherStatus", "autoWidth": true, "orderable": false },
+                { "data": "exchangePrice", "name": "ExchangePrice", "autoWidth": true, "orderable": false },
+                { "data": "sweetner", "name": "Sweetner", "autoWidth": true, "orderable": false },
+                { "data": "orderDate", "name": "OrderDate", "autoWidth": true, "orderable": false },
+                { "data": "voucherRedeemDate", "name": "VoucherRedeemDate", "autoWidth": true, "orderable": false },
+                { "data": "paymentstatus", "name": "Paymentstatus", "autoWidth": true, "orderable": false },
+                { "data": "orderReferenceId", "name": "OrderReferenceId", "autoWidth": true, "orderable": false }
+                
+            ]
+        });
+
+
+
+    }
+
+
+    $("#daterangewrapper").datepicker({
+
+        maxDate: 0
+
+    });
+    $("#daterangewrapperYear").datepicker({
+        maxDate: 0
+    });
+
+    $("#btnExportData").click(function () {
+
+        var AssociateCode = $('#hdnAssociateCode').val();
+        window.location = '@Url.Action("DownloadAttachment", "PostDetail", new { studentId = 123 })';
+
+
+        $.ajax({
+            type: "POST",
+            url: "@URLPrefixforProd/DealerDashboard/DealerDashboard?handler=ExportExcel_StoreData",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { AssociateCode: AssociateCode },
+            success: function () {
+                window.location = '@URLPrefixforProd/DealerDashboard/DealerDashboard?handler=ExportExcel_StoreData?AssociateCode=' + AssociateCode;
+
+                if (response == true || response == "True" || response == "true") {
+
+                }
+                else {
+
+                }
+            }
+        });
+    });
+
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+    //For Export Buttons available inside jquery-datatable "server side processing" - End
+</script>

@@ -1,0 +1,359 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC_Portal.EVCWalletRechargeByAdminModel
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+
+<div class="row ">
+    <div class="col-12 mb-4">
+        <div class="card shadow border-0">
+            <div class="card-header">
+                <h2 class="fs-5 mb-0 card-title">Payment Initiated</h2>
+            </div>
+
+            <div class="card-body payment-page">
+                <form method="post" enctype="multipart/form-data" id="RechargeWallet">
+                    <input type="hidden" id="HidEvcregistrationId" asp-for="EVCWalletAdditionViewModels.EvcregistrationId" />
+                    <input type="hidden" id="HidEVCRegdNo" asp-for="EVCWalletAdditionViewModels.EVCRegdNo" />
+                    <input type="hidden" id="HidBussinessName" asp-for="EVCWalletAdditionViewModels.BussinessName" />
+                    <input type="hidden" id="HidEVCemail" asp-for="EVCWalletAdditionViewModels.EVCemail" />
+                    <input type="hidden" id="HidEVCcontactNumber" asp-for="EVCWalletAdditionViewModels.EVCcontactNumber" />
+                    <input type="hidden" id="HidEVCaddress" asp-for="EVCWalletAdditionViewModels.EVCaddress" />
+                    <input type="hidden" id="HidEvcWalletBal" asp-for="EVCWalletAdditionViewModels.EvcWallet" />
+                    <input type="hidden" id="HidIsCreaditAmount" asp-for="EVCWalletAdditionViewModels.IsCreaditNote" />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="paymentinnerbox">
+                                <i class="fas fa-user"></i>
+                                <span><label id="EVCRegdNo"></label></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="paymentinnerbox">
+                                <i class="fa-solid fa-shop"></i>
+                                <span><label id="BussinessName"></label></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="paymentinnerbox">
+                                <i class="fas fa-envelope"></i>
+                                <span><label id="EVCemail"></label></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="paymentinnerbox">
+                                <i class="fas fa-phone"></i>
+                                <span><label id="EVCcontactNumber"></label></span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="paymentinnerbox">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span><label id="EVCaddress"></label></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="paymentinnerbox">
+                                <i class="fa-solid fa-wallet"></i>
+                                <span><label id="EvcWalletBal"></label></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-4">
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-4">
+                            <label for="rechargeType">Select Recharge Type</label>
+                            <select id="rechargeType" class="form-control">
+                                <option value="None">None</option>
+                                <option value="wallet">Wallet Recharge</option>
+                                <option value="credit">Credit Recharge</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4" id="WalletRechargetype">
+                        <div class="col-md-6 mb-3">
+                            <label for="txttransactionid">Transaction Id<span style="color:red;">*</span> </label>
+                            <input asp-for="EVCWalletAdditionViewModels.TransactionId" id="txttransactionid" type="text" class="form-control paymentinnerbox m-0" required>
+                            <span asp-validation-for="EVCWalletAdditionViewModels.TransactionId" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Transaction Date<span style="color:red;">*</span> </label>
+                            <div class="paymentinnerbox m-0">
+                                <span class="d-inline"><input asp-for="EVCWalletAdditionViewModels.TransactionDate" id="txtTransactionDate" type="date" class="form-control d-inline" required></span>
+                            </div>
+                            <span asp-validation-for="EVCWalletAdditionViewModels.TransactionDate" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Uplode Invoice image<span style="color:red;">*</span> </label>
+                            <input name="InvoiceImage" id="txtInvoiceImage" type="file" class="form-control paymentinnerbox" accept="image/*" required />
+                            <span asp-validation-for="EVCWalletAdditionViewModels.InvoiceImage" class="text-danger" ></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="txtAmountw">Amount<span style="color:red;">*</span></label>
+                            <input asp-for="EVCWalletAdditionViewModels.Amount" id="txtAmount" type="text" class="form-control paymentinnerbox mb-0" onkeyup="validateAmount(this)" required>
+                            <small id="amountError" style="color:red; display:none">Amount must be a number </small>
+                            <span asp-validation-for="EVCWalletAdditionViewModels.Amount" class="text-danger"></span>
+                        </div>
+
+                        @*<div class="col-md-6">
+                        <label>Amount</label>
+                        <div class="paymentinnerbox">
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                        <span class="d-inline"><input asp-for="EVCWalletAdditionViewModels.Amount" id="txtAmont" type="text" class="form-control d-inline"></span>
+                        </div>
+                        </div>*@
+
+                        <div class="col-md-12 text-right mb-4">
+                            <button value="Save" id="Proceed" class="btn btn-primary mt-2 paymentbtn" disabled="disabled">Proceed <i class="fas fa-arrow-right"></i></button>
+                            @*<button value="Save" id="btnsave" class="btn btn-primary mainshadow" disabled="disabled">Save Change</button>*@
+                        </div>
+                    </div>
+                    <div class="row mb-2" id="CreditRechargetype">
+                        <div class="col-md-6 mb-2">
+                            <label for="txtCredittransactionid">Transaction Id </label>
+                            <input asp-for="EVCWalletAdditionViewModels.CreditTransactionId" id="txtCredittransactionid" type="text" class="form-control paymentinnerbox mb-0" readonly required>
+                            <span asp-validation-for="EVCWalletAdditionViewModels.CreditTransactionId" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-2">
+                            <label>Transaction Date </label>
+                            <input asp-for="EVCWalletAdditionViewModels.CreditTransactionDate" id="txtCreditTransactionDate" type="text" class="form-control d-inline" readonly required>
+
+                            <span asp-validation-for="EVCWalletAdditionViewModels.CreditTransactionDate" class="text-danger"></span>
+
+                        </div>
+                        <div class="col-md-6">
+                            <label>Comment<span style="color:red;">*</span> </label>
+                            <textarea asp-for="EVCWalletAdditionViewModels.CreditComments" maxlength="200" id="txtCreditcommentRes" class="form-control" rows="1" required></textarea>
+                            <span asp-validation-for="EVCWalletAdditionViewModels.CreditComments" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="txtAmount">Amount<span style="color:red;">*</span></label>
+                            <input asp-for="EVCWalletAdditionViewModels.CreditAmount" id="txtCreditAmount" type="text" class="form-control paymentinnerbox" onkeyup="validateCreditAmount(this)" required>
+                            <small id="amountError" style="color:red; display:none">Amount must be a number </small>
+                            <span asp-validation-for="EVCWalletAdditionViewModels.CreditAmount" class="text-danger"></span>
+                        </div>
+
+
+
+                        <div class="col-12 text-right mb-4">
+                            <button value="Save" id="CreditProceed" class="btn btn-primary mt-2 paymentbtn" disabled="disabled">Proceed <i class="fas fa-arrow-right"></i></button>
+                            @*<button value="Save" id="btnsave" class="btn btn-primary mainshadow" disabled="disabled">Save Change</button>*@
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+   
+<script>
+    document.getElementById('txtInvoiceImage').addEventListener('change', function () {
+        const file = this.files[0];
+        if (file && !file.type.startsWith('image/')) {
+            alert('Please select an image file.');
+            this.value = ''; // Clear the input value to allow re-selection
+        }
+    });
+
+    $(document).ready(function () {
+        $('#WalletRechargetype').hide();
+        $('#CreditRechargetype').hide();
+        var Bussiness = $("#HidBussinessName").val();
+        var email = $("#HidEVCemail").val();
+        var phoneno = $("#HidEVCcontactNumber").val();
+        var address = $("#HidEVCaddress").val();
+        var EVCRegno = $("#HidEVCRegdNo").val();
+        var EVCWalletBalance = $("#HidEvcWalletBal").val();
+
+        $("#EVCRegdNo").text(EVCRegno);
+        $("#BussinessName").text(Bussiness);
+        $("#EVCemail").text(email);
+        $("#EVCcontactNumber").text(phoneno);
+        $("#EVCaddress").text(address);
+        $("#EvcWalletBal").text(EVCWalletBalance);
+        $("#HidIsCreaditAmount").val(false);
+
+        $("#txttransactionid").val('');
+        $("#txtTransactionDate").val('');
+        $("#txtInvoiceImage").val('');
+        $("#txtAmount").val('');
+
+        $("#txtCredittransactionid").val('');
+        $("#txtCreditTransactionDate").val('');
+        $("#txtCreditcommentRes").val('');
+        $("#txtCreditAmount").val('');
+
+
+    });
+    $('#txtAmont').keyup(function () {
+        var num = $('#txtAmont').val();
+        if (num != null && num != "" && parseInt(num) > 0) {
+            $('#Proceed').prop('disabled', false);
+        }
+        else {
+            $('#Proceed').prop('disabled', true);
+        }
+    });
+    $('#txtCreditAmount').keyup(function () {
+        var num = $('#txtCreditAmount').val();
+        if (num != null && num != "" && parseInt(num) > 0) {
+            $('#CreditProceed').prop('disabled', false);
+        }
+        else {
+            $('#CreditProceed').prop('disabled', true);
+        }
+    });
+
+    function validateAmount(input) {
+        var amount = input.value;
+        var amountError = document.getElementById("amountError");
+
+        // Check if the input is a number and has 8 or fewer digits
+        if (/^\d{1,8}$/.test(amount) === false) {
+            amountError.style.display = "block";
+            $('#Proceed').prop('disabled', true);
+        } else {
+            amountError.style.display = "none";
+            // Check if the input value is greater than 0
+            if (parseInt(amount) > 0) {
+                $('#Proceed').prop('disabled', false);
+            } else {
+                $('#Proceed').prop('disabled', true);
+            }
+        }
+
+        // Remove any non-numeric characters from the input value
+        input.value = amount.replace(/[^0-9]/g, '');
+    }
+
+
+    function validateCreditAmount(input) {
+        var amount = input.value;
+        var amountError = document.getElementById("amountError");
+
+        // Check if the input is a number and has 8 or fewer digits
+        if (/^\d{1,8}$/.test(amount) === false) {
+            amountError.style.display = "block";
+            $('#CreditProceed').prop('disabled', true);
+        } else {
+            amountError.style.display = "none";
+            // Check if the input value is greater than 0
+            if (parseInt(amount) > 0) {
+                $('#CreditProceed').prop('disabled', false);
+            } else {
+                $('#CreditProceed').prop('disabled', true);
+            }
+        }
+
+        // Remove any non-numeric characters from the input value
+        input.value = amount.replace(/[^0-9]/g, '');
+    }
+    $('#Proceed').click(function () {
+        var Transactionid = $("#txttransactionid").val();       
+        var TransactionDate = $("#txtTransactionDate").val();
+        var InvoiceImage = $("#txtInvoiceImage").val();
+        var Amount = $("#txtAmount").val();
+
+        if (Transactionid=='' || !TransactionDate || !InvoiceImage || !Amount) {
+            if (!TransactionDate) {
+                $("#txtTransactionDate").focus();
+            
+            } else if (Transactionid == '') {
+                alert(Transactionid);
+                $("#txttransactionid").focus();
+            }
+            else if (!InvoiceImage) {
+                $("#txtInvoiceImage").focus();
+            } else {
+                $("#txtAmount").focus();
+            }
+        } else {
+            $('#loader').show();
+            $('#RechargeWallet').submit();
+        }
+    });
+
+    $('#CreditProceed').click(function () {
+        var CreditcommentRes = $("#txtCreditcommentRes").val();
+        var CreditAmount = $("#txtCreditAmount").val();
+
+        if (!CreditcommentRes || !CreditAmount) {
+            if (!CreditcommentRes) {
+                $("#txtCreditcommentRes").focus();
+            } else {
+                $("#txtCreditAmount").focus();
+            }
+        } else {
+            $('#loader').show();
+            $('#RechargeWallet').submit();
+        }
+    });
+    // Show the appropriate div based on selected option
+    $('#rechargeType').change(function () {
+        var selectedOption = $(this).val();
+        if (selectedOption === 'wallet') {
+            $('#WalletRechargetype').show();
+            $('#CreditRechargetype').hide();
+            $("#txtCredittransactionid").val('');
+            $("#txtCreditTransactionDate").val('');
+            $("#txtCreditcommentRes").val('');
+            $("#txtCreditAmount").val('');
+
+            $("#HidIsCreaditAmount").val(false);
+
+        } else if (selectedOption === 'credit') {
+            $.get("@URLPrefixforProd/EVC/EVCWalletRechargeByAdmin?handler=GenrateEVCCreaditTransactionID").done(function (data) {
+                $("#txtCreditTransactionDate").val(data.transactionDate);
+                $("#txtCredittransactionid").val(data.transactionId);
+                $("#HidIsCreaditAmount").val(true);
+            });
+            $('#WalletRechargetype').hide();
+            $('#CreditRechargetype').show();
+            $("#txttransactionid").val('');
+            $("#txtTransactionDate").val('');
+            $("#txtInvoiceImage").val('');
+            $("#txtAmount").val('');
+
+
+
+        } else {
+            $('#WalletRechargetype').hide();
+            $('#CreditRechargetype').hide();
+            $("#txttransactionid").val('');
+            $("#txtTransactionDate").val('');
+            $("#txtInvoiceImage").val('');
+            $("#txtAmount").val('');
+
+            $("#txtCredittransactionid").val('');
+            $("#txtCreditTransactionDate").val('');
+            $("#txtCreditcommentRes").val('');
+            $("#txtCreditAmount").val('');
+
+            $("#HidIsCreaditAmount").val(false);
+
+        }
+    });
+
+</script>

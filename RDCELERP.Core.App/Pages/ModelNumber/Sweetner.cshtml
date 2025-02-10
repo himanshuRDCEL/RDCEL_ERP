@@ -1,0 +1,359 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ModelNumber.SweetnerModel
+
+@{
+    ViewData["Title"] = "Sweetner";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+
+<style>
+    /*Styling by AK 05/10/2023*/
+    .form-check .form-check-input {
+        float: none;
+    }
+
+    @@media (max-width:447px) {
+        .form-check {
+            display: block !important;
+        }
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>Update Sweetener for Multiple Model Number
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" id="myForm">
+                            <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                <input type="hidden" asp-for="ModelNumberViewModel.ModelNumberId" id="hdnId" />
+                                <input type="hidden" asp-for="ModelNumberViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="ModelNumberViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="ModelNumberViewModel.IsActive" />
+                                <input type="hidden" asp-for="ModelNumberViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="ModelNumberViewModel.ModifiedDate" />
+                                <input type="hidden" asp-for="ModelNumberViewModel.BusinessUnitId" id="hdnbuid" />
+                                <input type="hidden" asp-for="ModelNumberViewModel.BrandId" id="hdnbrandid" />
+                                <input type="hidden" asp-for="ModelNumberViewModel.ProductCategoryId" id="hdncatid" />
+                                <input type="hidden" asp-for="ModelNumberViewModel.ProductTypeId" id="hdntypeid" />
+
+                                <div class="col-12 mb-4 text-center">
+                                    <div class="form-check d-inline mx-4">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked="">
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Sweetner Business Unit based
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check d-inline mx-4">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option1" checked="">
+                                        <label class="form-check-label" for="exampleRadios2">
+                                            Sweetner Model based
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Company<span style="color:red;">*</span></label>
+                                    @if (Model.ModelNumberViewModel.ModelNumberId > 0 && Model.ModelNumberViewModel.BusinessUnitId > 0)
+                                    {
+
+
+                                        <input id="ddlBU" asp-for="ModelNumberViewModel.BusinessUnitName" class="form-control" />
+                                    }
+
+                                    else
+                                    {
+                                        <input id="ddlBU" asp-for="ModelNumberViewModel.BusinessUnitName" class="form-control" />
+                                    }
+                                    <span asp-validation-for="ModelNumberViewModel.BusinessUnitId" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Select Brand <span style="color:red;">*</span></label>
+                                    @if (Model.ModelNumberViewModel.ModelNumberId > 0 && Model.ModelNumberViewModel.BrandId > 0)
+                                    {
+                                        <input id="txtbrandname" asp-for="ModelNumberViewModel.BrandName" class="form-control" />
+                                        @*<select asp-for="ModelNumberViewModel.BrandId" class="form-control" asp-items="ViewBag.Brandlist">
+                    <option value=''>--None--</option>
+                </select>*@
+                                    }
+
+                                    else
+                                    {
+                                        <input id="txtbrandname" asp-for="ModelNumberViewModel.BrandName" class="form-control" />
+                                        @*<select asp-for="ModelNumberViewModel.BrandId" class="form-control" asp-items="ViewBag.Brandlist">
+                    <option value=''>--None--</option>
+                </select>*@
+                                    }
+                                    <span asp-validation-for="ModelNumberViewModel.BrandName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4" id="productCategoryContainer">
+                                    <label class="" for="">Product Category<span style="color:red;">*</span></label>
+                                    <input id="ddlCategory" asp-for="ModelNumberViewModel.ProductCategoryName" class="form-control" />
+                                    <span asp-validation-for="ModelNumberViewModel.ProductCategoryId" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4" id="productTypeContainer">
+                                    <label class="" for="">Product Type<span style="color:red;">*</span></label>
+                                    <input id="ddlType" asp-for="ModelNumberViewModel.ProductTypeName" class="form-control" /><span asp-validation-for="ModelNumberViewModel.ProductTypeId" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Sweetner For D to D <span style="color:red;">*</span></label>
+                                    <input asp-for="ModelNumberViewModel.SweetnerForDtd" class="form-control" />
+                                    <span asp-validation-for="ModelNumberViewModel.SweetnerForDtd" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Sweetner For D to C <span style="color:red;">*</span></label>
+                                    <input asp-for="ModelNumberViewModel.SweetnerForDtc" class="form-control" />
+                                    <span asp-validation-for="ModelNumberViewModel.SweetnerForDtc" class="text-danger"></span>
+                                </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        @if (accessRule != null && accessRule.CanView)
+                                        {
+                                            <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                        }
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <input type="submit" value="Save" class="btn btn-primary mainshadow" />
+                                        }
+                                    </div>
+
+                                </div>
+
+</form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/compressor.js"></script>
+<script type="text/javascript">
+
+    var radios = document.getElementsByName("exampleRadios");
+    var productCategoryContainer = document.getElementById("productCategoryContainer");
+    var productTypeContainer = document.getElementById("productTypeContainer");
+
+    radios[0].addEventListener("click", function () {
+        productCategoryContainer.style.display = "none";
+        productTypeContainer.style.display = "none";
+    });
+
+    radios[1].addEventListener("click", function () {
+        productCategoryContainer.style.display = "";
+        productTypeContainer.style.display = "";
+    });
+
+
+
+</script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script>
+    var BUId = null;
+    var BrandId = null;
+    var ProductCatId = null;
+    var ProductTypeId = null;
+
+     $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlBU").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/ModelNumber/Manage", {
+                    handler: "SearchBUName",
+                    term: extractLast(request.term),
+                }, response);
+            },
+
+                select: function (event, ui) {
+                    // $("#ddlBU").val(ui.item.value); // Set the selected value
+
+                    var terms = split(this.value);
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                this.value = terms;
+
+                BUId = ui.item.text;
+                $('#hdnbuid').val(BUId);
+                return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlBU").val(""); // Clear the input field
+                    }
+                }
+            });
+     })
+
+     $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+         $("#txtbrandname").on("keydown", function (event) {
+                if (event.keyCode === $.ui.keyCode.TAB &&
+                    $(this).autocomplete("instance").menu.active) {
+                    event.preventDefault();
+                }
+            })
+             .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/ModelNumber/Manage?handler=SearchBrandName", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+                select: function (event, ui) {
+                     var terms = split(this.value);
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                this.value = terms;
+
+                BrandId = ui.item.text;
+                $('#hdnbrandid').val(BrandId);
+                return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#txtbrandname").val(""); // Clear the input field
+                    }
+                }
+            });
+     })
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+
+
+        $("#ddlCategory").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/ModelNumber/Manage?handler=AutoProductCatName", {
+                        term: extractLast(request.term)
+                    },
+                        response
+                    );
+                },
+
+                select: function (event, ui) {
+                   var terms = split(this.value);
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                this.value = terms;
+                // Get the ID of the selected state  hdntypeid hdncatid
+                ProductCatId = ui.item.text;
+                $("#hdncatid").val(ProductCatId);
+                return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlCategory").val(""); // Clear the input field
+                        ProductCategoryId = null;
+                    }
+                }
+            });
+    })
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+
+
+        $("#ddlType").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/ModelNumber/Manage", {
+                        handler: "AutoProductTypeName",
+                        term: extractLast(request.term),
+                        term2: ProductCatId // Pass the selected ProductCatId
+                    },
+                        response
+                    );
+                },
+
+                select: function (event, ui) {
+                   var terms = split(this.value);
+                console.log(terms);
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                this.value = terms;
+
+                ProductTypeId = ui.item.text;
+                $("#hdntypeid").val(ProductTypeId);
+                return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlType").val(""); // Clear the input field
+
+                    }
+                }
+            });
+    })
+</script>
+
+

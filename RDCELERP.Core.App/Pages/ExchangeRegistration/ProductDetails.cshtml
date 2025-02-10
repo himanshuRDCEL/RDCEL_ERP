@@ -1,0 +1,567 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ExchangeRegistration.ProductDetails
+@{
+    ViewData["Title"] = "Exchange Registration";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var InvoiceImageURL = ViewData["InvoiceImageURL"];
+    var currentDate = DateTime.Now.Date;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+    //<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css"
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">Exchange Registration</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            <div>
+                                @*@Html.Partial("_MessagePartial")*@
+                            </div>
+                            <div class="row">
+                                <input type="hidden" asp-for="ExchangeOrderDataContract.CreatedBy" />
+                                <input type="hidden" asp-for="ExchangeOrderDataContract.CreatedDate" />
+                                <input type="hidden" asp-for="ExchangeOrderDataContract.IsActive" />
+                                <input type="hidden" asp-for="ExchangeOrderDataContract.ModifiedBy" />
+                                <input type="hidden" asp-for="ExchangeOrderDataContract.ModifiedDate" />
+                                <input type="hidden" asp-for="ExchangeOrderDataContract.PriceMasterNameId" id="hdnPriceMasterNameId" />
+                                <input type="hidden" asp-for="ExchangeOrderDataContract.BusinessUnitId" id="hdnBusinessUnitId" />
+                                <input type="hidden" asp-for="ExchangeOrderDataContract.BusinessPartnerId" id="hdnBusinessPartnerId" />
+                                <input type="hidden" asp-for="ExchangeOrderDataContract.CompanyName" />
+
+                                @* <input type="hidden" id="hdnNoclaimPeriod" asp-for="AbbRedemptionModel.NoClaimPeriod" /> *@
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Sponsor Order Number</label>
+                                    <input asp-for="ExchangeOrderDataContract.SponsorOrderNumber" id="txtRegdNo" maxlength="50" class="form-control" />
+
+                                    <span asp-validation-for="ExchangeOrderDataContract.SponsorOrderNumber" class="text-danger"></span>
+                                </div>
+
+
+
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0"><b>Exchange Product Details</b></></h5>
+                                    <hr />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Product Group<span style="color:red;">*</span></label>
+                                    <select asp-for="ExchangeOrderDataContract.ProductCategoryId" id="ddlprodcatid" class="form-select" asp-items="ViewBag.ProductGroup">
+                                        <option value=''>--Select Product Group--</option>
+                                    </select>
+                                    <span asp-validation-for="ExchangeOrderDataContract.ProductCategoryId" id="ValidateProdCatId" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Product Type<span style="color:red;">*</span></label>
+                                    @*                                     <input asp-for="ExchangeOrderDataContract.ProductTypeId" id="txtprodcattypeid" class="form-control" asp-items="ViewBag.ProductType" readonly />
+                                    *@                                    <select asp-for="ExchangeOrderDataContract.ProductTypeId" id="ddlprodcattypeid" class="form-select" asp-items="ViewBag.ProductType">
+@*                                         <option value=''>--Select Product Type--</option>
+ *@                                    </select>
+                                    <span asp-validation-for="ExchangeOrderDataContract.ProductTypeId" class="text-danger" id="ddlprodcattypeidValidation"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Brand<span style="color:red;">*</span></label>
+                                    @*                                     <input asp-for="ExchangeOrderDataContract.BrandId" id="txtbrandid" class="form-control" asp-items="ViewBag.SponserName" readonly />
+                                    *@                                    <select asp-for="ExchangeOrderDataContract.BrandId" id="ddlbrandid" class="form-select" asp-items="ViewBag.brands">
+@*                                         <option value=''>--Select Brand--</option>
+ *@                                    </select>
+
+                                    <span asp-validation-for="ExchangeOrderDataContract.BrandId" class="text-danger" id="ddlbrandValidation"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Product Condition<span style="color:red;">*</span></label>
+                                    @*<input asp-for="ExchangeOrderDataContract.BrandId" id="txtbrandid" class="form-control" asp-items="ViewBag.SponserName" readonly />
+                                    *@
+                                    <select asp-for="ExchangeOrderDataContract.QualityCheckValue" id="ddlQualityCheckValue" class="form-select" asp-items="ViewBag.QualityCheckList">
+@*                                         <option value=''>--Select Condition--</option>
+ *@                                    </select>
+
+                                    <span asp-validation-for="ExchangeOrderDataContract.QualityCheckValue" class="text-danger" id="ddlQualityCheckValueValidation"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Product Net Price(Incl Of GST)</label>
+                                    <input asp-for="ExchangeOrderDataContract.ExchangePrice" id="ddlprodnetprice" class="form-control calculate" readonly />
+                                    <span asp-validation-for="ExchangeOrderDataContract.ExchangePrice" id="vldMessageProductPrice" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0"><b>Customer Details</b></h5>
+                                    <hr />
+                                </div>
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">First Name <span style="color:red;">*</span></label>
+                                    <input asp-for="ExchangeOrderDataContract.FirstName" id="txtcustfirstname" maxlength="50" class="form-control" />
+                                    <span asp-validation-for="ExchangeOrderDataContract.FirstName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Last Name </label>
+                                    <input asp-for="ExchangeOrderDataContract.LastName" id="txtcustlastname" maxlength="50" class="form-control" />
+                                    <span asp-validation-for="ExchangeOrderDataContract.LastName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Mobile<span style="color:red;">*</span></label>
+                                    <input asp-for="ExchangeOrderDataContract.PhoneNumber" type="number" pattern="^\+91(7\d|8\d|9\d)\d{9}$" accept="0-9" id="txtcustmob" maxlength="10" class="form-control" />
+                                    <span asp-validation-for="ExchangeOrderDataContract.PhoneNumber" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">E-mail<span style="color:red;">*</span> </label>
+                                    <input asp-for="ExchangeOrderDataContract.Email" type="email" id="txtcustemail" maxlength="100" class="form-control" />
+                                    <span asp-validation-for="ExchangeOrderDataContract.Email" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Address1<span style="color:red;">*</span> </label>
+                                    <input asp-for="ExchangeOrderDataContract.Address1" id="txtcustaddress1" maxlength="200" class="form-control" />
+                                    <span asp-validation-for="ExchangeOrderDataContract.Address1" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Address2 </label>
+                                    <input asp-for="ExchangeOrderDataContract.Address2" id="txtcustaddress2" maxlength="200" class="form-control" />
+                                    <span asp-validation-for="ExchangeOrderDataContract.Address2" class="text-danger"></span>
+                                </div>
+
+                                @* <div class="col-md-4 mb-4">
+                                    <label for="">Pin Code<span style="color:red;">*</span></label>
+                                    <input asp-for="ExchangeOrderDataContract.PinCode " id="txtcustpincode" type="number" maxlength="6" class="form-control" />
+                                    <span asp-validation-for="ExchangeOrderDataContract.PinCode" class="text-danger"></span>
+                                </div> *@
+
+                                @* <div class="col-md-4 mb-4">
+                                    <label for="">State</label>
+                                    <input asp-for="ExchangeOrderDataContract.StateName" id="txtcity" maxlength="50" class="form-control" readonly />
+                                    <span asp-validation-for="ExchangeOrderDataContract.StateName" class="text-danger"></span>
+                                </div> *@
+
+                                @* <div class="col-md-4 mb-4">
+                                    <label for="">City</label>
+                                    <input asp-for="ExchangeOrderDataContract.CityName" id="txtcity" maxlength="50" class="form-control" readonly />
+                                    <span asp-validation-for="ExchangeOrderDataContract.CityName" class="text-danger"></span>
+
+                                </div> *@
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">State <span style="color:red;">*</span></label>
+
+                                    <input id="ddlState" asp-for="ExchangeOrderDataContract.StateName" class="form-control" />
+                                    <span asp-validation-for="ExchangeOrderDataContract.StateName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">City <span style="color:red;">*</span></label>
+
+                                    <input id="ddlCity" asp-for="ExchangeOrderDataContract.CityName" class="form-control" />
+                                    <span asp-validation-for="ExchangeOrderDataContract.CityName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Pin Code<span style="color:red;">*</span></label>
+                                    <input id="ddlPinCode" asp-for="ExchangeOrderDataContract.PinCode" class="form-control" />
+                                    <span asp-validation-for="ExchangeOrderDataContract.PinCode" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="col-12 text-end">
+
+                                    @*<a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>*@
+                                    <div class="form-group text-right d-inline" id="divSubmit" style="display:none">
+                                        <input type="submit" value="Save" class="btn btn-primary mainshadow" id="btnSubmit" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="float-right">
+
+                                            @if (accessRule != null && accessRule.CanAdd)
+                                            {
+                                                <input type="submit" value="Submit" id="Submitbtn" class="btn btn-primary mainshadow" />
+                                            }
+                                           @*  @if (accessRule != null && accessRule.CanView)
+                                            {
+                                                <a asp-page="./Index" id="btnReset" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">
+                                                    Reset
+                                                </a>
+                                            } *@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#Submitbtn').hide();
+
+        $("#ddlprodcatid").change(function () {
+            $("#ValidateProdCatId").text("");
+            $("#ddlprodnetprice").text("");
+            $("#ddlprodnetprice").val("");
+            $("#ddlprodcattypeid").empty();
+            $("#ddlbrandid").empty();
+            $("#ddlprodcattypeidValidation").text("");
+            $("#ddlbrandValidation").text("");
+            var productCatId = $('#ddlprodcatid').val();
+            var priceMasterNameId = $('#hdnPriceMasterNameId').val();
+            $.ajax({
+                url: "@ViewData["URLPrefixforProd"]/ExchangeRegistration/ProductDetails?handler=ProductTypelist",
+                type: "GET",
+                data: {
+                    productCatId: productCatId,
+                    priceMasterNameId: priceMasterNameId
+                },
+                success: function (response) {
+
+                    // Process the response and update the UI
+                    console.log(response);
+                    debugger;
+                    if (response != null) {
+                        // Check if the "count" property exists and is greater than 0
+                        if (response.length > 0) {
+                            // There are results, and "response" is an array of objects
+                            console.log("Number of results: " + response.length);
+                            $("#ddlprodcattypeid").append($("<option></option>").val('').html('Select ProductType'));
+                            $.each(response, function (i, producttype) {
+                                $("#ddlprodcattypeid").append($("<option></option>").val(producttype.id).html(producttype.description));
+                            });
+                            // You can access individual items in the array using response[index]
+                        } else {
+                            // No results
+                            $("#ddlprodcattypeidValidation").text("Not Available");
+                        }
+                    } else {
+                        // Response is null or empty
+                        $("#ValidateProdCatId").text("please select valid option");
+                    }
+
+                },
+                error: function (xhr, status, error) {
+                    $("#ddlprodcattypeidValidation").text("Not Available");
+                    $("#ddlbrandValidation").text("Not Available");
+                }
+            });
+
+
+        });
+
+        $("#ddlprodcattypeid").change(function () {
+            $("#ddlprodnetprice").text("");
+            $("#ValidateProdCatId").text("");
+
+            $("#ddlprodnetprice").val("");
+            $("#ddlbrandid").empty();
+            $("#ddlprodcattypeidValidation").text("");
+            $("#ddlbrandValidation").text("");
+            var productCatId = $('#ddlprodcatid').val();
+            var priceMasterNameId = $('#hdnPriceMasterNameId').val();
+            var producttypeId = $('#ddlprodcattypeid').val();
+            var BuId = $('#hdnBusinessUnitId').val();
+            $.ajax({
+                url: "@ViewData["URLPrefixforProd"]/ExchangeRegistration/ProductDetails?handler=ProductBrandlist",
+                type: "GET",
+                data: {
+                    productCatId: productCatId,
+                    priceMasterNameId: priceMasterNameId,
+                    producttypeId: producttypeId,
+                    BuId: BuId
+                },
+                success: function (response) {
+                    // Process the response and update the UI
+                    debugger;
+                    console.log(response);
+                    if (response != null) {
+                        // Check if the "count" property exists and is greater than 0
+                        if (response.length > 0) {
+                            // There are results, and "response" is an array of objects
+                            console.log("Number of results: " + response.length);
+                            $("#ddlbrandid").append($("<option></option>").val('').html('Select Brand'));
+                            $.each(response, function (i, producttype) {
+                                $("#ddlbrandid").append($("<option></option>").val(producttype.id).html(producttype.name));
+                            });
+                            // You can access individual items in the array using response[index]
+                        } else {
+                            // No results
+                            $("#ddlprodcattypeidValidation").text("Not Available");
+                        }
+                    } else {
+                        // Response is null or empty
+                        $("#ddlprodcattypeidValidation").text("please select product type");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    $("#ddlbrandValidation").text("Not Available");
+                }
+            });
+
+
+        });
+
+
+        $("#ddlQualityCheckValue").change(function () {
+            $("#ddlprodnetprice").text("");
+            $("#ddlprodnetprice").val("");
+            ShowProductPrice();
+
+        });
+
+        $("#ddlbrandid").change(function () {
+            $("#ddlprodnetprice").text("");
+            $("#ddlprodnetprice").val("");
+            ShowProductPrice();
+
+        });
+        
+        function ShowProductPrice() {
+            $("#ddlprodnetprice").text("");
+            $("#ddlprodnetprice").val("");
+            var productCatId = $('#ddlprodcatid').val();
+            var priceMasterNameId = $('#hdnPriceMasterNameId').val();
+            var producttypeId = $('#ddlprodcattypeid').val();
+            var BuId = $('#hdnBusinessUnitId').val();
+            var productCondtionId = $('#ddlQualityCheckValue').val();
+            var productBrandId = $('#ddlbrandid').val();
+            var BpId = $('#hdnBusinessPartnerId').val();
+            $.ajax({
+                url: "@ViewData["URLPrefixforProd"]/ExchangeRegistration/ProductDetails?handler=ProductPrice",
+                type: "GET",
+                data: {
+                    productCatId: productCatId,
+                    priceMasterNameId: priceMasterNameId,
+                    producttypeId: producttypeId,
+                    BuId: BuId,
+                    productCondtionId: productCondtionId,
+                    productBrandId: productBrandId,
+                    BpId: BpId
+                },
+                success: function (response) {
+
+                    // Process the response and update the UI
+                    debugger;
+                    console.log(response);
+                    if (response != null) {
+                        $("#ddlprodnetprice").val(response.baseValue);
+                        // Check if the "count" property exists and is greater than 0
+                    }
+
+                    if (productCatId < 0) {
+                        // Response is null or empty
+                        $("#ValidateProdCatId").text("Please select product category");
+                    }
+                    if (priceMasterNameId < 0) {
+                        // Response is null or empty
+                        $("#vldMessageProductPrice").text("No Price Master Id found");
+                    }
+                    if (producttypeId < 0) {
+                        // Response is null or empty
+                        $("#ddlprodcattypeidValidation").text("please select product type");
+                    }
+                    if (productBrandId < 0) {
+                        // Response is null or empty
+                        $("#ddlbrandValidation").text("please select brand");
+                    }
+                    if (productCondtionId < 0) {
+                        // Response is null or empty
+                        $("#ddlQualityCheckValueValidation").text("please select product condition");
+                    }
+
+                },
+                error: function (xhr, status, error) {
+                    $("#ddlbrandValidation").text("Not Available");
+                }
+            });
+
+
+        };
+
+
+        // $("#txtcustpincode").autocomplete({
+        //     source: function (request, response) {
+        //         //var customer = new array();
+        //         var buid = $("#hdnBusinessUnitId").val();
+        //         var pintext = $("#txtcustpincode").val();
+                
+        //         $.ajax({
+        //             async: false,
+        //             cache: false,
+        //             type: "GET",
+        //             url: "@ViewData["URLPrefixforProd"]/ExchangeRegistration/ProductDetails?handler=PincodeByCityIdBUId",
+        //             data: { "pintext": pintext, buid: buid },
+        //             success: function (data) {
+        //                 console.log(data);
+        //                 if (data.length > 0) {
+        //                     // response($.map(data.slice(0, 5), function (item) {
+        //                     //     return { label: item.Text, value: item.Text };
+
+        //                     // }))
+        //                 }
+        //                 else {
+        //                    // $("#txtPincode").val("");
+        //                 }
+        //             }
+
+
+        //         });
+
+        //         //response(data);
+        //     },
+        //     select: function (event, ui) {
+        //         // $("#storeCodebox").show();
+        //         // $(".pincodewrap ").removeClass('mt-5');
+        //         // $('#btnSubmitbox').hide();
+        //     }
+        // });
+
+    });
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        $("#ddlState").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/ExchangeRegistration/ProductDetails?handler=AutoStateName", {
+                    term: extractLast(request.term)
+                }, response);
+            },
+            select: function (event, ui) {
+                $("#ddlState").val(ui.item.value); // Set the selected value
+                StateId = ui.item.text;
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $("#ddlState").val(""); // Clear the input field
+                    StateId = null;
+                }
+            }
+        });
+
+        $("#ddlCity").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/ExchangeRegistration/ProductDetails", {
+                    handler: "AutoCityName",
+                    term: extractLast(request.term),
+                    term2: StateId
+                }, response);
+            },
+            select: function (event, ui) {
+                $("#ddlCity").val(ui.item.value); // Set the selected value
+                CityId = ui.item.text;
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $("#ddlCity").val(""); // Clear the input field
+                    CityId = null;
+                }
+            }
+        });
+
+        $("#ddlPinCode").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/ExchangeRegistration/ProductDetails", {
+                    handler: "AutoPinCode",
+                    term: extractLast(request.term),
+                    term2: CityId,
+                }, response);
+            },
+            select: function (event, ui) {
+                $("#ddlPinCode").val(ui.item.value); // Set the selected value
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $("#ddlPinCode").val(""); // Clear the input field
+                }
+            }
+        });
+
+        $("#ddlBU").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/ExchangeRegistration/ProductDetails", {
+                    handler: "AutoBusinessUnit",
+                    term: extractLast(request.term),
+                }, response);
+            },
+            select: function (event, ui) {
+                $("#ddlBU").val(ui.item.value); // Set the selected value
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $("#ddlBU").val(""); // Clear the input field
+                }
+            }
+        });
+    });
+
+    //on click submitbtn
+    $('#Submitbtn').click(function () {
+        $(this).hide();
+        $('#btnReset').hide();
+    });
+</script>
+
+

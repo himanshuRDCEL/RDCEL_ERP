@@ -1,0 +1,484 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.QCIndex.QCDetailsModel
+
+@{
+    ViewData["Title"] = "QCDetails";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int imageLabelViewModelsCount = Model.imageLabelViewModels.Count();
+    int count = 1;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+<style>
+    .myVideo {
+        background: url('/Images/VIDEO-placeholder.png') no-repeat center center;
+        background-size: contain;
+        min-height: 220px
+        /* width: 400px; */
+    }
+
+    .imgContainer {
+        position: relative;
+    }
+
+    .downloadbtn {
+        display: none;
+    }
+
+    .imgContainer:hover .downloadbtn {
+        display: inherit;
+        transition: 0.6s;
+    }
+
+    .downloadbtn {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+        bottom: 3%;
+    }
+
+    .downloadbtn {
+        padding: 5px 10px;
+        font-size: 13px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+
+    #validateSweetnerBtn:active {
+    }
+
+    #Div_Validation .box {
+        margin-bottom: 30px;
+        font-size: 14px;
+    }
+
+    @@media(max-width:767px) {
+        .validinvoiceuploadbox {
+            width: 100% !important;
+        }
+
+        .border-sm-0 {
+            border: none !important;
+        }
+    }
+
+    img.FullWidthIMG {
+        width: auto !important;
+        height: auto !important;
+        max-height: 90%;
+        z-index: 1000;
+        cursor: pointer;
+    }
+</style>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <form method="post" enctype="multipart/form-data" id="QCImagesForm">
+                <div class="col-12 mb-4">
+                    <div class="card border-0 shadow">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h2 class="fs-5 fw-bold mb-0">QC Details</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Company Name</label>
+                                    <input asp-for="exchangeOrderViewModel.CompanyName" class="form-control" readonly />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Regd No.</label>
+                                    <input asp-for="exchangeOrderViewModel.RegdNo" id="ddlrno" class="form-control" readonly />
+                                </div>
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0">Customer Details</h5>
+                                    <hr />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer Name</label>
+                                    <input asp-for="exchangeOrderViewModel.CustFullname" id="txtname" class="form-control" readonly />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Email </label>
+                                    <input asp-for="exchangeOrderViewModel.CustEmail" id="txtemail" class="form-control" readonly />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Phone </label>
+                                    <input asp-for="exchangeOrderViewModel.CustPhoneNumber" id="upi" class="form-control" readonly />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Address </label>
+                                    <input asp-for="exchangeOrderViewModel.CustAddress" id="txtaddress1" class="form-control" readonly />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Customer City</label>
+                                    <input asp-for="exchangeOrderViewModel.CustCity" id="txtcity" class="form-control" readonly />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Customer State</label>
+                                    <input asp-for="exchangeOrderViewModel.CustState" id="txtstate" class="form-control" readonly />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer Pin Code</label>
+                                    <input asp-for="exchangeOrderViewModel.CustPinCode" id="txtzipcode" type="number" class="form-control" readonly />
+                                </div>
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0">Product Details</h5>
+                                    <hr />
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Category</label>
+                                    <input asp-for="exchangeOrderViewModel.ProductCategoryName" id="txtproduccat" class="form-control" readonly />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Product Type</label>
+                                    <input asp-for="exchangeOrderViewModel.ProductTypeName" id="txtproducttype" class="form-control" readonly />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Brand</label>
+                                    <input asp-for="exchangeOrderViewModel.BrandName" id="txtbrand" class="form-control" readonly />
+                                </div>
+
+
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0">Self QC Images</h5>
+                                    <hr />
+                                </div>
+                                @if (Model.IsSelfQCDone != true)
+                                {
+                                    <div class="col-12 text-right float-right">
+                                        <button type="button" id="btnRefreshSelfQC" class="btn btn-primary">Refresh</button>
+                                    </div>
+                                }
+                                <div id="SelfQCImagesDiv" class="row">
+                                    @if (Model.selfQCList != null && Model.selfQCList.Count > 0)
+                                    {
+                                        @foreach (var item in Model.selfQCList)
+                                        {
+                                            <div class="col-md-3 mb-3">
+                                                <div class="showimgwrap">
+                                                    @if (item.IsMediaTypeVideo == true)
+                                                    {
+                                                        <iframe class="myMediaFile myVideo img-responsive" src="@item.ImageWithPath" width="100%" height="100%" sandbox="" allowfullscreen="true" style="background-image:url(/Images/VIDEO-placeholder.png)"></iframe>
+                                                    }
+                                                    else
+                                                    {
+                                                        <img class="myMediaFile myImage img-responsive" src="@item.ImageWithPath" alt="@item.ProductImageLabel" onerror="this.onerror=null;this.src='/Images/placeholder-01.png'" />
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-3 mb-3">
+                                            <div class="showimgwrap">
+                                                <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <div class="showimgwrap">
+                                                <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <div class="showimgwrap">
+                                                <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <div class="showimgwrap">
+                                                <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+
+
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0">QC Comment</h5>
+                                    <hr />
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">QC Flag<span style="color: red">*</span></label>
+                                    <select asp-for="exchangeOrderViewModel.QCCommentViewModel.StatusId" id="ddlqcflags" class="form-control" asp-items="ViewBag.statusflag">
+                                        <option value=''>-- Select Flag --</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-8 mb-4">
+                                    <label for="">QC Comment<span style="color: red">*</span></label>
+                                    <textarea asp-for="exchangeOrderViewModel.QCCommentViewModel.Qccomments" placeholder="QC Remarks" class="form-control" rows="1" maxlength="200" id="txtQcComment"></textarea>
+                                    <span asp-validation-for="exchangeOrderViewModel.QCCommentViewModel.Qccomments" class="text-danger"></span>
+                                </div>
+                                
+                                <input type="hidden" asp-for="exchangeOrderViewModel.IsDiagnosev2" />
+
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0">Video QC Image</h5>
+                                    <hr />
+                                </div>
+                            </div>
+
+
+
+                            <div class="row" id="divFinalQC">
+                                <div class="col-12">
+                                    <div class="row my-4">
+                                        <div class="col-md-6 text-center">
+                                            <label>
+                                                <input type="radio" name="finalQCImage" class="clsImage" value="selfqc" id="rdBtnSelfQC" />
+                                                Add Customer Declare Photos
+                                            </label>
+                                        </div>
+
+                                        <div class="col-md-6 text-center">
+                                            <label>
+                                                <input type="radio" name="finalQCImage" class="clsImage" value="videoqc" id="rdBtnQCTeam" />
+                                                Add QC Team Declare Photos
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" asp-for="imageLabelViewModels.Count" id="hdnCount" />
+                                <div class="row detailed-reporting" id="divQCImage">
+
+                                    @for (int i = 0; i < imageLabelViewModelsCount; i++)
+                                    {
+                                        <input type="hidden" asp-for="imageLabelViewModels[i].Base64StringValue" id="hdnBase64StringValue_@count" />
+                                        <div class="col-md-4 mb-3">
+                                            <label for="formFile" class="form-label"><p>@Html.DisplayFor(model => model.imageLabelViewModels[i].ProductImageLabel)</p></label>
+                                            <div class="showimgbox" id="showimgbox_@count">
+                                                <label id="lblFileErr_@count" style="color:red;"></label>
+                                                <img id="showImg_@count" />
+                                            </div>
+                                            <input id="Image_Upload_@count" accept="image/*" asp-for="imageLabelViewModels[i].FileName" type="file" class="form-control" />
+                                            <p class="mt-2"><span>@Html.DisplayFor(model => model.imageLabelViewModels[i].ProductImageDescription)</span></p>
+                                        </div>
+                                        count += 1;
+                                    }
+                                    <hr />
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-md-7 my-3">
+
+                                    <input type="button" value="Save" id="btnSubmit" class="btn btn-primary mainshadow" />
+                                    <a href="javascript:history.go(-1)" class="btn btn-secondary">Back</a>
+
+                                </div>
+                                <div class="col-md-5 my-3 text-md-end" id="divcancelqc">
+                                    <a href='@URLPrefixforProd/Index1?OrderTransId=@Model.exchangeOrderViewModel.OrderTransId' class="btn btn-primary">Time Line</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/compressor.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#divQCImage').hide();
+        $('#btnSubmit').prop('disabled', true);
+        var a = $('#hdnCount').val();
+        for (let i = 1; i <= a; i++) {
+            $("#Image_Upload_" + i).bind('change', function () {
+                $("#lblFileErr_" + i).text("");
+                $("#hdnBase64StringValue_" + i).val("");
+                $("#showImg_" + i).attr('src', "");
+                $("#Image_Upload_" + i).css("border", "");
+                $("#lbInvoicelFileName_" + i).append(this.files[0].name);
+            });
+
+            $("#Image_Upload_" + i).resizeImg(function () {
+                var value = parseInt("350");
+                var Weight = parseInt("2");
+                let type, quality;
+                {
+                    type = "image/jpeg";
+                    quality = 0.8;
+                }
+                return {
+                    use_reader: false,
+                    mode: Weight,
+                    val: value,
+                    type: type,
+                    quality: quality,
+                    callback: function (result) {
+                        $("#showimgbox_" + i).css("display", "flex");
+                        $("#showImg_" + i).attr('src', result);
+                        $("#hdnBase64StringValue_" + i).val(result.substr(result.indexOf(',') + 1)).css("height", 100);
+                        $("#Image_Upload_" + i).val(null);
+                    }
+                };
+            });
+        }
+    });
+
+    $('#btnSubmit').click(function () {
+        if (validateImages()) {
+            $('#QCImagesForm').submit();
+            $('#btnSubmit').prop('disabled', true);
+        }
+    });
+
+    function validateImages() {
+        var flag = true;
+        //var a = $('#hdnCount').val();
+        //for (let i = 1; i <= a; i++) {
+        //    var imgBase = $("#hdnBase64StringValue").val();
+
+        //    if ($("#hdnBase64StringValue_" + i).val() == '' || $("#hdnBase64StringValue_" + i).val() == null) {
+        //        $("#Image_Upload_" + i).css("border", "1px solid red");
+        //        $("#uploadtop_" + i).css("border", "1px solid red");
+        //        $("#uploadbottom_" + i).css("border", "1px solid red");
+        //        $("#Image_Upload_" + i).focus();
+        //        $("#showimgbox_" + i).css("display", "flex");
+
+        //        $("#showImg_" + i).attr('src', "");
+        //        $("#lblFileErr_" + i).text("Please Upload Correct Image.");
+
+        //        flag = false;
+        //    }
+        //    else {
+        //        $("#Image_Upload_" + i).css("border", ""); $("#lblFileErr_" + i).text("");
+        //    }
+        //}
+        return flag;
+    }
+
+    $("input[name='finalQCImage']").change(function () {
+        var RegdNo = $('#ddlrno').val();
+        var radioButtonValue = $("input[name='finalQCImage']:checked").val();
+        if (radioButtonValue == 'selfqc') {
+            $('#divQCImage').hide();
+            $.ajax({
+                type: "POST",
+                url: "@ViewData["URLPrefixforProd"]/QCIndex/QCDetails?handler=SaveSelfQCImageAsFinalQCImage",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: { "RegdNo": RegdNo },
+                success: function (response) {
+
+                    if (response.flag == 1) {
+                        alert(response.message);
+                        RadionButtonSelectedValueSet('finalQCImage', 'videoqc');
+                    }
+                    if (response.flag == 2) {
+                        alert(response.message);
+                    }
+                    if (response.flag == 3) {
+                        alert(response.message);
+                    }
+                }
+            });
+        }
+        else if (radioButtonValue == 'videoqc') {
+            $('#divQCImage').show();
+
+        }
+    });
+
+    function RadionButtonSelectedValueSet(name, SelectdValue) {
+        $('input[name="' + name + '"][value="' + SelectdValue + '"]').prop('checked', true);
+        $('#divQCImage').show();
+    }
+
+    // Listen for changes in the fields
+    $("#ddlqcflags, #txtQcComment").on("input change", function () {
+        checkFields();
+    });
+
+    // Function to check if fields have values and enable/disable submit button
+    function checkFields() {
+        var qcFlagValue = $("#ddlqcflags").val();
+        var qcCommentValue = $("#txtQcComment").val();
+
+        // Enable submit button only if both fields have values
+        if (qcFlagValue !== '' && qcCommentValue.trim() !== '') {
+            $("#btnSubmit").prop("disabled", false);
+        } else {
+            $("#btnSubmit").prop("disabled", true);
+        }
+    }
+</script>
+<script>
+    $("#btnRefreshSelfQC").click(function () {
+        GetMediaFiles();
+    });
+
+    function GetMediaFiles() {
+        debugger;
+        var regdNo = $('#ddlrno').val();
+        var data = { 'regdNo': regdNo };
+
+        $.ajax({
+            type: 'POST',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            url: "@URLPrefixforProd/QCIndex/QCUrl?handler=GetMediaFiles",
+            data: data,
+            cache: 'no-cache',
+            success: function (response) {
+                var htmlContent = "";
+                if (response != null && response.length > 0) {
+                    $.each(response, function (item) {
+                        var value = response[item];
+                        if (value != null && value != "") {
+                            var ext = value.split('.').pop();
+                            var timestamp = new Date().getTime();
+                            var imgSrc = value + '?' + timestamp;
+                            if (ext == "webm") {
+                                htmlContent += `<div class="col-md-3 mb-3">
+                                                                      <div class="showimgwrap">
+                                                                                                <iframe class="myMediaFile myVideo img-responsive" src="`+ imgSrc + `" width="100%" height="100%" sandbox="" allowfullscreen="true"></iframe>
+                                                                      </div>
+                                                                </div>`;
+                            }
+                            else {
+                                htmlContent += `<div class="col-md-3 mb-3">
+                                                                          <div class="showimgwrap">
+                                                                                                <img class="myMediaFile myImage img-responsive" src="`+ imgSrc + `"/>
+                                                                          </div>
+                                                                    </div>`;
+                            }
+                        }
+                    });
+                    $('#SelfQCImagesDiv').empty();
+                    $('#SelfQCImagesDiv').append(htmlContent);
+                }
+            }
+        });
+    }
+</script>

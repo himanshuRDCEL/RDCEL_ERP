@@ -1,0 +1,119 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC_Portal.EVC_UserProfileModel
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header card-header-wrapper">
+                        <div class="row align-items-center card-title">
+                            <div class="col-md-6">
+                                <h2 class="fs-5 mb-0">
+                                    User Info
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row detailed-reporting">
+                            <div class="col-md-12 text-center">
+                                @if (Model.eVC_RegistrationModel != null && !string.IsNullOrEmpty(Model.eVC_RegistrationModel.ProfilePic))
+                                {
+                                    <img src="~/DBFiles/EVC/EVCProfilePic/@Model.eVC_RegistrationModel.ProfilePic" class="rounded-circle" style="width:160px; height:150px;" alt="User Image">
+                                }
+                                else
+                                {
+                                    <img src="~/ds/img/default-user-image.png" class="rounded-circle" style="width:160px; height:150px;" alt="User Image" />
+                                }
+                            </div>
+                            <div class="pt-4"></div>
+                            <div class="col-md-4 mb-3">
+                                <p>First Name : <span>@Html.DisplayFor(model => model.UserViewModel.FirstName)</span></p>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <p>Last Name : <span>@Html.DisplayFor(model => model.UserViewModel.LastName)</span></p>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <p>Email : <span>@Html.DisplayFor(model => model.UserViewModel.Email)</span></p>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <p>Phone Number : <span>@Html.DisplayFor(model => model.UserViewModel.Phone)</span></p>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <p>Last Login : <span>@Html.DisplayFor(model => model.UserViewModel.LastLogin)</span></p>
+                            </div>
+                            <div class="pt-4"></div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="sectitle">Important Details</h5>
+                                </div>
+                                <div class="col-12">
+                                    <div class="datatablebox table-responsive">
+                                        <table id="leadtbl"
+                                               class="table align-items-center table-flush"
+                                               style="width:100%" border="0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="border-bottom" scope="col">Bank Name</th>
+                                                    <th class="border-bottom" scope="col">IFSC Code</th>
+                                                    <th class="border-bottom" scope="col">Account No.</th>
+                                                    <th class="border-bottom" scope="col">GST No.</th>
+                                                    <th class="border-bottom" scope="col">GST Certificate</th>
+                                                    <th class="border-bottom" scope="col">EWaste Certificate</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="fw-bolder text-gray-500">
+                                                        @Model.eVC_RegistrationModel.BankName
+                                                    </td>
+                                                    <td class="fw-bolder text-gray-500">
+                                                        @Model.eVC_RegistrationModel.IFSCCODE
+                                                    </td>
+                                                    <td class="fw-bolder text-gray-500">
+                                                        @Model.eVC_RegistrationModel.BankAccountNo
+                                                    </td>
+                                                    <td class="fw-bolder text-gray-500">
+                                                        @Model.eVC_RegistrationModel.GSTNo
+                                                    </td>
+                                                    <td class="fw-bolder text-gray-500">
+                                                        <img class="img-responsive" src="~/DBFiles/EVC/GSTRegistration/@Model.eVC_RegistrationModel.UploadGSTRegistration" class="ct-square" style="width:160px; height:150px;" alt="User Image">
+                                                    </td>
+                                                    <td class="fw-bolder text-gray-500">
+                                                        <img class="img-responsive" src="~/DBFiles/EVC/EWasteCertificate/@Model.eVC_RegistrationModel.EWasteCertificate" class="ct-square" style="width:160px; height:150px;" alt="User Image">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-default" tabindex="-1" aria-labelledby="modal-default" style="display: none;"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+               
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary ms-auto" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

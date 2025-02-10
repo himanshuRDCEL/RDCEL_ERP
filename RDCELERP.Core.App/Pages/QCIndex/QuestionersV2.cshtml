@@ -1,0 +1,464 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.QCIndex.QuestionersV2Model
+@Html.AntiForgeryToken()
+@{
+    ViewData["Title"] = "QCQuestionersV2";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int QuestionCount = Model.qCRatingViewModelList.Count;
+
+    int serialNo = 1;
+}
+
+<div class="py-4">
+</div>
+<div class="row">
+    <div class="col-md-4 mb-4 order-md-2">
+        <div class="card border-0 shadow noborderradius">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h2 class="fs-5 fw-bold mb-0">
+                                        Customer Response
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="customerResponseBox my-4">
+
+                                @if (Model.qCRatingViewModel.Count > 0)
+                                {
+                                    @for (int i = 0; i < Model.qCRatingViewModel.Count; i++)
+                                    {
+                                        <p>
+                                            @serialNo. @Model.qCRatingViewModel[i].Qcquestion
+                                        </p>
+                                        <span>@Model.qCRatingViewModel[i].QuestionerLOVName</span>
+                                        serialNo++;
+                                    }
+                                }
+                                else
+                                {
+                                    <p> No Response Recorded Yet </p>
+                                }
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8 mb-4 order-md-1">
+        <div class="col-12 mb-4">
+            <form method="post" enctype="multipart/form-data" id="diagnosticForm">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <h2 class="fs-5 fw-bold mb-0 text-center">
+                                    <a id="backButton" class="btn btn-primary" style="float: left;">
+                                        <i class="fa-solid fa-arrow-left"></i>
+                                    </a>
+                                    Product Evaluation
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <input type="hidden" asp-for="questionerViewModel.Sweetner" id="hdnSweetner" />
+                        <input type="hidden" asp-for="questionerViewModel.OrderTrandId" id="hdnOrderTransId" />
+                        <input type="hidden" asp-for="questionerViewModel.StatusId" id="hdnStatusId" />
+                        <input type="hidden" asp-for="questionerViewModel.IsDiagnoseV2" id="hdndiagnoseflag" />
+                        <input type="hidden" asp-for="questionerViewModel.ExcellentPriceByASP" id="exlprice" />
+
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <label class="" for="">Product Category</label>
+                                <input type="text" asp-for="questionerViewModel.TblProductType.ProductCat.Description" class="form-control" readonly />
+                                <input type="hidden" asp-for="questionerViewModel.TblProductType.ProductCat.Id" id="hdnProductCatId" />
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label class="" for="">Product Type</label>
+                                <input type="text" asp-for="questionerViewModel.TblProductType.Description" class="form-control" readonly />
+                                <input type="hidden" asp-for="questionerViewModel.TblProductType.Id" id="hdnProductTypeId" />
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label class="" for="">Brand Category</label>
+                                <input type="text" asp-for="questionerViewModel.TblBrand.Name" class="form-control" readonly />
+                                <input type="hidden" asp-for="questionerViewModel.TblBrand.Id" id="hdnBrandId" />
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label class="" for="">Size</label>
+                                <input type="text" asp-for="questionerViewModel.TblProductType.Size" class="form-control" readonly />
+                            </div>
+
+                            <div class="col-md-4 mb-4">
+                                <label class="" for="">Technology</label>
+                                <select asp-for="questionerViewModel.ProductTechnologyId" id="ddlTechId" asp-items="ViewBag.techId" class="form-select">
+                                    <option value=''>-- Select Technology --</option>
+                                </select>
+                                <span asp-validation-for="questionerViewModel.ProductTechnologyId" class="text-danger"></span>
+                                <input type="hidden" asp-for="questionerViewModel.ProductTechnologyId" id="hdnTechnologyId" />
+
+                            </div>
+
+                            <div class="col-md-4 mb-4" id="divASP">
+                                <label class="" for="">Average Selling Price</label>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <i class="fa-solid fa-indian-rupee-sign icon icon-xs text-gray-600 d-flex align-items-center" readonly></i>
+                                    </span>
+                                    <input type="number" asp-for="questionerViewModel.AverageSellingPrice" id="numASP" class="form-control" readonly />
+                                </div>
+
+                            </div>
+                            <div class="col-md-4 mb-4" id="divProceed">
+                                <div class="float-right">
+                                    <input type="button" value="Proceed" id="btnProceed" class="btn btn-primary mainshadow" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow border-0 mt-4 pt-3" id="divIsWorkingONQuestioners">
+                    <div class="card-body">
+                        <div id="setQuesionsDiv">
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-12 text-start">
+                                <div class="float-left">
+                                    <input type="button" value="Check Quoted Price" class="btn btn-primary" id="btnChkPrice">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="divPrices">
+                            <div class="row detailed-reporting questions-result">
+                                <div class="col-md-3">
+                                    <p class="border rounded p-2 px-4">
+                                        <span>Excellent Price</span>
+                                        <input type="number" asp-for="questionerViewModel.ExcellentPriceByASP" id="numExcellentPrice" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p class="border rounded p-2 px-4">
+                                        <span>Quoted Price</span>
+                                        <input type="number" asp-for="questionerViewModel.QuotedPrice" id="numQuotedPrice" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p class="border rounded p-2 px-4">
+                                        <span>Sweetner Price</span>
+                                        <input type="number" id="numSweetner" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p class="border rounded p-2 px-4">
+                                        <span>Quoted Price(with sweetner)</span>
+                                        <input type="number" asp-for="questionerViewModel.QuotedPriceWithSweetner" id="numQuotedWithSweetner" readonly />
+                                    </p>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <p class="mb-2"><span>Bonus if any for QC (agreed)</span></p>
+                                    <select class="form-control" asp-for='questionerViewModel.BonusCapQC' asp-items="ViewBag.qcBonusCapLimit" id="ddlBonusCap">
+                                        <option value="0" selected>-- Select Bonus --</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="border rounded border-success p-2 px-4">
+                                        <span>Final Price</span>
+                                        <input type="number" asp-for="questionerViewModel.FinalPrice" id="numFinalPrice" readonly />
+                                    </p>
+                                </div>
+
+                                <div class="col-md-6 qualityCheckbx">
+                                    <input type="hidden" asp-for="questionerViewModel.Quality" id="hdnQuality" required />
+                                    <label for="ddlQuality">Select Quality</label>
+                                    <select asp-for="questionerViewModel.QualityId" asp-items="ViewBag.Quality" required onchange="SetQuality()" class="form-select" id="ddlQuality">
+                                        @* <option value="0" selected>-- Select Quality --</option> *@
+                                    </select>
+                                    <span asp-validation-for="questionerViewModel.QualityId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row detailed-reporting questions-result" id="divNWP">
+                            <div class="col-md-12 text-center mx-auto">
+                                <p class="border rounded p-4">
+                                    <label>Non-Working Price</label>
+                                    <input class="text-center" type="number" asp-for="questionerViewModel.NonWorkingPrice" id="numNonWorkingPrice" readonly />
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4 savebtns">
+                            <div class="col-12 text-center  my-4">
+                                <input type="button" value="Save & Continue" class="btn btn-primary mb-2" id="btnSaveAndContinue">
+                                <input type="button" value="Save & Submit" class="btn btn-primary mb-2" id="btnSaveAndSubmit">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var a = $("#hdnCount").val();
+    function SetQuality() {
+        $("#hdnQuality").val("");
+        var quality = $("#ddlQuality :selected").text();
+        $("#hdnQuality").val(quality);
+    }
+
+    $(document).ready(function () {
+        $('#divASP').hide();
+        $("#divIsWorkingONQuestioners").hide();
+        $("#divAllQuestioners").hide();
+        $("#divPrices").hide();
+        $("#divNWP").hide();
+        $("#btnProceed").hide();
+        $('.pricereportbox').hide();
+        $('.savebtns').hide();
+        var prodTech = $("#ddlTechId").val();
+        var asp = $("#numASP").val();
+        if (prodTech > 0 && asp != "") {
+            $('#divASP').show();
+            $("#btnProceed").show();
+        }
+    });
+
+    $("#ddlTechId").change(function () {
+        $("#divIsWorkingONQuestioners").hide();
+        var techId = $(this).val();
+        var productTypeId = $("#hdnProductTypeId").val();
+        var brandId = $("#hdnBrandId").val();
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/QCIndex/QuestionersV2?handler=AverageSellingPricev2",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "techId": techId, "productTypeId": productTypeId, "brandId": brandId },
+            success: function (response) {
+                if (response > 0) {
+                    $("#divASP").show();
+                    $("#numASP").val(response);
+                    $("#hdnAvgSellingPrice_1").val(response);
+                    $("#btnProceed").show();
+                }
+                else {
+                    $("#divASP").show();
+                    $("#numASP").val(0);
+                    $("#hdnAvgSellingPrice_1").val(0);
+                    $("#btnProceed").show();
+                }
+            }
+        });
+    });
+
+    $('#btnProceed').click(function () {
+        $('#setQuesionsDiv').empty();
+        $("#divIsWorkingONQuestioners").show();
+        $("#btnProceed").hide();
+        $("#divAllQuestioners select").val('');
+        $("#divAllQuestioners").hide();
+        $("#divIsWorkingONQuestioners select").val('');
+        $("#btnChkPrice").hide();
+        $("#divPrices").hide();
+        $("#divNWP").hide();
+        $(".savebtns").hide();
+
+        var typeId = $("#hdnProductTypeId").val();
+        var techId = $('#ddlTechId').val();
+
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/QCIndex/QuestionersV2?handler=QuestionListForQC",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "typeId": typeId, "techId": techId },
+            success: function (response) {
+                console.log(response);
+                $('#setQuesionsDiv').append(response);
+            }
+        });
+    });
+
+    $("#ddlBonusCap").change(function () {
+        var bonusCap = $(this).val();
+        var quotedPrice = $("#numQuotedWithSweetner").val();
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/QCIndex/QuestionersV2?handler=FinalPriceAfterQCBonus",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "bonusCap": bonusCap, "quotedPrice": quotedPrice },
+            success: function (response) {
+                if (response > 0) {
+                    $("#numFinalPrice").val(response);
+                }
+                else {
+
+                }
+            }
+        });
+    });
+
+    $('#backLoad').click(function () {
+        window.location.href = "@ViewData["URLPrefixforProd"]/QCIndex/OrdersForQC";
+    });
+
+    $('#backButton').click(function () {
+        window.location.href = "@ViewData["URLPrefixforProd"]/QCIndex/OrdersForQC";
+    });
+
+    $(document).on('change', '.ddlIsWorkingON', function () {
+        var workingCount = 0, unanswered = 0;
+        var questCount = $('.ddlIsWorkingON').length;
+        $(".ddlIsWorkingON").each(function (i, row) {
+            var isWorking = this.value;
+            if (isWorking == 6) {
+                workingCount++;
+            }
+            if (isWorking == "") {
+                unanswered++;
+            }
+        });
+        $("#hdnQuality").val('');
+        $("#ddlQuality").val('');
+        if (questCount == workingCount && unanswered == 0) {
+            $("#divAllQuestioners").show();
+            $("#divNWP").hide();
+            $('.savebtns').hide();
+            $('#divAllQuestioners select').val('');
+            $('#divAllQuestioners textarea').val('');
+            $('#numNonWorkingPrice').val('');
+        }
+        else if (unanswered == 0) {
+            $('.savebtns').hide();
+            $("#divAllQuestioners").hide();
+            var techId = $("#ddlTechId").val();
+            var productTypeId = $("#hdnProductTypeId").val();
+            $.ajax({
+                type: "get",
+                url: "@ViewData["URLPrefixforProd"]/QCIndex/QuestionersV2?handler=NonWorkingPrice",
+                beforesend: function (xhr) {
+                    xhr.setrequestheader("xsrf-token",
+                        $('input:hidden[name="__requestverificationtoken"]').val());
+                },
+                data: { "techId": techId, "productTypeId": productTypeId },
+                success: function (response) {
+                    if (response > 0) {
+                        $("#numNonWorkingPrice").val(response);
+                        $("#divNWP").show();
+                        $("#divPrices").hide();
+                        $('.savebtns').show();
+                        $('#btnSaveAndContinue').hide();
+                        $('#btnSaveAndSubmit').show();
+                    }
+                    else {
+
+                    }
+                }
+            });
+
+        }
+    })
+
+    $(document).on('change', '.ddlQuestions', function () {
+        var allSelected = true;
+        $('.ddlQuestions').each(function () {
+            if (this.value == "") {
+                allSelected = false;
+                $(this).focus();
+                return false; // break out of loop early
+            }
+        });
+        if (allSelected) {
+            $('#btnChkPrice').show();
+        }
+        else {
+            $('#btnChkPrice').hide();
+            $("#divPrices").hide();
+            $('.savebtns').hide();
+        }
+    })
+
+    $(document).on('click', '#btnChkPrice', function () {
+        var a = $("#hdnDataCount").val();
+        $("#ddlBonusCap").prop("selectedIndex", 0);
+        var list = [];
+        for (let j = 0; j < a; j++) {
+            var qcratingId = $("#hdnQcratingId_" + j).val();
+            var productCatId = $("#hdnProductCatId_" + j).val();
+            var qcquestion = $("#hdnQcquestion_" + j).val();
+            var ratingWeightage = $("#hdnRatingWeightage_" + j).val();
+            var questionerLovid = $("#hdnLoVId_" + j).val();
+            var condition = $("#ddlCondition_" + j).val();
+            var averageSellingPrice = $("#exlprice").val();
+            var sweetner = $("#hdnSweetner").val();
+            list.push({
+                QcratingId: qcratingId, ProductCatId: productCatId, Qcquestion: qcquestion,
+                RatingWeightage: ratingWeightage, QuestionerLovid: questionerLovid, Condition: condition,
+                AverageSellingPrice: averageSellingPrice, Sweetner: sweetner
+            });
+        }
+        console.log(list);
+        var data = JSON.stringify(list);
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["URLPrefixforProd"]/QCIndex/QuestionersV2?handler=QuotedPriceV2",
+            data: data,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            contentType: 'application/json',
+            success: function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    if (i == 0) {
+                        $("#numExcellentPrice").val(response[i]);
+                    }
+                    else if (i == 1) {
+                        $("#numQuotedPrice").val(response[i]);
+                    }
+                    else if (i == 2) {
+                        $("#numSweetner").val(response[i]);
+                    }
+                    else if (i == 3) {
+                        $("#numQuotedWithSweetner").val(response[i]);
+                    }
+                    else if (i == 4) {
+                        $("#numFinalPrice").val(response[i]);
+                    }
+                }
+                $("#divPrices").show();
+                $("#divNWP").hide();
+                $('.savebtns').show();
+                $('#btnSaveAndContinue').show();
+            }
+        });
+    })
+
+    $(document).on('click', '#btnSaveAndContinue', function (event) {
+        $("#hdnStatusId").val(53);
+        $('#diagnosticForm').submit();
+    })
+
+    $(document).on('click', '#btnSaveAndSubmit', function (event) {
+        $('#diagnosticForm').submit();
+    })
+</script>

@@ -1,0 +1,90 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.PayOut.PaymentStatusModel
+@{
+    ViewData["Title"] = "PaymentStatus";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header card-header-wrapper">
+                        <div class="row align-items-center card-title">
+                            <div class="col-md-6">
+                                <h2 class="fs-5 mb-0">
+                                     Payment Status
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row detailed-reporting">
+                            <div class="pt-4"></div>
+                            @if (Model != null)
+                            {
+                                <div class="row detailed-reporting">
+                                    <h4 style="text-align: center;">Payment Status</h4>
+                                    <div class="col-md-12 mb-3">
+                                        <p><h4>Payment Details</h4> </p>
+                                    </div>
+
+                                    <div class="col-md-3 mb-3">
+                                        <p><span>Beneficiary Id</span>@Html.DisplayFor(@model => @model.PaymentDetails.BeneficiaryId)</p>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <p><span>Status</span>@Html.DisplayFor(model => model.PaymentDetails.Status)</p>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <p><span>Amount</span>@Html.DisplayFor(model => model.PaymentDetails.Amount)</p>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <p><span>UTR Number</span>@Html.DisplayFor(Model => Model.PaymentDetails.UTRNumber)</p>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <p><span>Transfer Method</span>@Html.DisplayFor(model => model.PaymentDetails.TransferMethod)</p>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <p><span>Initiated At</span>@Html.DisplayFor(model => model.PaymentDetails.InitiatedAt)</p>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <p><span>Transfer Acknowledge</span>@Html.DisplayFor(model => model.PaymentDetails.TransferAcknowledge)</p>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <p><span>Processed On</span>@Html.DisplayFor(model => model.PaymentDetails.ProcessedOn)</p>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <p><span>Status Description</span>@Html.DisplayFor(model => model.PaymentDetails.StatusDescription)</p>
+                                    </div>
+                                     @if(Model.PaymentDetails.Status != null && Model.PaymentDetails.Status == "FAILED")
+                                     { 
+                                        <form action = "" method="post" enctype="multipart/form-data" id="PayOutFormForm">
+                                        <div class="row">
+                                            <input type="hidden" asp-for="PaymentDetails.BeneficiaryId" id="beneId" />
+                                            <input type="hidden" asp-for="PaymentDetails.Amount" id="amount" />
+                                            <input type="hidden" asp-for="PaymentDetails.StatusDescription" id="amount" />
+                                        </div>
+                                        <div class="col-md-12 text-right">
+                                             <input type="submit" value="Repay" class="btn btn-primary" asp-page-handler="Payment" id="btnformSubmit" />
+                                        </div>
+                                        </form>
+                                     } 
+                                    <hr />
+                                </div>
+                            }                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

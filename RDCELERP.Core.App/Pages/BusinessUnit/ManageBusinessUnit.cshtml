@@ -1,0 +1,1521 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.BusinessUnit.ManageBusinessUnitModel
+
+@{
+    ViewData["Title"] = "ManageBusinessUnit";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    var BaseUrl = ViewData["BaseUrl"];
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/css/bootstrap-multiselect.min.css">
+<style>
+    .multiselect-dropdown-menu {
+        max-height: 200px;
+        overflow-y: auto;
+
+    }
+
+    .multiselect  {
+        margin-bottom: 30px;
+    }
+
+    .ct-square {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        max-height: 220px;
+        display: block;
+        margin: 20px auto 15px;
+        border-radius: 6px;
+        padding: 20px;
+    }
+
+</style>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h2 class="fs-5 mb-0 card-title">
+                        <a href="#"></a> Create Business Unit
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row align-items-center">
+            <div class="col">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link shadow" id="nav-tab-1" data-bs-toggle="tab" tab-id="1"
+                           href="#SponsorDetailsTab" role="tab" aria-controls="nav-home"
+                           aria-selected="true">
+                            Sponsor Details
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-tab-2" data-bs-toggle="tab" tab-id="2"
+                           href="#CompanyDetailsTab" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">Company Details</a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab9" data-bs-toggle="tab" tab-id="3"
+                           href="#ModelNubmerListTab" role="tab" aria-controls="nav-home9" aria-selected="true">
+                            Model Number
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-tab-3" data-bs-toggle="tab" tab-id="4"
+                           href="#BussinessPartnerListTab" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">Bussiness Partner</a>
+                        <a class="nav-item nav-link shadow" id="nav-tab-5" data-bs-toggle="tab" tab-id="5"
+                           href="#ABBPlanAndPriceMasterTab" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">Add ABB Plan & Price Master</a>
+                        <a class="nav-item nav-link shadow" id="nav-tab-7" data-bs-toggle="tab" tab-id="7"
+                           href="#ABBExchangeProductCategoryMappingTab" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">ABB And Exchange New Product Category Mapping</a>
+                      
+                        <a class="nav-item nav-link shadow" id="nav-tab-6" data-bs-toggle="tab" tab-id="6"
+                           href="#ExchangePriceMasterTab" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">Universal Price Master</a>
+                        <a class="nav-item nav-link shadow" id="nav-tab-9" data-bs-toggle="tab" tab-id="9"
+                           href="#GenerateQRTab" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">Generate QR</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow noborderradius">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- Tab -->
+                                <div class="tab-content" id="nav-tabContent">
+                                    <div class="tab-pane fade" id="SponsorDetailsTab" role="tabpanel" tab-id="1"
+                                         aria-labelledby="nav-tab-1">
+                                        <form method="post" enctype="multipart/form-data" id="SponsorDetailsForm">
+                                            <div class="row">
+                                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                <input type="hidden" asp-for="BusinessUnitVM.BusinessUnitId" class="hdnBUId" />
+                                                <input type="hidden" asp-for="BusinessUnitVM.CreatedBy" />
+                                                <input type="hidden" asp-for="BusinessUnitVM.CreatedDate" />
+                                                <input type="hidden" asp-for="BusinessUnitVM.IsActive" />
+                                                <input type="hidden" asp-for="BusinessUnitVM.ModifiedBy" />
+                                                <input type="hidden" asp-for="BusinessUnitVM.ModifiedDate" />
+
+                                                <div class="col-12 mb-4 text-center">
+                                                    <div class="editprofilepicbox mx-auto mb-4">
+                                                        @if (!string.IsNullOrEmpty(Model.BusinessUnitVM.LogoName))
+                                                        {
+                                                            <img src="~/DBFiles/Sponsor/@Model.BusinessUnitVM.LogoName" id="imgprev" accept="image/*" class="rounded-circle" style="width:160px;height:160px;object-fit: contain;" alt="Sponsor Logo">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="@ViewData["URLPrefixforProd"]/images/images (2).png" id="imgprev" accept="image/*" alt="Logo" class="rounded-circle" style="width:160px;height:160px;object-fit: contain;" />
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Upload Sponsor Logo :</label>
+                                                    <input name="SponsorLogo" type="file" class="form-control" onchange="ShowImagePreview(this)" />
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Name<span style="color:red;">*</span></label>
+                                                    <input asp-for="BusinessUnitVM.Name" class="form-control" />
+                                                    <span asp-validation-for="BusinessUnitVM.Name" class="text-danger"></span>
+                                                    <h6><label class="" for=""><span style="color:red;">@ViewData["Message"]</span></label></h6>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Description<span style="color:red;">*</span></label>
+                                                    <input asp-for="BusinessUnitVM.Description" class="form-control" />
+                                                    <span asp-validation-for="BusinessUnitVM.Description" class="text-danger"></span>
+
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Email<span style="color:red;">*</span></label>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            <i class="far fa-envelope text-gray-600"></i>
+                                                        </span>
+                                                        <input asp-for="BusinessUnitVM.Email" class="form-control emailinputbox" />
+
+                                                    </div>
+                                                    <span asp-validation-for="BusinessUnitVM.Email" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Expected Delivery Hours<span style="color:red;">*</span></label>
+                                                    <input asp-for="BusinessUnitVM.ExpectedDeliveryHours" class="form-control" />
+                                                    <span asp-validation-for="BusinessUnitVM.ExpectedDeliveryHours" class="text-danger"></span>
+
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Voucher Expiry Time<span style="color:red;">*</span></label>
+                                                    <input asp-for="BusinessUnitVM.VoucherExpiryTime" class="form-control" />
+                                                    <span asp-validation-for="BusinessUnitVM.VoucherExpiryTime" class="text-danger"></span>
+
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Sweetner For Dtd<span style="color:red;">*</span></label>
+                                                    <input asp-for="BusinessUnitVM.SweetnerForDtd" class="form-control" />
+                                                    <span asp-validation-for="BusinessUnitVM.SweetnerForDtd" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Sweetner For Dtc<span style="color:red;">*</span></label>
+                                                    <input asp-for="BusinessUnitVM.SweetnerForDtc" class="form-control" />
+                                                    <span asp-validation-for="BusinessUnitVM.SweetnerForDtc" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">GST Type<span style="color:red;">*</span></label>
+                                                    <select asp-for="BusinessUnitVM.Gsttype" class="form-control" asp-items="ViewBag.GstTypeList">
+                                                        <option value=''>Select</option>
+                                                    </select>
+                                                    <span asp-validation-for="BusinessUnitVM.Gsttype" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Margin Type<span style="color:red;">*</span></label>
+                                                    <input asp-for="BusinessUnitVM.MarginType" class="form-control" />
+                                                    <span asp-validation-for="BusinessUnitVM.MarginType" class="text-danger"></span>
+                                                </div>
+
+
+                                                <div class="col-md-12 mb-3"></div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsSweetnerModelBased" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsSweetnerModelBased" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsSweetnerModelBased" class="text-danger"></span>
+
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsBud2c" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsBud2c" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsBud2c" class="text-danger"></span>
+
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsAbb" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsAbb" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsAbb" class="text-danger"></span>
+
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsExchange" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsExchange" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsExchange" class="text-danger"></span>
+
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsBumultiBrand" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsBumultiBrand" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsBumultiBrand" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.ShowAbbPlan" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.ShowAbbPlan" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.ShowAbbPlan" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsInvoiceDetailsRequired" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsInvoiceDetailsRequired" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsInvoiceDetailsRequired" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsNewProductDetailsRequired" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsNewProductDetailsRequired" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsNewProductDetailsRequired" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsSponsorNumberRequiredOnUi" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsSponsorNumberRequiredOnUi" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsSponsorNumberRequiredOnUi" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsUpiIdRequired" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsUpiIdRequired" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsUpiIdRequired" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsPaymentThirdParty" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsPaymentThirdParty" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsPaymentThirdParty" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsModelDetailRequired" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsModelDetailRequired" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsModelDetailRequired" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsNewBrandRequired" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsNewBrandRequired" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsNewBrandRequired" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsAreaLocality" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsAreaLocality" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsAreaLocality" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsValidationBasedSweetner" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsValidationBasedSweetner" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsValidationBasedSweetner" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsQualityRequiredOnUi" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsQualityRequiredOnUi" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsQualityRequiredOnUi" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsQualityWorkingNonWorking" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsQualityWorkingNonWorking" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsQualityWorkingNonWorking" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsStandardPriceMaster" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsStandardPriceMaster" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsStandardPriceMaster" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.ShowEmplyeeCode" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.ShowEmplyeeCode" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.ShowEmplyeeCode" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsQcdateTimeRequiredOnD2c" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsQcdateTimeRequiredOnD2c" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsQcdateTimeRequiredOnD2c" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsBulkOrder" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsBulkOrder" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsBulkOrder" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsCertificateAvailable" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsCertificateAvailable" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsCertificateAvailable" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsSweetenerIndependent" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsSweetenerIndependent" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsSweetenerIndependent" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <input asp-for="BusinessUnitVM.IsInvoiceAvailable" type="checkbox" class="IsChecked">
+                                                    <label asp-for="BusinessUnitVM.IsInvoiceAvailable" class="control-label"></label>
+                                                    <span asp-validation-for="BusinessUnitVM.IsInvoiceAvailable" class="text-danger"></span>
+                                                </div>
+
+                                                <br />
+
+                                                <div class="float-md-right mr-2" style="float:right;">
+                                                    @if (accessRule != null && accessRule.CanView)
+                                                    {
+                                                        <a asp-page="./Index" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">Cancel</a>
+                                                    }
+                                                    @if (accessRule != null && accessRule.CanAdd)
+                                                    {
+                                                        <input type="submit" id="btnSubmit" asp-page-handler="ManageBusinessUnit" value="Save & Next" class="btn btn-primary mainshadow" />
+                                                    }
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <script>
+                                        function ShowImagePreview(input) {
+
+                                            if (input.files && input.files[0]) {
+                                                var reader = new FileReader();
+                                                reader.onload = function (e) {
+                                                    $('#imgprev').prop('src', e.target.result);
+                                                };
+                                                reader.readAsDataURL(input.files[0]);
+                                            }
+                                        }
+                                    </script>
+
+
+                                    <div class="tab-pane fade" id="CompanyDetailsTab" role="tabpanel" tab-id="2"
+                                         aria-labelledby="nav-tab-2">
+                                        <form method="post" enctype="multipart/form-data" id="CompanyDetailsForm">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <input type="hidden" asp-for="BusinessUnitVM.BusinessUnitId" class="hdnId" />
+                                            <input type="hidden" asp-for="BusinessUnitVM.CompanyVM.CompanyId" id="hdnCompanyId" />
+                                            <input type="hidden" asp-for="BusinessUnitVM.CompanyVM.CreatedBy" />
+                                            <input type="hidden" asp-for="BusinessUnitVM.CompanyVM.CreatedDate" />
+                                            <input type="hidden" asp-for="BusinessUnitVM.CompanyVM.IsActive" />
+                                            <input type="hidden" asp-for="BusinessUnitVM.CompanyVM.ModifiedBy" />
+                                            <input type="hidden" asp-for="BusinessUnitVM.CompanyVM.ModifiedDate" />
+                                            <input type="hidden" asp-for="BusinessUnitVM.CompanyVM.CompanyLogoUrl" />
+                                            <input type="hidden" asp-for="BusinessUnitVM.CompanyVM.BusinessUnitId" id="hdnbuid" />
+                                            <div class="row">
+                                                <div class="col-12 mb-4 text-center">
+                                                    <div class="editprofilepicbox mx-auto">
+                                                        @if (!string.IsNullOrEmpty(Model.BusinessUnitVM.CompanyVM.CompanyLogoUrl))
+                                                        {
+                                                            <img src="~/DBFiles/Company/@Model.BusinessUnitVM.CompanyVM.CompanyLogoUrl" id="imgprev" accept="image/*" class="rounded-circle" style="width:160px;height:150px" alt="Company Image">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="~/ds/img/default-company-image.jpg" id="imgprev" accept="image/*" alt="Company Image">
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Company Name <span style="color:red;">*</span></label>
+                                                    <input asp-for="BusinessUnitVM.CompanyVM.CompanyName" class="form-control" />
+                                                    <span asp-validation-for="BusinessUnitVM.CompanyVM.CompanyName" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Business Unit Name <span style="color:red;">*</span></label>
+                                                    @if (Model.BusinessUnitVM.CompanyVM.CompanyId > 0 && Model.BusinessUnitVM.CompanyVM.BusinessUnitId > 0)
+                                                    {
+
+                                                        <input id="ddlBU" asp-for="BusinessUnitVM.CompanyVM.BusinessUnitName" class="form-control" />
+
+                                                    }
+
+                                                    else
+                                                    {
+                                                        <input id="ddlBU" asp-for="BusinessUnitVM.CompanyVM.BusinessUnitName" class="form-control" />
+
+                                                    }
+
+                                                    <span asp-validation-for="BusinessUnitVM.CompanyVM.BusinessUnitName" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Email <span style="color:red;">*</span></label>
+                                                    <input asp-for="BusinessUnitVM.CompanyVM.Email" class="form-control" />
+                                                    <span asp-validation-for="BusinessUnitVM.CompanyVM.Email" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Phone Number <span style="color:red;">*</span></label>
+                                                    <input asp-for="BusinessUnitVM.CompanyVM.Phone" type="number" class="form-control" />
+                                                    <span asp-validation-for="BusinessUnitVM.CompanyVM.Phone" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Website <span style="color:red;">*</span></label>
+                                                    <input asp-for="BusinessUnitVM.CompanyVM.Website" class="form-control" />
+                                                    <span asp-validation-for="BusinessUnitVM.CompanyVM.Website" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="BusinessUnitVM.CompanyVM.CompanyLogo">Upload Company Logo :</label>
+                                                    <input asp-for="BusinessUnitVM.CompanyVM.CompanyLogo" class="form-control" type="file" onchange="ShowImagePreview(this)" />
+                                                </div>
+                                                <br />
+                                                <div class="float-md-right mr-2" style="float:right;">
+                                                    @if (accessRule != null && accessRule.CanView)
+                                                    {
+                                                        <a asp-page="./Index" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">Cancel</a>
+                                                    }
+                                                    @if (accessRule != null && accessRule.CanAdd)
+                                                    {
+                                                        <input type="submit" id="btnSubmit" asp-page-handler="ManageCompany" value="Save & Next" class="btn btn-primary mainshadow" />
+                                                    }
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+
+                                    <div class="tab-pane fade show" id="ModelNubmerListTab" role="tabpanel" tab-id="3"
+                                         aria-labelledby="nav-profile-tab">
+                                        <form method="post" enctype="multipart/form-data" id="ModelNumberForm">
+                                            @*  <input type="hidden" asp-for="ModelNumberVM.ModelNumberId" class="hdnId" /> *@
+                                            <input type="hidden" asp-for="BusinessUnitVM.BusinessUnitId" class="hdnId" />
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <div class="row my-4">
+                                                @if (accessRule != null && accessRule.CanAdd)
+                                                {
+                                                    <div class="col-md-6">
+                                                        <div class="border p-3 rounded">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <label for="">Upload List of Model Numbers</label>
+                                                                </div>
+                                                                <div class="col-md-8">
+
+                                                                    <input type="file" asp-for="ModelNumberVM.UploadModelNumber" class="form-control" />
+                                                                    <span asp-validation-for="ModelNumberVM.UploadModelNumber" class="text-danger"></span>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    @if (accessRule != null && accessRule.CanAdd)
+                                                                    {
+                                                                        <input type="submit" id="btnSubmit" asp-page-handler="ModelMasterExcelImport" value="Save & Next" class="btn btn-primary mainshadow" />
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <a href="~/ExcelUploadFormat/ModelNumberExcelFormat.xlsx" download class="btn btn-primary my-2">
+                                                            <i class="fa-solid fa-download"></i> &nbsp;Download Excel Format
+                                                        </a>
+                                                        <a href="../ModelNumber/Manage"
+                                                           class="btn btn-primary" target="_blank">
+                                                            New Model Number
+                                                        </a>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </form>
+                                        <div class="table-responsive">
+                                            <table id="ModelNumberDatatable" class="table align-items-center table-flush" border="1">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th class="all">ModelNumberId</th>
+                                                        <th class="all">Action</th>
+                                                        <th class="all">Company Name</th>
+
+                                                        <th class="all">Model Name</th>
+                                                        <th class="all">Description</th>
+                                                        <th class="all">Model Number</th>
+                                                        <th class="all">Brand</th>
+                                                        <th class="all">Product Category</th>
+                                                        <th class="all">Product Type</th>
+
+                                                        <th class="all">Date</th>
+
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="tab-pane fade" id="BussinessPartnerListTab" role="tabpanel" tab-id="4"
+                                         aria-labelledby="nav-tab-3">
+                                        <form method="post" enctype="multipart/form-data" id="BussinessPartnerForm">
+                                            <input type="hidden" asp-for="BusinessUnitVM.BusinessUnitId" />
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <div class="row mb-4">
+                                                @if (accessRule != null && accessRule.CanAdd)
+                                                {
+                                                            <div class="col-md-6">
+                                                                <div class="border p-3 rounded">
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            <label for="">Upload List of Business Partners</label>
+                                                                        </div>
+                                                                        <div class="col-md-8">
+                                                                           
+                                                                            <input type="file" asp-for="BusinessUnitVM.UploadBusinessPartner" class="form-control" />
+                                                                            <span asp-validation-for="BusinessUnitVM.UploadBusinessPartner" class="text-danger"></span>
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            @if (accessRule != null && accessRule.CanAdd)
+                                                                            {
+                                                                                <input type="submit" id="btnSubmit" asp-page-handler="BPExcelImport" value="Save" class="btn btn-primary mainshadow" />
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                              <div class="col-md-6 text-right">
+                                                                <a href="~/ExcelUploadFormat/BusinessPartnerUploadFormat.xlsx" download class="btn btn-primary my-2">
+                                                                    <i class="fa-solid fa-download"></i> &nbsp; Download Excel Format
+                                                                </a>
+                                                                <a href="../BusinessPartner/Manage"
+                                                                   class="btn btn-primary" target="_blank">
+                                                                    New Business Partner
+                                                                </a>
+                                                            </div>
+                                                            }
+                                                        </div>
+</form>
+                                        <div class="table-responsive">
+                                            <table id="BusinessPartnerDatatable" class="table align-items-center table-flush" border="1">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th class="all">BusinessPartnerId</th>
+                                                        <th class="all">Actions</th>
+                                                        <th class="all">Name</th>
+                                                        <th class="all">Email</th>
+                                                        <th class="all">Store Code</th>
+                                                        <th class="all">State</th>
+                                                        <th class="all">City</th>
+                                                        <th class="all">Address</th>
+                                                        <th class="all">Contact Person FirstName</th>
+                                                        <th class="all">Contact Person LastName</th>
+                                                        <th class="all">Phone Number</th>
+                                                        <th class="all">BP Password</th>
+                                                        <th class="all">Associate Code</th>
+                                                        <th class="all">Date</th>
+
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="ABBPlanAndPriceMasterTab" role="tabpanel" tab-id="5"
+                                         aria-labelledby="nav-tab-5">
+                                        <form method="post" enctype="multipart/form-data" id="ABBPlanAndPriceMasterForm">
+                                            <input type="hidden" asp-for="BusinessUnitVM.BusinessUnitId" class="hdnId" />
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <div class="row mb-2">
+                                                @if (accessRule != null && accessRule.CanAdd)
+                                                {
+                                                    <div class="col-md-6">
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <a href="../ABBPlanMaster/Manage" target="_blank"
+                                                           class="btn btn-primary mb-2">
+                                                            New ABB Plan Master
+                                                        </a>
+                                                        <a href="../ABBPriceMaster/Manage" target="_blank"
+                                                           class="btn btn-primary mb-2">
+                                                            New ABB Price Master
+                                                        </a>
+                                                    </div>
+
+                                                }
+                                            </div>
+                                        </form>
+                                        <div class="table-responsive">
+                                            <table id="ABBPlanMasterDatatable" class="table align-items-center table-flush" border="1">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th class="all">PlanMasterId</th>
+                                                        <th class="all">Actions</th>
+                                                        <th class="all">Business Unit Name</th>
+                                                        <th class="all">Sponsor</th>
+                                                        <th class="all">From Month</th>
+                                                        <th class="all">To Month</th>
+                                                        <th class="all">Assured Buy Back Percentage</th>
+                                                        <th class="all">Plan Period In Month</th>
+                                                        <th class="all">Product Category</th>
+                                                        <th class="all">Product Type</th>
+                                                        <th class="all">Abb Plan Name</th>
+                                                        <th class="all">No Claim Period</th>
+                                                        <th class="all">Date</th>
+
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table id="ABBPriceMasterDatatable" class="table align-items-center table-flush" border="1">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th class="all">PriceMasterId</th>
+                                                        <th class="all">Actions</th>
+                                                        <th class="all">Business Unit Name</th>
+                                                        <th class="all">Sponsor</th>
+                                                        <th class="all">Product Category</th>
+                                                        <th class="all">Product Type</th>
+                                                        <th class="all">Price Start Range</th>
+                                                        <th class="all">Price End Range</th>
+                                                        <th class="all">Fee Type</th>
+                                                        <th class="all">Fees Applicable Percentage</th>
+                                                        <th class="all">Plan Period In Months</th>
+                                                        <th class="all">Date</th>
+
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="ABBExchangeProductCategoryMappingTab" role="tabpanel" tab-id="7"
+                                         aria-labelledby="nav-tab-3">
+                                        <form method="post" enctype="multipart/form-data" id="ABBExchangeProductCategoryMappingForm">
+                                            <input type="hidden" asp-for="BusinessUnitVM.BusinessUnitId" value="@Model.BusinessUnitVM.BusinessUnitId" />
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <div class="row">
+                                                @if (accessRule != null && accessRule.CanAdd)
+                                                {
+                                                    <div class="col-12 mb-4 text-center">
+                                                        <div class="d-flex justify-content-center align-items-center gap-5">
+                                                            <div>
+
+                                                                <input asp-for="BusinessUnitVM.IsAbb" type="checkbox" class="IsChecked">
+                                                                <label asp-for="BusinessUnitVM.IsAbb" class="control-label"></label>
+                                                                <span asp-validation-for="BusinessUnitVM.IsAbb" class="text-danger"></span>
+
+                                                            </div>
+                                                            <div>
+                                                                <input asp-for="BusinessUnitVM.IsExchange" type="checkbox" class="IsChecked">
+                                                                <label asp-for="BusinessUnitVM.IsExchange" class="control-label"></label>
+                                                                <span asp-validation-for="BusinessUnitVM.IsExchange" class="text-danger"></span>
+
+                                                            </div>
+                                                        </div>
+                                                        <p class="text-danger" id="planErrorTxt"></p>
+                                                    </div>
+
+
+                                                    @for (int i = 0; i < Model.BusinessUnitVM.ProductCategoryVMList.Count; i++)
+                                                    {
+                                                        <input type="hidden" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].Buid" value="@Model.BusinessUnitVM.BusinessUnitId" />
+                                                        <input type="hidden" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].Id" id="tab_@Model.BusinessUnitVM.ProductCategoryVMList[i].Id" />
+                                                        //<input type="hidden" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].SelectedProduct" id="ddlproduct_@i" />
+
+                                                        <div class="col-12">
+                                                            <div class="form-group p-3 mb-3 border rounded categorymapbox">
+                                                                <input type="checkbox" class="clsHowistheinformationcollected_parent" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].Selected" data-inputindex="@i" onclick="showProductTypes(this, @i)" />
+                                                                <input type="hidden" class="form-control" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].Description" />
+                                                                <label class="control-label m-0">@Model.BusinessUnitVM.ProductCategoryVMList[i].Description</label>
+                                                            </div>
+
+                                                           @*  <div id="productTypeDropdown_@i" style="display: none;">
+                                                                <select multiple class="form-control prodTypesMulti" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].SelectedProduct" asp-items="ViewBag.ProductlistS"></select>
+                                                                <span asp-validation-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].SelectedProduct" class="text-danger"></span>
+                                                            </div> *@
+                                                        </div>
+
+                                                        <br />
+                                                    }
+                                                }
+
+                                                    <br />
+
+
+                                                   @*  @for (int i = 0; i < Model.BusinessUnitVM.ProductCategoryVMList.Count; i++)
+                                                    {
+                                                        <input type="hidden" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].Buid" value="@Model.BusinessUnitVM.BusinessUnitId" />
+                                                        <input type="hidden" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].Id" id="tab_@Model.BusinessUnitVM.ProductCategoryVMList[i].Id" />
+                                                        <input type="hidden" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].SelectedProductTypes"  id="ddlproduct" />
+                                                        <div class="col-12">
+                                                            <div class="form-group p-3 mb-3 border rounded categorymapbox">
+                                                                <input type="checkbox" class="clsHowistheinformationcollected_parent" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].Selected" data-inputindex="@i" onclick="showProductTypes(this, @i)" />
+                                                                <input type="hidden" class="form-control" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].Description" />
+                                                                <label class="control-label m-0">@Model.BusinessUnitVM.ProductCategoryVMList[i].Description</label>
+                                                            </div>
+
+                                                            <div id="productTypeDropdown_@i" style="display: none;">
+                                                                <select multiple class="form-control" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].SelectedProductTypes" asp-items="ViewBag.ProductlistS" class="form-control">
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
+                                                     
+                                                       
+                                                        <br>
+                                                    }
+                                                }
+                                                <br />
+ *@
+
+                                                @*  @for (int i = 0; i < Model.BusinessUnitVM.ProductCategoryVMList.Count; i++)
+                                                {
+                                                <input type="hidden" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].Buid" value="@Model.BusinessUnitVM.BusinessUnitId" />
+                                                <input type="hidden" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].Id" id="tab_@Model.BusinessUnitVM.ProductCategoryVMList[i].Id" />
+
+                                                <div class="col-lg-4">
+                                                <div class="form-group p-3 m-3 border rounded categorymapbox">
+                                                <input type="checkbox" class="clsHowistheinformationcollected_parent"  asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].Selected" onclick="showProductTypes(this, @i)" />
+                                                <input type="hidden" class="form-control" id="ddlProduct" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].Description" />
+                                                <label class="control-label m-0">@Model.BusinessUnitVM.ProductCategoryVMList[i].Description </label>
+                                                </div>
+                                                </div>
+                                                <div id="productTypeDropdown_@i" style="display: none;">
+                                                <!-- Multiselect dropdown for product types goes here -->
+                                                <select multiple class="form-control" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].SelectedProductTypes" asp-items="ViewBag.ProductlistS" class="form-control">
+                                                <!-- Options will be populated dynamically using JavaScript -->
+                                                </select>
+                                                </div>
+                                                <br>
+                                                }
+                                                }
+                                                <br/>
+
+                                                *@
+                                                @*  @for (int i = 0; i < Model.BusinessUnitVM.ProductCategoryVMList.Count; i++)
+                                                {
+                                                <input type="hidden" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].Buid" value="@Model.BusinessUnitVM.BusinessUnitId" />
+                                                <input type="hidden" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].Id" id="tab_@Model.BusinessUnitVM.ProductCategoryVMList[i].Id" />
+
+
+                                                <div class="col-lg-4">
+                                                <div class="form-group p-3 m-3 border rounded categorymapbox">
+                                                <input type="checkbox" class="clsHowistheinformationcollected_parent" asp-for="@Model.BusinessUnitVM.ProductCategoryVMList[i].Selected" />
+                                                <label class="control-label m-0">@Model.BusinessUnitVM.ProductCategoryVMList[i].Description</label>
+                                                </div>
+                                                </div>
+                                                <br>
+                                                }
+                                                }
+                                                <br /> *@
+
+                                                <div class="float-md-right mt-3 mr-2" style="float:right;">
+                                                    @if (accessRule != null && accessRule.CanView)
+                                                    {
+                                                        <a asp-page="./Index" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">Cancel</a>
+                                                    }
+                                                    @if (accessRule != null && accessRule.CanAdd)
+                                                    {
+                                                        <input type="submit" id="btnSubmit" asp-page-handler="SaveBUProductCatMapping" value="Save & Next" class="btn btn-primary mainshadow" />
+                                                    }
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="GenerateQRTab" role="tabpanel" tab-id="9"
+                                         aria-labelledby="nav-tab-9">
+                                        <form method="post" enctype="multipart/form-data" id="GenerateQRForm">
+                                            <input type="hidden" asp-for="BusinessUnitVM.BusinessUnitId" class="hdnId" />
+                                            <input type="hidden" asp-for="BusinessUnitVM.BuLoginVM.SponsorId" value="@Model.BusinessUnitVM.BusinessUnitId" />
+                                            <input type="hidden" asp-for="BusinessUnitVM.BuLoginVM.Id"/>
+                                            <input type="hidden" asp-for="BusinessUnitVM.Email" />
+                                            <input type="hidden" asp-for="BusinessUnitVM.CompanyVM.CompanyLogoUrl" />
+                                            <input type="hidden" asp-for="BusinessUnitVM.Name" />
+                                            <input type="hidden" asp-for="BusinessUnitVM.CompanyVM.Phone" />
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <div class="row">
+                                                @if (accessRule != null && accessRule.CanView)
+                                                {
+                                                    <div class="col-md-12 mb-4 font-weight-bold"><h5>Manage Sponsor Credentials</h5></div>
+                                                    <div class="col-md-6 mb-4">
+                                                        <label class="" for="">Username<span style="color:red;">*</span></label>
+                                                        <input asp-for="BusinessUnitVM.BuLoginVM.Username" class="form-control" autocomplete="off" />
+                                                        <span asp-validation-for="BusinessUnitVM.BuLoginVM.Username" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="col-md-6 mb-4">
+                                                        <label class="" for="">Password<span style="color:red;">*</span></label>
+                                                        <input type="text" asp-for="BusinessUnitVM.BuLoginVM.Password" class="form-control" autocomplete="off" />
+                                                        <span asp-validation-for="BusinessUnitVM.BuLoginVM.Password" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="col-md-6 mb-4">
+                                                        <label class="" for="">Select Price Master Name</label>
+                                                        <select asp-for="BusinessUnitVM.BuLoginVM.PriceMasterNameId" class="form-control" asp-items="@Model.BusinessUnitVM.BuLoginVM.PriceMasterNameList">
+                                                            <option value="">Select Price Master</option>
+                                                        </select>
+                                                        <span asp-validation-for="BusinessUnitVM.BuLoginVM.PriceMasterNameId" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="col-md-6 mb-4">
+                                                        <label class="" for="">Select Business Partner<span style="color:red;">*</span></label>
+                                                        <select asp-for="BusinessUnitVM.BuLoginVM.BusinessPartnerId" class="form-control" asp-items="@Model.BusinessUnitVM.BuLoginVM.BusinessPartnerSelectList">
+                                                            <option value="">Select Business Partner</option>
+                                                        </select>
+                                                        <span asp-validation-for="BusinessUnitVM.BuLoginVM.BusinessPartnerId" class="text-danger"></span>
+                                                    </div>
+                                                   
+                                                }
+                                                <br />
+                                                <div class="float-md-left" style="float:left;text-align:left">
+                                                    @if (accessRule != null && accessRule.CanView)
+                                                    {
+                                                        <a asp-page="./Index" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">Cancel</a>
+                                                    }
+                                                    @if (accessRule != null && accessRule.CanAdd)
+                                                    {
+                                                        <input type="submit" id="btnSubmit" asp-page-handler="ManageBULogin" value="Save & Next" class="btn btn-primary mainshadow" />
+                                                    }
+                                                    <div class="float-md-right mr-2 mb-4" style="float:right;text-align:right">
+                                                        @if (accessRule != null && accessRule.CanAdd)
+                                                        {
+                                                            <input type="submit" id="btnSubmit" asp-page-handler="GenerateQRForBPWithBU" value="Generate QR For BP With BU" class="btn btn-primary mainshadow" />
+                                                        }
+                                                    </div>
+                                                </div>
+
+                                                <hr />
+                                                <div class="col-md-12 mt-2 mb-4"><h5>Generate QR</h5></div>
+                                                <div class="col-md-12 text-center mb-4">
+                                                    <input type="submit" id="btnSubmit" asp-page-handler="GenerateQRForBU" value="Generate QR For BU" class="btn btn-primary mainshadow" />
+                                                    @if (Model.BusinessUnitVM.BuLoginVM.QrCodeNameBU != null)
+                                                    {
+                                                        <span class="d-block mt-3">@Model.BusinessUnitVM.BuLoginVM.QrCodeNameBU</span>
+
+                                                        <img src="@Model.BusinessUnitVM.BuLoginVM.QrCodeUrlBU" style="max-width: 250px;" class="d-block mx-auto border rounded my-3" />
+                                                        <a class="btn btn-primary" href="@Model.BusinessUnitVM.BuLoginVM.QrCodeUrlBU" download><i class="fa-solid fa-download"></i> &nbsp;Download QR</a>
+                                                    }
+                                                </div>
+                                                @*<div class="col-md-6 text-center mb-4">
+                                                <input type="submit" id="btnSubmit" asp-page-handler="GenerateQRForBPWithBU" value="Generate QR For BP With BU" class="btn btn-primary mainshadow" />
+                                                @if (Model.BusinessUnitVM.BuLoginVM.QrCodeNameBPBU != null)
+                                                {
+                                                <span class="d-block mt-2">@Model.BusinessUnitVM.BuLoginVM.QrCodeNameBPBU</span>
+                                                <img class="d-block mx-auto border rounded my-3" src="@Model.BusinessUnitVM.BuLoginVM.QrCodeUrlBPBU" />
+                                                <a class="btn btn-primary" href="@Model.BusinessUnitVM.BuLoginVM.QrCodeUrlBPBU" download><i class="fa-solid fa-download"></i> &nbsp;Download QR</a>
+                                                }
+
+                                                </div>*@
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="ExchangePriceMasterTab" role="tabpanel" tab-id="6"
+                                         aria-labelledby="nav-tab-3">
+                                        <form method="post" enctype="multipart/form-data" id="ExchangePriceMasterForm">
+                                            <input type="hidden" asp-for="BusinessUnitVM.BusinessUnitId" class="hdnId" />
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <div class="row">
+                                                @if (accessRule != null && accessRule.CanAdd)
+                                                {
+                                                    <div class="col-md-6">
+                                                        <div class="border p-3 rounded">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <label for="">Upload List of Universal Price Masters</label>
+                                                                </div>
+                                                                <div class="col-md-8">
+
+                                                                    <input type="file" asp-for="UniversalPriceMasterVM.UploadUniversalPriceMaster" class="form-control" />
+                                                                    <span asp-validation-for="UniversalPriceMasterVM.UploadUniversalPriceMaster" class="text-danger"></span>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    @if (accessRule != null && accessRule.CanAdd)
+                                                                    {
+                                                                        <input type="submit" id="btnSubmit" asp-page-handler="UniversalPriceMasterExcelImport" value="Save" class="btn btn-primary mainshadow" />
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <a href="~/ExcelUploadFormat/UniversalPriceMasterExcel.xlsx" download class="btn btn-primary my-2">
+                                                            <i class="fa-solid fa-download"></i> &nbsp;Download Excel Format
+                                                        </a>
+                                                       
+                                                        <a href="../NewPriceMasterName/Manage"
+                                                           class="btn btn-primary" target="_blank">
+                                                            New Price Master Name
+                                                        </a>
+                                                        <a href="../New`PriceMasterMapping/Manage"
+                                                           class="btn btn-primary" target="_blank">
+                                                            New Price Master Mapping
+                                                        </a>
+                                                        <a href="../UniversalPriceMaster/Manage"
+                                                           class="btn btn-primary" target="_blank">
+                                                            New Universal Price Master
+                                                        </a>
+
+                                                    </div>
+
+                                                }
+
+                                            </div>
+                                        </form>
+                                        <div class="table-responsive">
+                                            <table id="PriceMasterDatatable" class="table align-items-center table-flush" border="1">
+                                                <thead class="thead-light">
+                                                    <tr>
+
+                                                        <th class="all">priceMasterUniversalId</th>
+                                                        <th class="all">action</th>
+                                                        <th class="all">price Master Name</th>
+                                                        <th class="all">Product Category</th>
+                                                        <th class="all">Product Type</th>
+                                                        <th class="all">brand Name-1</th>
+                                                        <th class="all">brand Name-2</th>
+                                                        <th class="all">brand Name-3</th>
+                                                        <th class="all">brand Name-4</th>
+                                                        <th class="all">quote-P-High</th>
+                                                        <th class="all">quote-Q-High</th>
+                                                        <th class="all">quote-R-High</th>
+                                                        <th class="all">quote-S-High</th>
+                                                        <th class="all">quote-P</th>
+                                                        <th class="all">quote-Q</th>
+                                                        <th class="all">quote-R</th>
+                                                        <th class="all">quote-S</th>
+                                                        <th class="all">other Brand</th>
+                                                        <th class="all">Price Start Date</th>
+                                                        <th class="all">Price End Date</th>
+                                                        <th class="all">Created Date</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var BuId = @Model.BusinessUnitVM.BusinessUnitId;
+        if (BuId == "") {
+            BuId = 0;
+        }
+        var urlBUModelNumber = "@URLPrefixforProd/api/MasterList/GetModelNumberListByBUId?BUId=" + BuId;
+        var urlBUBP = "@URLPrefixforProd/api/MasterList/GetBusinessPartnerListByBUId?BUId=" + BuId;
+        var urlABBPlanMaster = "@URLPrefixforProd/api/MasterList/GetABBPlanMasterListByBUId?BUId=" + BuId;
+        var urlABBPriceMaster = "@URLPrefixforProd/api/MasterList/GetABBPriceMasterListByBUId?BUId=" + BuId;
+        var urlExchPriceMaster = "@URLPrefixforProd/api/MasterList/GetUniversalPriceMasterListByBUId?BUId=" + BuId;
+
+        ModelNumberDT(urlBUModelNumber);
+        BusinessPartnerDT(urlBUBP);
+        AbbPlanMasterDT(urlABBPlanMaster);
+        AbbPriceMasterDT(urlABBPriceMaster);
+        ExchangePriceMasterDT(urlExchPriceMaster);
+        // Get Form Id from Active Tab
+    @*var ActiveTabFormId = "";
+            $('.nav-tabs .nav-link').click(function () {
+            ActiveTabFormId = $('.tab-pane.active form').attr('id');
+            console.log(CurrentTabID);
+            });*@
+
+                    //Auto Active Tab Backend Dynamically
+                    var CurrentTabId = @Model.BusinessUnitVM.ActiveTabId;
+    @*$('.nav-tabs .nav-link').css({ 'pointer-events': 'none', 'cursor': 'not-allowed' });*@
+            $('.nav-item.nav-link[tab-id="' + CurrentTabId + '"]').addClass('active');
+        $('.tab-pane[tab-id="' + CurrentTabId + '"]').addClass('active show');
+    });
+</script>
+<script>
+    function ShowImagePreview(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imgprev').prop('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+<script type="text/javascript">
+
+    //DataTable Function Call
+    function ModelNumberDT(url) {
+        table = $('#ModelNumberDatatable').DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "searching": true,
+            "filter": true,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Model Number',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                },
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Model Number Found"
+            },
+            "searching": false,
+            "info": true,
+            "paging": true,
+            "oLanguage": {
+                "sEmptyTable": "No data found"
+            },
+
+            "ajax": {
+                "url": url,
+                "datatype": "json",
+                "type": "POST"
+            },
+
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "responsive": true,
+            "columns": [
+
+                { "data": "modelNumberId", "name": "ModelNumberId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "businessUnitName", "name": "BusinessUnitName", "autoWidth": true, "orderable": true },
+
+                { "data": "modelName", "name": "ModelName", "autoWidth": true, "orderable": true },
+                { "data": "description", "name": "Description", "autoWidth": true, "orderable": true },
+                { "data": "code", "name": "Code", "autoWidth": true, "orderable": true },
+                { "data": "brandName", "name": "BrandName", "autoWidth": true, "orderable": true },
+                { "data": "productCategoryName", "name": "ProductCategoryName", "autoWidth": true, "orderable": true },
+                { "data": "productTypeName", "name": "ProductTypeName", "autoWidth": true, "orderable": true },
+                { "data": "date", "name": "Date", "autoWidth": true, "orderable": true },
+
+            ]
+        });
+    }
+
+
+    //Business Partner Datatable
+    function BusinessPartnerDT(url) {
+        $('#BusinessPartnerDatatable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "searching": true,
+            "filter": true,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Business Partner',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                },
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No business partner found"
+            },
+            "searching": false,
+            "info": true,
+            "paging": true,
+            "oLanguage": {
+                "sEmptyTable": "No data found"
+            },
+
+            "ajax": {
+                "url": url,
+                "datatype": "json",
+                "type": "POST"
+            },
+
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "responsive": true,
+            "columns": [
+                { "data": "businessPartnerId", "name": "BusinessPartnerId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "name", "name": "Name", "autoWidth": true, "orderable": true },
+                { "data": "email", "name": "Email", "autoWidth": true, "orderable": true },
+                { "data": "storeCode", "name": "StoreCode", "autoWidth": true, "orderable": true },
+                { "data": "state", "name": "State", "autoWidth": true, "orderable": true },
+                { "data": "city", "name": "City", "autoWidth": true, "orderable": true },
+                { "data": "addressLine1", "name": "AddressLine1", "autoWidth": true, "orderable": true },
+                { "data": "contactPersonFirstName", "name": "ContactPersonFirstName", "autoWidth": true, "orderable": true },
+                { "data": "contactPersonLastName", "name": "ContactPersonLastName", "autoWidth": true, "orderable": true },
+                { "data": "phoneNumber", "name": "PhoneNumber", "autoWidth": true, "orderable": true },
+                { "data": "bppassword", "name": "BPPassword", "autoWidth": true, "orderable": true },
+                { "data": "associateCode", "name": "AssociateCode", "autoWidth": true, "orderable": true },
+                { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+
+            ]
+        });
+    }
+    //ABB Plan Master Datatable
+    function AbbPlanMasterDT(url) {
+        table = $('#ABBPlanMasterDatatable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "paging": true,
+            "filter": true,
+            "searching": false,
+    @*"data": { startDate: startDate, endDate: endDate },
+            *@"dom": 'Bfrtlp',
+            "buttons": [
+            {
+                extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                title: 'ABB Plan Master List',
+                action: newexportaction,
+                exportOptions: {
+                    modifier: {
+                        // DataTables core
+                        order: 'index',  // 'current', 'applied', 'index',  'original'
+                        page: 'all',      // 'all',     'current' for export all pages data
+                        search: 'none'     // 'none',    'applied', 'removed'
+                    },
+                    columns: ':not(.notexport)'
+                }
+            }
+        ],
+            "oLanguage": {
+            "sEmptyTable": "No ABB Plan Master found"
+        },
+            "ajax": {
+            "url": url,
+            "type": "POST",
+            "datatype": "json"
+        },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "responsive": true,
+            "columns": [
+
+            { "data": "planMasterId", "name": "PlanMasterId", "autoWidth": true, "orderable": false },
+            { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+            { "data": "businessUnitName", "name": "BusinessUnitName", "autoWidth": true, "orderable": true },
+            { "data": "sponsor", "name": "Sponsor", "autoWidth": true, "orderable": true },
+            { "data": "fromMonth", "name": "FromMonth", "autoWidth": true, "orderable": true },
+            { "data": "toMonth", "name": "ToMonth", "autoWidth": true, "orderable": true },
+            { "data": "assuredBuyBackPercentage", "name": "AssuredBuyBackPercentage", "autoWidth": true, "orderable": true },
+            { "data": "planPeriodInMonth", "name": "PlanPeriodInMonth", "autoWidth": true, "orderable": true },
+            { "data": "productCategoryName", "name": "ProductCategoryName", "autoWidth": true, "orderable": true },
+            { "data": "productTypeName", "name": "ProductTypeName", "autoWidth": true, "orderable": true },
+            { "data": "abbplanName", "name": "AbbplanName", "autoWidth": true, "orderable": true },
+            { "data": "noClaimPeriod", "name": "NoClaimPeriod", "autoWidth": true, "orderable": true },
+            { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+
+        ]
+                });
+            }
+    //ABB Price Master Datatable
+    function AbbPriceMasterDT(url) {
+        table = $('#ABBPriceMasterDatatable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "paging": true,
+            "filter": true,
+            "searching": false,
+    @*"data": { startDate: startDate, endDate: endDate },
+            *@"dom": 'Bfrtlp',
+            "buttons": [
+            {
+                extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                title: 'ABB Price Master List',
+                action: newexportaction,
+                exportOptions: {
+                    modifier: {
+                        // DataTables core
+                        order: 'index',  // 'current', 'applied', 'index',  'original'
+                        page: 'all',      // 'all',     'current' for export all pages data
+                        search: 'none'     // 'none',    'applied', 'removed'
+                    },
+                    columns: ':not(.notexport)'
+                }
+            }
+        ],
+            "oLanguage": {
+            "sEmptyTable": "No Data found"
+        },
+            "ajax": {
+            "url": url,
+            "type": "POST",
+            "datatype": "json"
+        },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "responsive": true,
+            "columns": [
+            { "data": "priceMasterId", "name": "PriceMasterId", "autoWidth": true, "orderable": false },
+            { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+            { "data": "businessUnitName", "name": "BusinessUnitName", "autoWidth": true, "orderable": true },
+
+            { "data": "sponsor", "name": "Sponsor", "autoWidth": true, "orderable": true },
+            { "data": "productCategory", "name": "ProductCategory", "autoWidth": true, "orderable": true },
+            { "data": "productSabcategory", "name": "ProductSabcategory", "autoWidth": true, "orderable": true },
+            { "data": "priceStartRange", "name": "PriceStartRange", "autoWidth": true, "orderable": true },
+            { "data": "priceEndRange", "name": "PriceEndRange", "autoWidth": true, "orderable": true },
+            { "data": "feeType", "name": "FeeType", "autoWidth": true, "orderable": true },
+            { "data": "feesApplicablePercentage", "name": "FeesApplicablePercentage", "autoWidth": true, "orderable": true },
+            { "data": "planPeriodInMonths", "name": "PlanPeriodInMonths", "autoWidth": true, "orderable": true },
+            { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+
+        ]
+                });
+            }
+    //Exchange Price Master Datatable
+    function ExchangePriceMasterDT(url) {
+        $('#PriceMasterDatatable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "searching": true,
+            "filter": true,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Price Master',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                },
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No price master found"
+            },
+            "searching": false,
+            "info": true,
+            "paging": true,
+            "oLanguage": {
+                "sEmptyTable": "No price master found"
+            },
+
+            "ajax": {
+                "url": url,
+                "datatype": "json",
+                "type": "POST"
+            },
+
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "responsive": true,
+            "columns": [
+
+                { "data": "priceMasterUniversalId", "name": "PriceMasterUniversalId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "priceMasterName", "name": "PriceMasterName", "autoWidth": true, "orderable": true },
+                { "data": "productCategoryDiscription", "name": "ProductCategoryDiscription", "autoWidth": true, "orderable": true },
+                { "data": "productTypeName", "name": "ProductTypeName", "autoWidth": true, "orderable": true },
+                { "data": "brandName1", "name": "BrandName1", "autoWidth": true, "orderable": true },
+                { "data": "brandName2", "name": "BrandName2", "autoWidth": true, "orderable": true },
+                { "data": "brandName3", "name": "BrandName3", "autoWidth": true, "orderable": true },
+                { "data": "brandName4", "name": "BrandName4", "autoWidth": true, "orderable": true },
+                { "data": "quotePHigh", "name": "QuotePHigh", "autoWidth": true, "orderable": true },
+                { "data": "quoteQHigh", "name": "QuoteQHigh", "autoWidth": true, "orderable": true },
+                { "data": "quoteRHigh", "name": "QuoteRHigh", "autoWidth": true, "orderable": true },
+                { "data": "quoteSHigh", "name": "QuoteSHigh", "autoWidth": true, "orderable": true },
+                { "data": "quoteP", "name": "QuoteP", "autoWidth": true, "orderable": true },
+                { "data": "quoteQ", "name": "QuoteQ", "autoWidth": true, "orderable": true },
+                { "data": "quoteR", "name": "QuoteR", "autoWidth": true, "orderable": true },
+                { "data": "quoteS", "name": "QuoteS", "autoWidth": true, "orderable": true },
+                { "data": "otherBrand", "name": "OtherBrand", "autoWidth": true, "orderable": true },
+                { "data": "priceStartDate", "name": "PriceStartDate", "autoWidth": true, "orderable": true },
+                { "data": "priceEndDate", "name": "PriceEndDate", "autoWidth": true, "orderable": true },
+                { "data": "date", "name": "Date", "autoWidth": true, "orderable": true },
+            ]
+        });
+    }
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+    //For Export Buttons available inside jquery-datatable "server side processing" - End
+
+
+    $('.categorymapbox').click(function () {
+        var checkBoxes = $(this).find('input[type="checkbox"]');
+        if (checkBoxes.prop("checked") == true)
+            checkBoxes.prop("checked", false);
+        else {
+            checkBoxes.prop("checked", true);
+            let indexN = checkBoxes.data('inputindex');
+            var Description = checkBoxes.next().val();
+            console.log(Description);
+            loadProductTypes(indexN, Description);
+            var dropdown = document.getElementById('productTypeDropdown_' + indexN);
+            dropdown.style.display = 'block';
+        }
+    });
+
+    $('.categorymapbox input[type="checkbox"]').click(function (e) {
+        e.stopPropagation();
+    });
+
+    $(document).ready(function () {
+        $('#ABBExchangeProductCategoryMappingForm').submit(function () {
+            if ($('input[name="BusinessUnitVM.IsAbb"]:checked').length == 0 &&
+                $('input[name="BusinessUnitVM.IsExchange"]:checked').length == 0) {
+                $('#planErrorTxt').text('Please select at least one option from ABB & Exchange');
+
+                return false;
+            }
+            else {
+                $('#planErrorTxt').text('  ');
+                const res = $('#ddlproduct').val();
+                console.log(res);
+            }
+        });
+    });
+
+
+    var BUId = null;
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlBU").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/BusinessUnit/ManageBusinessUnit", {
+                    handler: "SearchBUName",
+                    term: extractLast(request.term),
+                }, response);
+            },
+
+            select: function (event, ui) {
+                // $("#ddlBU").val(ui.item.value); // Set the selected value
+
+                var terms = split(this.value);
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                this.value = terms;
+
+                BUId = ui.item.text;
+                $('#hdnbuid').val(BUId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $("#ddlBU").val(""); // Clear the input field
+                }
+            }
+        });
+    })
+
+    // function showProductTypes(checkbox, index) {
+
+    //     var Description = $(checkbox).next().val();
+
+    //     console.log(Description);
+        
+    //     var dropdown = document.getElementById('productTypeDropdown_' + index);
+
+    //     if (checkbox.checked) {
+    //         loadProductTypes(index, Description);
+    //         dropdown.style.display = 'block';
+    //     } else {
+    //         dropdown.style.display = 'none';
+    //     }
+    // }
+
+
+
+    // function loadProductTypes(index, Description) {
+
+    //     debugger;
+
+    //     var dropdown = document.getElementById('productTypeDropdown_' + index);
+    //     var Id = $("#hdnbuid").val();
+    //     alert(Id);
+    //     // AJAX request to get product types for the selected category
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: "@URLPrefixforProd/BusinessUnit/ManageBusinessUnit?handler=SelectProductTypes",
+    //         data: { "Description" : Description, "Id" : Id },
+    //         beforeSend: function (xhr) {
+    //             xhr.setRequestHeader("XSRF-TOKEN",
+    //                 $('input:hidden[name="__RequestVerificationToken"]').val());
+    //         },
+    //         success: function (data) {
+    //             console.log(data);
+    //             // Update the options in the existing dropdown
+    //             var select = $('#productTypeDropdown_' + index + ' select');
+    //             select.empty(); // Clear existing options
+
+    //             let prodType = data.$values;
+
+    //             console.log(prodType);
+
+    //             prodType.forEach(function (productType) {
+    //                 var option = document.createElement('option');
+    //                 option.value = productType.Id;
+    //                 option.text = productType.Description;
+    //                 select.append(option);
+    //             });
+
+    //             // Check if Multiselect has already been applied
+    //             if (!select.hasClass('multiselect-initialized')) {
+    //                 // Initialize Multiselect for the updated dropdown
+    //                 select.multiselect({
+    //                     enableFiltering: true,
+    //                     filterPlaceholder: 'Search',
+    //                     enableCaseInsensitiveFiltering: true,
+    //                     buttonWidth: '100%',
+    //                     includeSelectAllOption: false,
+    //                     onDropdownShow: function (event) {
+    //                         var dropdownMenu = $(event.currentTarget).find('.dropdown-menu');
+    //                         dropdownMenu.addClass('multiselect-dropdown-menu'); // Add the CSS class to the dropdown menu
+    //                     }
+    //                 });
+
+    //                 // Add a class to mark that Multiselect has been initialized
+    //                 select.addClass('multiselect-initialized');
+    //             } else {
+    //                 // Refresh the Multiselect to reflect the changes
+    //                 select.multiselect('rebuild');
+    //             }
+    //         },
+
+
+
+    //         error: function (xhr, status, error) {
+    //             console.error(xhr.responseText);
+    //             alert('Error loading product types. See console for details.');
+    //         }
+    //     });
+    // }
+
+
+    
+</script>

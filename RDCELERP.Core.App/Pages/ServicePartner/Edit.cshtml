@@ -1,0 +1,76 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ServicePartner.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "ServicePartner";
+}
+
+<h1>Edit</h1>
+
+<h4>TblServicePartner</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblServicePartner.ServicePartnerId" />
+            <div class="form-group">
+                <label asp-for="TblServicePartner.ServicePartnerName" class="control-label"></label>
+                <input asp-for="TblServicePartner.ServicePartnerName" class="form-control" />
+                <span asp-validation-for="TblServicePartner.ServicePartnerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblServicePartner.ServicePartnerDescription" class="control-label"></label>
+                <input asp-for="TblServicePartner.ServicePartnerDescription" class="form-control" />
+                <span asp-validation-for="TblServicePartner.ServicePartnerDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblServicePartner.IsActive" class="control-label"></label>
+                <input asp-for="TblServicePartner.IsActive" class="form-control" />
+                <span asp-validation-for="TblServicePartner.IsActive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblServicePartner.CreatedBy" class="control-label"></label>
+                <input asp-for="TblServicePartner.CreatedBy" class="form-control" />
+                <span asp-validation-for="TblServicePartner.CreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblServicePartner.CreatedDate" class="control-label"></label>
+                <input asp-for="TblServicePartner.CreatedDate" class="form-control" />
+                <span asp-validation-for="TblServicePartner.CreatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblServicePartner.Modifiedby" class="control-label"></label>
+                <input asp-for="TblServicePartner.Modifiedby" class="form-control" />
+                <span asp-validation-for="TblServicePartner.Modifiedby" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblServicePartner.ModifiedDate" class="control-label"></label>
+                <input asp-for="TblServicePartner.ModifiedDate" class="form-control" />
+                <span asp-validation-for="TblServicePartner.ModifiedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblServicePartner.UserId" class="control-label"></label>
+                <select asp-for="TblServicePartner.UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="TblServicePartner.UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblServicePartner.IsServicePartnerLocal" class="control-label"></label>
+                <input asp-for="TblServicePartner.IsServicePartnerLocal" class="form-control" />
+                <span asp-validation-for="TblServicePartner.IsServicePartnerLocal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

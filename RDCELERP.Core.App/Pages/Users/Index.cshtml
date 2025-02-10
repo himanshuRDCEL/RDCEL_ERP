@@ -1,0 +1,505 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.Users.IndexModel
+
+@{
+    ViewData["Title"] = "User List";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int i = 0;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+@if (accessRule != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="card border-0 shadow">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h2 class="fs-5 fw-bold mb-0">User List</h2>
+                                </div>
+                                <div class="col text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <a asp-page="Manage"
+                                           class="btn btn-primary">
+                                            New User
+                                        </a>
+                                        @*<<<<<<< Dev@*@
+                                    }
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            
+                            <div class="table-responsive">
+                                <table id="UserDatatable" class="table align-items-center table-flush" border="1">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            @*<<<<<<< Dev*@
+                                            <th class="all">UserId</th>
+                                            <th class="all">Action</th>
+                                            <th class="all">Image</th>
+                                            <th class="all">First Name</th>
+                                            <th class="all">Last Name</th>
+                                            <th class="all">Email</th>
+                                            <th class="all">Phone</th>
+                                            <th class="all">Role</th>
+                                            <th class="all">Company</th>
+                                            <th class="all">User Status</th>
+                                            <th class="all">Date</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            
+                        </div>
+                        @*List Page Common Filters Code VK 19-May*@
+                        <div class="filters">
+                            <div class="p-4">
+                                <h4 class="">Filters</h4>
+                                @* Order Date Range Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkOrderDateRange">
+                                    <label for="chkOrderDateRange">Date Range</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline mb-2" id="startDate"  placeholder="Start Date" autocomplete="off">
+                                    <input type="text" class="form-control d-inline mb-2" id="endDate" placeholder="End Date" autocomplete="off">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* First Name Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkFName">
+                                    <label for="chkPhoneNo">First Name</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="FName" placeholder="Search First Name">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Last Name Filter *@
+                                <p class="filterheading"><input type="checkbox" name="" id="chkLName"><label for="chkUser">Last Name</label></p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="LName" placeholder="Search Last Name">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+
+                                @* Email Filter *@
+                                <p class="filterheading"><input type="checkbox" name="" id="chkEmail"><label for="chkUser">Email</label></p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="Email" placeholder="Search Email">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Phone Number Filter *@
+                                <p class="filterheading"><input type="checkbox" name="" id="chkPhoneNo"><label for="chkUser">Phone Number</label></p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="PhoneNo" placeholder="Search Phone Number">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Role Filter *@
+                                <p class="filterheading"><input type="checkbox" name="" id="chkrole"><label for="chkUser">Role</label></p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="role" placeholder="Search Role">
+                                </div>
+                                <div class="filter-seprator"></div>
+                                @* Company Filter *@
+                                <p class="filterheading"><input type="checkbox" name="" id="chkcompany"><label for="chkUser">Company</label></p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="Company" placeholder="Search Company">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Submit Filter *@
+                                <div class="filterbtnwrap">
+                                    <a id="btnFilter" class="btn btn-primary">Filter</a>
+                                    <a id="btnCloseFilter" class="btn btn-secondary py-2">Clear</a>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="delete-conformation" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+        <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+            <div class="modal-content">
+                <div class="modal-header" style="background:#d9534f;color:white;">
+                    <h4 class="modal-title" id="delete-conformation">
+                        Inactive Confirmation
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+
+                        <div class="row">
+                            <div class="form-group">
+                                <input type="hidden" asp-for="TblUserRoleObj.UserRoleId" id="hdnId" />
+                                <div class="col-sm-12">
+                                    <span>
+                                        Are you sure you want to Inactive this User?
+                                    </span>
+                                    @*<strong class="deletedValueName">
+                                </strong>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <input type="submit" asp-page-handler="Delete" class="btn btn-danger" value="Make Inactive" />
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="active-conformation" tabindex="-1" role="dialog" aria-labelledby="activeconformation">
+        <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+            <div class="modal-content">
+                <div class="modal-header" style="background:#d9534f;color:white;">
+                    <h4 class="modal-title" id="active-conformation1">
+                        Active Confirmation
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+
+                        <div class="row">
+                            <div class="form-group">
+                                <input type="hidden" asp-for="TblUserRoleObj.UserRoleId" id="hdnId1" />
+                                <div class="col-sm-12">
+                                    <span>
+                                        Are you sure you want to active this User?
+                                    </span>
+                                    @*<strong class="deletedValueName">
+                                </strong>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <input type="submit" asp-page-handler="Delete" class="btn btn-success" value="Make Active" />
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+<script type="text/javascript">
+    var table = null;
+
+    //variable declaration
+    var table = null;
+
+    //Document (Page Load) ready Function Call
+    $(document).ready(function () {
+        //Date Picker
+        $("#startDate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                $("#endDate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#endDate").datepicker({
+            defaultDate: null,
+        });
+
+
+        //Hide Filters Dive
+        $('.filters').hide();
+        //Table Count 1 Start
+        var url = "@ViewData["URLPrefixforProd"]/api/ListPage/GetUsersList?roleId=" + @ViewBag.RoleId ;
+        DataTable(url);
+
+    });
+
+    //Filter Close Button Click Event
+    $('#btnCloseFilter').click(function () {
+        $('#startDate').val("");
+        $('#endDate').val("");
+        $('#FName').val("");
+        $('#LName').val("");
+        $('#Email').val("");
+        $('#PhoneNo').val("");
+        $('#role').val("");
+        $('#Company').val("");
+        // Unchecks it
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        CommonFilter();
+    });
+
+    //Check Box Date Range change Event
+    $("#chkOrderDateRange").click(function () {
+        if (!this.checked) {
+            $('#startDate').val("");
+            $('#endDate').val("");
+        }
+    });
+
+    //Check Box First Name change Event
+    $("#chkFName").click(function () {
+        if (!this.checked) {
+            $('#FName').val("");
+        }
+    });
+    //Check Box Last Name change Event
+    $("#chkLName").click(function () {
+        if (!this.checked) {
+            $('#LName').val("");
+        }
+    });
+
+    //Check Box Email change Event
+    $("#chkEmail").click(function () {
+        if (!this.checked) {
+            $('#Email').val("");
+        }
+    });
+
+    //Check Box Phone Number change Event
+    $("#chkPhoneNo").click(function () {
+        if (!this.checked) {
+            $('#PhoneNo').val("");
+        }
+    });
+
+    //Check Box Role change Event
+    $("#chkrole").click(function () {
+        if (!this.checked) {
+            $('#role').val("");
+        }
+    });
+
+    //Check Box Company change Event
+    $("chkcompany").click(function () {
+        if (!this.checked) {
+            $('#Company').val("");
+        }
+    });
+    // Follow-up list multi Search Filter
+    $('#btnFilter').click(function () {
+        CommonFilter();
+    });
+
+    function DataTable(url) {
+        table = $('#UserDatatable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "paging": true,
+            "filter": true,
+            "searching": false,
+
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    text: '<button class="btn btn-primary" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters').toggle();
+                        //$('.content').toggleClass('maincontent');
+                        //$('.filters').insertBefore('table.dataTable');
+                    }
+                },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'User List',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No User found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "responsive": true,
+            "columns": [
+                { "data": "userId", "name": "UserId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "imageName", "name": "ImageName", "autoWidth": true, "orderable": true },
+                { "data": "firstName", "name": "FirstName", "autoWidth": true, "orderable": true },
+                { "data": "lastName", "name": "LastName", "autoWidth": true, "orderable": true },
+                { "data": "email", "name": "Email", "autoWidth": true, "orderable": true },
+                { "data": "phone", "name": "Phone", "autoWidth": true, "orderable": true },
+                { "data": "role", "name": "Role", "autoWidth": true, "orderable": true },
+                { "data": "companyName", "name": "CompanyName", "autoWidth": true, "orderable": true },
+                { "data": "userStatus", "name": "UserStatus", "autoWidth": true, "orderable": true },
+                { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+            ]
+        });
+    }
+
+    function GetURLData(startDate = null, endDate = null, FName = null, LName = null, Email = null, PhoneNo = null, role = null, Company = null) {
+        var urlData = "";
+        if (startDate != null && endDate != null) {
+            urlData += '&startDate=' + startDate + '&endDate=' + endDate;
+        }
+        if (FName != null) {
+            urlData += '&FName=' + FName;
+        }
+        if (LName != null) {
+            urlData += '&LName=' + LName;
+        }
+        if (Email != null) {
+            urlData += '&Email=' + Email;
+        }
+        if (PhoneNo != null) {
+            urlData += '&PhoneNo=' + PhoneNo;
+        }
+        if (role != null) {
+            urlData += '&role=' + role;
+        }
+        if (Company != null) {
+            urlData += '&Company=' + Company;
+        }
+        return urlData;
+    }
+
+    function activeConfirmUser(_Id) {
+
+        $('#hdnId1').val(_Id);
+        $('#active-conformation').modal('show');
+    }
+
+    function deleteConfirmUser(_Id) {
+        // alert(_dealId);
+        $('#hdnId').val(_Id);
+        $('#delete-conformation').modal('show');
+    }
+
+    //Filter Function
+    function CommonFilter() {
+
+        var orderStartDate = $('#startDate').val();
+        orderStartDate = $('#endDate').val() == "" ? null : $('#startDate').val();
+        var orderEndDate = $('#endDate').val();
+        orderEndDate = $('#endDate').val() == "" ? null : $('#endDate').val();
+
+        var FName = $('#FName').val();
+        FName = $('#FName').val() == "" ? null : $('#FName').val();
+
+        var LName = $('#LName').val();
+        LName = $('#LName').val() == "" ? null : $('#LName').val();
+
+        var Email = $('#Email').val();
+        Email = $('#Email').val() == "" ? null : $('#Email').val();
+
+        var PhoneNo = $('#PhoneNo').val();
+        PhoneNo = $('#PhoneNo').val() == "" ? null : $('#PhoneNo').val();
+
+        var role = $('#role').val();
+        role = $('#role').val() == "" ? null : $('#role').val();
+
+        var Company = $('#Company').val();
+        Company = $('#Company').val() == "" ? null : $('#Company').val();
+
+        var urlData = GetURLData(orderStartDate, orderEndDate, FName, LName, Email, PhoneNo, role, Company);
+
+        var url = null;
+        url = "@ViewData["URLPrefixforProd"]/api/ListPage/GetUsersList?roleId=" + @ViewBag.RoleId + urlData;
+
+
+        // Destroy the existing DataTable
+        table = $('#UserDatatable').DataTable();
+        // Destroy the existing DataTable
+        table.clear().destroy();
+        //Re-Initialize Datatable
+        DataTable(url);
+
+        $('.filters').hide();
+    }
+
+
+
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+            //For Export Buttons available inside jquery-datatable "server side processing" - End
+</script>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,203 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.QCIndex.UpperBonusCapModel
+@Html.AntiForgeryToken()
+@{
+    ViewData["Title"] = "AdminBonusCap";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int serialNo = 1;
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+    alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="py-4">
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card border-0 shadow">
+            <div class="card-body">
+                <div class="row align-items-center pb-4">
+                    <div class="col-12">
+                        <h2 class="fs-5 fw-bold mb-0 text-center">
+                            <a id="backButton" class="btn btn-primary" style="float: left;">
+                                <i class="fa-solid fa-arrow-left"></i>
+                            </a>
+                            Admin Bonus Cap
+                        </h2>
+                    </div>
+                </div>
+                <form method="post" enctype="multipart/form-data" id="adminBonusForm">
+                    <input type="hidden" asp-for="adminBonusCapViewModel.OrderTransId" />
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <label class="" for="">Customer Name</label>
+                            <input type="text" asp-for="adminBonusCapViewModel.CustomerName" class="form-control" readonly />
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <label class="" for="">Order Number</label>
+                            <input type="text" asp-for="adminBonusCapViewModel.RegdNo" class="form-control" readonly />
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <label class="" for="">Product Category</label>
+                            <input type="text" asp-for="adminBonusCapViewModel.ProductCategoryName" class="form-control" readonly />
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <label class="" for="">Product Type</label>
+                            <input type="text" asp-for="adminBonusCapViewModel.ProductTypeName" class="form-control" readonly />
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <label class="" for="">Brand Name</label>
+                            <input type="text" asp-for="adminBonusCapViewModel.BrandName" class="form-control" readonly />
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <label class="" for="">Size</label>
+                            <input type="text" asp-for="adminBonusCapViewModel.Size" class="form-control" readonly />
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <label class="" for="">Technology</label>
+                            <input type="text" asp-for="adminBonusCapViewModel.ProductTechnolgyName" class="form-control" readonly />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="table-responsive my-4">
+                            <table class="table table-striped">
+                                <thead class="bg-dark text-white">
+                                    <tr>
+                                        <th>S.No.</th>
+                                        <th>Question</th>
+                                        <th>Condition</th>
+                                        <th>Comments</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.qCRatingViewModelList.Count; i++)
+                                    {
+                                        <input type="hidden" asp-for="qCRatingViewModelList[i].QcratingId" />
+                                        <input type="hidden" asp-for="qCRatingViewModelList[i].ProductCatId" />
+                                        <input type="hidden" asp-for="qCRatingViewModelList[i].Qcquestion" />
+                                        <input type="hidden" asp-for="qCRatingViewModelList[i].RatingWeightage" />
+                                        <input type="hidden" asp-for="qCRatingViewModelList[i].QuestionerLovid" />
+                                        <input type="hidden" asp-for="qCRatingViewModelList[i].QuestionerLOVName" />
+                                        <input type="hidden" asp-for="qCRatingViewModelList[i].Condition" />
+                                        <input type="hidden" asp-for="qCRatingViewModelList[i].AverageSellingPrice" />
+                                        <input type="hidden" asp-for="qCRatingViewModelList[i].Sweetner" />
+                                        <input type="hidden" asp-for="qCRatingViewModelList[i].CommentByQC" />
+
+                                        <tr>
+                                            <td>@serialNo</td>
+                                            <td>@Model.qCRatingViewModelList[i].Qcquestion</td>
+                                            <td>@Model.qCRatingViewModelList[i].QuestionerLOVName</td>
+                                            <td>@Model.qCRatingViewModelList[i].CommentByQC</td>
+                                        </tr>
+                                        serialNo++;
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-4 mb-4">
+                            <label class="" for="">Average Selling Price</label>
+                            <input type="text" asp-for="adminBonusCapViewModel.AverageSellingPrice" class="form-control" readonly />
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <label class="" for="">Excellent Price <sup>*As Per ASP</sup></label>
+                            <input type="text" asp-for="adminBonusCapViewModel.ExcellentPriceByASP" class="form-control" readonly />
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <label class="" for="">Quoted Price</label>
+                            <input type="text" asp-for="adminBonusCapViewModel.QuotedPrice" class="form-control" readonly />
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <label class="" for="">Sweetner</label>
+                            <input type="text" asp-for="adminBonusCapViewModel.Sweetner" class="form-control" readonly />
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <label class="" for="">Quoted(With Sweetner)</label>
+                            <input type="text" asp-for="adminBonusCapViewModel.QuotedPriceWithSweetner" class="form-control" readonly />
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <label class="" for="">Bonus Amount</label>
+                            <input type="text" asp-for="adminBonusCapViewModel.BonusCapQC" class="form-control" readonly />
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <label class="" for="">Bonus(%)</label>
+                            <input type="text" asp-for="adminBonusCapViewModel.BonusPercentageByQC" class="form-control" readonly />
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <label class="" for="">Final Price<sup>After QC</sup></label>
+                            <input type="number" asp-for="adminBonusCapViewModel.FinalPriceAfterQC" id="txtFinalPrice" class="form-control" readonly />
+                        </div>
+                    </div>
+
+
+                    <div class="row detailed-reporting questions-result">
+                        <div class="col-md-6 mb-4">
+                            <p class="mb-2"><span>Admin Bonus Cap</span></p>
+                            <select class="form-control" asp-for='adminBonusCapViewModel.BonusCapAdmin' asp-items="ViewBag.upperBonusCapLimit" id="ddlBonusCap">
+                                <option value="0">-- Select Bonus --</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p class="border rounded border-success p-2 px-4">
+                                <span>Final Price</span>
+                                <input type="number" asp-for="adminBonusCapViewModel.FinalPriceAfterAdminCap" id="numFinalPrice" readonly />
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="row mb-4 savebtns">
+                            <div class="col-12 text-center  my-4">
+                                <input type="button" value="Submit" class="btn btn-primary mb-2" id="btnSubmit">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $("#ddlBonusCap").change(function () {
+        var bonusCap = $(this).val();
+        var quotedPrice = $("#txtFinalPrice").val();
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/QCIndex/UpperBonusCap?handler=FinalPriceAfterQCAdminBonus",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "bonusCap": bonusCap, "quotedPrice": quotedPrice},
+            success: function (response) {
+                if (response > 0) {
+                    $("#numFinalPrice").val(response);
+                }
+                else {
+                    $("#numFinalPrice").val(0);
+                }
+
+            }
+        });
+    });
+
+    $('#btnSubmit').click(function () {
+        $('#btnSubmit').prop('disabled', true)
+        $("#adminBonusForm").submit();
+    });
+
+    $('#backButton').click(function () {
+        window.location.href = "@ViewData["URLPrefixforProd"]/QCIndex/AdminBonus";
+    });
+
+</script>

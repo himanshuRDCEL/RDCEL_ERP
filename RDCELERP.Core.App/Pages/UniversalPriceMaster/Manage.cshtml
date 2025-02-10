@@ -1,0 +1,514 @@
+﻿
+@page
+@model RDCELERP.Core.App.Pages.UniversalPriceMaster.ManageModel
+
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>Universal Price Master
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                <input type="hidden" asp-for="UniversalPriceMasterViewModel.PriceMasterUniversalId" id="hdnId" />
+                                <input type="hidden" asp-for="UniversalPriceMasterViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="UniversalPriceMasterViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="UniversalPriceMasterViewModel.IsActive" />
+                                <input type="hidden" asp-for="UniversalPriceMasterViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="UniversalPriceMasterViewModel.ModifiedDate" />
+                                <input type="hidden" asp-for="UniversalPriceMasterViewModel.ProductCategoryId" id="hdnCat" />
+
+
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Price Master Name <span style="color:red;">*</span></label>
+
+                                    <input id="ddlPriceMasterName" asp-for="UniversalPriceMasterViewModel.PriceMasterName" class="form-control" />
+
+                                    <span asp-validation-for="UniversalPriceMasterViewModel.PriceMasterName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Product Category <span style="color:red;">*</span></label>
+
+
+                                    <input id="ddlCategory" asp-for="UniversalPriceMasterViewModel.ProductCategoryDiscription" class="form-control" />
+
+                                    <span asp-validation-for="UniversalPriceMasterViewModel.ProductCategoryDiscription" class="text-danger"></span>
+
+                                </div>
+
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Product Type <span style="color:red;">*</span></label>
+
+
+                                    <input id="ddlType" asp-for="UniversalPriceMasterViewModel.ProductTypeName" class="form-control" />
+
+                                    <span asp-validation-for="UniversalPriceMasterViewModel.ProductTypeName" class="text-danger"></span>
+
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for=""> Product Type Code <span style="color:red;">*</span></label>
+
+                                    <input id="ddlProductTypeCode" asp-for="UniversalPriceMasterViewModel.ProductTypeCode" class="form-control" />
+
+                                    <span asp-validation-for="UniversalPriceMasterViewModel.ProductTypeCode" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Brand Name 1<span style="color:red;">*</span></label>
+
+                                    <input id="ddlBrand" asp-for="UniversalPriceMasterViewModel.BrandName1" class="form-control" />
+
+                                    <span asp-validation-for="UniversalPriceMasterViewModel.BrandName1" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Brand Name 2<span style="color:red;">*</span></label>
+
+                                    <input id="ddlBrand2" asp-for="UniversalPriceMasterViewModel.BrandName2" class="form-control" id="txtbrand2" onchange="CheckAvailability();" />
+
+                                    <span asp-validation-for="UniversalPriceMasterViewModel.BrandName2" class="text-danger"></span>
+                                    <span class="text-danger" id="message"></span>
+                                    <label class="" for=""><span class="text-danger">@ViewData["Msg"]</span></label>
+                                </div>
+
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Brand Name 3<span style="color:red;">*</span></label>
+                                    <input id="ddlBrand3" asp-for="UniversalPriceMasterViewModel.BrandName3" class="form-control" />
+
+                                    <span asp-validation-for="UniversalPriceMasterViewModel.BrandName3" class="text-danger"></span>
+                                    <label class="" for=""><span class="text-danger">@ViewData["Msg1"]</span></label>
+                                </div>
+
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Brand Name 4<span style="color:red;">*</span></label>
+                                   <input id="ddlBrand4" asp-for="UniversalPriceMasterViewModel.BrandName4" class="form-control" />
+
+                                    <span asp-validation-for="UniversalPriceMasterViewModel.BrandName4" class="text-danger"></span>
+                                    <label class="" for=""><span class="text-danger">@ViewData["Msg2"]</span></label>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Quote P High<span style="color:red;">*</span></label>
+                                    <input asp-for="UniversalPriceMasterViewModel.QuotePHigh" class="form-control" />
+                                    <span asp-validation-for="UniversalPriceMasterViewModel.QuotePHigh" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Quote Q High<span style="color:red;">*</span></label>
+                                    <input asp-for="UniversalPriceMasterViewModel.QuoteQHigh" class="form-control" />
+                                    <span asp-validation-for="UniversalPriceMasterViewModel.QuoteQHigh" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Quote R High<span style="color:red;">*</span></label>
+                                    <input asp-for="UniversalPriceMasterViewModel.QuoteRHigh" class="form-control" />
+                                    <span asp-validation-for="UniversalPriceMasterViewModel.QuoteRHigh" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Quote S High<span style="color:red;">*</span></label>
+                                    <input asp-for="UniversalPriceMasterViewModel.QuoteSHigh" class="form-control" />
+                                    <span asp-validation-for="UniversalPriceMasterViewModel.QuoteSHigh" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Quote P<span style="color:red;">*</span></label>
+                                    <input asp-for="UniversalPriceMasterViewModel.QuoteP" class="form-control" />
+                                    <span asp-validation-for="UniversalPriceMasterViewModel.QuoteP" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Quote Q<span style="color:red;">*</span></label>
+                                    <input asp-for="UniversalPriceMasterViewModel.QuoteQ" class="form-control" />
+                                    <span asp-validation-for="UniversalPriceMasterViewModel.QuoteQ" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Quote R<span style="color:red;">*</span></label>
+                                    <input asp-for="UniversalPriceMasterViewModel.QuoteR" class="form-control" />
+                                    <span asp-validation-for="UniversalPriceMasterViewModel.QuoteR" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Quote S<span style="color:red;">*</span></label>
+                                    <input asp-for="UniversalPriceMasterViewModel.QuoteS" class="form-control" />
+                                    <span asp-validation-for="UniversalPriceMasterViewModel.QuoteS" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Price Start Date<span style="color:red;">*</span></label>
+
+                                    <input asp-for="UniversalPriceMasterViewModel.PriceStartDate" class="form-control" id="startdate" placeholder="Start Date">
+                                    <span asp-validation-for="UniversalPriceMasterViewModel.PriceStartDate" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Price End Date<span style="color:red;">*</span></label>
+                                    <input asp-for="UniversalPriceMasterViewModel.PriceEndDate" class="form-control" id="enddate" placeholder="End Date">
+                                    <span asp-validation-for="UniversalPriceMasterViewModel.PriceEndDate" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                    }
+                                </div>
+                                <div class="col-6 text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <input type="submit" value="Save" class="btn btn-primary mainshadow" />
+                                    }
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#startdate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                // Set the minimum date for the end datepicker to the selected start date plus one day
+                var minDate = new Date(selectedDate);
+                minDate.setDate(minDate.getDate() + 1);
+                $("#enddate").datepicker("option", "minDate", minDate);
+            }
+        });
+        $("#enddate").datepicker({
+            defaultDate: null,
+        });
+    });
+
+
+     var ProductCategoryId = null;
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlCategory").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/PriceMaster/Manage?handler=AutoProductCatName", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+
+
+                select: function (event, ui) {
+                    $("#ddlCategory").val(ui.item.value); // Set the selected value
+                    ProductCategoryId = ui.item.text;
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlCategory").val(""); // Clear the input field
+                        ProductCategoryId = null;
+                    }
+                }
+            });
+    });
+
+    if (ProductCategoryId === null) {
+               ProductCategoryId = $('#hdnCat').val();
+             }
+
+        $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlType").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+
+                    $.get("@URLPrefixforProd/PriceMaster/Manage?handler=AutoProductTypeName", {
+
+                        term: extractLast(request.term),
+                        term2: ProductCategoryId
+                    }, response);
+                },
+
+                select: function (event, ui) {
+                    $("#ddlType").val(ui.item.value); // Set the selected value
+                   
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlType").val(""); // Clear the input field
+                        
+                    }
+                }
+            });
+    });
+
+    if (ProductCategoryId === null) {
+               ProductCategoryId = $('#hdnCat').val();
+             }
+
+
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlProductTypeCode").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                $.get("@URLPrefixforProd/PriceMaster/Manage?handler=AutoProductTypeCode", {
+
+                        term: extractLast(request.term),
+                        term2: ProductCategoryId
+                    }, response);
+                },
+
+
+                select: function (event, ui) {
+                    $("#ddlProductTypeCode").val(ui.item.value); // Set the selected value
+
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlProductTypeCode").val(""); // Clear the input field
+
+                    }
+                }
+            });
+    });
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlPriceMasterName").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/UniversalPriceMaster/Manage?handler=AutoPriceMasterName", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+
+
+                select: function (event, ui) {
+                    $("#ddlPriceMasterName").val(ui.item.value); // Set the selected value
+                   
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlPriceMasterName").val(""); // Clear the input field
+                        
+                    }
+                }
+            });
+    });
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlBrand").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/UniversalPriceMaster/Manage?handler=AutoBrand", {
+                        term: extractLast(request.term)
+                            
+                    }, response);
+                },
+
+
+                select: function (event, ui) {
+                    $("#ddlBrand").val(ui.item.value); // Set the selected value
+
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlBrand").val(""); // Clear the input field
+
+                    }
+                }
+            });
+    });
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlBrand2").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/UniversalPriceMaster/Manage?handler=AutoBrand", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+
+
+                select: function (event, ui) {
+                    $("#ddlBrand2").val(ui.item.value); // Set the selected value
+
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlBrand2").val(""); // Clear the input field
+
+                    }
+                }
+            });
+    });
+
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlBrand3").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/UniversalPriceMaster/Manage?handler=AutoBrand", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+
+
+                select: function (event, ui) {
+                    $("#ddlBrand3").val(ui.item.value); // Set the selected value
+
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlBrand3").val(""); // Clear the input field
+
+                    }
+                }
+            });
+    });
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlBrand4").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/UniversalPriceMaster/Manage?handler=AutoBrand", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+
+
+                select: function (event, ui) {
+                    $("#ddlBrand4").val(ui.item.value); // Set the selected value
+
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlBrand4").val(""); // Clear the input field
+
+                    }
+                }
+            });
+    });
+
+
+
+</script>

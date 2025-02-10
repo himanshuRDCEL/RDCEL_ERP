@@ -1,0 +1,107 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC_Portal.WalletAdditionOrUtilizationModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+
+
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">All WALLET ADDITION</h2>
+                            </div>
+                            @* <div class="col text-end">
+                            <a asp-page="MyWalletSummary"
+                            class="btn btn-primary float-right ">
+                            BACK
+                            </a>
+                            </div> *@
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="ALL_WalletAddition_byEVC" class="table align-items-center table-flush" border="1">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="all">evcRegistrationId </th>
+                                        <th class="all">Type </th>
+                                        <th class="all">Amount </th>
+                                        <th class="all">Added by</th>
+                                        <th class="all">Date Of Recharge</th>
+
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+<script>
+    // var logginId =@Model.userId;
+    $(document).ready(function () {
+        var url = "@URLPrefixforProd/api/EVCList/EVC_All_WalletAdditionHistory?LoggingId=" + @Model.userId;
+        //
+        $('#ALL_WalletAddition_byEVC').DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'frtlp',
+
+            "oLanguage": {
+                "sEmptyTable": "No Wallet Addition History found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+
+            "columns": [
+                { "data": "evcRegistrationId", "name": "evcRegistrationId", "autoWidth": true, "orderable": false },
+                { "data": "type", "name": "type", "autoWidth": true, "orderable": false },
+                { "data": "amount", "name": "Amount", "autoWidth": true, "orderable": false },
+                { "data": "addedBy", "name": "AddedBy", "autoWidth": true, "orderable": false },
+                { "data": "finalDate", "name": "FinalDate", "autoWidth": true, "orderable": false },
+
+            ]
+        });
+
+    });
+
+
+</script>
+
+

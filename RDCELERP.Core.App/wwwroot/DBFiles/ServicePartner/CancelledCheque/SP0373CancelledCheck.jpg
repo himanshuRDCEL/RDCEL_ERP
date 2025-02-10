@@ -1,0 +1,464 @@
+{
+	"info": {
+		"_postman_id": "aa7804cf-cde2-44c1-9d08-71291378cfcb",
+		"name": "Samsung",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21774630"
+	},
+	"item": [
+		{
+			"name": "Push_Exchange_Order_For_Pine Labs_Local_Host",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 8xIP3-ZCMc-oYflig-o2RnMuqv2KcnR2y3Ve-ZOIG9PYN6MI1_ucPEVyDRoKxFkiIsH_TrgH9y-P6StV2AnSbwftvnkLEwn6fzXFtj0c6ZQBx0Y7obfCzZ0p9gX2kAvLQpF3pcK3HpUOeWtoStyAkJ8ndlaG0HKz27JJrcSrvX7BoJfx0tsk4edFkaSZyWHWzjj1Z_S_HYz5-eiC4QQuuZEvd8vYHaVo_LZ3OmmsZl0AHY7RQcOwkBK4ZxO5mORe",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\": \"\",\r\n  \"lastName\": \"\",\r\n  \"email\": \"\",\r\n  \"city\": \"\",\r\n  \"zipCode\": \"\",\r\n  \"address1\": \"\",\r\n  \"address2\": \"\",\r\n  \"phoneNumber\": \"8889999119\",\r\n  \"brandId\": 1,\r\n  \"bonus\": \"0\",\r\n  \"estimatedDeliveryDate\": \"26-May-2022\",\r\n  \"productCondition\": \"1\",\r\n  \"companyName\": \"PineLabs\",\r\n  \"productTypeId\": 25,\r\n  \"sponsorOrderNumber\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://103.168.19.49/QA/api/Sponsor/ProductOrderPlace",
+					"protocol": "http",
+					"host": [
+						"103",
+						"168",
+						"19",
+						"49"
+					],
+					"path": [
+						"QA",
+						"api",
+						"Sponsor",
+						"ProductOrderPlace"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Havells Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "Havells@digi2L.in",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Havells@!2023",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://utcbridge.com/utc-uat/token",
+					"protocol": "https",
+					"host": [
+						"utcbridge",
+						"com"
+					],
+					"path": [
+						"utc-uat",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SSG Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "siel@digi2l.in",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "S@msung!EL22",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://103.127.146.29/QA/token",
+					"protocol": "http",
+					"host": [
+						"103",
+						"127",
+						"146",
+						"29"
+					],
+					"path": [
+						"QA",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Creator UpdateOrder api",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Zoho-oauthtoken 1000.46455807a11933edf65569af7b7dfc20.abd795b734fbcc09089a20bb58466745",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n        \"Sponsor_Name\": \"4186686000004217003\",\r\n        \"First_Name\": \"test\",\r\n        \"Id\": \"4186686000005475003\",\r\n        \"Last_Name\": \"test\",\r\n        \"Customer_Email_Address\": \"vishal852.cc@gmail.com\",\r\n        \"Customer_Address_1\": \"indore\",\r\n        \"Customer_City\": \"PUNE\",\r\n        \"Customer_Mobile\": \"8889999119\",\r\n        \"Customer_Pincode\": \"410045\",\r\n        \"Customer_Address_2\": null,\r\n        \"Customer_Address_Landmark\": null,\r\n        \"Customer_State_Name\": \"Maharashtra\"\r\n    },\r\n    \"result\": {\r\n        \"message\": false,\r\n        \"tasks\": false\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://creatorapp.zoho.com/api/v2/utcdigital/sept-6-live/report/All_Sponsors/4186686000005475003",
+					"protocol": "https",
+					"host": [
+						"creatorapp",
+						"zoho",
+						"com"
+					],
+					"path": [
+						"api",
+						"v2",
+						"utcdigital",
+						"sept-6-live",
+						"report",
+						"All_Sponsors",
+						"4186686000005475003"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SAMSUNG_Place_Order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer m8w7EL1aMC8bp9Oz6cR-TY2dn0OQaG2Q-_1oWlkNv3gGmOz2HJQCqzFr7W_vTCeUT0vXRWLoGObc0fMzOSdyzsE8t0RJyL7nbQtwN-mwEYhFxZWs3oWii6rOkWAGFdzOBix44_o3-E6-flJwcysa6NqNAPw09royZ0fXIS1KV31iE915YqpcliSYcexMPaRuT3jXNnjOueRPQXeXKkgm0SLt4laDJOhqL5kDkSsfC8VLruwHVKKohJpa7_r-hFW5",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\": \"Bhupendra Test\",\r\n  \"lastName\": \"Test\",\r\n  \"email\": \"bhupendra.digi2l@gmail.com\",\r\n  \"city\": \"Chandighar\",\r\n  \"zipCode\": \"160035\",\r\n  \"address1\": \"Vigyan\",\r\n  \"address2\": \"Nagar\",\r\n  \"phoneNumber\": \"8104841795\",\r\n  \"brandId\": 1,\r\n  \"bonus\": \"0\",\r\n  \"estimatedDeliveryDate\": \"02-May-2023\",\r\n  \"productCondition\": \"1\",\r\n  \"companyName\": \"Samsung\",\r\n  \"productTypeId\": 11,\r\n  \"sponsorOrderNumber\": \"\",\r\n  \"StoreCode\":\"\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://utcbridge.com/utc-uat/api/Sponsor/ProductOrderPlace",
+					"protocol": "https",
+					"host": [
+						"utcbridge",
+						"com"
+					],
+					"path": [
+						"utc-uat",
+						"api",
+						"Sponsor",
+						"ProductOrderPlace"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "D2C Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "DtoC@digimart.co.in",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "DtoC!2345",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://103.127.146.29/QA/token",
+					"protocol": "http",
+					"host": [
+						"103",
+						"127",
+						"146",
+						"29"
+					],
+					"path": [
+						"QA",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get exchange Order detail",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer L-v6GnRmS-SrRNWUba9mtg7lcqDzGareCMnKJ53T4yGWZvLFHFDzTxPGKyKS3vfQjKWWpprmAPHGTL-IOft2Zv3UubklLyzYsWtmx5wkJH7Xb58haT1Ws9s8tkGaPKRVs5U4CMZdHRJsGTBUkk2JVSLig7aTenEApcdKgfnzivuvuWNtyOoDnarYhFUZoTHwcrPrkeUVxp7uS4w_JcKfcvbPOAZd17WfAd4xNewtNzg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://utcbridge.com/UTCAPI/api/Sponsor/GetOrderDetails?orderId=26589",
+					"protocol": "https",
+					"host": [
+						"utcbridge",
+						"com"
+					],
+					"path": [
+						"UTCAPI",
+						"api",
+						"Sponsor",
+						"GetOrderDetails"
+					],
+					"query": [
+						{
+							"key": "orderId",
+							"value": "26589"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Voucher Capture",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ctOtZCkfpLzG_qPMNG90NDoubSv2xcrnIx3QAQuHU1dzkWNh_wqnAcRXgMtayD4b7Y2apK0Y-baqeHQHjAzTVMBTQxBbGHHc6Yx_sOG41O1K0pjQ2jVVaRcUq_cf4RtbGIed8ViGqwub7iaIgVOQ7QTQ4GRN8bFl8atm2KrWoeMYSAUFOcDaETbL201syrfFxKIHbCPxifPcJg9Xi28MtG_Ixao7D772Yhib12WUyAGMsrYlL90qd69Z3RubCixh",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://utcbridge.com/utc-uat/api/Sponsor/CaptureVoucher?VoucherCode=DV67Z1KJ8&&IsVoucherUsed=true",
+					"protocol": "https",
+					"host": [
+						"utcbridge",
+						"com"
+					],
+					"path": [
+						"utc-uat",
+						"api",
+						"Sponsor",
+						"CaptureVoucher"
+					],
+					"query": [
+						{
+							"key": "VoucherCode",
+							"value": "DV67Z1KJ8"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "IsVoucherUsed",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetProductPrice",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer odRE8sag0JvHS9XSJRPpHDZotwr-dxX2npeQ1f92qMAopqSuYJT8ImpAIRS6wvfM1Ue0xC_asFntTIHkDgvIugheP5QWmNwHRAciuIzkrlnhR4v3Selqp9-igrkCBFLry-3VjxqD_XMthHPmQbLGN-4mf0W-2JnT4KrRSjq612IaikGT3E0zFe0X4ZY5siacuNxK4EjqTpFKlpaO6uZMcypzlrRe8Luhxi8KmiLTvfFX0_FqWD3rlUiY_FsF3kuS",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://utcbridge.com/utc-uat/api/Sponsor/GetProductPrice?catid=2&&typeid=8&&brandid=2",
+					"protocol": "https",
+					"host": [
+						"utcbridge",
+						"com"
+					],
+					"path": [
+						"utc-uat",
+						"api",
+						"Sponsor",
+						"GetProductPrice"
+					],
+					"query": [
+						{
+							"key": "catid",
+							"value": "2"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "typeid",
+							"value": "8"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "brandid",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetProductType",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer _8bBvq_bDDk2ljLwUN5mGfxbRyeGOr4K2Md_ZjmAwgBXncqG31_7ls6SsMD3aeGpY8v43TaqhcPfNO6LqN4I8LMlWq5h9pQkDM_ht1Vre1W10y71Rs7voMAqTHH_erEDrTqbLrKNGnTXNQe0zoiFtHTwkYQYWrEnZhfEw-W-PN9j5r3cq_MHUuX14gHxYUvKnw1ilgpcOezMUvVhQV5pJe_ON0O2809bOqCWV_T4aXY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://103.127.146.29/QA/api/Master/GetProductType?catId=1",
+					"protocol": "http",
+					"host": [
+						"103",
+						"127",
+						"146",
+						"29"
+					],
+					"path": [
+						"QA",
+						"api",
+						"Master",
+						"GetProductType"
+					],
+					"query": [
+						{
+							"key": "catId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product_Order_Status_Change",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer UJb_F3-Lx51Yqy5TiCtCC2bwBjvrdv6OJV0SHyLUwJFKRv5yhIy8KabwrHiQXQWeYSYjvmkDZVF2sLdAMOs7ST8jtXH3mbLUdk_OwJgTQO9YpnWGTezjGsYJq-NvqFbZ2HXil6HLx51zvOxn0Sm09U1UpW9oJLLV9hAHMM1qBedOJeQ9ntYhL59crUPZCAkwj6huBP3AASBOaybBFztJqUqlbN09qzg2OxDRM91_fHI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderId\": 20887,\r\n    \"status\": \"Delivered\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://103.127.146.29/QA/api/Sponsor/ProductOrderStatusChange",
+					"protocol": "http",
+					"host": [
+						"103",
+						"127",
+						"146",
+						"29"
+					],
+					"path": [
+						"QA",
+						"api",
+						"Sponsor",
+						"ProductOrderStatusChange"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

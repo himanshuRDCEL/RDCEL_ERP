@@ -1,0 +1,372 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.PinCode.ManageModel
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>Pin Code
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" id="myForm">
+                            <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="PinCodeViewModel.Id" id="hdnId" />
+                                <input type="hidden" asp-for="PinCodeViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="PinCodeViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="PinCodeViewModel.IsActive" />
+                                <input type="hidden" asp-for="PinCodeViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="PinCodeViewModel.ModifiedDate" />
+                                <input type="hidden" asp-for="PinCodeViewModel.StateId" id="hdnstateid" />
+
+                                <div class="col-12 mb-4 text-center">
+                                    <div class="d-flex justify-content-center align-items-center gap-5">
+                                        <div>
+
+                                            @if (Model.PinCodeViewModel.IsAbb == true)
+                                            {
+
+                                                <label class="mx-2" for="">ABB</label>
+                                                <input name="PinCodeViewModel.IsAbb" type="checkbox" id="IsChecked" value="true" class="form-check-input IsDealerChk" data-val-required="The IsChecked field is required.">
+                                                <input name="PinCodeViewModel.IsAbb" type="hidden" data-val="false" id="IsChecked" value="false" data-val-required="The IsChecked field is required.">
+
+                                            }
+                                            else
+                                            {
+
+                                                <label class="mx-2" for="">ABB</label>
+                                                <input name="PinCodeViewModel.IsAbb" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="form-check-input">
+                                                <input name="PinCodeViewModel.IsAbb" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                            }
+                                        </div>
+                                        <div>
+                                            @if (Model.PinCodeViewModel.IsExchange == true)
+                                            {
+                                                <label class="mx-2" for="">Exchange</label>
+                                                <input name="PinCodeViewModel.IsExchange" type="checkbox" id="IsChecked" value="true" class="form-check-input IsDealerChk" data-val-required="The IsChecked field is required.">
+                                                <input name="PinCodeViewModel.IsExchange" type="hidden" data-val="false" id="IsChecked" value="false" data-val-required="The IsChecked field is required.">
+
+                                            }
+                                            else
+                                            {
+
+                                                <label class="mx-2" for="">Exchange</label>
+                                                <input name="PinCodeViewModel.IsExchange" type="checkbox" id="IsChecked" value="true" data-val-required="The IsChecked field is required." class="form-check-input">
+                                                <input name="PinCodeViewModel.IsExchange" type="hidden" id="IsChecked" value="false" data-val-required="The IsChecked field is required.">
+
+                                            }
+
+                                        </div>
+
+                                    </div>
+
+                                    <p class="text-danger" id="planErrorTxt"></p>
+
+                                </div>
+
+                              
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for=""> Pin Code <span style="color:red;">*</span></label>
+                                    <input type="text" asp-for="PinCodeViewModel.ZipCode" class="form-control" id="txtName" onkeyup="CheckAvailability();" />
+                                    
+                                     <span asp-validation-for="PinCodeViewModel.ZipCode" class="text-danger"></span>
+                                    
+                                    <span class="text-danger" id="message"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">State <span style="color:red;">*</span></label>
+                                    @*<select asp-for="PinCodeViewModel.State" class="form-control" asp-items="ViewBag.Statelist" id="ddlState">
+                                            <option value=''>Select</option>
+                                        </select>*@
+                                    <input id="ddlState" asp-for="PinCodeViewModel.State" class="form-control" />
+                                    <span asp-validation-for="PinCodeViewModel.State" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">City<span style="color:red;">*</span></label>
+                                    @*<select asp-for="PinCodeViewModel.Location" class="form-control" asp-items="ViewBag.cityListS" id="ddlCity">
+                                        <option value=''>Select</option>
+                                    </select>*@
+                                    <input id="ddlCity" asp-for="PinCodeViewModel.Location" class="form-control" />
+                                    <span asp-validation-for="PinCodeViewModel.Location" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Area Locality</label>
+                                    <input asp-for="PinCodeViewModel.AreaLocality" class="form-control" />
+                                    <span asp-validation-for="PinCodeViewModel.AreaLocality" class="text-danger"></span>
+                                </div>
+
+                                
+                               
+                                
+                               
+
+                                
+                                <div class="row">
+                                    <div class="col-6">
+                                        @if (accessRule != null && accessRule.CanView)
+                                        {
+                                            <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                        }
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <input type="submit" id="Savebtn" value="Save" class="btn btn-primary mainshadow" />
+                                        }
+                                    </div>
+
+                                </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/js/compressor.js"></script>
+
+
+<script type="text/javascript">
+    var StateId = null;
+    var CityId = null;
+
+    $(function () {
+
+        $('.IsDealerChk').each(function () {
+            var Ischecked = $(this).val();
+
+            if (Ischecked == "true") {
+
+                $(this).attr('checked', 'checked');
+            }
+        });
+    });
+
+
+    //
+    $("#ddlState").change(function () {
+
+        $.get("@URLPrefixforProd/PinCode/Manage?handler=CityByStateId&PinCodeViewModel.State=" + $(this).val()).done(function (data) {
+            // "/EVC/EVC_Registration?handler=CityByStateId&EVC_RegistrationModel.StateId="
+            console.log(data);
+            $("#ddlCity").empty(); // Clear the plese wait
+            $("#ddlCity").append($("<option></option>").val('').html('Select Location'));
+            $.each(data, function (i, cities) {
+
+                $("#ddlCity").append($("<option></option>").val(cities.name).html(cities.name));
+            });
+        });
+    });
+
+    $(document).ready(function () {
+    // Bind to the input event of the input field to clear the message whenever the input changes
+    $("#txtName").on('input', function () {
+        $("#message").html(" ");
+        $('#Savebtn').prop('disabled', false);
+    });
+});
+
+function CheckAvailability() {
+
+        $('#txtName-error').text('');
+    var name = $("#txtName").val();
+     var id = $("#hdnId").val();
+    if (name === '') {
+        $("#message").html(" ");
+        return;
+    }
+
+
+    $.ajax({
+        type: "POST",
+        url: "@ViewData["URLPrefixforProd"]/PinCode/Manage?handler=CheckName",
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("XSRF-TOKEN",
+                $('input:hidden[name="__RequestVerificationToken"]').val());
+        },
+        data: { "zipcode": name, "Id": id },
+        success: function (response) {
+            if (response == true || response == "True" || response == "true") {
+                $("#message").html(" ");
+            } else {
+                $("#message").css("color", "red");
+                $("#message").html("This pincode is already exist.");
+                $('#Savebtn').prop('disabled', true);
+            }
+        },
+    });
+    }
+
+
+
+    $(document).ready(function () {
+        $('#myForm').change(function () {
+            if ($('input[name="PinCodeViewModel.IsAbb"]:Checked').length == 0 &&
+                $('input[name="PinCodeViewModel.IsExchange"]:Checked').length == 0) {
+                 $('#planErrorTxt').text('Please select at least one option from ABB & Exchange');
+            
+                return false;
+            }
+            else
+            {
+                  $('#planErrorTxt').text('  ');
+            
+            }
+        });
+
+
+        $(document).ready(function () {
+            $('#myForm').submit(function () {
+                // Check if neither checkbox is checked
+                if ($('input[name="PinCodeViewModel.IsAbb"]:checked').length === 0 &&
+                    $('input[name="PinCodeViewModel.IsExchange"]:checked').length === 0) {
+                    // Display error message
+                    $('#planErrorTxt').text('Please select at least one option from ABB & Exchange');
+                    return false;
+                } else {
+                    // Clear error message
+                    $('#planErrorTxt').text(' ');
+                }
+            });
+        });
+
+
+        $('#txtName').on("keydown", function () {
+
+            $('#txtName-error').text('');
+        })
+    });
+
+    var StateId = null;
+    var CityId = null;
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        // Autocomplete for State field
+        $("#ddlState").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/PinCode/Manage?handler=AutoStateName", {
+                    term: extractLast(request.term)
+                }, response);
+            },
+            focus: function () {
+                // Prevent value inserted on focus
+                return false;
+            },
+            open: function (event, ui) {
+                // Get the menu element
+                var menu = $(this).autocomplete("widget");
+
+                // Set max-height and overflow properties
+                menu.css("max-height", "200px");
+                menu.css("overflow-y", "auto");
+            },
+            select: function (event, ui) {
+                this.value = ui.item.value; // Set the selected value
+
+                StateId = ui.item.text;
+                console.log("stateid is: ", StateId);
+                $("#ddlCity").empty(); // Clear the plese wait
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    // If the selected item is not in the list, clear the input
+                    $(this).val("");
+                    StateId = null; // Clear the StateId
+                    $("#ddlCity").empty(); // Clear the plese wait
+                }
+            }
+        });
+
+
+        if (StateId === null) {
+            StateId = $('#hdnstateid').val();
+        }
+
+        console.log('StateID', StateId);
+
+
+        // Autocomplete for City field
+        $("#ddlCity").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/PinCode/Manage", {
+                    handler: "AutoCityName",
+                    term: extractLast(request.term),
+                    term2: StateId
+                }, response);
+            },
+            focus: function () {
+                // Prevent value inserted on focus
+                return false;
+            },
+            open: function (event, ui) {
+                // Get the menu element
+                var menu = $(this).autocomplete("widget");
+
+                // Set max-height and overflow properties
+                menu.css("max-height", "200px");
+                menu.css("overflow-y", "auto");
+            },
+            select: function (event, ui) {
+                this.value = ui.item.value; // Set the selected value
+
+                CityId = ui.item.text;
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    // If the selected item is not in the list, clear the input
+                    $(this).val("");
+                    CityId = null; // Clear the CityId
+                }
+            }
+        });
+
+    });
+
+</script>
+
+
+

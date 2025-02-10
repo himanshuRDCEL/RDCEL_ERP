@@ -1,0 +1,102 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.Company.ManageUserRoleModel
+
+@{
+    ViewData["Title"] = "ManageUserRole";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a> Assign Role
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                    <input type="hidden" asp-for="UserRoleViewModel.CreatedBy" />
+                                    <input type="hidden" asp-for="UserRoleViewModel.CreatedDate" />
+                                    <input type="hidden" asp-for="UserRoleViewModel.IsActive" />
+                                    <input type="hidden" asp-for="UserRoleViewModel.ModifiedBy" />
+                                    <input type="hidden" asp-for="UserRoleViewModel.ModifiedDate" />
+                                    <input type="hidden" asp-for="UserRoleViewModel.UserId" />
+                                    <input type="hidden" asp-for="UserRoleViewModel.UserRoleId" />
+                                  
+                                    <div class="col-12 mb-3">
+                                        <div class="form-group">
+                                            <label class="" for="">Select Company <span style="color:red;">*</span></label>
+                                        
+                                            <select asp-for="UserRoleViewModel.CompanyId" onchange="GetRole(this.value);" class="form-control" asp-items="ViewBag.CompanyList">
+                                                <option value=''>--None--</option>
+                                            </select>
+                                       
+                                         <span asp-validation-for="UserRoleViewModel.CompanyId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-3">
+
+                                        <div class="form-group">
+                                            <label class="" for="">Role Name <span style="color:red;">*</span></label>
+                                            <select id="ddlRole" asp-for="UserRoleViewModel.RoleId" class="form-control" asp-items="ViewBag.RoleList">
+                                            </select>
+                                            <span asp-validation-for="UserRoleViewModel.RoleId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                    }
+                                </div>
+                                <div class="col-6 text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <input type="submit" value="Save" class="btn btn-primary mainshadow" />
+                                    }
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function GetRole(_companyId) {
+        $.getJSON(`?handler=RoleBYCompanyId&UserRoleViewModel.CompanyId=${_companyId}`, (data) => {
+
+            $("#ddlRole").empty();
+            $("#ddlRole").append("<option value=''>--Select Role--</option>");
+
+            $.each(data, function (i, item) {
+                $("#ddlRole").append(`<option value="${item.roleId}">${item.roleName}</option>`);
+            });
+            //var val = data.countryId;
+            //var supervisoryId = data.supervisoryId;
+            //$('#CompanyViewModel_SupervisoryId').val(supervisoryId);
+
+        });
+    }
+</script>

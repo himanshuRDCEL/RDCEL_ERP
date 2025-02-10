@@ -1,0 +1,318 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.Index1Model
+
+@{
+    ViewData["Title"] = "Time Line";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int i = 0;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<style>
+    i.fa-regular.fa-comment {
+        margin: 0 8px 0 0;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card border-0 shadow mb-4">
+            <div class="card-header">
+                <div class="row align-items-center card-title">
+                    <div class="col-md-8">
+                        <h2 class="fs-5 mb-0">
+                            Time Line
+                        </h2>
+                    </div>
+                    <div class="col-md-4 d-flex justify-content-between">
+                    </div>
+                </div>
+            </div>
+            <div class="card-body detailed-reporting">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="timelinemeta my-4 row text-center">
+
+                            <div class="col-md-4">
+                                @if (Model.TblOrderTrans.RegdNo != null)
+                                {
+                                    <p>
+                                        @Model.TblOrderTrans.RegdNo
+                                        <span>Regd No</span>
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p>
+                                        No RegdNo found
+                                        <span>Regd No</span>
+                                    </p>
+                                }
+                            </div>
+                            <div class="col-md-4">
+
+                                @if (Model.TblCustomerDetail.Id > 0)
+                                {
+                                    <p>
+                                        @Model.TblCustomerDetail.FirstName  @Model.TblCustomerDetail.LastName
+                                        <span>Customer Name</span>
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p>
+                                        No Customer
+                                        <span>Customer Name</span>
+                                    </p>
+                                }
+                            </div>
+                            <div class="col-md-4">
+                                @if (Model.TblCustomerDetail.PhoneNumber == null)
+                                {
+
+                                    <p>
+                                        No Customer
+                                        <span>Phone Number</span>
+                                    </p>
+                                }
+                                else
+                                {
+
+                                    <p>
+
+                                        @Model.TblCustomerDetail.PhoneNumber
+                                        <span>Phone Number</span>
+                                    </p>
+                                }
+
+                            </div>
+                        </div>
+
+
+                        <hr class="mb-4">
+                        <div class="timelinewrap">
+                            <ul>
+                                <li class="timelineheading trackericon">
+                                    <span class="currentstatus">Current Status : </span>
+                                    @if (Model.TblTimelineStatusMapping.StatusId != null)
+
+                                    {
+                                        <span class="status-progress">@Model.TblTimeLine.OrderTimeline </span>
+
+                                    }
+                                    else
+                                    {
+                                        <span class="status-progress">InProgress<p>(Praesent quis sapien)</p> </span>
+                                    }
+
+
+                                </li>
+
+                                @* @if (Model.TimeList.Count > 0)
+                                {
+                                foreach (var item in Model.TimeList)
+                                {*@
+
+                                @*<li class="timelineheading trackericon">
+                                <span class="currentstatus">Current Status : </span>
+                                <span class="status-progress">@item.OrderStatus <p>(Praesent quis sapien)</p> </span>
+
+                                </li>*@
+
+                                @* <li class="timelineheading done">
+
+                                @item.OrderTimeline
+
+                                <p>
+                                <span><i class="fa-regular fa-calendar"></i>@item.CreatedDate</span>
+
+
+
+                                @if (item.CreatedByName1 != null)
+                                {
+                                <span><i class="fa-solid fa-user"></i>@item.CreatedByName1</span>
+
+                                }
+
+                                else
+                                {
+                                <span><i class="fa-solid fa-user"></i> @item.CreatedByName </span>
+                                }
+
+                                </p>
+
+                                @<<<<<<< Dev@
+
+                                </li>
+                                @=======@
+                                @ <p>
+                                <span><i class="fa-regular fa-calendar"></i>@item.CreatedDate</span>
+
+
+
+                                @if (item.CreatedByName1 != null)
+                                {
+                                <span><i class="fa-solid fa-user"></i>@item.CreatedByName1</span>
+
+                                }
+
+                                else
+                                {
+                                <span><i class="fa-solid fa-user"></i> @item.CreatedByName </span>
+                                }@
+                                @>>>>>>> Rathod_Ashwin@
+
+
+                                <li class="done">
+                                @item.StatusDescription
+                                <p>
+                                <span><i class="fa-regular fa-calendar"></i>@item.CreatedDate</span>
+
+                                @if (item.CreatedByName1 != null)
+                                {
+                                <span><i class="fa-solid fa-user"></i>@item.CreatedByName1</span>
+
+                                }
+
+                                else
+                                {
+                                <span><i class="fa-solid fa-user"></i> @item.CreatedByName </span>
+                                }
+                                </p>
+                                </li>
+
+                                @<<<<<<< Dev@
+                                }
+                                }*@
+
+
+                                @if (Model.timeLineObj.Count > 0)
+                                {
+                                    @foreach (var item1 in Model.timeLineObj)
+                                    {
+
+                                        <li class="timelineheading done">
+
+                                            @item1.OrderTimeLine
+                                            @foreach (var items1 in item1.StatusDiscription)
+                                            {
+                                                <p>
+                                                    <span><i class="fa-regular fa-calendar"></i>@items1.CreatedDate</span>
+
+
+
+                                                    @if (items1.CreatedByName1 != null)
+                                                    {
+                                                        <span><i class="fa-solid fa-user"></i>@items1.CreatedByName1</span>
+
+                                                    }
+
+                                                    else
+                                                    {
+                                                        <span><i class="fa-solid fa-user"></i> @items1.CreatedByName </span>
+                                                    }
+
+                                                </p>
+                                            }
+                                        </li>
+                                        @foreach (var items in item1.StatusDiscription)
+                                        {
+                                            <li class="done">
+                                                <div>
+                                                    @items.StatusDescription
+                                                    <p>
+                                                        <span><i class="fa-regular fa-calendar"></i>@items.CreatedDate</span>
+
+                                                        @if (items.CreatedByName1 != null)
+                                                        {
+                                                            <span><i class="fa-solid fa-user"></i>@items.CreatedByName1</span>
+
+                                                        }
+
+                                                        else
+                                                        {
+                                                            <span><i class="fa-solid fa-user"></i> @items.CreatedByName </span>
+                                                        }
+                                                    </p>
+
+
+
+                                                </div>
+                                                @if (items.Comment != null)
+                                                {
+                                                    <p>
+                                                        <span><i class="fa-regular fa-comment"></i>@items.Comment</span>
+
+                                                    </p>
+                                                }
+                                                @if (items.EVCName != null)
+                                                {
+                                                    <p>
+                                                        <span><i class="fa-sharp fa-solid fa-store"></i>@items.EVCName</span>
+
+                                                        @*=======
+                                        <li class="done">
+                                        @item.StatusDescription
+                                        <p>
+                                        <span><i class="fa-regular fa-calendar"></i>@item.CreatedDate</span>
+
+                                        @if (item.CreatedByName1 != null)
+                                        {
+                                        <span><i class="fa-solid fa-user"></i>@item.CreatedByName1</span>
+
+                                        }
+
+                                        else
+                                        {
+                                        <span><i class="fa-solid fa-user"></i> @item.CreatedByName </span>
+                                        }
+                                        </p>
+                                        </li>
+
+                                        }
+                                        }
+
+                                        >>>>>>> Rathod_Ashwin*@
+
+                                                    </p>
+                                                }
+                                                @if (items.ServicePartnerName != null)
+                                                {
+                                                    <p>
+                                                        <span><i class="fa-sharp fa-solid fa-store"></i>@items.ServicePartnerName</span>
+                                                    </p>
+                                                }
+                                                @if (items.DriverName != null)
+                                                {
+                                                    <p>
+                                                        <span><i class="fa-sharp fa-solid fa-store"></i>@items.DriverName</span>
+                                                    </p>
+                                                }
+                                            </li>
+                                        }
+
+
+                                    }
+                                }
+                            </ul>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-12 text-end">
+                                <a href='javascript:history.go(-1)' class="btn btn-secondary">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

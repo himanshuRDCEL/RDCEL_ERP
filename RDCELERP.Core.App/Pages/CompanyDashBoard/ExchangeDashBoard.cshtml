@@ -1,0 +1,562 @@
+﻿@page
+@using RDCELERP.Model.DealerDashBoard;
+@model RDCELERP.Core.App.Pages.CompanyDashBoard.ExchangeDashBoardModel
+@{
+    ViewData["Title"] = "Manager";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+    //<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css"
+}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow border-0">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="fs-5 mb-0">
+                            Company Dashboard
+                        </h2>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+        <div class="card border-0 shadow">
+
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
+                    </div>
+                    <div class="col-xl-7 px-xl-0">
+
+                        <h2 class="h6 text-gray-400 mb-0">Total Orders</h2>
+                        <h3 class="fw-extrabold mb-2">@Html.DisplayFor(model => model.OrderCountViewModel.OderCount)</h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+        <div class="card border-0 shadow">
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                            <i class="fa-solid fa-ticket"></i>
+                        </div>
+                    </div>
+                    <div class="col-xl-7 px-xl-0">
+                        <h2 class="h6 text-gray-400 mb-0">In Process Orders</h2>
+                        <h3 class="fw-extrabold mb-2">@Html.DisplayFor(model => model.OrderCountViewModel.InProcessOrders)</h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+        <div class="card border-0 shadow">
+
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
+                    </div>
+                    <div class="col-xl-7 px-xl-0">
+
+                        <h2 class="h6 text-gray-400 mb-0">Total Completed Orders</h2>
+                        <h3 class="fw-extrabold mb-2">@Html.DisplayFor(model => model.OrderCountViewModel.CompletedOrders)</h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+        <div class="card border-0 shadow">
+
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
+                    </div>
+                    <div class="col-xl-7 px-xl-0">
+
+                        <h2 class="h6 text-gray-400 mb-0">Cancelled Orders </h2>
+                        <h3 class="fw-extrabold mb-2">@Html.DisplayFor(model => model.OrderCountViewModel.CancelledOrders)</h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row mr-2">
+
+    <form method="post" enctype="multipart/form-data" id="lgcPickupForm">
+        <div class="row">
+
+            <input type="hidden" asp-for="OrderCountViewModel.AssociateCode" id="hdnAssociateCode" />
+            <input type="hidden" asp-for="OrderCountViewModel.BusinessUnitId" id="hdnBusinessUnitId" />
+            <input type="hidden" asp-for="OrderCountViewModel.CompanyName" id="hdnCompanyName" />
+            <input type="hidden" asp-for="OrderCountViewModel.UserCompanyName" id="hdnUserCompanyName" />
+            <input type="hidden" asp-for="OrderCountViewModel.userRole" id="hdnRoleAssigned" />
+        </div>
+        @*<div class="col-md-12 text-right mb-3">
+        <input type="submit" value="Export To Excel" class="btn btn-primary p-2 px-4" asp-page-handler="ExportExcel_StoreData" id="btnExportData">
+        </div>*@
+    </form>
+
+
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow border-0">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="fs-5 mb-0">
+                            Get Details
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row mt-4 detailed-reporting">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush" id="CompanyDataTable">
+                                <thead class="thead-light">
+                                    <tr>
+
+                                        <th class="border-bottom" scope="col">Id</th>
+                                        <th class="border-bottom" scope="col">Action</th>
+                                        <th class="border-bottom" scope="col">Order Id</th>
+                                        <th class="border-bottom" scope="col">Company Name</th>
+                                        <th class="border-bottom" scope="col">Registration No</th>
+                                        <th class="border-bottom" scope="col">Customer Name</th>
+                                        <th class="border-bottom" scope="col">Product Category</th>
+                                        <th class="border-bottom" scope="col">Product Type</th>
+                                        <th class="border-bottom" scope="col">settlement To</th>
+                                        <th class="border-bottom" scope="col">Voucher code</th>
+                                        <th class="border-bottom" scope="col">Voucher status</th>
+                                        <th class="border-bottom" scope="col">Exchange price</th>
+                                        <th class="border-bottom" scope="col">Sweetener</th>
+                                        <th class="border-bottom" scope="col">Order date</th>
+                                        <th class="border-bottom" scope="col">Reedemed date</th>
+                                        <th class="border-bottom" scope="col">Payment Status</th>
+                                        <th class="border-bottom" scope="col">Order Reference Id</th>
+                                        <th class="border-bottom" scope="col">Sponsor Order Number</th>
+                                        <th class="border-bottom" scope="col">Status Flag</th>
+                                        <th class="border-bottom" scope="col">Store Code</th>
+
+                                        @*new added fields*@
+                                        <th class="border-bottom" scope="col">Actual Amount As Per QC</th>
+                                        <th class="border-bottom" scope="col">QC Comment</th>
+                                        <th class="border-bottom" scope="col">Actual Prod Qlty</th>
+                                        <th class="border-bottom" scope="col">Latest Status Description</th>
+                                        <th class="border-bottom" scope="col">Latest Date And Time</th>
+                                        <th class="border-bottom" scope="col">City</th>
+                                        <th class="border-bottom" scope="col">State</th>
+                                        <th class="border-bottom" scope="col">Pin Code</th>
+                                        <th class="border-bottom" scope="col">Customer Declare Qtly</th>
+                                        <th class="border-bottom" scope="col">ActualPickupDate</th>
+                                        <th class="border-bottom" scope="col">Amount Payable Through LGC</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="filters">
+                        <div class="p-4">
+
+                            <h4 class="">Filters</h4>
+
+
+
+                            <div class="filter-seprator"></div>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkregdNo">Regd No</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">
+                            </div>
+
+                            <div class="filter-seprator"></div>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkSponsorOrderNumber">Sponsor Order Number</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="SponsorOrderNumber" placeholder="Search Sponsor Order Number">
+                            </div>
+
+                            <div class="filter-seprator"></div>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkSponsorOrderId">Order Id</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="orderId" placeholder="Search Order Id">
+                            </div>
+
+                            <div class="filter-seprator"></div>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkOrderStatus">Latest Status Description</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="latestStatusDescription" placeholder="Search Orderr Status">
+                            </div>
+
+                            @if (Model.TblBusinessPartners.All(x => x.IsVoucher == true))
+                            {
+                                <div class="filter-seprator"></div>
+
+                                <p class="filterheading"><input type="checkbox" name="" id="chkcoucherStatus">Voucher Status</p>
+
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="voucherStatus" placeholder="Search Voucher Status">
+                                </div>
+                            }
+
+                            <div class="filter-seprator"></div>
+
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkcustomerPhone">Phone Number</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="customerPhone" placeholder="Search Customer Phone Number">
+                            </div>
+                            <div class="filter-seprator"></div>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkReferenceId">Reference Id</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="ReferenceId" placeholder="Search Reference Id">
+                            </div>
+                            <div class="filter-seprator"></div>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkstorecode">Store Code</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="storecode" placeholder="Search Store Code">
+                            </div>
+                            <div class="filterbtnwrap">
+                                <a id="btnFilter" class="btn btn-primary">Filter</a>
+                                <a id="btnCloseFilter" class="btn btn-sm btn-secondary py-2">Clear</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="formDiv">
+
+</div>
+
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/newlayout/assets/js/exporttable.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var CompanyName = $("#hdnCompanyName").val();
+        var UserCompany = $("#hdnUserCompanyName").val();
+        $('.filters').hide();
+        var BusinessUnitId = $("#hdnBusinessUnitId").val();
+        var url = "@URLPrefixforProd/api/ListPage/OrderDataTableForBU?BusinessUnitId=" + BusinessUnitId;
+        GetOrderCountByBusinessPartnerId(url);
+
+      });
+
+
+
+
+    $("#filter-dates_DriverList").click(function () {
+        var CompanyName = $("#hdnCompanyName").val();
+        var UserCompany = $("#hdnUserCompanyName").val();
+        var RegdNo = $("#RegdNOId").val();
+        var SponsorOrderNumber = $("#sponsorOrder").val();
+        var PhoneNumber = $("#custPhone").val();
+
+        if (CompanyName == "" || CompanyName == null) {
+            CompanyName = "NotDefined";
+        }
+
+        if (UserCompany == "" || UserCompany == null) {
+            UserCompany = "NotDefined";
+        }
+        var RegdNo = $("#RegdNOId").val();
+        var url = "@URLPrefixforProd/api/ListPage/SearchByRegdNOForBUDashBoard?RegdNo=" + RegdNo + "&CompanyName=" + CompanyName + "&UserCompany=" + UserCompany;
+
+        table = $('#CompanyDataTable').DataTable();
+        // Destroy the existing DataTable
+        table.destroy();
+        GetOrderCountByBusinessPartnerId(url);
+
+        });
+
+    function GetOrderCountByBusinessPartnerId(url) {
+        $("#CompanyDataTable").DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    text: '<button class="btn btn-primary" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters').toggle();
+                    }
+                },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Order Details',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "searching": false,
+            "info": true,
+            "paging": true,
+            "oLanguage": {
+                "sEmptyTable": "No data found"
+            },
+            "ajax": {
+
+                "url": url,
+                "type": "POST",
+                "datatype": "json",
+                   /* "contentType": "application/json; charset=utf-8",*/
+    @* "data": { userId: userId, startDate: startDate, endDate: endDate },*@
+       },
+    "columnDefs": [{
+        "targets": [0],
+        "visible": false,
+        "searchable": false
+    }],
+        "responsive": true,
+
+            "columns": [
+                { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                { "data": "actionUrl", "name": "actionUrl", "autoWidth": true, "orderable": false },
+                { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                { "data": "companyName", "name": "CompanyName", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                { "data": "customerName", "name": "CustomerName", "autoWidth": true, "orderable": false },
+                { "data": "oldProductCategory", "name": "OldProductCategory", "autoWidth": true, "orderable": false },
+                { "data": "oldProductType", "name": "OldProductType", "autoWidth": true, "orderable": false },
+                { "data": "typeOfSettelment", "name": "TypeOfSettelment", "autoWidth": true, "orderable": false },
+                { "data": "voucherCode", "name": "VoucherCode", "autoWidth": true, "orderable": false },
+                { "data": "voucherStatus", "name": "VoucherStatus", "autoWidth": true, "orderable": false },
+                { "data": "exchangePrice", "name": "ExchangePrice", "autoWidth": true, "orderable": false },
+                { "data": "sweetner", "name": "Sweetner", "autoWidth": true, "orderable": false },
+                { "data": "orderDate", "name": "OrderDate", "autoWidth": true, "orderable": false },
+                { "data": "voucherRedeemDate", "name": "VoucherRedeemDate", "autoWidth": true, "orderable": false },
+                { "data": "paymentstatus", "name": "Paymentstatus", "autoWidth": true, "orderable": false },
+                { "data": "orderReferenceId", "name": "OrderReferenceId", "autoWidth": true, "orderable": false },
+                { "data": "sponsorOrderNumber", "name": "SponsorOrderNumber", "autoWidth": true, "orderable": false },
+                { "data": "status", "name": "Status", "autoWidth": true, "orderable": false },
+                { "data": "storeCode", "name": "StoreCode", "autoWidth": true, "orderable": false },
+
+                { "data": "actualAmountAsPerQC", "name": "ActualAmountAsPerQC", "autoWidth": true, "orderable": false },
+                { "data": "qcComment", "name": "QCComment", "autoWidth": true, "orderable": false },
+                { "data": "actualProdQlty", "name": "ActualProdQlty", "autoWidth": true, "orderable": false },
+                { "data": "latestStatusDescription", "name": "LatestStatusDescription", "autoWidth": true, "orderable": false },
+                { "data": "latestDateAndTime", "name": "LatestDateAndTime", "autoWidth": true, "orderable": false },
+                { "data": "city", "name": "City", "autoWidth": true, "orderable": false },
+                { "data": "state", "name": "State", "autoWidth": true, "orderable": false },
+                { "data": "pinCode", "name": "PinCode", "autoWidth": true, "orderable": false },
+                { "data": "customerDeclareQtly", "name": "CustomerDeclareQtly", "autoWidth": true, "orderable": false },
+                { "data": "actualPickupDate", "name": "ActualPickupDate", "autoWidth": true, "orderable": false },
+                { "data": "amountPayableThroughLGC", "name": "AmountPayableThroughLGC", "autoWidth": true, "orderable": false },
+            ]
+            });
+        }
+
+
+
+
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+    //For Export Buttons available inside jquery-datatable "server side processing" - End
+
+
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+    //For Export Buttons available inside jquery-datatable "server side processing" - End
+    $('#btnFilter').click(function () {
+        CommonFilter();
+    });
+
+    function CommonFilter() {
+        var regdNo = $('#regdNo').val();
+        regdNo = $('#regdNo').val() == "" ? null : $('#regdNo').val();
+        var sponsorOrderNumber = $('#SponsorOrderNumber').val();
+        sponsorOrderNumber = $('#SponsorOrderNumber').val() == "" ? null : $('#SponsorOrderNumber').val();
+        var ReferenceId = $('#ReferenceId').val();
+        ReferenceId = $('#ReferenceId').val() == "" ? null : $('#ReferenceId').val();
+        var BusinessUnitId = $("#hdnBusinessUnitId").val();
+        var phoneNumber = $('#customerPhone').val();
+        phoneNumber = $('#customerPhone').val() == "" ? null : $('#customerPhone').val();
+        var Storecode = $('#storecode').val();
+        Storecode = $('#storecode').val() == "" ? null : $('#storecode').val();
+        url = "@URLPrefixforProd/api/ListPage/OrderDataTableForBU?BusinessUnitId=" + BusinessUnitId + '&regdNo=' + regdNo + '&sponsorOrderNumber=' + sponsorOrderNumber + '&phoneNumber=' + phoneNumber + '&ReferenceId=' + ReferenceId + "&Storecode=" + Storecode;
+        var VoucherStatus = $('#voucherStatus').val();
+        VoucherStatus = $('#voucherStatus').val() == "" ? null : $('#voucherStatus').val();
+        var LatestStatusDescription = $('#latestStatusDescription').val();
+        LatestStatusDescription = $('#latestStatusDescription').val() == "" ? null : $('#latestStatusDescription').val();
+        var OrderId = $('#orderId').val();
+        OrderId = $('#orderId').val() == "" ? null : $('#orderId').val();
+        url = "@URLPrefixforProd/api/ListPage/OrderDataTableForBU?BusinessUnitId=" + BusinessUnitId + '&regdNo=' + regdNo + '&sponsorOrderNumber=' + sponsorOrderNumber + '&phoneNumber=' + phoneNumber + '&ReferenceId=' + ReferenceId + "&Storecode=" + Storecode + "&VoucherStatus=" + VoucherStatus + "&LatestStatusDescription=" + LatestStatusDescription + "&OrderId=" + OrderId;
+
+        // Destroy the existing DataTable
+        table = $('#CompanyDataTable').DataTable();
+        // Destroy the existing DataTable
+        table.destroy();
+        GetOrderCountByBusinessPartnerId(url);
+        $('.filters').hide();
+    }
+
+
+    //Filter Clsoe Button Click Event
+    $('#btnCloseFilter').click(function () {
+        $('#regdNo').val("");
+        $('#SponsorOrderNumber').val("");
+        $('#ReferenceId').val("");
+        $('#customerPhone').val("");
+        $('#storecode').val("");
+        $('#voucherStatus').val("");
+        $('#latestStatusDescription').val("");
+        $('#orderId').val("");
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        CommonFilter();
+    });
+    function GetURLData(orderStartDate = null, orderEndDate = null, resheduleStartDate = null, resheduleEndDate = null, companyName = null, productCatId = null, productTypeId = null, regdNo = null, phoneNo = null, custCity = null) {
+        var urlData = "";
+        if (orderStartDate != null && orderEndDate != null) {
+            urlData += '&orderStartDate=' + orderStartDate + '&orderEndDate=' + orderEndDate;
+        }
+        if (resheduleStartDate != null && resheduleEndDate != null) {
+            urlData += '&resheduleStartDate=' + resheduleStartDate + '&resheduleEndDate=' + resheduleEndDate;
+        }
+        if (companyName != null) {
+            urlData += '&companyName=' + companyName;
+        }
+        if (productCatId != null && productCatId > 0) {
+            urlData += '&productCatId=' + productCatId;
+        }
+        if (productTypeId != null && productTypeId > 0) {
+            urlData += '&productTypeId=' + productTypeId;
+        }
+        if (regdNo != null) {
+            urlData += '&regdNo=' + regdNo;
+        }
+        if (phoneNo != null) {
+            urlData += '&phoneNo=' + phoneNo;
+        }
+        if (custCity != null) {
+            urlData += '&custCity=' + custCity;
+        }
+        return urlData;
+    }
+</script>

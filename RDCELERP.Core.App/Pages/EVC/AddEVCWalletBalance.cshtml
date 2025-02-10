@@ -1,0 +1,903 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC.AddEVCWalletBalanceModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row align-items-center">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h2 class="fs-5 mb-0 card-title">EVC Wallet information</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active shadow" id="nav-home-tab1" data-bs-toggle="tab"
+                           href="#WalletAddition" role="tab" aria-controls="nav-home1" aria-selected="true">
+                            Wallet Summary
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab2" data-bs-toggle="tab"
+                           href="#CreditApproval" role="tab" aria-controls="nav-home" aria-selected="true">
+                          Pending Credit Approval 
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-4">
+                <!-- Tab -->
+                <div class="card border-0 shadow noborderradius">
+                    <div class="card-body">
+                        <div class="tab-content" id="nav-tabContent">
+                            <!-- follow Up In Between 48 hrs for UPI Verification-->
+                            <div class="tab-pane fade show active" id="WalletAddition" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <div class="table-responsive">
+                                    <table id="WalletAdditionDatatable" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="all">Registration Id</th>
+                                                <th class="all">Action</th>
+                                                <th class="all">EVC Registration No</th>
+                                                <th class="all">Business Name</th>
+                                                <th class="all">Wallet Amount</th>
+                                                <th class="all">Clear Balance</th>
+                                                <th class="all">Date</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- follow Up In After 48 hrs for UPI Verification-->
+                            <div class="tab-pane fade show" id="CreditApproval" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <div class="table-responsive">
+                                    <table id="CreditApprovalDatatable" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="all notexport">Credit Request Id</th>
+                                                <th class="all notexport">Time Line</th>
+                                                <th class="all notexport">Approve Request</th>
+                                                <th class="all">Order Regd No</th>                                               
+                                                <th class="all">EVC Regd No</th>
+                                                <th class="all">Wallet Amount</th>
+                                                <th class="all">Clear Balance</th>
+                                                <th class="all">EVC Amount</th>
+                                                <th class="all">Order Amount</th> 
+                                                <th class="all">Status Code</th>
+                                                <th class="all">Old Prod Type</th>
+                                                <th class="all">Exch Prod Group</th>
+                                                <th class="all">Customer Name</th>                                                                                              
+                                                <th class="all">Customer City</th>                                                                                           
+                                                <th class="all">Genrate Request By</th>
+                                                <th class="all">Request Date</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        @*List Page Common Filters Code VK 19-May*@
+                        <div class="filters1 filters">
+                            <div class="p-4">
+                                <h4 class="">Filters</h4>
+                                @* Order Date Range Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkOrderDateRange">
+                                    <label for="chkOrderDateRange">Date Range</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline mb-2" id="orderStartDate" readonly placeholder="Start Date" autocomplete="off">
+                                    <input type="text" class="form-control d-inline mb-2" id="orderEndDate" readonly placeholder="End Date" autocomplete="off">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Phone Number Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkPhoneNo">
+                                    <label for="chkPhoneNo">Phone Number</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="phoneNo" placeholder="Search Phone Number">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Cust State Filter *@
+                                <p class="filterheading"><input type="checkbox" name="" id="chkCustState"><label for="chkCustCity">EVC State</label></p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="custState" placeholder="Search State">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+
+                                @* Cust City Filter *@
+                                <p class="filterheading"><input type="checkbox" name="" id="chkCustCity"><label for="chkCustCity">EVC City</label></p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="custCity" placeholder="Search City">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Cust City Filter *@
+                                <p class="filterheading"><input type="checkbox" name="" id="chkCustPin"><label for="chkCustCity">EVC PinCode</label></p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="custPin" placeholder="Search Pin">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* EVCRegd No Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkevcregdNo">
+                                    <label for="chkevcregdNo">EVC Regd No</label>
+                                </p>
+                                <div class="filterbox">
+                                    @*<input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">*@
+                                    <input type="text" class="form-control d-inline" id="evcregdNo" placeholder="Search EVCRegdNo">
+
+                                </div>                               
+                                @* Submit Filter *@
+                                <div class="filterbtnwrap">
+                                    <a id="btnFilter" class="btn btn-primary">Filter</a>
+                                    <a id="btnCloseFilter" class="btn btn-sm btn-secondary py-2">Cancel</a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        @* <a asp-page="./EVC_Dashboard" class="btn btn-primary">Back to List</a> *@
+
+
+
+                        @*List Page Common Filters Code VK 19-May*@
+                        <div class="filters2 filters">
+                            <div class="p-4">
+                                <h4 class="">Filters</h4>
+                                @* Order Date Range Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkOrderDateRange2">
+                                    <label for="chkOrderDateRange">Order Date Range</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline mb-2" id="orderStartDate2" readonly placeholder="Start Date" autocomplete="off">
+                                    <input type="text" class="form-control d-inline mb-2" id="orderEndDate2" readonly placeholder="End Date" autocomplete="off">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Company Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkcompanyName2">
+                                    <label for="chkcompanyName">Company Name</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="companyName2" placeholder="Search Company Name">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Product Group Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkProductCategory2">
+                                    <label for="chkProductCategory">Product Group</label>
+                                </p>
+                                <div class="filterbox">
+                                    <select asp-for="searchFilterVM.ProductCatId" id="ddlprodcatid2" class="form-control d-inline" asp-items="ViewBag.ProductGroup">
+                                        <option value='0'>--Product Cat--</option>
+                                    </select>
+                                    <span asp-validation-for="searchFilterVM.ProductCatId" class="text-danger"></span>
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkProductType2">
+                                    <label for="chkProductType">Product Type</label>
+                                </p>
+                                <div class="filterbox">
+                                    <select asp-for="searchFilterVM.ProductTypeId" id="ddlprodcattypeid2" class="form-control d-inline" asp-items="ViewBag.productTypeList">
+                                        <option value='0'>--Product Type--</option>
+                                    </select>
+                                    <span asp-validation-for="searchFilterVM.ProductTypeId" class="text-danger"></span>
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Regd No Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkregdNo2">
+                                    <label for="chkregdNo">Regd No</label>
+                                </p>
+                                <div class="filterbox">
+                                    @*<input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">*@
+                                    <input type="text" class="form-control d-inline" id="regdNo2" placeholder="Search RegdNo">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Phone Number Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkPhoneNo2">
+                                    <label for="chkPhoneNo">Phone Number</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="phoneNo2" placeholder="Search Phone Number">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Cust City Filter *@
+                                <p class="filterheading"><input type="checkbox" name="" id="chkCustCity2"><label for="chkCustCity">Customer City</label></p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="custCity2" placeholder="Search City">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* EVCRegd No Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkevcregdNo2">
+                                    <label for="chkevcregdNo">EVC Regd No</label>
+                                </p>
+                                <div class="filterbox">
+                                    @*<input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">*@
+                                    <input type="text" class="form-control d-inline" id="evcregdNo2" placeholder="Search EVCRegdNo">
+                                </div>
+                                <div class="filter-seprator"></div>
+                               
+                                @* Submit Filter *@
+                                <div class="filterbtnwrap">
+                                    <a id="btnFilter2" class="btn btn-primary">Filter</a>
+                                    <a id="btnCloseFilter2" class="btn btn-sm btn-secondary py-2">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        @* <a asp-page="./EVC_Dashboard" class="btn btn-primary">Back to List</a> *@
+                    </div>
+                </div>
+                <!-- End of tab -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+
+<script type="text/javascript">
+    $(window).on('pageshow', function () {
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+    });
+    //variable declaration
+    var table = null;
+    var table1 = null;
+    //Document (Page Load) ready Function Call
+    $(document).ready(function () {
+        //Date Picker
+        $("#orderStartDate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                $("#orderEndDate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#orderEndDate").datepicker({
+            defaultDate: null,
+        });
+        //Hide Filters Dive
+        $('.filters1').hide();
+        $('.filters2').hide();
+
+        //Table Count 1 Start
+        var url_WalletAddition = "@URLPrefixforProd/api/EVCList/AddEVCWalletBalance";
+        var url_CreditApproval = "@URLPrefixforProd/api/EVCList/GetEVCPendingCreditApprovalList";
+
+        DataTableWalletAddition(url_WalletAddition);
+        DataTableCreditApproval(url_CreditApproval);
+
+    });
+
+    //Filter Close Button Click Event
+    $('#btnCloseFilter').click(function () {
+        $('#orderStartDate').val("");
+        $('#orderEndDate').val("");
+        $('#phoneNo').val("");
+        $('#custState').val("");
+        $('#custCity').val("");
+        $('#custPin').val("");
+        $('#evcregdNo').val("");      
+        // Unchecks it
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        CommonFilter();
+    });
+
+    //Filter Close Button Click Event
+    $('#btnCloseFilter2').click(function () {
+        $('#orderStartDate2').val("");
+        $('#orderEndDate2').val("");
+        $('#ddlprodcatid2').val(0);
+        $('#ddlprodcattypeid2').empty();
+        $('#ddlprodcattypeid2').append("<option value='0'>--Product Type--</option>");
+        $('#regdNo2').val("");
+        $('#phoneNo2').val("");
+        $('#companyName2').val("");
+        $('#custCity2').val("");
+        $('#evcregdNo2').val("");     
+        // Unchecks it
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        CommonFilter2();
+    });
+
+    //Check Box Date Range change Event
+    $("#chkOrderDateRange").click(function () {
+        if (!this.checked) {
+            $('#orderStartDate').val("");
+            $('#orderEndDate').val("");
+        }
+    });
+    //Check Box Phone Number change Event
+    $("#chkPhoneNo").click(function () {
+        if (!this.checked) {
+            $('#phoneNo').val("");
+        }
+    });
+    //Check Box Customer State change Event
+    $("#chkCustState").click(function () {
+        if (!this.checked) {
+            $('#custState').val("");
+        }
+    });
+
+    //Check Box Customer City change Event
+    $("#chkCustCity").click(function () {
+        if (!this.checked) {
+            $('#custCity').val("");
+        }
+    });
+
+    //Check Box Customer City change Event
+    $("#chkCustPin").click(function () {
+        if (!this.checked) {
+            $('#custPin').val("");
+        }
+    });
+
+    //Check Box EVCRegd Number change Event
+    $("#chkevcregdNo").click(function () {
+        if (!this.checked) {
+            $('#evcregdNo').val("");
+        }
+    }); 
+
+    // Follow-up list multi Search Filter
+    $('#btnFilter').click(function () {
+        CommonFilter();
+    });
+
+    //Check Box Date Range change Event
+    $("#chkOrderDateRange2").click(function () {
+        if (!this.checked) {
+            $('#orderStartDate2').val("");
+            $('#orderEndDate2').val("");
+        }
+    });
+
+    //Check Box Product Category change Event
+    $("#chkProductCategory2").click(function () {
+        if (!this.checked) {
+            $('#ddlprodcatid2').val(0);
+        }
+    });
+
+    //On Change Event for Get Product type by Product Category
+    $("#ddlprodcatid2").change(function () {
+        $.get("@URLPrefixforProd/api/Dropdown/OnGetProductCategoryTypeAsync?productCatId=" + $(this).val()).done(function (data) {
+
+            $("#ddlprodcattypeid2").empty();
+            $("#ddlprodcattypeid2").append($("<option></option>").val('0').html('Select ProductType'));
+            $.each(data, function (i, producttype) {
+                $("#ddlprodcattypeid2").append($("<option></option>").val(producttype.text).html(producttype.value));
+            });
+        });
+    });
+
+    //Check Box Product Type change Event
+    $("#chkProductType2").click(function () {
+        if (!this.checked) {
+            $('#ddlprodcattypeid2').val(0);
+        }
+    });
+
+    //Check Box Regd Number change Event
+    $("#chkregdNo2").click(function () {
+        if (!this.checked) {
+            $('#regdNo2').val("");
+        }
+    });
+
+    //Check Box Phone Number change Event
+    $("#chkPhoneNo2").click(function () {
+        if (!this.checked) {
+            $('#phoneNo2').val("");
+        }
+    });
+
+    //Check Box Brand Name change Event
+    $("#chkcompanyName2").click(function () {
+        if (!this.checked) {
+            $('#companyName2').val("");
+        }
+    });
+
+    //Check Box Customer City change Event
+    $("#chkCustCity2").click(function () {
+        if (!this.checked) {
+            $('#custCity2').val("");
+        }
+    });
+   
+
+    //Check Box EVCRegd Number change Event
+    $("#chkevcregdNo2").click(function () {
+        if (!this.checked) {
+            $('#evcregdNo2').val("");
+        }
+    });
+   
+    // Follow-up list multi Search Filter
+    $('#btnFilter2').click(function () {
+        CommonFilter2();
+    });
+
+    //This Datatable function is calling for Method
+    function DataTableWalletAddition(url) {
+        table = $('#WalletAdditionDatatable').DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    text: '<button class="btn btn-primary datatablebtn" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters1').toggle();
+                        //$('.content').toggleClass('maincontent');
+                        //$('.filters').insertBefore('table.dataTable');
+                    }
+                },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'EVC Wallet Addition List',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Data found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": true
+            }],
+
+            "responsive": true,
+            "columns": [
+
+                { "data": "evcregistrationId", "name": "EvcregistrationId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "evcregdNo", "name": "EvcregdNo", "autoWidth": true, "orderable": false },
+                { "data": "bussinessName", "name": "BussinessName", "autoWidth": true, "orderable": false },
+                { "data": "evcwalletAmount", "name": "EvcwalletAmount", "autoWidth": true, "orderable": false },
+                { "data": "runingBalance", "name": "RuningBalance", "autoWidth": true, "orderable": false },
+                { "data": "date", "name": "Date", "autoWidth": true, "orderable": false },
+                
+            ]
+        });
+    }
+    //This Datatable function is calling for Method
+    function DataTableCreditApproval(url) {
+        table1 = $('#CreditApprovalDatatable').DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    text: '<button class="btn btn-primary datatablebtn" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters2').toggle();
+                        //$('.content').toggleClass('maincontent');
+                        //$('.filters').insertBefore('table.dataTable');
+                    }
+                },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Pending Credit Approval List',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Data found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": true
+            }],
+
+            "responsive": true,
+            "columns": [               
+                { "data": "creditRequestId", "name": "CreditRequestId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "edit", "name": "Edit", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                { "data": "evcRegNo", "name": "EvcRegNo", "autoWidth": true, "orderable": false },
+                { "data": "evcWalletAmount", "name": "EvcWalletAmount", "autoWidth": true, "orderable": false },
+                { "data": "clearBalance", "name": "clearBalance", "autoWidth": true, "orderable": false },
+                { "data": "evcRate", "name": "EvcRate", "autoWidth": true, "orderable": false },
+                { "data": "finalExchangePrice", "name": "FinalExchangePrice", "autoWidth": true, "orderable": false },
+                { "data": "statusCode", "name": "StatusCode", "autoWidth": true, "orderable": false },
+                { "data": "exchProdGroup", "name": "ExchProdGroup", "autoWidth": true, "orderable": false },
+                { "data": "oldProdType", "name": "OldProdType ", "autoWidth": true, "orderable": false },
+                { "data": "firstName", "name": "FirstName", "autoWidth": true, "orderable": false },
+                { "data": "custCity", "name": "CustCity", "autoWidth": true, "orderable": false },
+                { "data": "genrateRequestBy", "name": "GenrateRequestBy", "autoWidth": true, "orderable": false },
+                { "data": "requestDate", "name": "RequestDate", "autoWidth": true, "orderable": false },               
+            ]
+        });
+    }
+
+    function GetURLData(orderStartDate = null, orderEndDate = null, phoneNo = null, custState = null, custCity = null, custPin = null, evcregdNo = null) {
+        var urlData = "";
+        if (orderStartDate != null && orderEndDate != null) {
+            urlData += '&orderStartDate=' + orderStartDate + '&orderEndDate=' + orderEndDate;
+        }
+        if (phoneNo != null) {
+            urlData += '&phoneNo=' + phoneNo;
+        }
+        if (custState != null) {
+            urlData += '&custState=' + custState;
+        }
+        if (custCity != null) {
+            urlData += '&custCity=' + custCity;
+        }
+        if (custPin != null) {
+            urlData += '&custPin=' + custPin;
+        }
+        if (evcregdNo != null) {
+            urlData += '&evcregdNo=' + evcregdNo;
+        }
+       
+        return urlData;
+    }
+
+    //Filter Function
+    function CommonFilter() {
+        var orderStartDate = $('#orderStartDate').val();
+        orderStartDate = $('#orderStartDate').val() == "" ? null : $('#orderStartDate').val();
+        var orderEndDate = $('#orderEndDate').val();
+        orderEndDate = $('#orderEndDate').val() == "" ? null : $('#orderEndDate').val();
+
+        var phoneNo = $('#phoneNo').val();
+        phoneNo = $('#phoneNo').val() == "" ? null : $('#phoneNo').val();
+
+        var custState = $('#custState').val();
+        custState = $('#custState').val() == "" ? null : $('#custState').val();
+
+        var custCity = $('#custCity').val();
+        custCity = $('#custCity').val() == "" ? null : $('#custCity').val();
+
+        var custPin = $('#custPin').val();
+        custPin = $('#custPin').val() == "" ? null : $('#custPin').val();
+
+        var evcregdNo = $('#evcregdNo').val();
+        evcregdNo = $('#evcregdNo').val() == "" ? null : $('#evcregdNo').val();
+       
+        var urlData = GetURLData(orderStartDate, orderEndDate, phoneNo, custState, custCity, custPin, evcregdNo);
+
+        var url_WalletAddition = "@URLPrefixforProd/api/EVCList/AddEVCWalletBalance?" + urlData;
+      
+        // Destroy the existing DataTable
+        table = $('#WalletAdditionDatatable').DataTable();
+        // Destroy the existing DataTable
+        table.clear().destroy();
+        //Re-Initialize Datatable
+        DataTableWalletAddition(url_WalletAddition);      
+        $('.filters').hide();
+    }
+
+    function GetURLData2(orderStartDate = null, orderEndDate = null, companyName = null, productCatId = null, productTypeId = null, regdNo = null, phoneNo = null, custCity = null, evcregdNo = null) {
+        var urlData = "";
+        if (orderStartDate != null && orderEndDate != null) {
+            urlData += '&orderStartDate=' + orderStartDate + '&orderEndDate=' + orderEndDate;
+        }
+
+        if (companyName != null) {
+            urlData += '&companyName=' + companyName;
+        }
+        if (productCatId != null && productCatId > 0) {
+            urlData += '&productCatId=' + productCatId;
+        }
+        if (productTypeId != null && productTypeId > 0) {
+            urlData += '&productTypeId=' + productTypeId;
+        }
+        if (regdNo != null) {
+            urlData += '&regdNo=' + regdNo;
+        }
+        if (phoneNo != null) {
+            urlData += '&phoneNo=' + phoneNo;
+        }
+        if (custCity != null) {
+            urlData += '&custCity=' + custCity;
+        }       
+        if (evcregdNo != null) {
+            urlData += '&evcregdNo=' + evcregdNo;
+        }
+        
+        return urlData;
+    }
+    //Filter Function
+    function CommonFilter2() {
+        var companyName = $('#companyName2').val();
+        companyName = $('#companyName2').val() == "" ? null : $('#companyName2').val();
+
+        var productCatId = $('#ddlprodcatid2').val();
+        productCatId = $('#ddlprodcatid2').val() == "" ? 0 : $('#ddlprodcatid2').val();
+        var productTypeId = $('#ddlprodcattypeid2').val();
+        productTypeId = $('#ddlprodcattypeid2').val() == "" ? 0 : $('#ddlprodcattypeid2').val();
+
+        var orderStartDate = $('#orderStartDate2').val();
+        orderStartDate = $('#orderStartDate2').val() == "" ? null : $('#orderStartDate2').val();
+        var orderEndDate = $('#orderEndDate2').val();
+        orderEndDate = $('#orderEndDate2').val() == "" ? null : $('#orderEndDate2').val();
+
+
+        var regdNo = $('#regdNo2').val();
+        regdNo = $('#regdNo2').val() == "" ? null : $('#regdNo2').val();
+
+        var phoneNo = $('#phoneNo2').val();
+        phoneNo = $('#phoneNo2').val() == "" ? null : $('#phoneNo2').val();
+
+        var custCity = $('#custCity2').val();
+        custCity = $('#custCity2').val() == "" ? null : $('#custCity2').val();
+     
+        var evcregdNo = $('#evcregdNo2').val();
+        evcregdNo = $('#evcregdNo2').val() == "" ? null : $('#evcregdNo2').val();
+     
+        var urlData = GetURLData2(orderStartDate, orderEndDate, companyName, productCatId, productTypeId, regdNo, phoneNo, custCity, evcregdNo);
+
+        var url = null;
+        var url_CreditApproval = "@URLPrefixforProd/api/EVCList/GetEVCPendingCreditApprovalList?" + urlData;
+
+        // Destroy the existing DataTable
+         table1 = $('#CreditApprovalDatatable').DataTable();
+        // Destroy the existing DataTable
+         table1.clear().destroy();
+        //Re-Initialize Datatable
+         DataTableCreditApproval(url_CreditApproval);  
+        $('.filters2').hide();
+    }
+</script>
+<script>
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+    //For Export Buttons available inside jquery-datatable "server side processing" - End
+
+</script>
+<script>
+    function AddWalletConfirm(_EvcregistrationId) {
+        $('#loader').show();
+        var evcRegistration = _EvcregistrationId;
+        window.location.href = '@ViewData["URLPrefixforProd"]/EVC/EVCWalletRechargeByAdmin?EVCRegistration=' + evcRegistration;
+
+    }
+    function WalletRe_Calculation() {
+        location.reload(true);
+    }
+    //Approved EVC
+    function ApproveCreditRequest(id) {
+        var Id = id;
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You want to Approve Credit Request!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ok',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.get("@URLPrefixforProd/EVC/AddEVCWalletBalance?handler=ApproveCreditRequest&Id=" + Id).done(function (data) {
+                    location.reload(true);
+                });
+            }
+            else {
+            }
+        })
+    }
+    $('#nav-home-tab1').click(function () {
+        $('.filters1').hide();
+        $('.filters2').hide();
+        let table = $('#WalletAdditionDatatable').DataTable();
+        table.ajax.reload();
+    })
+    $('#nav-home-tab2').click(function () {
+        $('.filters1').hide();
+        $('.filters2').hide();
+        let table = $('#CreditApprovalDatatable').DataTable();
+        table.ajax.reload();
+    })
+</script>
+@*AutoPopulate Regd No search filter*@
+<script>
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        $("#regdNo").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 3,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/EVC/AddEVCWalletBalance?handler=SearchRegdNo", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+                focus: function () {
+                    // prevent value inserted on focus
+                    return false;
+                },
+                open: function (event, ui) {
+                    // Get the menu element
+                    var menu = $(this).autocomplete("widget");
+
+                    // Set max-height and overflow properties
+                    menu.css("max-height", "200px");
+                    menu.css("overflow-y", "auto");
+                },
+                select: function (event, ui) {
+                    var terms = split(this.value);
+                    console.log(terms);
+                    // remove the current input
+                    terms.pop();
+                    // add the selected item
+                    terms.push(ui.item.value);
+
+                    this.value = ui.item.value;
+                    return false;
+                }
+            });
+    })
+</script>
+
+@*AutoPopulate EVCRegd No search filter*@
+<script>
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        $("#evcregdNo").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 3,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/EVC/AddEVCWalletBalance?handler=SearchEVCRegdNo", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+                focus: function () {
+                    // prevent value inserted on focus
+                    return false;
+                },
+                open: function (event, ui) {
+                    // Get the menu element
+                    var menu = $(this).autocomplete("widget");
+
+                    // Set max-height and overflow properties
+                    menu.css("max-height", "200px");
+                    menu.css("overflow-y", "auto");
+                },
+                select: function (event, ui) {
+                    var terms = split(this.value);
+                    console.log(terms);
+                    // remove the current input
+                    terms.pop();
+                    // add the selected item
+                    terms.push(ui.item.value);
+
+                    this.value = ui.item.value;
+                    return false;
+                }
+            });
+    })
+</script>

@@ -1,0 +1,318 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.LGCOrderTracking.VehicleListModel
+@{
+    ViewData["Title"] = "Vehicle List";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="row align-items-center">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h2 class="fs-5 mb-0 card-title">Vehicle List</h2>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12 mb-4">
+                <!-- Tab -->
+                <div class="card border-0 shadow noborderradius">
+                    <div class="card-body">
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="AllVehicleList" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <div class="table-responsive">
+                                    <table id="AllVehicleList_DT" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="border-bottom all notexport" scope="col">Vehicle Id</th>
+                                              @*   <th class="border-bottom all notexport" scope="col">Action</th> *@
+                                                <th class="border-bottom all" scope="col">Vehicle Number</th>
+                                                <th class="border-bottom all" scope="col">RC Number</th>
+                                                <th class="border-bottom all" scope="col">RC Certificate</th>
+                                                <th class="border-bottom all" scope="col">City</th>
+                                                <th class="border-bottom all" scope="col">Service Partner Name</th>
+                                                <th class="border-bottom all" scope="col">Is Approved</th>
+                                                <th class="border-bottom all" scope="col">Approved By</th>
+                                                <th class="border-bottom all" scope="col">Fitness Certificate</th>
+                                                <th class="border-bottom all" scope="col">Insurance Certificate</th>
+                                            </tr>
+                                        </thead>
+                                        
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                        @*List Page Common Filters Code VK*@
+                        <div class="filters">
+                            <div class="p-4">
+                                <h4 class="">Filters</h4>
+
+                                @if (Model.SPId == 0)
+                                {
+                                    @* Service Partner Name Filter *@
+                                    <p class="filterheading">
+                                        <input type="checkbox" name="" id="chkservicepartneName">
+                                        <label for="chkservicepartneName">Service Partner Name</label>
+                                    </p>
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="servicepartnerName" placeholder="Search Service Partner Name">
+                                    </div>
+                                    <div class="filter-seprator"></div>
+                                }
+
+                                @* Vehicle Name Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkVehicleNumber">
+                                    <label for="chkVehicleNumber">Vehicle Number</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="VehicleNumber" placeholder="Search Vehicle Number">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Phone Number Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkvehicleRcnumber">
+                                    <label for="chkvehicleRcnumber">RC Number</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="vehicleRcnumber" placeholder="Search Vehicle RC Number">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Vehicle City Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkVehiclecity">
+                                    <label for="chkVehiclecity">City</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="Vehiclecity" placeholder="Search City">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Submit *@
+                                <div class="filterbtnwrap">
+                                    <a id="btnFilter" class="btn btn-primary">Filter</a>
+                                    <a id="btnCloseFilter" class="btn btn-sm btn-secondary py-2">Clear</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of tab -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+
+<script type="text/javascript">
+    //variable declaration
+    var table = null;
+
+    //Document (Page Load) ready Function Call
+    $(document).ready(function () {
+        //Hide Filters Dive
+        $('.filters').hide();
+        var url_AllVehicleList = "@URLPrefixforProd/api/LGCMobileApp/AllVehicleList?companyId=" + @ViewBag.CompanyId+ "&SPId=" + @Model.SPId;
+        DataTableAllVehicleList(url_AllVehicleList);
+    });
+
+    // Filter Close Button Click Event  servicepartnerName,VehicleNumber,vehicleRcnumber,vehicleno,Vehiclecity,ticketnumber,actionorder
+    $('#btnCloseFilter').click(function () {
+        $('#servicepartnerName').val("");
+        $('#VehicleNumber').val("");
+        $('#vehicleRcnumber').val("");
+        $('#Vehiclecity').val("");
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        CommonFilter();
+    });
+
+    //Check Box Service Partne Name change Event
+    $("#chkservicepartneName").click(function () {
+        if (!this.checked) {
+            $('#servicepartnerName').val("");
+        }
+    });
+
+    //Check Box Vehicle Name change Event
+    $("#chkVehicleNumber").click(function () {
+        if (!this.checked) {
+            $('#VehicleNumber').val("");
+        }
+    });
+
+    //Check Box Vehicle Phone Number change Event
+    $("#chkvehicleRcnumber").click(function () {
+        if (!this.checked) {
+            $('#vehicleRcnumber').val("");
+        }
+    });
+
+    //Check Box Vehicle City change Event
+    $("#chkVehiclecity").click(function () {
+        if (!this.checked) {
+            $('#Vehiclecity').val("");
+        }
+    });
+
+    // Follow-up list multi Search Filter
+    $('#btnFilter').click(function () {
+        CommonFilter();
+    });
+
+    function GetURLData(servicepartnerName = null, VehicleNumber = null, vehicleRcnumber = null, Vehiclecity = null) {
+        var urlData = "";
+        if (servicepartnerName != null) {
+            urlData += '&servicepartnerName=' + servicepartnerName;
+        }
+        if (VehicleNumber != null) {
+            urlData += '&VehicleNumber=' + VehicleNumber;
+        }
+        if (vehicleRcnumber != null) {
+            urlData += '&vehicleRcnumber=' + vehicleRcnumber;
+        }
+        if (Vehiclecity != null) {
+            urlData += '&Vehiclecity=' + Vehiclecity;
+        }
+        return urlData;
+    }
+
+    //Filter Function
+    function CommonFilter() {
+        var servicepartnerName = $('#servicepartnerName').val();
+        servicepartnerName = $('#servicepartnerName').val() == "" ? null : $('#servicepartnerName').val();
+
+        var VehicleNumber = $('#VehicleNumber').val();
+        VehicleNumber = $('#VehicleNumber').val() == "" ? null : $('#VehicleNumber').val();
+
+        var vehicleRcnumber = $('#vehicleRcnumber').val();
+        vehicleRcnumber = $('#vehicleRcnumber').val() == "" ? null : $('#vehicleRcnumber').val();
+
+        var Vehiclecity = $('#Vehiclecity').val();
+        Vehiclecity = $('#Vehiclecity').val() == "" ? null : $('#Vehiclecity').val();
+
+        debugger;
+        var urlData = GetURLData(servicepartnerName, VehicleNumber, vehicleRcnumber, Vehiclecity);
+
+        var url_AllVehicleList = "@URLPrefixforProd/api/LGCMobileApp/AllVehicleList?companyId=" + @ViewBag.CompanyId+ "&SPId=" + @Model.SPId + urlData;
+
+        // Destroy the existing DataTable
+        table = $('#AllVehicleList_DT').DataTable();
+        table.clear().destroy();
+        DataTableAllVehicleList(url_AllVehicleList);
+
+        $('.filters').hide();
+    }
+
+    function DataTableAllVehicleList(url_AllVehicleList) {
+        table = $('#AllVehicleList_DT').DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    text: '<button class="btn btn-primary datatablebtn" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters').toggle();
+
+                    }
+                },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Vehicle List',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                },
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Data found"
+            },
+            "ajax": {
+                "url": url_AllVehicleList,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": true
+            }],
+            "responsive": true,
+            "columns": [
+                { "data": "vehicleId", "name": "VehicleId", "autoWidth": true },
+                // { "data": "action", "name": "Action", "autoWidth": true },
+                { "data": "vehicleNumber", "name": "VehicleNumber", "autoWidth": true },
+                { "data": "vehicleRCNumber", "name": "VehicleRCNumber", "autoWidth": true },
+                { "data": "vehicleRCCertificate", "name": "VehicleRCCertificate", "autoWidth": true},
+                { "data": "cityName", "name": "CityName", "autoWidth": true },
+                { "data": "servicePartnerName", "name": "ServicePartnerName", "autoWidth": true },
+                { "data": "isApproved", "name": "IsApproved", "autoWidth": true },
+                { "data": "approvedByName", "name": "ApprovedByName", "autoWidth": true },
+                { "data": "vehiclefitnessCertificate", "name": "VehiclefitnessCertificate", "autoWidth": true},
+                { "data": "vehicleInsuranceCertificate", "name": "VehicleInsuranceCertificate", "autoWidth": true},
+            ]
+        });
+    }
+
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+</script>

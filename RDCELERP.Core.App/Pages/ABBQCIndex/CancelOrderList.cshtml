@@ -1,0 +1,655 @@
+﻿
+@page
+@model RDCELERP.Core.App.Pages.ABBQCIndex.CancelOrderListModel
+@{
+    ViewData["Title"] = "Cancelled Orders";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var ExchangeImagesURL = ViewData["ExchangeImagesURL"];
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+
+<script type="text/javascript">
+        $(function () {
+            $('.checkboxinput').click(function () {
+                var flag = false;
+                $('.checkboxinput').each(function () {
+                    if (this.checked) {
+                        flag = true;
+                    }
+                });
+                if (flag) {
+                    $('#exportbtn').prop('disabled', false);
+                }
+                else {
+                    $('#exportbtn').prop('disabled', true);
+                }
+            });
+        });
+
+        function ReopenConfirmId(_Id) {
+
+              $("#hdnId").val(_Id);
+        $('#Reopen-conformation').modal('show');
+    }
+
+ function ReopenConfirm() {
+      var searchIDs = "";
+       $('.checkboxinput').each(function () {
+            if (this.checked) {
+                searchIDs += this.value + ",";
+            }
+        });
+
+        if (searchIDs != "") {
+            searchIDs = searchIDs.replace(/,\s*$/, "");
+            $("#hdnId").val(searchIDs);
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You want to reopen this order!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ok',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#Reopen-conformation').modal('show');
+                }
+                else {
+                    location.reload(true);
+                }
+                customClass: {
+                    confirmButton: 'btn btn-dark'
+                }
+            });
+        }
+        else {
+            Swal.fire({
+                title: "Failed!",
+                text: "Please select any order to reopen",
+                icon: 'warning',
+                confirmButtonText: 'Ok',
+                customClass: {
+                    confirmButton: 'btn btn-dark'
+                }
+            });
+        }
+
+        // searchIDs = searchIDs.replace(/,\s*$/, "");
+        // $("#hdnId").val(searchIDs);
+        // $('#Reopen-conformation').modal('show');
+    }
+    </script>
+
+@if (accessRule != null && accessRule.CanView) { 
+    <div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">Cancelled Orders List</h2>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="CancelOrderListDatatable" class="table align-items-center" border="1">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="all notexport">Id</th>
+                                        <th class="all"><input type='checkbox' id='select_all' /></th>
+                                        <th class="all">Company</th>
+                                        <th class="all">Regd No.</th>
+                                        <th class="all">CustomerCity</th>
+                                        <th class="all">Product Group</th>
+                                        <th class="all">Product Type</th>
+                                        <th class="all">Status Code</th>
+                                        <th class="all">Order Date & Time</th>
+                                        <th class="all">Preferred QC Date & Time</th>
+                                        <th class="all">QC Reschedule Date</th>
+                                        <th class="all">Reschedule Count</th>
+                                        <th class="all notexport">Actions</th>
+
+                                        @*this field use for Excel inport*@
+                                        <th class="all">CustomerFullName</th>
+                                        <th class="all">CustomerAddress</th>
+                                        <th class="all">Pin Code</th>
+                                        <th class="all">CustomerState</th>
+                                        <th class="all">Store Code</th>
+                                        <th class="all">Store Name</th>
+                                        <th class="all">Store Phone Number</th>
+                                        <th class="all">QCDate</th>
+                                        <th class="all">Final Redemption Price</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        @*List Page Common Filters Code VK 19-May*@
+                        <div class="filters">
+                            <div class="p-4">
+                                <h4 class="">Filters</h4>
+                                @* Order Date Range Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkOrderDateRange">
+                                    <label for="chkOrderDateRange">Order Date Range</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline mb-2" id="orderStartDate" readonly placeholder="Start Date" autocomplete="off">
+                                    <input type="text" class="form-control d-inline mb-2" id="orderEndDate" readonly placeholder="End Date" autocomplete="off">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Reschedule Date Range Filter *@
+                                <p class="filterheading"><input type="checkbox" name="" id="chkRescheduleDateRange"><label for="chkRescheduleDateRange">Reschedule Date Range</label></p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline mb-2" id="resheduleStartDate" readonly placeholder="Start Date" autocomplete="off">
+                                    <input type="text" class="form-control d-inline mb-2" id="resheduleEndDate" readonly placeholder="End Date" autocomplete="off">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Company Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkcompanyName">
+                                    <label for="chkcompanyName">Company Name</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="companyName" placeholder="Search Company Name">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Product Group Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkProductCategory">
+                                    <label for="chkProductCategory">Product Group</label>
+                                </p>
+                                <div class="filterbox">
+                                    <select asp-for="searchFilterVM.ProductCatId" id="ddlprodcatid" class="form-control d-inline" asp-items="ViewBag.ProductGroup">
+                                        <option value='0'>--Product Cat--</option>
+                                    </select>
+                                    <span asp-validation-for="searchFilterVM.ProductCatId" class="text-danger"></span>
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkProductType">
+                                    <label for="chkProductType">Product Type</label>
+                                </p>
+                                <div class="filterbox">
+                                    <select asp-for="searchFilterVM.ProductTypeId" id="ddlprodcattypeid" class="form-control d-inline" asp-items="ViewBag.productTypeList">
+                                        <option value='0'>--Product Type--</option>
+                                    </select>
+                                    <span asp-validation-for="searchFilterVM.ProductTypeId" class="text-danger"></span>
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Regd No Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkregdNo">
+                                    <label for="chkregdNo">Regd No</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Phone Number Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkPhoneNo">
+                                    <label for="chkPhoneNo">Phone Number</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="phoneNo" placeholder="Search Phone Number">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Cust City Filter *@
+                                <p class="filterheading"><input type="checkbox" name="" id="chkCustCity"><label for="chkCustCity">Customer City</label></p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline" id="custCity" placeholder="Search City">
+                                </div>
+                                <div class="filter-seprator"></div>
+
+                                @* Submit Filter *@
+                                <div class="filterbtnwrap">
+                                    <a id="btnFilter" class="btn btn-primary">Filter</a>
+                                    <a id="btnCloseFilter" class="btn btn-sm btn-secondary py-2">Clear</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+
+<div class="modal fade" id="Reopen-conformation" tabindex="-1" role="dialog" aria-labelledby="AddWalletAmount">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="Add-conformation">
+                    Reopen Cancelled Order
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="row my-3">
+                        <div class="col-6">
+                            Comment:
+                        </div>
+                        <div class="col-6">
+                            <input type="hidden" asp-for="tblAbbredemption.Qccomments" id="hdnId" />
+                            <input asp-for="tblAbbredemption.LogisticsComments" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="Update" class="btn btn-danger" value="Reopen" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+
+<script type="text/javascript">
+
+    $(window).on('pageshow', function () {
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+    });
+
+    var table = null;
+    $(document).ready(function () {
+        //Date Picker
+        $("#orderStartDate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                $("#orderEndDate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#orderEndDate").datepicker({
+            defaultDate: null,
+        });
+        $("#resheduleStartDate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                $("#resheduleEndDate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#resheduleEndDate").datepicker({
+            defaultDate: null,
+        });
+        //Hide Filters Dive
+        $('.filters').hide();
+        var url = "@ViewData["URLPrefixforProd"]/api/ABBList/CancelledOrderListNew?companyId=" + @ViewBag.CompanyId;
+        DataTable(url);
+    });
+    //Filter Close Button Click Event
+    $('#btnCloseFilter').click(function () {
+        $('#orderStartDate').val("");
+        $('#orderEndDate').val("");
+        $('#resheduleStartDate').val("");
+        $('#resheduleEndDate').val("");
+        $('#ddlprodcatid').val(0);
+        $('#ddlprodcattypeid').empty();
+        $('#ddlprodcattypeid').append("<option value='0'>--Product Type--</option>");
+        $('#regdNo').val("");
+        $('#phoneNo').val("");
+        $('#companyName').val("");
+        $('#custCity').val("");
+        // Unchecks it
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        CommonFilter();
+    });
+
+    //Check Box Date Range change Event
+    $("#chkOrderDateRange").click(function () {
+        if (!this.checked) {
+            $('#orderStartDate').val("");
+            $('#orderEndDate').val("");
+        }
+        });
+        //Check Box Date Range change Event
+    $("#chkRescheduleDateRange").click(function () {
+            if (!this.checked) {
+                $('#resheduleStartDate').val("");
+                $('#resheduleEndDate').val("");
+            }
+        });
+
+    //Check Box Product Category change Event
+    $("#chkProductCategory").click(function () {
+        if (!this.checked) {
+            $('#ddlprodcatid').val(0);
+        }
+    });
+
+    //On Change Event for Get Product type by Product Category
+    $("#ddlprodcatid").change(function () {
+        $.get("@URLPrefixforProd/api/Dropdown/OnGetProductCategoryTypeAsync?productCatId=" + $(this).val()).done(function (data) {
+
+            $("#ddlprodcattypeid").empty();
+            $("#ddlprodcattypeid").append($("<option></option>").val('0').html('Select ProductType'));
+            $.each(data, function (i, producttype) {
+                $("#ddlprodcattypeid").append($("<option></option>").val(producttype.text).html(producttype.value));
+            });
+        });
+    });
+
+    //Check Box Product Type change Event
+    $("#chkProductType").click(function () {
+        if (!this.checked) {
+            $('#ddlprodcattypeid').val(0);
+        }
+    });
+
+    //Check Box Regd Number change Event
+    $("#chkregdNo").click(function () {
+        if (!this.checked) {
+            $('#regdNo').val("");
+        }
+    });
+
+    //Check Box Phone Number change Event
+    $("#chkPhoneNo").click(function () {
+        if (!this.checked) {
+            $('#phoneNo').val("");
+        }
+    });
+
+    //Check Box Brand Name change Event
+    $("#chkcompanyName").click(function () {
+        if (!this.checked) {
+            $('#companyName').val("");
+        }
+    });
+
+    //Check Box Customer City change Event
+    $("#chkCustCity").click(function () {
+            if (!this.checked) {
+                $('#custCity').val("");
+            }
+        });
+
+    // Follow-up list multi Search Filter
+    $('#btnFilter').click(function () {
+     CommonFilter();
+    });
+
+    function DataTable(url) {
+            table = $('#CancelOrderListDatatable').DataTable({
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "paging": true,
+                "filter": true,
+                "searching": false,
+                "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        text: '<button class="btn btn-primary datatablebtn" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                        action: function (e, dt, node, config) {
+                            $('.filters').toggle();
+                            //$('.content').toggleClass('maincontent');
+                            //$('.filters').insertBefore('table.dataTable');
+                        }
+                    },
+                {
+                    text: '<div class="datatablebtn viewableWithAddPermission" id="GenerateReopenOrder"><button class="btn btn-primary" onclick="ReopenConfirm()" id="ReopenOrder"><i class="fa-solid fa-arrow-rotate-left"></i>&nbsp; Reopen Selected</button></div>', id: "ReopenOrder",
+                    title: 'Reopen Order',
+                },
+            {
+                extend: 'excel', text: '<div class="datatablebtn"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                title: 'Cancelled Orders',
+                action: newexportaction,
+                exportOptions: {
+                    modifier: {
+                        // DataTables core
+                        order: 'index',  // 'current', 'applied', 'index',  'original'
+                        page: 'all',      // 'all',     'current'
+                        search: 'none'     // 'none',    'applied', 'removed'
+                    },
+                    columns: ':not(.notexport)'
+                }
+            }
+            ],
+                "oLanguage": {
+                    "sEmptyTable": "No Data found"
+                },
+                "ajax": {
+                    "url": url,
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": true
+                }],
+
+                "responsive": true,
+                "columns": [
+                    { "data": "redemptionId", "name": "RedemptionId", "autoWidth": true, "orderable": false },
+                    { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                    { "data": "companyName", "CompanyName": "SponsorName", "autoWidth": true, "orderable": false },
+                    { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                    { "data": "custCity", "name": "CustCity", "autoWidth": true, "orderable": false },
+                    { "data": "newProductCategoryName", "name": "NewProductCategoryName", "autoWidth": true, "orderable": false },
+                    { "data": "newProductCategoryType", "name": "NewProductCategoryType", "autoWidth": true, "orderable": false },
+                    { "data": "statusCode", "name": "StatusCode", "autoWidth": true, "orderable": false },
+                    { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": false },
+                    { "data": "preferredQCDate", "name": "PreferredQCDate", "autoWidth": true, "orderable": false },
+                    { "data": "rescheduleDate", "name": "RescheduleDate", "autoWidth": true, "orderable": false },
+                    { "data": "reschedulecount", "name": "Reschedulecount", "autoWidth": true, "orderable": false },
+                    { "data": "edit", "name": "Action", "autoWidth": true, "orderable": false },
+                    //Fields for Download Excel
+                    { "data": "custFullname", "name": "CustFullname", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "custAddress", "name": "CustAddress", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "custPinCode", "name": "CustPinCode", "autoWidth": true, "visible": false},
+                    { "data": "custState", "name": "CustState", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "storeCode", "name": "StoreCode", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "storeName", "name": "StoreName", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "storePhoneNumber", "name": "StorePhoneNumber", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "qcDate", "name": "QcDate", "autoWidth": true, "orderable": false, "visible": false },
+                    { "data": "finalRedemptionValue", "name": "FinalRedemptionValue", "autoWidth": true, "orderable": false, "visible": false },
+                ]
+            });
+        }
+
+    function GetURLData(orderStartDate = null, orderEndDate = null, resheduleStartDate = null, resheduleEndDate = null, companyName = null, productCatId = null, productTypeId = null, regdNo = null, phoneNo = null, custCity = null) {
+      var urlData = "";
+        if (orderStartDate != null && orderEndDate != null) {
+            urlData += '&orderStartDate=' + orderStartDate + '&orderEndDate=' + orderEndDate;
+        }
+        if (resheduleStartDate != null && resheduleEndDate != null) {
+            urlData += '&resheduleStartDate=' + resheduleStartDate + '&resheduleEndDate=' + resheduleEndDate;
+        }
+        if (companyName != null) {
+            urlData += '&companyName=' + companyName;
+        }
+        if (productCatId != null && productCatId > 0) {
+            urlData += '&productCatId=' + productCatId;
+        }
+        if (productTypeId != null && productTypeId > 0) {
+            urlData += '&productTypeId=' + productTypeId;
+        }
+        if (regdNo != null) {
+            urlData += '&regdNo=' + regdNo;
+        }
+        if (phoneNo != null) {
+            urlData += '&phoneNo=' + phoneNo;
+        }
+        if (custCity != null) {
+            urlData += '&custCity=' + custCity;
+        }
+        return urlData;
+    }
+
+    //Filter Function
+    function CommonFilter() {
+        var companyName = $('#companyName').val();
+        companyName = $('#companyName').val() == "" ? null : $('#companyName').val();
+
+        var productCatId = $('#ddlprodcatid').val();
+        productCatId = $('#ddlprodcatid').val() == "" ? 0 : $('#ddlprodcatid').val();
+        var productTypeId = $('#ddlprodcattypeid').val();
+        productTypeId = $('#ddlprodcattypeid').val() == "" ? 0 : $('#ddlprodcattypeid').val();
+
+        var orderStartDate = $('#orderStartDate').val();
+        orderStartDate = $('#orderStartDate').val() == "" ? null : $('#orderStartDate').val();
+        var orderEndDate = $('#orderEndDate').val();
+        orderEndDate = $('#orderEndDate').val() == "" ? null : $('#orderEndDate').val();
+        var resheduleStartDate = $('#resheduleStartDate').val();
+        resheduleStartDate = $('#resheduleStartDate').val() == "" ? null : $('#resheduleStartDate').val();
+        var resheduleEndDate = $('#resheduleEndDate').val();
+        resheduleEndDate = $('#resheduleEndDate').val() == "" ? null : $('#resheduleEndDate').val();
+
+        var regdNo = $('#regdNo').val();
+        regdNo = $('#regdNo').val() == "" ? null : $('#regdNo').val();
+
+        var phoneNo = $('#phoneNo').val();
+        phoneNo = $('#phoneNo').val() == "" ? null : $('#phoneNo').val();
+
+        var custCity = $('#custCity').val();
+        custCity = $('#custCity').val() == "" ? null : $('#custCity').val();
+
+        var urlData = GetURLData(orderStartDate, orderEndDate, resheduleStartDate, resheduleEndDate, companyName, productCatId, productTypeId, regdNo, phoneNo, custCity);
+
+        var url = null;
+        url = "@ViewData["URLPrefixforProd"]/api/ABBList/CancelledOrderListNew?companyId=" + @ViewBag.CompanyId + urlData;
+        debugger;
+
+        // Destroy the existing DataTable
+        table = $('#CancelOrderListDatatable').DataTable();
+        // Destroy the existing DataTable
+        table.clear().destroy();
+        //Re-Initialize Datatable
+        DataTable(url);
+
+        $('.filters').hide();
+    }
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+        //For Export Buttons available inside jquery-datatable "server side processing" - End
+</script>
+
+<script>
+    $("#ReopenOrder").click(function (event) {     
+        var searchIDs = "";
+        $('input[type=checkbox]:checked').each(function () {
+            if (this.checked) {
+                searchIDs += this.value + ",";
+            }
+        });
+        searchIDs = searchIDs.replace(/,\s*$/, "");
+       
+        $("#hdnExchangeorderIds").val(searchIDs);
+
+        $("#exportForm").submit()
+    });
+
+    $(document).ready(function () {
+                $('#select_all').on('click', function () {
+
+                    if (this.checked) {
+                        $('.checkboxinput').each(function () {
+                            this.checked = true;
+                        });
+                    } else {
+                        $('.checkboxinput').each(function () {
+                            this.checked = false;
+                        });
+                    }
+                });
+            });
+</script>
+
+@*AutoPopulate Regd No search filter*@
+<script>
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        $("#regdNo").on("keydown", function (event) {
+                if (event.keyCode === $.ui.keyCode.TAB &&
+                    $(this).autocomplete("instance").menu.active) {
+                    event.preventDefault();
+                }
+            })
+            .autocomplete({
+                minLength: 3,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/ABBQCIndex/CancelOrderList?handler=SearchRegdNo", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+                focus: function () {
+                    // prevent value inserted on focus
+                    return false;
+                },
+                open: function (event, ui) {
+                    // Get the menu element
+                    var menu = $(this).autocomplete("widget");
+
+                    // Set max-height and overflow properties
+                    menu.css("max-height", "200px");
+                    menu.css("overflow-y", "auto");
+                },
+                select: function (event, ui) {
+                    var terms = split(this.value);
+                    console.log(terms);
+                    // remove the current input
+                    terms.pop();
+                    // add the selected item
+                    terms.push(ui.item.value);
+                    
+                    this.value = ui.item.value;
+                    return false;
+                }
+            });
+    })
+</script>

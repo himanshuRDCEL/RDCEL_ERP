@@ -1,0 +1,181 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.Company.SelectCompanyModel
+    @{
+    ViewData["Title"] = "Company";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    RDCELERP.Model.Users.LoginViewModel loginVM = (RDCELERP.Model.Users.LoginViewModel)ViewBag.LoginUser;
+    }
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+              integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+              crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <link type="text/css" href="~/NewLayout/css/style.css" rel="stylesheet">
+    <script src="~/NewLayout/vendor/jquery/jquery-3.6.1.min.js"></script>
+    <script src="~/NewLayout/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/NewLayout/vendor/@@popperjs/core/dist/umd/popper.min.js"></script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+
+    <link href="~/newlayout/css/v2.0.css" rel="stylesheet" />
+
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+
+        <script type="text/javascript">
+            function preventBack() { window.history.forward(); }
+            setTimeout("preventBack()", 0);
+            window.onunload = function () { null };
+        </script>
+        <style>
+            body {
+                background: #fff;
+            }
+        </style>
+
+    </head>
+
+<body class="selectCompanyBody">
+
+        <main>
+
+            <!-- Section -->
+            <section class="mt-5 bg-soft d-flex align-items-center companyselectwrap">
+                <div class="container">
+                    <form method="post" enctype="multipart/form-data" id="formwrap">
+                        <div class="row justify-content-center form-bg-image" id="parent"
+                             data-background-lg="~/NewLayout/assets/img/illustrations/signin.svg">
+                            <div class="col-12 d-flex align-items-center mb-4 justify-content-center">
+                                <div class="w-100">
+                                   
+                                    <div class="selectcompanywrap">
+                                        <h2 class="h3 mb-0">Select Company</h2>
+                                        <div class="logoutwrapper">
+                                            <a id="logoutbtnwrap1" class="logoutbtn" href="~/Logout">
+                                                Logout
+                                            <i data-feather="log-out" style="color: #f05a29"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <input type="text" class="form-control p-3" id="searchcompanyinput"
+                                           placeholder="Search Company" aria-label="Search" autofocus />
+                                </div>
+                                <input type="hidden" id="hdnCompanyId" asp-for="TblCompanyObj.CompanyId" />
+                            </div>
+
+                            </div>
+                        <div class="row">
+
+                            @foreach (var item in Model.CompanyVM)
+                            {
+                                <div class="col-md-4 companybox my-3" >
+                                    <a onclick="selectCompany(@item.CompanyId)">
+                                        <div class="border-0 rounded border-light p-2 p-lg-3 w-100 companyselectbox">
+                                            <div class="selectcompanyimg">
+                                                @if (!string.IsNullOrEmpty(item.CompanyLogoUrl))
+                                                {
+                                                    <img src="~/DBFiles/Company/@item.CompanyLogoUrl" alt="Company Image" onerror="this.onerror=null;this.src='/images/placeholder-01.png';">
+
+                                                    @*<img src="https://img.freepik.com/free-vector/abstract-logo-flame-shape_1043-44.jpg"
+            alt="">*@
+                                                }
+                                                else
+                                                {
+                                                    @* <img src="~/ds/img/default-company-image.jpg" alt="Company Image">*@
+                                                    <img src="https://img.freepik.com/free-vector/abstract-logo-flame-shape_1043-44.jpg"
+                                                         alt="">
+                                                }
+                                            </div>
+                                            <div class="text-center text-md-center mt-md-0">
+                                                <h4 class="mb-0">@item.CompanyName</h4>
+                                            </div>
+                                        <input type="radio" class="rdoCompanyId" id="@item.CompanyId" style="display:none;" name="companyId" value="@item.CompanyId">
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <script src="~/NewLayout/vendor/Jquery/jquery-3.6.1.min.js"></script>
+        <script src="~/NewLayout/vendor/datatable/jquery-ui.js"></script>
+        <script src="~/NewLayout/vendor/@@popperjs/core/dist/umd/popper.min.js"></script>
+        <script src="~/NewLayout/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="~/NewLayout/assets/js/custom.js"></script>
+    <script type="text/javascript">
+
+        function selectCompany(demo) {
+               
+            $("#"+demo).attr("checked", true);
+            var companyseleted=$("#"+demo).val();
+            $("#hdnCompanyId").val(companyseleted);
+            $('#formwrap').submit();
+            
+        }
+
+        $(document).ready(function () {
+
+           $('img').on('error', function () {
+        this.src = "/images/placeholder-01.png";
+         })
+
+                var $search = $("#searchcompanyinput").on('input', function () {
+                    $btns.removeClass('active');
+                    var matcher = new RegExp($(this).val(), 'gi');
+                    $('.companybox').show().not(function () {
+                        return matcher.test($(this).find('.companybox h4').text())
+                    }).hide();
+                })
+            })
+
+        $(document).ready(function () {
+
+            $('#searchcompanyinput').bind('keyup change', function () {
+                if ($(this).val().trim().length !== 0) {
+
+                    $('.companyselectwrap .companybox').show().hide().each(function () {
+                        if ($(this).is(':icontains(' + $('#searchcompanyinput').val() + ')'))
+                            $(this).show();
+                    });
+                }
+                else {
+                    $('.companyselectwrap .companybox').show().hide().each(function () {
+                        $(this).show();
+                    });
+                }
+            });
+
+            $.expr[':'].icontains = function (obj, index, meta, stack) {
+                return (obj.textContent || obj.innerText || jQuery(obj).text() || '').toLowerCase().indexOf(meta[3].toLowerCase()) >= 0;
+            };
+        });
+
+        feather.replace();
+    </script>
+
+
+
+    </body>
+   
+    </html>
+

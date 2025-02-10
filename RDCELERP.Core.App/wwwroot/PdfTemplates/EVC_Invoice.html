@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>demoBillNumber</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            line-height: 1.2rem;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        p {
+            margin: 0 0 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table td {
+            padding: 6px 20px;
+        }
+
+        .tbl2 tr td:nth-child(2) {
+            border-right: 1px solid #333;
+        }
+        .p0tbl tr td {
+            padding: 6px 0;
+        }
+
+        .maintbl tr td {
+            padding: 6px;
+        }
+        
+        .maintbl tr td:nth-child(2), .maintbl tr td:nth-child(3) {
+            text-align: left;
+        }
+
+        .maintbl tr td:nth-child(2) {
+            word-break: break-all;
+        }
+      
+        .maintbl tr:first-child, .maintbl tr:nth-child(1)  {
+            text-align: center !important;
+        }
+      
+    </style>
+</head>
+
+<body>
+
+    <div style="margin: 50px 30px; width: 95%; margin: 0 auto; border: 1px solid #333;">
+
+        <table border="0">
+            <tr style="border-bottom: 1px solid #333;">
+                <td style="width: 25%;">
+                    <img src="https://digi2l.in/wp-content/uploads/2022/09/logo.svg" alt="">
+                </td>
+                <td style="width: 50%;">
+                    <h3 style="font-size: 19px; line-height: 1.4rem; margin: 0 0 10px 0;">UTC DIGITAL TECHNOLOGIES PRIVATE LIMITED</h3>
+                    <p>
+                        B 704/705, CITI Point, Chakala-JB Nagar,
+                        Andheri East, Mumbai-400059
+                        India
+                    </p>
+                    <p>GSTIN 27AADCU0037B2ZV</p>
+                </td>
+                <td style="text-align: center;">
+                    <h1 style="font-weight: normal; font-size: 24px;">TAX INVOICE</h1>
+                </td>
+            </tr>
+        </table>
+
+
+        <table border="0" class="tbl2">
+            <tr>
+                <td style="width: 20%;">Invoice#</td>
+                <td><strong>: demoBillNumber</strong></td>
+                <td>Place Of Supply</td>
+                <td><strong>: demoPlaceOfSupply <!--(27)--></strong></td>
+            </tr>
+            <tr>
+                <td>Invoice Date</td>
+                <td><strong>: demoCurrentDate</strong></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Terms</td>
+                <td><strong>: Due On Receipt</strong></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Due Date</td>
+                <td><strong>: demoCurrentDate</strong></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr style="background-color: rgb(43, 0, 77);
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333; color: #fff;">
+                <td colspan="4">Bill To</td>
+            </tr>
+        </table>
+        
+        <div style="padding: 0px 10px 10px; width: 100%;">
+            <div style="width: 40%;">
+                <h3>demoEVCName</h3>
+                <p>
+                    # demoAddress
+                    demoCity, demoPincode demoState, India
+                </p>
+
+            </div>
+        </div>
+
+        <div style="text-align: right;" class="maintbl">
+            <table border="1" style="width: 100%;">
+
+                <tr style="background-color: rgb(43, 0, 77); color: #fff; ">
+                    <td rowspan="2">#</td>
+                    <td rowspan="2">Item & Description</td>
+                    <td rowspan="2">HSN/ SAC</td>
+                    <td rowspan="2">Qty</td>
+                    <td rowspan="2">Rate</td>
+                    <td colspan="2">CGST</td>
+                    <td colspan="2">SGST</td>
+                    <td rowspan="2">Amt</td>
+                </tr>
+                <tr style="background-color: rgb(43, 0, 77); color: #fff;">
+                    <td style="text-align: center;">%</td>
+                    <td>Amt</td>
+                    <td style="text-align: center;">%</td>
+                    <td>Amt</td>
+                </tr>
+                demoRnumList
+            </table>
+           
+        </div>
+
+        <table border="0">
+            <tr>
+                <td style="vertical-align: top;">
+                    <p style="margin: 20px 0 0;">Total In Words</p>
+                    <p><strong>Indian Rupee demoFinalAmtInWords</strong></p>
+                    <br>
+                    <p>Thanks for your business.</p>
+                    <br>
+                    <table style="margin: 0; padding: 0;" class="p0tbl">
+                       <tr>
+                        <td>Account Name</td>
+                        <td>UTC DIGITAL TECHNOLOGIES PVT LTD</td>
+                       </tr> 
+                       <tr>
+                        <td>Account No.</td>
+                        <td>002005043063</td>
+                       </tr>
+                       <tr>
+                        <td>Bank</td>
+                        <td>ICICI Bank Ltd</td>
+                       </tr>
+                       <tr>
+                        <td>IFSC</td>
+                        <td>ICIC0000020</td>
+                       </tr>
+                       <tr>
+                        <td>Branch</td>
+                        <td>Galleria, Powai Branch</td>
+                       </tr>
+                    </table>
+                </td>
+
+                <td style="border-left: 1px solid #333; padding: 0;">
+                    <table border="0" style="padding: 0; margin: 0; text-align: right;">
+                        <tr>
+                            <!--<td>Sub Total
+             <span style="font-size: 11px; display: block; color: #aaa;">(Tax Inclusive)</span></td>
+         <td>
+             demoSubtotal
+         </td>-->
+                            <td><br /></td>
+                            <td><br /></td>
+                        </tr>
+                        <!--<tr>
+                            <td>CGST9 (9%)</td>
+                            <td>demoCGSTAmt</td>
+                        </tr>
+                        <tr>
+                            <td>SGST9 (9%) </td>
+                            <td>demoSGSTAmt</td>
+                        </tr>
+                        <tr>
+                            <td>Shipping Cost </td>
+                            <td>demoLgcCost</td>
+                        </tr>-->
+                        demoGSTDisplay
+                        demoShippingCostDisplay
+                        demoAdditionalCost
+                        <tr style="font-weight: bold;">
+                            <td>
+                                Total
+                                <span style="font-size: 11px; display: block; color: #aaa;">(Tax demoGstType)</span>
+                            </td>
+                            <td>₹demoFinalPrice</td>
+                        </tr>
+                        <tr style="font-weight: bold;">
+                            <td>Balance Due</td>
+                            <td>₹demoFinalPrice</td>
+                        </tr>
+                        <tr style="border-top: 1px solid #333; margin: 30px 0 0 0;">
+                            <td colspan="2" style="text-align: center;">
+                                <img src="demoUtcSeel_INV" style="width: 70%;" alt="">
+                                <p style="margin: 10px 0;">Authorized Signature</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

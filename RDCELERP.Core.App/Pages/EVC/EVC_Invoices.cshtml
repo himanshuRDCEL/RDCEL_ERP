@@ -1,0 +1,325 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC.EVC_InvoicesModel
+@{
+    ViewData["Title"] = "EVC Invoices";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+@Html.AntiForgeryToken()
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">
+                                    Order Details
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @if (accessRule != null && accessRule.CanView)
+                        {
+                            @*<div class="row datefilter mt-2 mb-4">
+                <div class="col-md-8 text-right datefilter-right">
+                    <input type="text" class="form-control d-inline mb-2" autocomplete="off" id="startdate" placeholder="Start Date">
+                    <input type="text" class="form-control d-inline mb-2" autocomplete="off" id="enddate" placeholder="End Date">
+                    <input type="button" id="filter-dates" value="Filter" class="btn btn-primary">
+                </div>
+                <div class="col-md-8 text-right datefilter-right">
+                    <input type="text" class="form-control d-inline " autocomplete="off" id="startdate" placeholder="Start Date">
+                    <input type="text" class="form-control d-inline " autocomplete="off" id="enddate" placeholder="End Date">
+                    <input type="button" id="filter-dates" value="Filter" class="btn btn-primary">
+                </div>
+            </div>*@
+                            <div class="row datefilter mt-2 mb-4">
+                                <div class="col-md-8 text-right datefilter-right">
+                                    <input type="text" class="form-control d-inline " autocomplete="off" id="startdate" placeholder="Start Date">
+                                    <input type="text" class="form-control d-inline " autocomplete="off" id="enddate" placeholder="End Date">
+                                    <input type="button" id="filter-dates" value="Filter" class="btn btn-primary">
+                                </div>
+                            </div>
+                            <div class="row datefilter mt-2 mb-2">
+                                <div class="col-md-12 text-right" style="display:inline-block">
+                                    <div class="col-md-2" style="display:inline-block">
+                                        <select id = "ddlCity" class="form-control d-inline"  asp-items="ViewBag.EVCCityDDL">
+                                            <option value=''>---Select City---</option>
+                                        </select>
+                                        @*@Html.DropDownListFor(model => model.driverDetailsViewModel.City, Model.driverDetailsViewModel.CityList, "---Select City---", new { @class = "form-select CityEVCOnchange d-inline", @id = "ddlCity" })*@
+                                        <span @*asp-validation-for="searchFilterVM.ProductCatId"*@ class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-2" style="display:inline-block">
+                                        <select id = "ddlEVC" class="form-control d-inline" >
+                                            <option value=''>---Select EVC Name---</option>
+                                        </select>
+                                        @*@Html.DropDownListFor(model => model.driverDetailsViewModel.EVCBusinessName, Model.driverDetailsViewModel.EvcList, "---Select EVC Name---", new { @class = "form-select d-inline CityEVCOnchange", @id = "ddlEVC" })*@
+                                        <span @*asp-validation-for="searchFilterVM.ProductCatId"*@ class="text-danger"></span>
+                                    </div>
+                                    <button id="btnFilter" class="btn btn-primary d-inline">Search</button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="EVC_InvoicesDatatable" class="table align-items-center table-flush" border="1">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th class="border-bottom all notexport" scope="col">Id</th>
+                                            <th class="border-bottom all" scope="col">RegdNo</th>
+                                            <th class="border-bottom all" scope="col">Inv Amt Per Order</th>
+                                            <th class="border-bottom all" scope="col">Gst Amt Per Order</th>
+                                            <th class="border-bottom all" scope="col">Debit Note Pdf Name</th>
+                                            <th class="border-bottom all" scope="col">Invoice Pdf Name</th>
+                                            <th class="border-bottom all" scope="col">Invoice Amount</th>
+                                            <th class="border-bottom all" scope="col">EVC Bussiness Name</th>
+                                            <th class="border-bottom all" scope="col">EVC City</th>
+                                            <th class="border-bottom all" scope="col">Invoice Date</th>
+                                            <th class="border-bottom all" scope="col">Financial Year</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+
+<script>
+    $(document).ready(function () {
+          //Code for add Date Picker
+        $("#startdate").datepicker({
+            defaultDate: null
+        });
+        $("#enddate").datepicker({
+            defaultDate: null
+        });
+        var startDate = $('#startdate').val();
+        var endDate = $('#enddate').val();
+        var url = "@URLPrefixforProd/api/EVCList/GetListOfGeneratedInvoices?&startDate=" + startDate + "&endDate=" + endDate;
+            DataTable(url);
+        });
+     // LGC Pickup //date range Filter
+    $('#filter-dates').click(function () {
+        var startDate = $('#startdate').val();
+        var endDate = $('#enddate').val();
+        var url = "@URLPrefixforProd/api/EVCList/GetListOfGeneratedInvoices?&startDate=" + startDate + "&endDate=" + endDate;
+
+        table = $('#EVC_InvoicesDatatable').DataTable();
+            // Destroy the existing DataTable
+        table.destroy();
+        DataTable(url);
+    });
+
+    function DataTable(url) {
+        $('#EVC_InvoicesDatatable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="datatablebtn"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'EVC Invoices',
+                    action: newexportaction,
+                    exportOptions: {
+
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current'
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                },
+                {
+                    text: '<div class="datatablebtn d-inline" id="GenerateInvoiceBtn"><button class="btn btn-primary" id="invoicebtn"><i class="fa-solid fa-file-invoice"></i>&nbsp; Generate Invoice</button></div>', id: "invoicebtn",
+                    title: 'EVC Invoices',
+                    action: GenerateInvoice,
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "Data Not found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+
+            "columns": [
+                { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false,"visible":false },
+                { "data": "orderAmtForEVCInv", "name": "OrderAmtForEVCInv", "autoWidth": true, "orderable": false ,"visible":false  },
+                { "data": "gstAmtForEVCInv", "name": "GstAmtForEVCInv", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "debitNotePdfName", "name": "DebitNotePdfName", "autoWidth": true, "orderable": false },
+                { "data": "invoicePdfName", "name": "InvoicePdfName", "autoWidth": true, "orderable": false },
+                { "data": "invoiceAmount", "name": "InvoiceAmount", "autoWidth": true, "orderable": true },
+                { "data": "evcBussinessName", "name": "EVCBussinessName", "autoWidth": true, "orderable": true },
+                { "data": "evcCity", "name": "EVCCity", "autoWidth": true, "orderable": false },
+                { "data": "invoiceDate", "name": "InvoiceDate", "autoWidth": true, "orderable": false },
+                { "data": "financialYear", "name": "FinancialYear", "autoWidth": true, "orderable": false, "visible": false  },
+            ]
+        });
+    }
+
+    //Dropdown filter for EVC
+     $("#ddlCity").change(function () {
+        var cityId = $("#ddlCity").val();
+        $('#ddlEVC').val("");
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/EVC/EVC_Invoices?handler=EVCByCityId",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "cityId": cityId},
+            success: function (response) {
+                if (response) {
+                    $('#ddlEVC').empty();
+                    $("#ddlEVC").append('<option value="">--Select EVC Name--</option>');
+                    $.each(response, function (i, item) {
+                        $("#ddlEVC").append('<option value="' + item.value + '">' + item.text + '</option>');
+                    });
+                }
+            }
+        });
+     });
+    function GenerateInvoice() {
+         debugger;
+                $($("#invoicebtn")).prop('disabled', true);
+                var EvcRegId = $('#ddlEVC').val();
+                $.ajax({
+                    type: "POST",
+                    url: "@ViewData["URLPrefixforProd"]/EVC/EVC_Invoices?handler=GenerateInvoice",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    data: { "EvcRegistrationId": EvcRegId },
+                    success: function (response) {
+                    if (response == true || response == "True" || response == "true") {
+                        alert("Invoice Generated Sucessfully");
+                        location.reload();
+                    }
+                    else {
+                        alert("Unable to Generate Invoies");
+                        $($("#invoicebtn")).prop('disabled', false);
+                    }
+                    },
+                });
+    }
+        //Generate Invoice
+        @*$('#invoicebtn').click(function () {
+
+            });*@
+    $('#btnFilter').click(function () {
+        debugger;
+        table = $('#EVC_InvoicesDatatable').DataTable();
+        // Destroy the existing DataTable
+        table.clear();
+        table.destroy();
+        var evcRegId = $('#ddlEVC').val();
+        var startDate = $('#startdate').val();
+        var endDate = $('#enddate').val();
+        var evcCityId = $('#startdate').val();
+        var url = "@URLPrefixforProd/api/EVCList/GetListOfGeneratedInvoices?&evcRegId=" + evcRegId + "&startDate=" + startDate + "&endDate=" + endDate;
+        DataTable(url);
+    });
+
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+    //For Export Buttons available inside jquery-datatable "server side processing" - End
+</script>
+@*Do not Change its position*@
+@if (accessRule != null && accessRule.CanAdd)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#GenerateInvoiceBtn").show();
+        });
+    </script>
+}
+@*Do not Change its position*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

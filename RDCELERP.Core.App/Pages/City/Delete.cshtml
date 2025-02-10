@@ -1,0 +1,34 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.City.DeletCityById
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "_Layout";
+}
+
+<div class="row content-area">
+    <!--For Lead details-->
+    <div class="col-12">
+        <div class="box">
+            <hr />
+            <dl class="row">
+                <h5>
+                    Are you sure you want to delete <b>@Html.DisplayFor(model => model.TblCity.Name)</b>
+                </h5>
+            </dl>
+            <form method="post">
+                <input type="hidden" asp-for="TblCity.CityId" />
+                <input type="hidden" asp-for="TblCity.CityCode" />
+                <input type="hidden" asp-for="TblCity.StateId" />
+                <input type="hidden" asp-for="TblCity.CreatedBy" />
+                <input type="hidden" asp-for="TblCity.CreatedDate" />
+                <input type="hidden" asp-for="TblCity.ModifiedBy" />
+                <input type="hidden" asp-for="TblCity.ModifiedDate" />
+                <input type="hidden" asp-for="TblCity.IsActive" />
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+                <a asp-page="./Index" class="btn btn-primary mainshadow">Back to List</a>
+            </form>
+        </div>
+    </div>
+</div>
+

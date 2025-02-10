@@ -1,0 +1,86 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ImageLabelMaster.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "ImageLabelMaster";
+}
+
+<h1>Edit</h1>
+
+<h4>TblImageLabelMaster</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblImageLabelMaster.ImageLabelid" />
+            <div class="form-group">
+                <label asp-for="TblImageLabelMaster.ProductName" class="control-label"></label>
+                <input asp-for="TblImageLabelMaster.ProductName" class="form-control" />
+                <span asp-validation-for="TblImageLabelMaster.ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblImageLabelMaster.ProductImageLabel" class="control-label"></label>
+                <input asp-for="TblImageLabelMaster.ProductImageLabel" class="form-control" />
+                <span asp-validation-for="TblImageLabelMaster.ProductImageLabel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblImageLabelMaster.ProductImageDescription" class="control-label"></label>
+                <input asp-for="TblImageLabelMaster.ProductImageDescription" class="form-control" />
+                <span asp-validation-for="TblImageLabelMaster.ProductImageDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblImageLabelMaster.Pattern" class="control-label"></label>
+                <input asp-for="TblImageLabelMaster.Pattern" class="form-control" />
+                <span asp-validation-for="TblImageLabelMaster.Pattern" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblImageLabelMaster.IsActive" class="control-label"></label>
+                <input asp-for="TblImageLabelMaster.IsActive" class="form-control" />
+                <span asp-validation-for="TblImageLabelMaster.IsActive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblImageLabelMaster.CreatedBy" class="control-label"></label>
+                <input asp-for="TblImageLabelMaster.CreatedBy" class="form-control" />
+                <span asp-validation-for="TblImageLabelMaster.CreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblImageLabelMaster.CreatedDate" class="control-label"></label>
+                <input asp-for="TblImageLabelMaster.CreatedDate" class="form-control" />
+                <span asp-validation-for="TblImageLabelMaster.CreatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblImageLabelMaster.Modifiedby" class="control-label"></label>
+                <input asp-for="TblImageLabelMaster.Modifiedby" class="form-control" />
+                <span asp-validation-for="TblImageLabelMaster.Modifiedby" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblImageLabelMaster.ModifiedDate" class="control-label"></label>
+                <input asp-for="TblImageLabelMaster.ModifiedDate" class="form-control" />
+                <span asp-validation-for="TblImageLabelMaster.ModifiedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblImageLabelMaster.ProductCatId" class="control-label"></label>
+                <select asp-for="TblImageLabelMaster.ProductCatId" class="form-control" asp-items="ViewBag.ProductCatId"></select>
+                <span asp-validation-for="TblImageLabelMaster.ProductCatId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblImageLabelMaster.ProductTypeId" class="control-label"></label>
+                <select asp-for="TblImageLabelMaster.ProductTypeId" class="form-control" asp-items="ViewBag.ProductTypeId"></select>
+                <span asp-validation-for="TblImageLabelMaster.ProductTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

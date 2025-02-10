@@ -1,0 +1,402 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC_Allocation.ReassignFromModel
+@{
+
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        const {@ViewData["UserAuth"]</script>
+}
+<form method="post" enctype="multipart/form-data" id="Re-AllocateForm">
+    <div class="py-4">
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="card border-0 shadow">
+                        <div class="card-header card-header-wrapper">
+                            <div class="row align-items-center card-title">
+                                <div class="col-md-6">
+                                    <h2 class="fs-5 mb-0">
+                                        EVC Re-assign
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row detailed-reporting">
+                                <div class="col-12 mt-4">
+                                    <h5>Order Details</h5>
+                                    <hr>
+                                </div>
+
+                                <input type="hidden" id="hdnOrderTransId" asp-for="ReassignFromViewModels.orderTransId" />
+
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Reg. No</span>
+                                        <input class="form-control " asp-for="ReassignFromViewModels.RegdNo" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Current Status</span>
+                                        <input type="text"class="form-control " asp-for="ReassignFromViewModels.StatusId" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Customer State</span>
+                                        <input class="form-control" asp-for="ReassignFromViewModels.Custstate" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Customer City</span>
+                                        <input class="form-control" asp-for="ReassignFromViewModels.CustCity" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Area Locality</span>
+                                        <input class="form-control" asp-for="ReassignFromViewModels.AreaLocality" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Customer Pincode</span>
+                                        <input class="form-control" asp-for="ReassignFromViewModels.CustPin" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Product Group</span>
+                                        <input class="form-control txtEVCPin" asp-for="ReassignFromViewModels.OldProdType" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Product Type</span>
+                                        <input class="form-control txtEVCPin" asp-for="ReassignFromViewModels.ExchProdGroup" readonly />
+
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Bonus</span>
+                                        <input class="form-control txtEVCPin" asp-for="ReassignFromViewModels.Bonus" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Actual Price After QC(With Sweetener)</span>
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <i class="fa-solid fa-indian-rupee-sign"></i>
+                                            </span>
+                                            <input class="form-control txtEVCPin" asp-for="ReassignFromViewModels.ActualBasePrice" readonly />
+                                        </div>
+                                    </p>
+                                </div>
+
+
+                                <!-- Old EVC -->
+
+                                <div class="col-12 mt-4">
+                                    <h5>Old EVC Details</h5>
+                                    <hr>
+                                </div>
+
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Reg. No</span>
+                                        <input class="form-control " asp-for="ReassignFromViewModels.OldEvcregdNo" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">EVC Partner Code</span>
+                                        <input class="form-control " asp-for="ReassignFromViewModels.OldEVCStoreCode" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">EVC Name</span>
+                                        <input class="form-control " asp-for="ReassignFromViewModels.OldEvcName" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">EVC Partner State</span>
+                                        <input class="form-control" asp-for="ReassignFromViewModels.OldEVCState" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">EVC Partner City</span>
+                                        <input class="form-control" asp-for="ReassignFromViewModels.OldEVCCity" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">EVC Partner Pincode</span>
+                                        <input class="form-control" asp-for="ReassignFromViewModels.OldEVCPinCode" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Wallet Balance</span>
+                                        <input class="form-control txtEVCPin" asp-for="ReassignFromViewModels.OldEVCEvcwalletAmount" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Clear Balance</span>
+                                        <input class="form-control" asp-for="ReassignFromViewModels.OldEVCClearBalance" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Prime Product</span>
+                                        <input class="form-control" asp-for="ReassignFromViewModels.PrimeProduct" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Expected Price(Without Sweetener)</span>
+                                        <input type="text" class="form-control" asp-for="ReassignFromViewModels.OldEvcExpectedPrice" readonly />
+                                    </p>
+                                </div>
+
+
+                                <br />
+
+                                <div class="col-12 my-4">
+                                    <h5>New EVC Selection</h5>
+                                    <hr class="my-4">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-2">
+                                            @if (@ViewBag.EVcLists != null)
+                                            {
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Select EVC <span style="color:red;">*</span></label>
+                                                    <select asp-for="ReassignFromViewModels.newEVCPartnerId" class="custom-select my-1 mr-sm-2 form-select" asp-items="ViewBag.EVcLists" id="ddlEvcReg">
+                                                        <option value=0>--None--</option>
+                                                    </select>
+                                                    <span asp-validation-for="ReassignFromViewModels.newEVCPartnerId" id="EVCMessege" class="text-danger"></span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <label>EVC NotFound plz check city </label>
+                                            }
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                            <br>
+
+                            <div class="row detailed-reporting">
+                                <!-- New EVC -->
+
+                                <div class="col-12 mt-4">
+                                    <h5>New EVC Details</h5>
+                                    <hr>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <p>
+                                        <span class="mb-1">EVC Reg No</span>
+                                        <input id="txtEVCRNo" class="form-control " readonly />
+
+                                    </p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p>
+                                        <span class="mb-1">EVC Partner Code</span>
+                                        <input id="txtEVCStoreCode" class="form-control " readonly />
+
+                                    </p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p>
+                                        <span class="mb-1">EVC Partner State</span>
+                                        <input id="txtEVCState" class="form-control" readonly />
+
+                                    </p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p>
+                                        <span class="mb-1">EVC Partner City</span>
+                                        <input id="txtEVCCity" class="form-control" readonly />
+
+                                    </p>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <p>
+                                        <span class="mb-1">EVC Partner Pincode</span>
+
+                                        <input id="txtEVCPin" class="form-control txtEVCPin" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p>
+                                        <span class="mb-1">Wallet Amount</span>
+
+                                        <input id="txtEVCWalletAmount" class="form-control txtEVCWalletAmount" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p>
+                                        <span class="mb-1">Clear Balance</span>
+
+                                        <input id="txtEVCRuningBalance" class="form-control txtEVCRuningBalance" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p>
+                                        <span class="mb-1">Expected Price</span>
+                                        <input type="text"class="form-control" id="txtExpectedPrice" asp-for="ReassignFromViewModels.OldEvcExpectedPrice" readonly />
+                                        @*<input id="txtEVCExpectedprice" class="form-control txtEVCExpectedprice" readonly />*@
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <hr class="my-4">
+                            <div class="col-md-12" id="hidecommentdiv">
+                                <label for="">Comment</label>
+                                <textarea asp-for="ReassignFromViewModels.ReallocationComment" maxlength="200" id="txtcommentRes" class="form-control" rows="1"></textarea>
+                                <span asp-validation-for="ReassignFromViewModels.ReallocationComment" class="text-danger"></span>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="row detailed-reporting">
+                                <div class="col-md-7">
+                                    <a href='javascript:history.go(-1)' class="btn btn-secondary"><i class="fa-solid fa-arrow-left-long"></i> &nbsp;Back</a>
+                                </div>
+                                <div class="col-md-5 text-right">
+                                    @*<input type="submit" id="btnsave" value="Re-Assign" class="btn btn-primary mainshadow" disabled="disabled" />*@
+                                    <button value="Save" id="btnsave" class="btn btn-primary mainshadow" disabled="disabled">Save Change</button>
+                                    @*<a href="#" class="btn btn-primary"> <i class="fa-solid fa-plus"></i> &nbsp;Assign</a>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+
+        $('#ddlEvcReg').change(function () {
+            if ($("#ddlEvcReg").val() == 0) {
+                $("#txtEVCRNo").val(' ');
+                $("#txtEVCPin").val(' ');
+                $("#txtEVCState").val(' ');
+                $("#txtEVCCity").val(' ');
+                $("#txtEVCAddress").val(' ');
+                $("#txtEVCWalletAmount").val(' ');
+                $("#txtEVCRuningBalance").val(' ');
+                $("#txtEVCStoreCode").val(' ');
+                $("#EVCMessege").css("color", "red");
+                $("#EVCMessege").html("Pleace Select New EVC ");
+                $("#txtExpectedPrice").val('');
+                $("#btnsave").prop('disabled', true);
+            }
+            else {
+                $.get("@URLPrefixforProd/EVC_Allocation/Allocate_EVCFrom?handler=EVCDetailsByEVCRegNo&evcPartnerId=" + $("#ddlEvcReg").val() + "&orderTransId="+$("#hdnOrderTransId").val()).done(function (data) {
+                    $("#EVCMessege").html(" ");
+                    $("#txtEVCRNo").val(data.evcregdNo);
+                    $("#txtEVCPin").val(data.pinCode);
+                    $("#txtEVCState").val(data.stateName);
+                    $("#txtEVCCity").val(data.cityName);
+                    $("#txtEVCAddress").val(data.regdAddressLine1);
+                    $("#txtEVCWalletAmount").val(data.evcwalletAmount);
+                    $("#txtEVCRuningBalance").val(data.runingBalance);
+                    $("#txtEVCStoreCode").val(data.evcStoreCode);
+                    $("#txtExpectedPrice").val(data.expectedPrice);
+                    if ($('#txtcommentRes').val().trim() !== '' && $("#ddlEvcReg").val() > 0) {
+                        $('#btnsave').prop('disabled', false);
+                    }
+                    else {
+                        $("#txtcommentRes").focus();
+                        $("#btnsave").prop('disabled', true);
+                    }
+                });
+            }
+        });
+
+
+    //use for new price is greter then final price
+    function CheckPrice() {
+        var NewPrice = document.getElementById("txtNewPrice").value;
+        var oldPrice = document.getElementById("txtOldPrice").value;
+        var check = parseInt(NewPrice) > parseInt(oldPrice);
+        if (check == false) {
+            $("#message").html("Please enter Greater price for Price After QC");
+            $('#btnsave').prop('disabled', true);
+        }
+        else {
+            if ($("#ddlEvcReg").val() > 0) {
+                $("#message").html("");
+                $('#btnsave').prop('disabled', false);
+            }
+            else {
+                $("#EVCMessege").css("color", "red");
+                $("#EVCMessege").html("Pleace Select New EVC ");
+                $('#btnsave').prop('disabled', true);
+            }
+        }
+    }
+
+    $(function () {
+        $("#myCheck").click(function () {
+            if ($(this).is(":checked")) {
+                $("#txtNewPrice").removeAttr("disabled");
+                $("#txtNewPrice").focus();
+            }
+            else {
+                $("#txtNewPrice").attr("disabled", "disabled");
+                $('#btnsave').prop('disabled', true);
+            }
+        });
+    });
+    $('#txtcommentRes').keyup(function () {
+        if ($('#txtcommentRes').val().trim() !== '' && $("#ddlEvcReg").val() > 0) {
+
+            $('#btnsave').prop('disabled', false);
+        }
+        else {
+            if ($("#ddlEvcReg").val() == 0) {
+                $("#ddlEvcReg").focus();
+                $("#EVCMessege").css("color", "red");
+                $("#EVCMessege").html("Pleace Select New EVC ");
+            }
+            $('#btnsave').prop('disabled', true);
+        }
+    });
+
+    $('#btnsave').click(function () {
+        $('#btnsave').prop('disabled', true);
+        $('#loader').show();
+        $('#Re-AllocateForm').submit();
+    });
+</script>

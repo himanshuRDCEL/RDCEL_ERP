@@ -1,0 +1,240 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.AccessList.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@*@<<<<<<< Dev@*@
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>AccessList
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="row">
+
+                                <div class="col-md-4 mb-4">
+                                    <label for=""> Name <span style="color:red;">*</span></label>
+                                    <input asp-for="TblAccessList.Name" class="form-control" />
+                                    <span asp-validation-for="TblAccessList.Name" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Description <span style="color:red;">*</span></label>
+                                    <input asp-for="TblAccessList.Description" class="form-control" />
+                                    <span asp-validation-for="TblAccessList.Description" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">ActionName <span style="color:red;">*</span></label>
+                                    <input asp-for="TblAccessList.ActionName" type="number" class="form-control" />
+                                    <span asp-validation-for="TblAccessList.ActionName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">ActionUrl <span style="color:red;">*</span></label>
+                                    <input asp-for="TblAccessList.ActionUrl" class="form-control" />
+                                    <span asp-validation-for="TblAccessList.ActionUrl" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">IsActive <span style="color:red;">*</span></label>
+                                    <input asp-for="TblAccessList.IsActive" class="form-control" />
+                                    <span asp-validation-for="TblAccessList.IsActive" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">CreatedBy <span style="color:red;">*</span></label>
+                                    <input asp-for="TblAccessList.CreatedBy" class="form-control" />
+                                    <span asp-validation-for="TblAccessList.CreatedBy" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">CreatedDate <span style="color:red;">*</span></label>
+                                    <input asp-for="TblAccessList.CreatedDate" class="form-control" />
+                                    <span asp-validation-for="TblAccessList.CreatedDate" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">ModifiedBy <span style="color:red;">*</span></label>
+                                    <input asp-for="TblAccessList.ModifiedBy" class="form-control" />
+                                    <span asp-validation-for="TblAccessList.ModifiedBy" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">ModifiedDate <span style="color:red;">*</span></label>
+                                    <input asp-for="TblAccessList.ModifiedDate" class="form-control" />
+                                    <span asp-validation-for="TblAccessList.ModifiedDate" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">ParentAccessListId <span style="color:red;">*</span></label>
+                                    <input asp-for="TblAccessList.ParentAccessListId" class="form-control" />
+                                    <span asp-validation-for="TblAccessList.ParentAccessListId" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">SetIcon <span style="color:red;">*</span></label>
+                                    <input asp-for="TblAccessList.SetIcon" class="form-control" />
+                                    <span asp-validation-for="TblAccessList.SetIcon" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">CompanyId <span style="color:red;">*</span></label>
+                                    <input asp-for="TblAccessList.CompanyId" class="form-control" />
+                                    <span asp-validation-for="TblAccessList.CompanyId" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">IsMenu <span style="color:red;">*</span></label>
+                                    <input asp-for="TblAccessList.IsMenu" class="form-control" />
+                                    <span asp-validation-for="TblAccessList.IsMenu" class="text-danger"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="float-right">
+
+
+                                            <a asp-page="./Edit" asp-route-id="@Model.TblAccessList.AccessListId" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">Edit</a>
+                                            </a>
+                                            <a asp-page="./Index" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">Back to List</a>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+    <!-- activity -->
+@*@=======@*@
+
+<!--<div class="row">
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card border-0 shadow">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h2 class="fs-5 mb-0 card-title">
+                                <a href="#"></a>AccessList
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="row">
+
+                            <div class="col-md-4 mb-4">
+                                <label for=""> Name <span style="color:red;">*</span></label>
+                                <input asp-for="TblAccessList.Name" class="form-control" />
+                                <span asp-validation-for="TblAccessList.Name" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label for="">Description <span style="color:red;">*</span></label>
+                                <input asp-for="TblAccessList.Description" class="form-control" />
+                                <span asp-validation-for="TblAccessList.Description" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label for="">ActionName <span style="color:red;">*</span></label>
+                                <input asp-for="TblAccessList.ActionName" type="number" class="form-control" />
+                                <span asp-validation-for="TblAccessList.ActionName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label for="">ActionUrl <span style="color:red;">*</span></label>
+                                <input asp-for="TblAccessList.ActionUrl" class="form-control" />
+                                <span asp-validation-for="TblAccessList.ActionUrl" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label for="">IsActive <span style="color:red;">*</span></label>
+                                <input asp-for="TblAccessList.IsActive" class="form-control" />
+                                <span asp-validation-for="TblAccessList.IsActive" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-4">
+                                <label for="">CreatedBy <span style="color:red;">*</span></label>
+                                <input asp-for="TblAccessList.CreatedBy" class="form-control" />
+                                <span asp-validation-for="TblAccessList.CreatedBy" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-4">
+                                <label for="">CreatedDate <span style="color:red;">*</span></label>
+                                <input asp-for="TblAccessList.CreatedDate" class="form-control" />
+                                <span asp-validation-for="TblAccessList.CreatedDate" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label for="">ModifiedBy <span style="color:red;">*</span></label>
+                                <input asp-for="TblAccessList.ModifiedBy" class="form-control" />
+                                <span asp-validation-for="TblAccessList.ModifiedBy" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label for="">ModifiedDate <span style="color:red;">*</span></label>
+                                <input asp-for="TblAccessList.ModifiedDate" class="form-control" />
+                                <span asp-validation-for="TblAccessList.ModifiedDate" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label for="">ParentAccessListId <span style="color:red;">*</span></label>
+                                <input asp-for="TblAccessList.ParentAccessListId" class="form-control" />
+                                <span asp-validation-for="TblAccessList.ParentAccessListId" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label for="">SetIcon <span style="color:red;">*</span></label>
+                                <input asp-for="TblAccessList.SetIcon" class="form-control" />
+                                <span asp-validation-for="TblAccessList.SetIcon" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label for="">CompanyId <span style="color:red;">*</span></label>
+                                <input asp-for="TblAccessList.CompanyId" class="form-control" />
+                                <span asp-validation-for="TblAccessList.CompanyId" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label for="">IsMenu <span style="color:red;">*</span></label>
+                                <input asp-for="TblAccessList.IsMenu" class="form-control" />
+                                <span asp-validation-for="TblAccessList.IsMenu" class="text-danger"></span>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="float-right">
+
+
+                                        <a asp-page="./Edit" asp-route-id="@Model.TblAccessList.AccessListId" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">Edit</a>
+                                        </a>
+                                        <a asp-page="./Index" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">Back to List</a>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+</form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>-->
+    <!-- /.box-body -->
+<!--</div>-->
+<!-- /.box -->
+<!-- activity -->
+<!-->>>>>>> Rathod_Ashwin-->
+</div>
+

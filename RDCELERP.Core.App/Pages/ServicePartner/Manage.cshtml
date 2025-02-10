@@ -1,0 +1,966 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ServicePartner.ManageModel
+
+
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)
+ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+
+}
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/css/bootstrap-multiselect.min.css">
+
+
+@*<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />*@
+<style>
+    .multiselect-dropdown-menu {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    .ct-square {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        max-height: 220px;
+        display: block;
+        margin: 20px auto 15px;
+        border-radius: 6px;
+        padding: 20px;
+    }
+
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>Service Partner
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data" id="myForm">
+                            <div class="row detailed-reporting">
+                                <div class="col-md-12 mb-3">
+
+
+                                </div>
+
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="ServicePartnerViewModel.ServicePartnerId" />
+                                <input type="hidden" asp-for="ServicePartnerViewModel.Map_ServicePartnerCityStateId" />
+                                <input type="hidden" asp-for="ServicePartnerViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="ServicePartnerViewModel.CreatedDate" />                         
+                                <input type="hidden" asp-for="ServicePartnerViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="ServicePartnerViewModel.ServicePartnerRegdNo" />
+                                <input type="hidden" asp-for="ServicePartnerViewModel.ServicePartnerProfilePic" />
+                                <input type="hidden" asp-for="ServicePartnerViewModel.ServicePartnerGstregisteration" />
+                                <input type="hidden" asp-for="ServicePartnerViewModel.ServicePartnerCancelledCheque" />
+                                <input type="hidden" asp-for="ServicePartnerViewModel.ServicePartnerAadharfrontImage" />
+                                <input type="hidden" asp-for="ServicePartnerViewModel.ServicePartnerAadharBackImage" />
+                                <input type="hidden" asp-for="ServicePartnerViewModel.UserId" />
+                                <input type="hidden" asp-for="ServicePartnerViewModel.Selected" id="select" />
+                                 <input type="hidden" asp-for="ServicePartnerViewModel.ServicePartnerState" />
+                                <input type="hidden" asp-for="ServicePartnerViewModel.ServicePartnerIsApprovrd" />
+
+                                 <input type="hidden" asp-for="ServicePartnerViewModel.IsActive" />
+                    
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for=""> Service Partner First Name <span style="color:red;">*</span></label>
+                                    <input type="text" asp-for="ServicePartnerViewModel.ServicePartnerFirstName" class="form-control" id="txtName" onkeyup="CheckAvailability();" />
+                                    <span asp-validation-for="ServicePartnerViewModel.ServicePartnerFirstName" class="text-danger"></span>
+                                    <span class="text-danger" id="message"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for=""> Service Partner Last Name <span style="color:red;">*</span></label>
+                                    <input type="text" asp-for="ServicePartnerViewModel.ServicePartnerLastName" class="form-control" />
+                                    <span asp-validation-for="ServicePartnerViewModel.ServicePartnerLastName" class="text-danger"></span>
+                                    <span class="text-danger" id="message"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for=""> Service Partner Business Name <span style="color:red;">*</span></label>
+                                    <input type="text" asp-for="ServicePartnerViewModel.ServicePartnerBusinessName" class="form-control" />
+                                    <span asp-validation-for="ServicePartnerViewModel.ServicePartnerBusinessName" class="text-danger"></span>
+                                   
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Service Partner Description <span style="color:red;">*</span></label>
+                                    <input asp-for="ServicePartnerViewModel.ServicePartnerDescription" class="form-control" />
+                                    <span asp-validation-for="ServicePartnerViewModel.ServicePartnerDescription" class="text-danger"></span>
+                                </div>
+                                @if (Model.Editmode == false)
+                                {
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">Email Id<span style="color:red;">*</span></label>
+                                        <input asp-for="ServicePartnerViewModel.ServicePartnerEmailId" class="form-control" id="txtEmail" />
+                                        <span asp-validation-for="ServicePartnerViewModel.ServicePartnerEmailId" class="text-danger"></span>
+                                        <span class="text-danger" id="messagess"></span>
+
+                                    </div>
+                                   
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">Mobile Number <span style="color:red;">*</span></label>
+                                        <input asp-for="ServicePartnerViewModel.ServicePartnerMobileNumber" class="form-control" id="txtPhone" />
+                                        <span asp-validation-for="ServicePartnerViewModel.ServicePartnerMobileNumber" class="text-danger"></span>
+                                        <span class="text-danger" id="messages"></span>
+                                         <label class="" for=""><span class="text-danger">@ViewData["Msg"]</span></label>
+                                    </div>
+                                    
+                                }
+                                else
+                                {
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">Email Id<span style="color:red;">*</span></label>
+                                        <input asp-for="ServicePartnerViewModel.ServicePartnerEmailId" class="form-control" id="txtEmail" readonly />
+                                        <span asp-validation-for="ServicePartnerViewModel.ServicePartnerEmailId" class="text-danger"></span>
+                                        <span class="text-danger" id="messagess"></span>
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">Mobile Number <span style="color:red;">*</span></label>
+                                        <input asp-for="ServicePartnerViewModel.ServicePartnerMobileNumber" class="form-control" id="txtPhone"  readonly />
+                                        <span asp-validation-for="ServicePartnerViewModel.ServicePartnerMobileNumber" class="text-danger"></span>
+                                        <span class="text-danger" id="messages"></span>
+                                    </div>
+                                }
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Alternate Mobile Number</label>
+                                    <input asp-for="ServicePartnerViewModel.ServicePartnerAlternateMobileNumber" class="form-control" />
+                                    <span asp-validation-for="ServicePartnerViewModel.ServicePartnerAlternateMobileNumber" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Address Line 1<span style="color:red;">*</span></label>
+                                    <input asp-for="ServicePartnerViewModel.ServicePartnerAddressLine1" class="form-control" />
+                                    <span asp-validation-for="ServicePartnerViewModel.ServicePartnerAddressLine1" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Address Line 2</label>
+                                    <input asp-for="ServicePartnerViewModel.ServicePartnerAddressLine2" class="form-control" />
+                                    <span asp-validation-for="ServicePartnerViewModel.ServicePartnerAddressLine2" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Select State<span style="color:red;">*</span></label>
+                                    <select asp-for="ServicePartnerViewModel.ServicePartnerStates" class="form-control" asp-items="ViewBag.statelist" id="ddlState" multiple>
+                                    </select><span asp-validation-for="ServicePartnerViewModel.ServicePartnerStates" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Select City<span style="color:red;">*</span></label>
+                                    <select asp-for="ServicePartnerViewModel.ServicePartnerCities" asp-items="ViewBag.citylistS" class="form-control" id="ddlCity" multiple>
+                                    </select><span asp-validation-for="ServicePartnerViewModel.ServicePartnerCities" class="text-danger"></span>
+                                </div>
+
+                                </div>
+
+                                <div class="row">
+
+                               
+                              <div class="col-md-4 mb-3">
+    <label for="formFile" class="form-label">Upload Cencelled Cheque <span style="color:red;">*</span></label>
+    @if (!string.IsNullOrEmpty(Model.ServicePartnerViewModel.ServicePartnerCancelledCheque))
+    {
+        <img src="~/DBFiles/ServicePartner/CancelledCheque/@Model.ServicePartnerViewModel.ServicePartnerCancelledCheque" id="imgprev" accept="image/*" class="ct-square" alt="Cancelled Cheque">
+    }
+    <input type="file" accept="image/jpeg,image/png,jpg|png" name="CencelledCheque" id="CencelledCheque" class="form-control" onchange="SetFileStatus(this)" />
+    <input type="hidden" id="CencelledChequeStatus" name="CencelledChequeStatus" value="0" />
+    <input type="hidden" id="CencelledChequeInitial" name="CencelledChequeInitial" value="@Model.ServicePartnerViewModel.ServicePartnerCancelledCheque" />
+    <span asp-validation-for="ServicePartnerViewModel.ServicePartnerCancelledCheque" class="text-danger"></span>
+    <span id="cencelledchequeError" class="error" style="color:#ff4d29;"></span><br>
+</div>
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="formFile" class="form-label">Upload Service Partner GST Registration :</label>
+                                    @if (!string.IsNullOrEmpty(Model.ServicePartnerViewModel.ServicePartnerGstregisteration))
+                                    {
+                                        <img src="~/DBFiles/ServicePartner/GST/@Model.ServicePartnerViewModel.ServicePartnerGstregisteration" id="imgprevGST" accept="image/*" class="ct-square" alt="GST Image">
+                                    }
+                                    <input name="GST" type="file" accept="image/jpeg,image/png,jpg|png" class="form-control" onchange="ShowImagePreviewGST(this)" />
+                                    <span asp-validation-for="ServicePartnerViewModel.ServicePartnerGstregisteration" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="formFile" class="form-label">
+                                        Upload Service Partner Aadhar Front Image :
+                                        <span style="color:red;">*</span>
+                                    </label>
+                                    @if (!string.IsNullOrEmpty(Model.ServicePartnerViewModel.ServicePartnerAadharfrontImage))
+                                    {
+                                        <img src="~/DBFiles/ServicePartner/Aadhar/@Model.ServicePartnerViewModel.ServicePartnerAadharfrontImage" id="imgprevFront" accept="image/*" class="ct-square" alt="Aadhar Front Image">
+                                    }
+                                    <input name="AadharFront" id="AadharFront" type="file" accept="image/jpeg,image/png,jpg|png" class="form-control" onchange="SetFileStatus(this, 'AadharFront')" />
+                                    <input type="hidden" id="AadharFrontStatus" name="AadharFrontStatus" value="0" />
+                                    <input type="hidden" id="AadharFrontInitial" name="AadharFrontInitial" value="@Model.ServicePartnerViewModel.ServicePartnerAadharfrontImage" />
+                                    <span asp-validation-for="ServicePartnerViewModel.ServicePartnerAadharfrontImage" class="text-danger"></span>
+                                    <span id="AadharFrontError" class="error" style="color:#ff4d29;"></span><br>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="formFile" class="form-label">Upload Service Partner Aadhar Back Image :<span style="color:red;">*</span></label>
+                                    @if (!string.IsNullOrEmpty(Model.ServicePartnerViewModel.ServicePartnerAadharBackImage))
+                                    {
+                                        <img src="~/DBFiles/ServicePartner/Aadhar/@Model.ServicePartnerViewModel.ServicePartnerAadharBackImage" id="imgprevBack" accept="image/*" class="ct-square" alt="Aadhar Back Image">
+                                    }
+
+                                    <input name="AadharBack" id="AadharBack" type="file" accept="image/jpeg,image/png,jpg|png" class="form-control" onchange="SetFileStatus(this, 'AadharBack')" />
+                                    <input type="hidden" id="AadharBackStatus" name="AadharBackStatus" value="0" />
+                                    <input type="hidden" id="AadharBackInitial" name="AadharBackInitial" value="@Model.ServicePartnerViewModel.ServicePartnerAadharBackImage" />
+                                    <span asp-validation-for="ServicePartnerViewModel.ServicePartnerAadharBackImage" class="text-danger"></span>
+                                    <span id="AadharBackError" class="error" style="color:#ff4d29;"></span><br>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="formFile" class="form-label">Upload Service Partner Profile Pic :<span style="color:red;">*</span></label>
+                                    @if (!string.IsNullOrEmpty(Model.ServicePartnerViewModel.ServicePartnerProfilePic))
+                                    {
+                                        <img src="~/DBFiles/ServicePartner/ProfilePic/@Model.ServicePartnerViewModel.ServicePartnerProfilePic" id="imgprevProfile" accept="image/*" class="ct-square" alt="Profile Image">
+                                    }
+
+                                    <input name="ProfilePic" id="ProfilePic" type="file" accept="image/jpeg,image/png,jpg|png" class="form-control" onchange="SetFileStatus(this, 'ProfilePic')" />
+                                    <input type="hidden" id="ProfilePicStatus" name="ProfilePicStatus" value="0" />
+                                    <input type="hidden" id="ProfilePicInitial" name="ProfilePicInitial" value="@Model.ServicePartnerViewModel.ServicePartnerProfilePic" />
+                                    <span asp-validation-for="ServicePartnerViewModel.ServicePartnerProfilePic" class="text-danger"></span>
+                                    <span id="profilepicError" class="error" style="color:#ff4d29;"></span><br>
+                                </div>
+                                </div>
+
+
+                                <div class="row">
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">GST No.</label>
+                                    <input asp-for="ServicePartnerViewModel.ServicePartnerGstno" class="form-control" />
+                                    <span asp-validation-for="ServicePartnerViewModel.ServicePartnerGstno" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Bank Name<span style="color:red;">*</span></label>
+                                    <input asp-for="ServicePartnerViewModel.ServicePartnerBankName" class="form-control" />
+                                    <span asp-validation-for="ServicePartnerViewModel.ServicePartnerBankName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Bank Account No.<span style="color:red;">*</span></label>
+                                    <input asp-for="ServicePartnerViewModel.ServicePartnerBankAccountNo" class="form-control" />
+                                    <span asp-validation-for="ServicePartnerViewModel.ServicePartnerBankAccountNo" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">IFSC CODE<span style="color:red;">*</span></label>
+                                    <input asp-for="ServicePartnerViewModel.ServicePartnerIfsccode" class="form-control" />
+                                    <span asp-validation-for="ServicePartnerViewModel.ServicePartnerIfsccode" class="text-danger"></span>
+                                </div>
+
+                               
+
+                                <div class="col-md-4 mb-4">
+                                    @if (Model.ServicePartnerViewModel.IsServicePartnerLocal == true)
+                                    {
+                                        <label class="" for="">Is Service Partner Local</label>
+                                        <input name="ServicePartnerViewModel.IsServicePartnerLocal" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="IsDealerChk form-check-input">
+                                        <input name="ServicePartnerViewModel.IsServicePartnerLocal" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">Is Service Partner Local</label>
+                                        <input name="ServicePartnerViewModel.IsServicePartnerLocal" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="form-check-input">
+                                        <input name="ServicePartnerViewModel.IsServicePartnerLocal" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+
+                                    <span asp-validation-for="ServicePartnerViewModel.IsServicePartnerLocal" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    @if (Model.ServicePartnerViewModel.IconfirmTermsCondition == true)
+                                    {
+                                        <label class="" for="">I Confirm Terms & Condition<span style="color:red;">*</span></label>
+                                        <input name="ServicePartnerViewModel.IconfirmTermsCondition" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="Mycheck" value="true">
+                                        <input name="ServicePartnerViewModel.IconfirmTermsCondition" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="Mycheck" value="false">
+                                        
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">I Confirm Terms & Condition<span style="color:red;">*</span></label>
+                                        <input name="ServicePartnerViewModel.IconfirmTermsCondition" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="Mycheck" value="true">
+                                        <input name="ServicePartnerViewModel.IconfirmTermsCondition" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="Mycheck" value="false">
+
+                                    }
+                                     <p class="text-danger" id="planErrorTxt"></p>
+                                  
+                                </div>
+
+
+
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                    }
+                                </div>
+                                <div class="col-6 text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <input type="submit" id="Savebtn" value="Save" class="btn btn-primary mainshadow" />
+                                    }
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="emailModalLabel">Confirmation</h5>
+               
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal body content goes here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="yesBtn">Yes</button>
+                <button type="button" class="btn btn-secondary" id="NoBtn">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="emailModal1" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="emailModalLabel">Confirmation</h5>
+               
+            </div>
+            <div class="modal-body" id="modalBody1">
+                <!-- Modal body content goes here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="okBtn">OK</button>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/compressor.js"></script>
+<script type="text/javascript">
+
+    function ShowImagePreview(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imgprev').prop('src', e.target.result);
+                $('#imgprev').closest('.ct-square').show();
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+    function ShowImagePreviewGST(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imgprevGST').prop('src', e.target.result);
+                $('#imgprevGST').closest('.ct-square').show();
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function ShowImagePreviewfront(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imgprevFront').prop('src', e.target.result);
+                $('#imgprevFront').closest('.ct-square').show();
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function ShowImagePreviewBack(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imgprevBack').prop('src', e.target.result);
+                $('#imgprevBack').closest('.ct-square').show();
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function ShowImagePreviewProfile(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imgprevProfile').prop('src', e.target.result);
+                $('#imgprevProfile').closest('.ct-square').show();
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+
+
+    $(function () {
+
+        $('.IsDealerChk').each(function () {
+            var Ischecked = $(this).val();
+
+            if (Ischecked == "true") {
+
+                $(this).attr('checked', 'checked');
+            }
+        });
+    });
+
+// $(document).ready(function () {
+//     // Bind to the input event of the input field to clear the message whenever the input changes
+//         $("#txtName").on('input', function () {
+//             $("#message").html(" ");
+//             $('#Savebtn').prop('disabled', false);
+//     });
+// });
+
+// function CheckAvailability() {
+//     var name = $("#txtName").val();
+//     if (name === '') {
+//         $("#message").html(" ");
+
+//     }
+
+//     $.ajax({
+//         type: "POST",
+//         url: "@ViewData["URLPrefixforProd"]/ServicePartner/Manage?handler=CheckName",
+//         beforeSend: function (xhr) {
+//             xhr.setRequestHeader("XSRF-TOKEN",
+//                 $('input:hidden[name="__RequestVerificationToken"]').val());
+//         },
+//         data: { "name": name },
+//         success: function (response) {
+//             if (response == true || response == "True" || response == "true") {
+//                 $("#message").html(" ");
+//             } else {
+//                 $("#message").css("color", "red");
+//                 $("#message").html("This name is already exist.");
+//                 $('#Savebtn').prop('disabled', true);
+//             }
+//         },
+//     });
+//     }
+
+
+
+    $(document).ready(function() {
+  // Event listener for the checkEmailBtn click
+        $("#txtEmail").on("change", function () {
+            var emailId = $(this).val();
+    $.ajax({
+      type: "POST",
+       url: "@ViewData["URLPrefixforProd"]/ServicePartner/Manage?handler=CheckUserEmailId",
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val());
+      },
+      data: { "emailId": emailId },
+        success: function (response) {
+            if (response === null) {
+                $("#message").html("");
+                return;
+            }
+            
+        if (response.value === "UserExists") {
+          // User exists with matching email
+            $("#modalBody1").html(response.message);
+              $("#emailModal1").modal("show");
+             $("#messagess").text("This email is already registered with a user. Please use another email.");
+
+          // Event listener for the Yes button click
+              $("#okBtn").click(function () {
+                    // Perform the desired action if the user clicks Yes
+                    // ...
+                    $("#emailModal1").modal("hide");
+                });
+
+              // Event listener for the Yes button click
+                $("#okBtn").click(function() {
+                // Perform the desired action if the user clicks Yes
+                // ...
+                $("#emailModal1").modal("hide");
+              });
+        }
+
+
+         if (response.value === "NoUserExists") {
+          // User exists with matching email
+            // $("#modalBody1").html(response.message);
+            //   $("#emailModal1").modal("show");
+             $("#messagess").text("");
+
+              
+        }
+
+            if (response.value === "EVCExists") {
+                // User exists with matching email
+                $("#modalBody").html(response.message);
+                $("#emailModal").modal("show");
+
+                // Event listener for the Yes button click
+                $("#yesBtn").click(function () {
+                    // Perform the AJAX request to call the server-side handler
+                      $("#messagess").text("");
+                    $.ajax({
+                        type: "GET",
+                        url: "@ViewData["URLPrefixforProd"]/ServicePartner/Manage?handler=CheckYes",
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val());
+                        },
+                        success: function (response) {
+                            $("#select").val(response);
+                            console.log(response);
+                            // You can perform any additional actions based on the response value
+                        }
+                    });
+
+                    // Close the modal
+                    $("#emailModal").modal("hide");
+                });
+                $("#NoBtn").click(function () {
+                    // Perform the desired action if the user clicks Yes
+                   $("#messagess").text("Please use another email.");
+                    $("#emailModal").modal("hide");
+                });
+            }
+        else if (response.value === "ServicePartnerExists") {
+          // Email exists in service partner table
+          $("#modalBody1").html("This email is already registered with a service partner. Please use another email.");
+            $("#emailModal1").modal("show");
+                 $("#messagess").text("This email is already registered with a service partner. Please use another email.");
+            $("#okBtn").click(function () {
+                // Perform the desired action if the user clicks Yes
+                // ...
+                $("#emailModal1").modal("hide");
+            });
+
+          // Event listener for the Yes button click
+            $("#okBtn").click(function() {
+            // Perform the desired action if the user clicks Yes
+            // ...
+            $("#emailModal1").modal("hide");
+          });
+
+        } else {
+          // Handle other scenarios or success case
+          // ...
+        }
+      if(!($('#messages').text() == "" && $('#messagess').text() == "")){
+         $('#Savebtn').prop('disabled', true);
+     }
+      else{
+            $('#Savebtn').prop('disabled', false);
+     }
+      },
+    });
+  });    
+});
+
+
+
+
+    $(document).ready(function() {
+  // Event listener for the checkEmailBtn click
+        $("#txtPhone").on("change", function () {
+            var phone = $(this).val();
+    $.ajax({
+      type: "POST",
+        url: "@ViewData["URLPrefixforProd"]/ServicePartner/Manage?handler=CheckUserPhone",
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val());
+      },
+        data: { "phone": phone },
+        success: function (response) {
+            if (response === null) {
+                $("#message").html("");
+                return;
+            }
+            
+        if (response.value === "UserExists") {
+          // User exists with matching email
+                $("#modalBody1").html(response.message);
+           $("#emailModal1").modal("show");
+                 $("#messages").text("This mobile number is already in registered with a user. Please use another mobile number.");
+
+        // Event listener for the Yes button click
+                  $("#okBtn").click(function () {
+                        // Perform the desired action if the user clicks Yes
+                        // ...
+                        $("#emailModal1").modal("hide");
+                    });
+
+                  // Event listener for the Yes button click
+                    $("#okBtn").click(function() {
+                    // Perform the desired action if the user clicks Yes
+                    // ...
+                    $("#emailModal1").modal("hide");
+                  });
+
+        }
+
+              if (response.value === "NoUserExists") {
+              // User exists with matching email
+                // $("#modalBody1").html(response.message);
+                //   $("#emailModal1").modal("show");
+                     $("#messages").text("");
+                         
+
+            }
+
+            if (response.value === "EVCExists") {
+                // User exists with matching email
+                $("#modalBody").html(response.message);
+                $("#emailModal").modal("show");
+
+                // Event listener for the Yes button click
+                $("#yesBtn").click(function () {
+                    // Perform the AJAX request to call the server-side handler
+                    $.ajax({
+                        type: "GET",
+                        url: "@ViewData["URLPrefixforProd"]/ServicePartner/Manage?handler=CheckYes",
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val());
+                        },
+                        success: function (response) {
+                            $("#select").val(response);
+                            console.log(response);
+                            // You can perform any additional actions based on the response value
+                        }
+                    });
+
+                    // Close the modal
+                    $("#emailModal").modal("hide");
+                });
+                $("#NoBtn").click(function () {
+                    // Perform the desired action if the user clicks Yes
+                    // ...
+                    $("#emailModal").modal("hide");
+                });
+
+            }
+        else if (response.value === "ServicePartnerExists") {
+          // Email exists in service partner table
+          $("#modalBody1").html("This mobile no. is already in register as a service partner. Please use another mobile no.");
+            $("#emailModal1").modal("show");
+                $("#messages").text("This mobile number is already register as a service partner please use another mobile no.");
+            $("#okBtn").click(function () {
+                // Perform the desired action if the user clicks Yes
+                // ...
+                $("#emailModal1").modal("hide");
+            });
+
+          // Event listener for the Yes button click
+            $("#okBtn").click(function() {
+            // Perform the desired action if the user clicks Yes
+            // ...
+            $("#emailModal1").modal("hide");
+          });
+
+        } else {
+          // Handle other scenarios or success case
+          // ...
+        }
+      if(!($('#messages').text() == "" && $('#messagess').text() == "")){
+        $('#Savebtn').prop('disabled', true);
+        }
+     else{
+        $('#Savebtn').prop('disabled', false);
+        }
+      },
+    });
+  });
+    });
+
+      $(document).ready(function () {
+          $('.field-validation-error').text('');
+        $('#myForm').submit(function () {
+            if ($('input[name="ServicePartnerViewModel.IconfirmTermsCondition"]:checked').length === 0)  {
+                $('#planErrorTxt').text('Please select terms & conditions');
+                return false;
+            }
+        });
+        
+    });
+
+       
+
+           document.getElementById("myForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        // Get file input elements and related elements
+        const fileInputs = [
+            {
+                input: document.getElementById("CencelledCheque"),
+                error: document.getElementById("cencelledchequeError"),
+                status: document.getElementById("CencelledChequeStatus"),
+                initial: document.getElementById("CencelledChequeInitial"),
+                errorMessage: "Please upload a valid cancelled cheque image",
+            },
+            {
+                input: document.getElementById("AadharFront"),
+                error: document.getElementById("AadharFrontError"),
+                status: document.getElementById("AadharFrontStatus"),
+                initial: document.getElementById("AadharFrontInitial"),
+                errorMessage: "Please upload a valid Aadhar front image",
+            },
+            {
+                input: document.getElementById("AadharBack"),
+                error: document.getElementById("AadharBackError"),
+                status: document.getElementById("AadharBackStatus"),
+                initial: document.getElementById("AadharBackInitial"),
+                errorMessage: "Please upload a valid Aadhar back image",
+            },
+            {
+                input: document.getElementById("ProfilePic"),
+                error: document.getElementById("profilepicError"),
+                status: document.getElementById("ProfilePicStatus"),
+                initial: document.getElementById("ProfilePicInitial"),
+                errorMessage: "Please upload a valid profile pic image",
+            },
+        ];
+
+        // Clear previous error messages
+        fileInputs.forEach((fileInput) => {
+            fileInput.error.textContent = "";
+        });
+
+        // Collect error messages in an array
+        const errorMessages = [];
+
+        // Check each file input
+        fileInputs.forEach((fileInput) => {
+            if (fileInput.status.value === "0" && fileInput.input.value === "" && fileInput.initial.value === "") {
+                errorMessages.push(fileInput.errorMessage);
+                fileInput.error.textContent = fileInput.errorMessage; // Update the error message on the page
+            }
+        });
+
+        // Display all error messages together
+        if (errorMessages.length > 0) {
+            return false; // Prevent form submission if there are errors
+        }
+
+        // If all validation passes, you can optionally submit the form here
+        // You can also use AJAX to submit the data to the server
+
+        // Uncomment this line if you want to submit the form
+        $(this).submit();
+    });
+
+    // Function to set the file status when a new file is selected
+    function SetFileStatus(fileInput) {
+        const statusInput = document.getElementById(fileInput.id + "Status");
+        const initialInput = document.getElementById(fileInput.id + "Initial");
+
+        if (fileInput.value !== "" && initialInput.value === "") {
+            // New file selected
+            statusInput.value = "1";
+        } else {
+            // No new file selected
+            statusInput.value = "0";
+        }
+    }
+
+</script>
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"></script>
+@*<script src="https://cdn.jsdelivr.net/npm/bootstrap-multiselect@0.9.16/dist/js/bootstrap-multiselect.min.js"></script>*@
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>*@
+<script>
+    $(document).ready(function () {
+        $('#ddlState').multiselect({
+            enableFiltering: true, // Enable filtering of options
+            filterPlaceholder: 'Search', // Placeholder text for the filter input
+            enableCaseInsensitiveFiltering: true, // Enable case-insensitive filtering
+            buttonWidth: '100%',
+            includeSelectAllOption: false,
+            onDropdownShow: function (event) {
+                var dropdownMenu = $(event.currentTarget).find('.dropdown-menu');
+                dropdownMenu.addClass('multiselect-dropdown-menu'); // Add the CSS class to the dropdown menu
+            }
+        });
+    });
+
+    @*$(document).ready(function () {
+        $('#ddlCity').multiselect({
+            enableFiltering: true, // Enable filtering of options
+            filterPlaceholder: 'Search', // Placeholder text for the filter input
+            enableCaseInsensitiveFiltering: true, // Enable case-insensitive filtering
+            buttonWidth: '100%',
+            onDropdownShow: function (event) {
+                var dropdownMenu = $(event.currentTarget).find('.dropdown-menu');
+                dropdownMenu.addClass('multiselect-dropdown-menu'); // Add the CSS class to the dropdown menu
+            }
+        });
+    });
+
+     $("#ddlState").change(function () {
+
+         $.get("@URLPrefixforProd/ServicePartner/Manage?handler=CityByStateId&ServicePartnerViewModel.ServicePartnerState=" + $(this).val()).done(function (data) {
+
+            console.log(data);
+            $("#ddlCity").empty(); // Clear the plese wait
+            $("#ddlCity").append($("<option></option>").val('').html('Select City'));
+            $.each(data, function (i, cities) {
+
+                $("#ddlCity").append($("<option></option>").val(cities.name).html(cities.name));
+            });
+        });
+    });*@
+
+    @*$(document).ready(function () {
+    $('#ddlCity').multiselect({
+        enableFiltering: true,
+        filterPlaceholder: 'Search',
+        enableCaseInsensitiveFiltering: true,
+        buttonWidth: '100%',
+        onDropdownShow: function (event) {
+            var dropdownMenu = $(event.currentTarget).find('.dropdown-menu');
+            dropdownMenu.addClass('multiselect-dropdown-menu');
+        }
+    });
+
+    $("#ddlState").change(function () {
+        var selectedState = $(this).val();
+        var cityDropdown = $("#ddlCity");
+
+        // Clear the current options in the city dropdown
+        cityDropdown.empty();
+        cityDropdown.append($("<option></option>").val('').html('Select City'));
+
+        // Make an AJAX request to fetch the cities based on the selected state
+        $.get("@URLPrefixforProd/ServicePartner/Manage?handler=CityByStateId&ServicePartnerViewModel.ServicePartnerState=" + selectedState)
+            .done(function (data) {
+                console.log(data);
+
+                // Populate the city dropdown with the fetched data
+                $.each(data, function (i, city) {
+
+                    cityDropdown.append($("<option></option>").val(city.name).html(city.name));
+                });
+
+                // Refresh the multiselect plugin to update the dropdown with new options
+                cityDropdown.multiselect('rebuild');
+            });
+    });
+});*@
+
+    $(document).ready(function () {
+
+        populateCity();
+
+    
+
+    $('#ddlCity').multiselect({
+        enableFiltering: true,
+        filterPlaceholder: 'Search',
+        enableCaseInsensitiveFiltering: true,
+        buttonWidth: '100%',
+        onDropdownShow: function (event) {
+            var dropdownMenu = $(event.currentTarget).find('.dropdown-menu');
+            dropdownMenu.addClass('multiselect-dropdown-menu');
+        }
+    });
+
+    $("#ddlState").change(function () {
+        var selectedState = $(this).val();
+
+        populateCity();
+        
+    });
+
+    function populateCity() {
+
+        var selectedState = $('#ddlState').val();
+
+        var cityDropdown = $("#ddlCity");
+
+        if (typeof selectedState !== 'undefined' && selectedState.length > 0) {
+
+            debugger;
+
+            // Make an AJAX request to fetch the cities based on the selected state
+        var url = "@URLPrefixforProd/ServicePartner/Manage?handler=CityByStateId&ServicePartnerViewModel.ServicePartnerState=" + encodeURIComponent(selectedState);
+        $.get(url)
+            .done(function (data) {
+                console.log(data);
+                // Sort the data array alphabetically by city name
+               
+                // Populate the city dropdown with the fetched data
+                $.each(data, function (i, city) {
+                    cityDropdown.append($("<option></option>").val(city.name).text(city.name));
+                });
+
+                // Refresh the multiselect plugin to update the dropdown with new options
+                cityDropdown.multiselect('rebuild');
+            });
+        }
+
+        
+        
+    }
+
+    
+});
+</script>
+
+
+
+
+
+
+
+
+

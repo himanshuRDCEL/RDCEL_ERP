@@ -1,0 +1,97 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.RoleAccess.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TblRoleAccess[0].IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TblRoleAccess[0].CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TblRoleAccess[0].ModifiedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TblRoleAccess[0].CanAdd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TblRoleAccess[0].CanView)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TblRoleAccess[0].CanDelete)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TblRoleAccess[0].AccessList)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TblRoleAccess[0].Company)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TblRoleAccess[0].CreatedByNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TblRoleAccess[0].ModifiedByNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TblRoleAccess[0].Role)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.TblRoleAccess) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanAdd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanView)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanDelete)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccessList.AccessListId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Company.CompanyId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedByNavigation.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedByNavigation.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role.RoleId)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.RoleAccessId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.RoleAccessId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.RoleAccessId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,629 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC_Portal.Store_SpecificationModel
+@{
+    ViewData["Title"] = "Store specification";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    var BaseUrl = ViewData["BaseUrl"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">Partner Details</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="detailed-reporting">
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Partner code</label>
+                                    <input type="text" asp-for="eVC_PartnerListModels.EvcStoreCode" class="form-control" placeholder="Store Regd No." readonly>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Business Name</label>
+                                    <input type="text" asp-for="eVC_PartnerListModels.BussinessName" class="form-control" placeholder="Business Name" readonly>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">EVC Registration No</label>
+                                    <input type="text" asp-for="eVC_PartnerListModels.EvcregdNo" class="form-control" placeholder="Registration No." readonly>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Partner Pincode</label>
+                                    <input type="text" asp-for="eVC_PartnerListModels.PinCode" class="form-control" placeholder="Registration No." readonly>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Partner Email Id</label>
+                                    <input type="text" asp-for="eVC_PartnerListModels.EmailId" class="form-control" placeholder="Registration No." readonly>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Partner Contact Number</label>
+                                    <input type="text" asp-for="eVC_PartnerListModels.ContactNumber" class="form-control" placeholder="Registration No." readonly>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Partner Address</label>
+                                    <input type="text" asp-for="eVC_PartnerListModels.Address" class="form-control" placeholder="Registration No." readonly>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Partner City</label>
+                                    <input type="text" asp-for="eVC_PartnerListModels.CityName" class="form-control" placeholder="Registration No." readonly>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Partner State</label>
+                                    <input type="text" asp-for="eVC_PartnerListModels.StateName" class="form-control" placeholder="Registration No." readonly>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">Specification</h2>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="detailed-reporting">
+                            <form method="post" enctype="multipart/form-data" id="lgcLoadForm">
+                                <input type="hidden" id="hdnEVCPartnerId" asp-for="eVCStore_SpecificationViewModel.EvcPartnerId" />
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="">Product Category</label>
+                                        <select asp-for="eVCStore_SpecificationViewModel.productcatId" asp-items="ViewBag.ProductCategorylist" class="form-control" id="ddlproductcat">
+                                            <option value="0">None</option>
+                                        </select>
+                                        <span asp-validation-for="eVCStore_SpecificationViewModel.productcatId" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-4 qualityCheckbx">
+                                        <label for="">Quality</label>
+                                        <select asp-for="eVCStore_SpecificationViewModel.Quality" asp-items="ViewBag.Quality" class="form-select" id="ddlQuality" multiple>
+                                        </select><span asp-validation-for="eVCStore_SpecificationViewModel.Quality" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-4 d-flex align-items-end justify-content-start">
+                                        <input type="submit" class="btn btn-primary" placeholder="Registration No." value="Update">
+                                    </div>
+
+                                </div>
+                            </form>
+
+                            <div class="row my-5">
+
+                                <div class="col-12 mb-3">
+                                    <h2 class="fs-5 fw-bold mb-0">Current Preferred Quality</h2>
+
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="StoreDetailDataTable" class="table align-items-center table-flush" border="1">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="border-bottom all notexport" scope="col">EvcPartnerpreferenceId</th>
+                                                    <th class="border-bottom all notexport" scope="col">Action</th>
+                                                    <th class="border-bottom all" scope="col">EVC Regdno</th>
+                                                    <th class="border-bottom all" scope="col">Partner Code</th>
+                                                    <th class="border-bottom all" scope="col">Product Category</th>
+                                                    <th class="border-bottom all" scope="col">Quality</th>
+                                                    <th class="border-bottom all" scope="col">Modify Date</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+
+                                    </div>
+                                    @*List Page Common Filters Code VK 19-May*@
+                                    <div class="filters">
+                                        <div class="p-4">
+                                            <h4 class="">Filters</h4>
+                                            @* Order Date Range Filter *@
+                                            <p class="filterheading">
+                                                <input type="checkbox" name="" id="chkOrderDateRange">
+                                                <label for="chkOrderDateRange">Date Range</label>
+                                            </p>
+                                            <div class="filterbox">
+                                                <input type="text" class="form-control d-inline mb-2" id="orderStartDate" readonly placeholder="Start Date" autocomplete="off">
+                                                <input type="text" class="form-control d-inline mb-2" id="orderEndDate" readonly placeholder="End Date" autocomplete="off">
+                                            </div>
+                                            <div class="filter-seprator"></div>
+
+                                            @* Phone Number Filter *@
+                                            <p class="filterheading">
+                                                <input type="checkbox" name="" id="chkStoreRegdNo">
+                                                <label for="chkStoreRegdNo">Partner Code</label>
+                                            </p>
+                                            <div class="filterbox">
+                                                <input type="text" class="form-control d-inline" id="StoreRegdNo" placeholder="Search Store Code">
+                                            </div>
+                                            <div class="filter-seprator"></div>
+
+                                            @* Product Group Filter *@
+                                            <p class="filterheading">
+                                                <input type="checkbox" name="" id="chkProductCategory">
+                                                <label for="chkProductCategory">Product Group</label>
+                                            </p>
+                                            <div class="filterbox">
+                                                <select asp-for="searchFilterVM.ProductCatId" id="ddlprodcatid" class="form-control d-inline" asp-items="ViewBag.ProductCategorylist">
+                                                    <option value='0'>--Product Cat--</option>
+                                                </select>
+                                                <span asp-validation-for="searchFilterVM.ProductCatId" class="text-danger"></span>
+                                            </div>
+                                            <div class="filter-seprator"></div>
+
+
+                                            @* EVCRegd No Filter *@
+                                            <p class="filterheading">
+                                                <input type="checkbox" name="" id="chkevcregdNo">
+                                                <label for="chkevcregdNo">EVC Regd No</label>
+                                            </p>
+                                            <div class="filterbox">
+                                                @*<input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">*@
+                                                <input type="text" class="form-control d-inline" id="evcregdNo" placeholder="Search EVCRegdNo">
+
+                                            </div>
+
+
+                                            @* Submit Filter *@
+                                            <div class="filterbtnwrap">
+                                                <a id="btnFilter" class="btn btn-primary">Filter</a>
+                                                <a id="btnCloseFilter" class="btn btn-sm btn-secondary py-2">Cancel</a>
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </div>
+
+                                    @*  <a href='javascript:history.go(-1)' class="btn btn-primary">Back to List</a> *@
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="delete-conformation" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="delete-conformation">
+                    Inactive Confirmation
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="eVCStore_SpecificationViewModel.EvcPartnerpreferenceId" id="hdnId" />
+                            <div class="col-sm-12">
+                                <span>
+                                    Are you sure you want to make this Product Quality Inactive ?
+                                </span>
+                                @*<strong class="deletedValueName">
+                                </strong>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="Delete" class="btn btn-danger" value="Make Inactive" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="active-conformation" tabindex="-1" role="dialog" aria-labelledby="activeconformation">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="active-conformation1">
+                    Active Confirmation
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="eVCStore_SpecificationViewModel.EvcPartnerpreferenceId" id="hdnId1" />
+                            <div class="col-sm-12">
+                                <span>
+                                    Are you sure you want to Active this Product Quality?
+                                </span>
+                                @*<strong class="deletedValueName">
+                                </strong>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="Delete" class="btn btn-success" value="Make Active" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#ddlQuality').multiselect({
+            enableFiltering: false,
+            filterPlaceholder: 'Search',
+            enableCaseInsensitiveFiltering: false,
+            buttonWidth: '100%',
+            onDropdownShow: function (event) {
+                var dropdownMenu = $(event.currentTarget).find('.dropdown-menu');
+                dropdownMenu.addClass('multiselect-dropdown-menu');
+            }
+        });
+
+
+    });
+    function activeConfirmStoreSpecification(_Id) {
+
+        $('#hdnId1').val(_Id);
+        $('#active-conformation').modal('show');
+    }
+
+    function deleteConfirmStoreSpecification(_Id) {
+        // alert(_dealId);
+        $('#hdnId').val(_Id);
+        $('#delete-conformation').modal('show');
+    }
+    $("#ddlCity").change(function () {
+        var cityId = $("#ddlCity").val();
+        $('#ddlEVC').val("");
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/LGC/LGCLoad?handler=EVCByCityId",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "cityId": cityId },
+            success: function (response) {
+                if (response) {
+                    $('#ddlEVC').empty();
+                    $("#ddlEVC").append('<option value="">--Select EVC Name--</option>');
+                    $.each(response, function (i, item) {
+                        $("#ddlEVC").append('<option value="' + item.value + '">' + item.text + '</option>');
+                    });
+                }
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    //variable declaration
+    var table = null;
+    var EVCPartnerId = $('#hdnEVCPartnerId').val();
+    //Document (Page Load) ready Function Call
+    $(document).ready(function () {
+        //Date Picker
+        $("#orderStartDate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                $("#orderEndDate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#orderEndDate").datepicker({
+            defaultDate: null,
+        });
+        //Hide Filters Dive
+        $('.filters').hide();
+        //Table Count 1 Start
+        var url = "@URLPrefixforProd/api/EVCList/GetEVC_PartnerpreferenceList?LoggingId=" + EVCPartnerId
+        DataTable(url);
+
+    });
+
+    //Filter Close Button Click Event
+    $('#btnCloseFilter').click(function () {
+        $('#orderStartDate').val("");
+        $('#orderEndDate').val("");
+        $('#StoreRegdNo').val("");
+        $('#ddlprodcatid').val(0);
+        $('#custCity').val("");
+        $('#custPin').val("");
+        $('#evcregdNo').val("");
+        // Unchecks it
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        CommonFilter();
+    });
+
+    //Check Box Date Range change Event
+    $("#chkOrderDateRange").click(function () {
+        if (!this.checked) {
+            $('#orderStartDate').val("");
+            $('#orderEndDate').val("");
+        }
+    });
+
+
+
+    //Check Box Phone Number change Event
+    $("#chkStoreRegdNo").click(function () {
+        if (!this.checked) {
+            $('#StoreRegdNo').val("");
+        }
+    });
+    //Check Box Product Category change Event
+    $("#chkProductCategory").click(function () {
+        if (!this.checked) {
+            $('#ddlprodcatid').val(0);
+        }
+    });
+
+    //Check Box EVCRegd Number change Event
+    $("#chkevcregdNo").click(function () {
+        if (!this.checked) {
+            $('#evcregdNo').val("");
+        }
+    });
+    // Follow-up list multi Search Filter
+    $('#btnFilter').click(function () {
+        CommonFilter();
+    });
+
+    function DataTable(url) {
+        table = $('#StoreDetailDataTable').DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    text: '<button class="btn btn-primary" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters').toggle();
+                        //$('.content').toggleClass('maincontent');
+                        //$('.filters').insertBefore('table.dataTable');
+                    }
+                },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper "><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Store Specification List',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Record found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+
+            "columns": [
+
+                { "data": "evcPartnerpreferenceId", "name": "EvcPartnerpreferenceId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "evcregdNo", "name": "EvcregdNo", "autoWidth": true, "orderable": false },
+                { "data": "evcStoreCode", "name": "EvcStoreCode", "autoWidth": true, "orderable": false },
+                { "data": "productCategory", "name": "ProductCategory", "autoWidth": true, "orderable": false },
+                { "data": "productQuality", "name": "ProductQuality", "autoWidth": true, "orderable": false },
+                { "data": "date", "name": "Date", "autoWidth": true, "orderable": false },
+            ]
+        });
+    }
+
+    function GetURLData(orderStartDate = null, orderEndDate = null, StoreRegdNo = null, productCatId = null, evcregdNo = null) {
+        var urlData = "";
+        if (orderStartDate != null && orderEndDate != null) {
+            urlData += '&orderStartDate=' + orderStartDate + '&orderEndDate=' + orderEndDate;
+        }
+        if (StoreRegdNo != null) {
+            urlData += '&StoreRegdNo=' + StoreRegdNo;
+        }
+        if (productCatId != null && productCatId > 0) {
+            urlData += '&productCatId=' + productCatId;
+        }
+        if (evcregdNo != null) {
+            urlData += '&evcregdNo=' + evcregdNo;
+        }
+        return urlData;
+    }
+
+    //Filter Function
+    function CommonFilter() {
+
+        var orderStartDate = $('#orderStartDate').val();
+        orderStartDate = $('#orderStartDate').val() == "" ? null : $('#orderStartDate').val();
+        var orderEndDate = $('#orderEndDate').val();
+        orderEndDate = $('#orderEndDate').val() == "" ? null : $('#orderEndDate').val();
+
+        var StoreRegdNo = $('#StoreRegdNo').val();
+        StoreRegdNo = $('#StoreRegdNo').val() == "" ? null : $('#StoreRegdNo').val();
+
+        var productCatId = $('#ddlprodcatid').val();
+        productCatId = $('#ddlprodcatid').val() == "" ? 0 : $('#ddlprodcatid').val();
+
+        var evcregdNo = $('#evcregdNo').val();
+        evcregdNo = $('#evcregdNo').val() == "" ? null : $('#evcregdNo').val();
+
+        var urlData = GetURLData(orderStartDate, orderEndDate, StoreRegdNo, productCatId, evcregdNo);
+
+        var url = null;
+        url = "@URLPrefixforProd/api/EVCList/GetEVC_PartnerpreferenceList?LoggingId=" + EVCPartnerId + urlData;
+
+
+        // Destroy the existing DataTable
+        table = $('#StoreDetailDataTable').DataTable();
+        // Destroy the existing DataTable
+        table.clear().destroy();
+        //Re-Initialize Datatable
+        DataTable(url);
+
+        $('.filters').hide();
+    }
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+
+    //Delete EVC
+    function deleteConfirm(_EvcregistrationId) {
+        $('#hdnId').val(_EvcregistrationId);
+        CheckAvailability(_EvcregistrationId);
+    }
+
+    function CheckAvailability(_EvcregistrationId) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Page("EVC_PartnerList", "CheckOrder")",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { evcregistrationId: _EvcregistrationId },
+            success: function (response) {
+                if (response == false || response == "False" || response == "false") {
+                    $('#delete-conformation').modal('show');
+                } else {
+                    Swal.fire({
+                        title: 'Deleted Failed',
+                        text: 'Please clear the bucket orders in order to get the new ones',
+                        icon: 'warning',
+                        confirmButtonText: 'Ok',
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                }
+            },
+        });
+    }
+
+    // Assuming this code is inside a script tag or a separate JavaScript file
+
+    $(document).ready(function () {
+        $('#ddlproductcat').change(function () {
+
+            $('.qualityCheckbx .form-check-input').prop('checked', false);
+
+            var selectedProductCategory = $('#ddlproductcat').val();
+            var evcPartnerId = $('#hdnEVCPartnerId').val();
+
+            // Make an AJAX request to get Quality options based on the selected Product Category
+            $.ajax({
+                type: "GET",
+                url: "@ViewData["URLPrefixforProd"]/EVC_Portal/Store_Specification?handler=QualityOptions",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: { productCategoryId: selectedProductCategory, evcPartnerId: evcPartnerId },
+                success: function (data) {
+                    data.forEach(item => {
+                        $('.qualityCheckbx .form-check-input').each(function (i, checkbox) {
+                            if (item == $(this).val()) {
+                                $(this).prop('checked', true);
+                            }
+                        });
+                    })
+                    // Trigger the 'change' event on the checkboxes
+                    $('.qualityCheckbx .form-check-input').trigger('change');
+                },
+                error: function (error) {
+                    console.error('Error loading Quality options:', error);
+                }
+            });
+        });
+    });
+
+</script>
+
+
+
+
+
+

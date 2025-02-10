@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon" href="~/Images/favicon.png" sizes="32x32" />
+    <link rel="icon" href="~/Images/favicon.png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="~/Images/favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="~/NewLayout/vendor/jquery-ui/jquery-ui.css">
+
+    <link type="text/css" href="~/NewLayout/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+    <link type="text/css" href="~/NewLayout/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link type="text/css" href="~/NewLayout/css/style.css" rel="stylesheet">
+
+    <link href="~/newlayout/css/v2.0.css" rel="stylesheet" />
+
+    <script src="~/NewLayout/vendor/jquery/jquery-3.6.1.min.js"></script>
+    <script src="~/NewLayout/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/NewLayout/vendor/@@popperjs/core/dist/umd/popper.min.js"></script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    @* <script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>*@
+
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+
+</head>
+@{
+    RDCELERP.Model.Users.LoginViewModel loginVM = (RDCELERP.Model.Users.LoginViewModel)ViewBag.LoginUser;
+    List<RDCELERP.Model.Role.RoleAccessViewModel> roleAccessList = (List<RDCELERP.Model.Role.RoleAccessViewModel>)ViewBag.RoleAccessList;
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    //var title = "";
+    //var text = "";
+    //var icon = "";
+    //var button = "";
+    //if (accessRule != null)
+    //{
+    //    title = accessRule.MsgTitle;
+    //    text = accessRule.Msg;
+    //    icon = accessRule.MsgIcon;
+    //    button = "Ok!";
+    //}
+
+    if (loginVM != null && loginVM.RoleViewModel.CompanyId == null || loginVM.RoleViewModel.CompanyId == 0)
+    {
+        if (ViewBag.UrlNew != null && ViewBag.UrlNew != "/Company/SelectCompany")
+        {
+            Context.Response.Redirect("/");
+        }
+    }
+}
+@*Do not Change its position*@
+@if (accessRule != null && accessRule.CanAdd)
+{
+    @*Note: With the corresponding permissions, this css class can be used to hide or unhide buttons in any list page, Added by VK*@
+    <style>
+        .viewableWithAddPermission {
+            display: inline-block;
+        }
+    </style>
+}
+@*Do not Change its position*@
+<body>
+
+    <div id="loader">
+        <div class="loaderwrap">
+            <img src="~/images/digi2l-gif.gif" />
+            <p>Please Wait ...</p>
+        </div>
+    </div>
+
+
+    <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
+        @*<a class="navbar-brand me-lg-5" href="@ViewBag.PortalLink">
+
+                <span class="navbar-brand-dark sidebar-icon logotext"><i class="fa-solid fa-cubes logoicon"></i> @ViewBag.PortalName</span>
+            </a>*@
+        @if (loginVM.RoleViewModel.PortalName != null && loginVM.RoleViewModel.PortalLink != null)
+        {
+            <a class="navbar-brand me-lg-5" href="@loginVM.RoleViewModel.PortalLink">
+
+                <img src="~/images/erp-2-01.png" />
+            </a>
+        }
+        else
+        {
+            <a class="navbar-brand me-lg-5">
+                <img src="~/images/erp-2-01.png" />
+            </a>
+        }
+        <div class="d-flex align-items-center">
+            <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </button>
+        </div>
+    </nav>
+    @await Component.InvokeAsync("Header")
+    <main class="content">
+
+     
+
+        @await Component.InvokeAsync("Sidebar")
+        @*   <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-12 mb-4">
+                            <div class="card border-0 shadow">
+                                <div class="card-body">
+                                    @RenderBody()
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        <div class="py-3">
+        </div>
+        @RenderBody()
+        @*//sidebar
+            //body*@
+
+        <footer class="bg-white  shadow p-4 m-0" id="">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-4 col-xl-6 mb-md-0">
+                    <p class="mb-0 text-center text-center">
+                        ©
+                        <script>document.write(new Date().getFullYear())</script> &nbsp; Powered by GraspCorn
+                    </p>
+                </div>
+            </div>
+
+        </footer>
+     
+
+    </main>
+ 
+
+    <script src="~/NewLayout/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="~/NewLayout/assets/js/custom.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+     <script>
+         feather.replace();
+     </script>
+
+</body>
+
+</html>
+
+
+

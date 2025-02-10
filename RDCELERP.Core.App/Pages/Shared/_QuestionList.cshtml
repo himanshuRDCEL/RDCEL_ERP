@@ -1,0 +1,79 @@
+﻿@using RDCELERP.Model.QCComment
+@model List<QCRatingViewModel>
+
+@{
+    int QuestionCount = Model.Count;
+    int itemIndex = 0;
+    int count = 1;
+}
+
+<div id="getQuesionsDiv">
+    <input type="hidden" value="@QuestionCount" id="hdnDataCount" />
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        if (Model[i] != null && Model[i].IsDecidingQues == true)
+        {
+            <div class="row">
+                <div class="col-md-5 mb-4 questionbox">
+                    <p><label id="lblQuestion_@itemIndex" class="" for="">@count. @Model[i].Qcquestion</label></p>
+                </div>
+
+                <div class="col-md-3 mb-4 questionbox">
+                    <select name="qCRatingViewModelList[@itemIndex].Condition" id="ddlCondition_@itemIndex" class="form-select ddlIsWorkingON" asp-items="@Model[i].OptionsList">
+                        <option value='' disabled selected>Select</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <textarea name="qCRatingViewModelList[@itemIndex].CommentByQC" id="txtComment_@itemIndex" placeholder="Remarks" class="form-control" rows="1" maxlength="200"></textarea>
+                </div>
+            </div>
+            <input type="hidden" name="qCRatingViewModelList[@itemIndex].QcratingId" value="@Model[i].QcratingId" id="hdnQcratingId_@itemIndex" />
+            <input type="hidden" name="qCRatingViewModelList[@itemIndex].ProductCatId" value="@Model[i].ProductCatId" id="hdnProductCatId_@itemIndex" />
+            <input type="hidden" name="qCRatingViewModelList[@itemIndex].Qcquestion" value="@Model[i].Qcquestion" id="hdnQcquestion_@itemIndex" />
+            <input type="hidden" name="qCRatingViewModelList[@itemIndex].RatingWeightage" value="@Model[i].RatingWeightage" id="hdnRatingWeightage_@itemIndex" />
+            <input type="hidden" name="qCRatingViewModelList[@itemIndex].QuestionerLovid" value="@Model[i].QuestionerLovid" id="hdnLoVId_@itemIndex" />
+            <input type="hidden" name="qCRatingViewModelList[@itemIndex].AverageSellingPrice" value="@Model[i].AverageSellingPrice" id="hdnAvgSellingPrice_@itemIndex" />
+            <input type="hidden" name="qCRatingViewModelList[@itemIndex].CommentByQC" value="@Model[i].CommentByQC" id="hdnCommentByQC_@itemIndex" />
+            <input type="hidden" name="Count" id="hdnCount" />
+            count += 1;
+            itemIndex += 1;
+        }
+    }
+    <div class="row questions" id="divAllQuestioners" style="display:none">
+        @{
+            itemIndex = count - 1;
+        }
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            if (Model[i] != null && Model[i].IsDecidingQues != true)
+            {
+                <div class="col-12 py-4 border-top questionbox">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p class="d-inline"><label id="lblQuestion_@itemIndex" class="" for="">@count. @Model[i].Qcquestion</label></p>
+                        </div>
+                        <div class="col-md-3 mb-4 questionbox">
+                            <select name="qCRatingViewModelList[@itemIndex].Condition" id="ddlCondition_@itemIndex" class="form-select ddlQuestions" asp-items="@Model[i].OptionsList">
+                                <option value='' disabled selected>Select</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <textarea name="qCRatingViewModelList[@itemIndex].CommentByQC" id="txtComment_@itemIndex" placeholder="Remarks" class="form-control" rows="1" maxlength="200"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" name="qCRatingViewModelList[@itemIndex].QcratingId" value="@Model[i].QcratingId" id="hdnQcratingId_@itemIndex" />
+                <input type="hidden" name="qCRatingViewModelList[@itemIndex].ProductCatId" value="@Model[i].ProductCatId" id="hdnProductCatId_@itemIndex" />
+                <input type="hidden" name="qCRatingViewModelList[@itemIndex].Qcquestion" value="@Model[i].Qcquestion" id="hdnQcquestion_@itemIndex" />
+                <input type="hidden" name="qCRatingViewModelList[@itemIndex].RatingWeightage" value="@Model[i].RatingWeightage" id="hdnRatingWeightage_@itemIndex" />
+                <input type="hidden" name="qCRatingViewModelList[@itemIndex].QuestionerLovid" value="@Model[i].QuestionerLovid" id="hdnLoVId_@itemIndex" />
+                <input type="hidden" name="qCRatingViewModelList[@itemIndex].AverageSellingPrice" value="@Model[i].AverageSellingPrice" id="hdnAvgSellingPrice_@itemIndex" />
+                <input type="hidden" name="qCRatingViewModelList[@itemIndex].CommentByQC" value="@Model[i].CommentByQC" id="hdnCommentByQC_@itemIndex" />
+                <input type="hidden" name="Count" id="hdnCount" />
+                count += 1;
+                itemIndex += 1;
+            }
+        }
+    </div>
+</div>

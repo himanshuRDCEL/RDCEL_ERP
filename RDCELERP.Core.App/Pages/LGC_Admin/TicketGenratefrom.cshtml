@@ -1,0 +1,402 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.LGC_Admin.TicketGenratefromModel
+@using ResponseData = RDCELERP.Model.TicketGenrateModel.ResponseData;
+@{
+    int i = 1;
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    // var dataList = TempData["DataList"] as List<string>;
+    var responseDataList = ViewData["ResponseDataList1"] as List<ResponseData>;
+   
+}
+
+<style>
+    .clsCheckboxwrap {
+        width: 19px;
+        height: 19px;
+        margin: 0 6px 0 0;
+    }
+</style>
+
+<div class="py-3">
+</div>
+@if (responseDataList == null)
+{
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card border-0 shadow">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h2 class="fs-5 fw-bold mb-0 card-title">Create Ticket</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" id="Course-form" class="form-horizontal" autocomplete="off">
+                        <input type="hidden" id="hdnLocal" asp-for="loginobj.IsServicePartnerLocal" />
+                        <input type="hidden" id="hdnRegno" asp-for="loginobj.RegdNo" />
+                        <input type="hidden" id="hdnservicepartnerid" asp-for="loginobj.ServicePartnerId" />
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="table-responsive">
+                                <table class="table border bg-gradient table-striped" border="1">
+                                    <thead class="bg-dark text-white">
+                                        <tr>
+                                            <th>
+                                                Sr. No
+                                            </th>
+                                            <th>
+                                                Regd No.
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var ids in Model.RegdNoLists)
+                                        {
+
+                                            <tr>
+                                                <td>
+                                                    @i
+                                                </td>
+                                                <td>
+                                                    @ids.RegdNo
+                                                </td>
+                                            </tr>
+                                            i++;
+                                        }
+
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6 d-none">
+                                <div class="form-group">
+                                    <label for="">RegdNo<span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" id="txtregdNo" name="RegdNo" asp-for="loginobj.RegdNo" />
+                                    <label id="lblName" style="color:red;"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-4">
+
+                                    <label class="" for="">Select Service Partner<span style="color:red;">*</span></label>
+                                    <!--<select Onchange="GetServicePArtnerDetails(this.value)" asp-for="loginobj.ServicePartnerId" id="ddlservicePartner" class="form-control form-select" asp-items="ViewBag.SelectService">
+                                        <option value='0'>--All--</option>-->
+                                        @*<option value="" disabled>Select Service Partner</option>*@
+                                    <!--</select>-->
+                                    <input id="ddlservicePartner" asp-for="loginobj.ServicePartnerName" class="form-control autocomplete" />
+                                </div>
+
+                                <div style="display:none;" id="divPriority" class="mb-4">
+                                    <div class="form-group">
+                                        <label for="">Select Priority <span style="color:red;">*</span></label>
+                                        <select Onchange="GetBizlogPriority(this.value)" asp-for="loginobj.priority" class="custom-select" id="ddlpriority" required="required">
+                                            <option value="0">--Select Priority--</option>
+                                            <!-- Add options dynamically -->
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="submit" value="Submit" class="btn btn-primary" id="submitButton" disabled="disabled" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (responseDataList != null && responseDataList.Count > 0)
+{
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card border-0 shadow">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h2 class="fs-5 fw-bold mb-0 card-title">Create Ticket</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                    <table class="table border bg-gradient table-striped" border="1">
+                        <thead class="bg-dark text-white">
+                            <tr>
+                                <th scope="col">Regd Number</th>
+                                <th scope="col">Service Partner</th>
+                            <th scope="col">Ticket Generated</th>
+                                <th scope="col">Message</th>
+                                <th scope="col">Ticket Number</th>
+
+                             
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var responseData in responseDataList)
+                            {
+                            <tr>
+                                <td>@responseData.Regno</td>
+                                <td>@responseData.ServicePartner</td>
+                                @if (responseData.Success)
+                                {
+                                    <td>YES</td>
+                                }
+                                else
+                                {
+                                    <td>NO</td>
+                                }
+                                <td>@responseData.Message</td>
+                                @if (responseData.TicketNo != null)
+                                {
+                                    <td>@responseData.TicketNo</td>
+                                }
+                                else
+                                {
+                                    <td>@responseData.awbNumber</td>
+                                }
+
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script type="text/javascript">
+
+
+    var servicePartnerId = null;
+    $("#submitButton").click(function () {
+        $('#loader').show();
+        $(this).prop('disabled', true);
+        $("#Course-form").submit();
+    })
+
+    function GetBizlogPriority(PriorityValue) {
+        var priorityValue = PriorityValue;
+        if (priorityValue == 0) {
+            $('#submitButton').prop('disabled', true);
+        }
+        else {
+            $('#submitButton').prop('disabled', false);
+        }
+    }
+
+
+    function GetPriorityList(servicePartnerId) {
+            var servicePArtnerId = servicePartnerId;
+             $.ajax({
+                type: "GET",
+                 url:"@ViewData["URLPrefixforProd"]/LGC_Admin/TicketGenratefrom?handler=GetOrderPriorityList",
+                 data: { servicepartnerId: servicePArtnerId},
+                 success: function (data) {
+                    if (data && data.length > 0) {
+                        //console.log(data);
+                        $("#divPriority").show();
+                        $("#ddlpriority").empty();
+                        $("#ddlpriority").append('<option value="0">--Select Priority--</option>');
+                        $.each(data, function (key, value) {
+                            console.log(value.Value);
+
+                         /*   $("#ddlpriority").append($("<option></option>").val(cities.cityId).html(cities.name));*/
+
+                            $("#ddlpriority").append('<option value="' + value.value + '">' + value.text + '</option>');
+                            $('#submitButton').prop('disabled', true);
+                        });
+                    } else {
+                        $("#ddlpriority").empty();
+                        $("#divPriority").hide();
+                        $('#submitButton').prop('disabled', false);
+                    }
+                 },
+                 failure: function (response) {
+                     $("#ddlpriority").empty();
+                     $("#divPriority").hide();
+                     $('#submitButton').prop('disabled', true);
+                 }
+            });
+        }
+        @*function CheckPrioritySelectTion(servicePartnerId) {
+            var servicePartnerId = servicePartnerId;
+            $.ajax({
+                type: "GET",
+                url: "@ViewData["URLPrefixforProd"]/LGC_Admin/TicketGenratefrom?handler=GetPriorityNeddedforpartner",
+                data: { servicepartnerId: servicePartnerId},
+                success: function (data) {
+                    if (data) {
+
+                        if (data == true || data == "True" || data == "true") {
+                            $("#divPriority").show();
+                            GetPriorityList(servicePartnerId);
+                        }
+                        else {
+                            $("#ddlpriority").empty();
+                            $("#divPriority").hide();
+                        }
+                    } else {
+                        $("#ddlpriority").empty();
+                        $("#divPriority").hide();
+                    }
+                 },
+                 failure: function (response) {
+                     $("#ddlpriority").empty();
+                     $("#divPriority").hide();
+                 }
+            });
+        }*@
+
+    function CheckPrioritySelectTion(servicePartnerId) {
+        //var servicePartnerId = servicePartnerId;
+        if (servicePartnerId > 0) {
+            $.ajax({
+                type: "GET",
+                url: "@ViewData["URLPrefixforProd"]/LGC_Admin/TicketGenratefrom?handler=GetPriorityNeddedforpartner",
+                data: { servicepartnerId: servicePartnerId },
+                success: function (data) {
+                    if (data) {
+                        if (data == true || data == "True" || data == "true") {
+                            $("#divPriority").show();
+                            GetPriorityList(servicePartnerId);
+                        }
+                        else {
+                            $("#ddlpriority").empty();
+                            $("#divPriority").hide();
+                            $('#submitButton').prop('disabled', false);
+                        }
+                    } else {
+                        $("#ddlpriority").empty();
+                        $("#divPriority").hide();
+                        $('#submitButton').prop('disabled', false);
+                    }
+                },
+                failure: function (response) {
+                    $("#ddlpriority").empty();
+                    $("#divPriority").hide();
+                    $('#submitButton').prop('disabled', true);
+                }
+            });
+        }
+        else {
+            $("#divPriority").hide();
+            $('#submitButton').prop('disabled', true);
+        }
+    }
+    function GetServicePArtnerDetails(servicePartnerId) {
+        $("#divPriority").hide();
+        $('#submitButton').prop('disabled', true);
+        var servicePartnerId = servicePartnerId;
+        if (servicePartnerId > 0) {
+            $.ajax({
+                type: "GET",
+                url: "@ViewData["URLPrefixforProd"]/LGC_Admin/TicketGenratefrom?handler=GetServicepartnerDetails",
+                data: { servicepartnerId: servicePartnerId },
+                success: function (data) {
+
+                    if (data) {
+                        if (data == true || data == "True" || data == "true") {
+                            var localpartner = true;
+                            $("#hdnLocal").val(localpartner);
+                            CheckPrioritySelectTion(servicePartnerId);
+                        }
+                        else {
+                            CheckPrioritySelectTion(servicePartnerId);
+
+                        }
+                    } else {
+
+                        CheckPrioritySelectTion(servicePartnerId);
+
+                    }
+                },
+            });
+        }
+        else {
+            $("#divPriority").hide();
+            $('#submitButton').prop('disabled', true);
+        }
+    }
+
+    // Rest of the JavaScript code for AJAX requests and functions
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        $("#ddlservicePartner").keydown(function (e) {
+            $("#divPriority").hide();
+            $('#submitButton').prop('disabled', true);
+            $('#hdnservicepartnerid').val("");
+            var k = e.keyCode || e.which;
+            var ok = k >= 65 && k <= 90 || // A-Z
+                k >= 96 && k <= 105 || // a-z
+                k >= 35 && k <= 40 || // arrows
+                k == 9 || //tab
+                k == 46 || //del
+                k == 8 || // backspaces
+                (!e.shiftKey && k >= 48 && k <= 57); // only 0-9 (ignore SHIFT options)
+            if (!ok || (e.ctrlKey && e.altKey)) {
+                e.preventDefault();
+            }
+        });
+
+        $("#ddlservicePartner").on("click", function () {
+            $(this).autocomplete("search", "#");
+        }).autocomplete({
+            minLength: 0,
+            scroll: true,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/LGC_Admin/TicketGenratefrom?handler=SearchServicePartner", {
+                    term: extractLast(request.term)
+                }, function (data) {
+                    response(data.slice(0, 20));
+                });
+            },
+            focus: function (event, ui) {
+
+            },
+            open: function (event, ui) {
+                var menu = $(this).autocomplete("widget");
+                menu.css({ "max-height": "200px", "overflow": "hidden", "overflow-y": "scroll" });
+            },
+            select: function (event, ui) {
+                var terms = split(this.value);
+                terms.pop();
+                terms.push(ui.item.value);
+                this.value = terms;
+                servicePartnerId = ui.item.text;
+                
+                $('#hdnservicepartnerid').val(servicePartnerId);
+                GetServicePArtnerDetails(servicePartnerId);
+                
+                return false;
+            }
+        });
+    });
+
+   @* $('#ddlservicePartner').change(function () {
+        GetServicePArtnerDetails(servicePartnerId);
+        $('#hdnservicepartnerid').val(servicePartnerId);
+    });*@
+</script>
+
+

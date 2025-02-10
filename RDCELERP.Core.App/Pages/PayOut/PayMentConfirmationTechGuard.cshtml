@@ -1,0 +1,99 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.PayOut.PayMentConfirmationTechGuardModel
+@{
+
+    ViewData["Title"] = "PayOutConfirmation";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+    //<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css"
+}
+<div class="py-4">
+</div>
+
+
+<div class="row ">
+    <div class="col-12 mb-4">
+        <div class="card shadow border-0">
+            <div class="card-header">
+                <h2 class="fs-5 mb-0 card-title">Payout</h2>
+            </div>
+
+            <div class="card-body payment-page">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="paymentinnerbox">
+                            <i class="fas fa-user"></i>
+                            <span><label id="customername">@Model.processPayment.CustomerName</label></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="paymentinnerbox">
+                            <i class="fas fa-phone"></i>
+                            <span><label id="phoneNumber">@Model.processPayment.PhoneNumber</label></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="paymentinnerbox">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span><label id="address">@Model.processPayment.Address</label></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="paymentinnerbox">
+                            <i class="fas fa-envelope"></i>
+                            <span><label id="custEmail">@Model.processPayment.Email</label></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="paymentinnerbox">
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                            <span><label id="custEmail">@Model.processPayment.FinalPrice</label></span>
+                        </div>
+                    </div>
+                    <form method="post" enctype="multipart/form-data" id="PayOutFormForm">
+                        <div class="row">
+                            <input type="hidden" asp-for="processPayment.CustomerName" id="hdnname" />
+                            <input type="hidden" asp-for="processPayment.Email" id="hdnemail" />
+                            <input type="hidden" asp-for="processPayment.PhoneNumber" id="hdnphone" />
+                            <input type="hidden" asp-for="processPayment.FinalPrice" id="hdnFinalExchangePrice" />
+                            <input type="hidden" asp-for="processPayment.Address" id="hdnaddress1" />
+                            <input type="hidden" asp-for="processPayment.RepairId" id="hdnsponsorOrderNumber" />
+                            <input type="hidden" asp-for="processPayment.RegdNo" id="hdnRegdNo" />
+                            <input type="hidden" asp-for="processPayment.RedemptoinId" id="hdnRedemptoinId" />
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <input type="submit" value="Proceed" class="btn btn-primary" asp-page-handler="PayOutTC" id="btnformSubmit" />
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

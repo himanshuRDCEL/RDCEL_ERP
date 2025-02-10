@@ -1,0 +1,252 @@
+﻿@page
+@model EVC_StoreRegistrastionModel
+@{
+    ViewData["Title"] = "EVC Store Registrastion";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    var BaseUrl = ViewData["BaseUrl"];
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>EVC Multistore Address
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" id="myForm">
+                            <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.EvcregistrationId" />
+                            <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.StateId" id="hdnstateid" />
+                            <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.CityId" id="hdncityid" />
+                            <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.EvcPartnerId" />
+                            <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.EvcStoreCode" />
+                            <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.CreatedBy" />
+                            <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.CreatedDate" />
+                            <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.IsActive" />
+                            <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.ListOfPincode" id="hdnListOfPincode" />
+                            <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.userId" />
+                            <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.IsApprove" />
+                           
+
+                            <div class="row">                                                                                                                          
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Email<span style="color:red;">*</span></label>
+
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="far fa-envelope text-gray-600"></i>
+                                        </span>
+                                        <input asp-for="eVC_StoreRegistrastionViewModels.EmailId" class="form-control emailinputbox" />
+
+                                    </div>
+                                    <span asp-validation-for="eVC_StoreRegistrastionViewModels.EmailId" class="text-danger"></span>
+                                </div>
+
+                               
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Phone Number<span style="color:red;">*</span></label>
+                                    <input asp-for="eVC_StoreRegistrastionViewModels.ContactNumber" type="number" class="form-control" />
+                                    <span asp-validation-for="eVC_StoreRegistrastionViewModels.ContactNumber" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Address Line 1<span style="color:red;">*</span></label>
+                                    <input asp-for="eVC_StoreRegistrastionViewModels.Address1" class="form-control" />
+                                    <span asp-validation-for="eVC_StoreRegistrastionViewModels.Address1" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Address Line 2<span style="color:red;">*</span></label>
+                                    <input asp-for="eVC_StoreRegistrastionViewModels.Address2" class="form-control" />
+                                    <span asp-validation-for="eVC_StoreRegistrastionViewModels.Address2" class="text-danger"></span>
+                                </div>
+                                @if (@Model.Editmode == false)
+                                {
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">State <span style="color:red;">*</span></label>
+
+                                        <input id="ddlState" asp-for="eVC_StoreRegistrastionViewModels.State" class="form-control" />
+                                        <span asp-validation-for="eVC_StoreRegistrastionViewModels.State" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">City <span style="color:red;">*</span></label>
+
+                                        <input id="ddlCity" asp-for="eVC_StoreRegistrastionViewModels.City" class="form-control" />
+                                        <span asp-validation-for="eVC_StoreRegistrastionViewModels.City" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">Pin Code<span style="color:red;">*</span></label>
+                                        <input id="ddlPinCode" asp-for="eVC_StoreRegistrastionViewModels.PinCode" class="form-control" />
+                                        <span asp-validation-for="eVC_StoreRegistrastionViewModels.PinCode" class="text-danger"></span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.PinCode" />
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">State <span style="color:red;">*</span></label>
+
+                                        <input asp-for="eVC_StoreRegistrastionViewModels.State" class="form-control" readonly />
+                                        <span asp-validation-for="eVC_StoreRegistrastionViewModels.State" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">City <span style="color:red;">*</span></label>
+
+                                        <input  asp-for="eVC_StoreRegistrastionViewModels.City" class="form-control" readonly />
+                                        <span asp-validation-for="eVC_StoreRegistrastionViewModels.City" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">Pin Code<span style="color:red;">*</span></label>
+                                        <input  asp-for="eVC_StoreRegistrastionViewModels.PinCode" class="form-control" readonly />
+                                        <span asp-validation-for="eVC_StoreRegistrastionViewModels.PinCode" class="text-danger"></span>
+                                    </div>
+                                }
+                                <div class="col-md-4 mb-4">
+                                    &nbsp;
+                                </div>
+
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+                                    }
+                                </div>
+                                <div class="col-6 text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        //<button value="Save" id="btnsave" class="btn btn-primary mainshadow">Save Change</button>
+                                       <input type="submit" value="Save" class="btn btn-primary mainshadow" />
+                                    }
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/js/compressor.js"></script>
+<script type="text/javascript">  
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        $("#ddlState").on("keydown", function (event) {
+            $("#ddlCity"). val('');
+            $("#ddlPinCode").val('');
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/EVC_Portal/EVC_StoreRegistrastion?handler=AutoStateName", {
+                    term: extractLast(request.term)
+                }, response);
+            },
+            select: function (event, ui) {
+                this.value = ui.item.value; // Set the selected value
+
+                StateId = ui.item.text;
+                $('#hdnstateid').val(StateId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    // If the selected item is not in the list, clear the input
+                    $(this).val("");
+                    $("#hdnstateid").val(""); // Also clear the hidden field
+                }
+            }
+        });
+
+        $("#ddlCity").on("keydown", function (event) {
+            $("#ddlPinCode").val('');
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/EVC_Portal/EVC_StoreRegistrastion", {
+                    handler: "AutoCityName",
+                    term: extractLast(request.term),
+                    term2: StateId
+                }, response);
+            },
+            select: function (event, ui) {
+                this.value = ui.item.value; // Set the selected value
+
+                CityId = ui.item.text;
+                $('#hdncityid').val(CityId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    // If the selected item is not in the list, clear the input
+                    $(this).val("");
+                    $("#hdncityid").val(""); // Also clear the hidden field
+                }
+            }
+        });
+
+        $("#ddlPinCode").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/EVC_Portal/EVC_StoreRegistrastion", {
+                    handler: "AutoPinCode",
+                    term: extractLast(request.term),
+                    term2: CityId,
+                }, response);
+            },
+            select: function (event, ui) {
+                $("#ddlPinCode").val(ui.item.value); // Set the selected value
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $("#ddlPinCode").val(""); // Clear the input field
+                }
+            }
+        });        
+    });
+    function GetLoader() {
+        
+        $('#loader').show();
+    }
+    $('#btnsave').click(function () {
+
+        $('#btnsave').prop('disabled', true);
+        $('#loader').show();
+        $('#myForm').submit();
+    });
+
+</script>

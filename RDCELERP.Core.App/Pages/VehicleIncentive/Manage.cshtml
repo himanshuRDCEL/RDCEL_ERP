@@ -1,0 +1,303 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.VehicleIncentive.ManageModel
+
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>Vehicle Incentive
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                <input type="hidden" asp-for="VehicleIncentiveViewModel.IncentiveId" id="hdnId" />
+                                <input type="hidden" asp-for="VehicleIncentiveViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="VehicleIncentiveViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="VehicleIncentiveViewModel.IsActive" />
+                                <input type="hidden" asp-for="VehicleIncentiveViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="VehicleIncentiveViewModel.ModifiedDate" />
+                                <input type="hidden" asp-for="VehicleIncentiveViewModel.BusinessUnitId" id="hdnbuid" />
+
+                                <input type="hidden" asp-for="VehicleIncentiveViewModel.ProductCategoryId" id="hdncatid" />
+                                <input type="hidden" asp-for="VehicleIncentiveViewModel.ProductTypeId" id="hdntypeid" />
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Company<span style="color:red;">*</span></label>
+
+                                    <input id="ddlBU" asp-for="VehicleIncentiveViewModel.BusinessUnitName" class="form-control" />
+
+                                    <span asp-validation-for="VehicleIncentiveViewModel.BusinessUnitName" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Product Category<span style="color:red;">*</span></label>
+                                    <input id="ddlCategory" asp-for="VehicleIncentiveViewModel.ProductCategoryName" class="form-control" />
+
+                                    <span asp-validation-for="VehicleIncentiveViewModel.ProductCategoryName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+
+                                    <label class="" for="">Product Type<span style="color:red;">*</span></label>
+
+                                    <input id="ddlType" asp-for="VehicleIncentiveViewModel.ProductTypeName" class="form-control" />
+                                    <span asp-validation-for="VehicleIncentiveViewModel.ProductTypeName" class="text-danger"></span>
+                                    <span class="text-danger" id="message"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Base Price<span style="color:red;">*</span></label>
+                                    <input asp-for="VehicleIncentiveViewModel.BasePrice" class="form-control" />
+                                    <span asp-validation-for="VehicleIncentiveViewModel.BasePrice" class="text-danger"></span>
+                                </div>
+                               
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Pickup Time in Hour<span style="color:red;">*</span></label>
+                                    <input  asp-for="VehicleIncentiveViewModel.PickupTatinHr" class="form-control" />
+                                    <span asp-validation-for="VehicleIncentiveViewModel.PickupTatinHr" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Pickup Incentive Amount<span style="color:red;">*</span></label>
+                                    <input asp-for="VehicleIncentiveViewModel.PickupIncAmount" class="form-control" />
+                                    <span asp-validation-for="VehicleIncentiveViewModel.PickupIncAmount" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Drop Time in Hour<span style="color:red;">*</span></label>
+                                    <input  asp-for="VehicleIncentiveViewModel.DropTatinHr" class="form-control" />
+                                    <span asp-validation-for="VehicleIncentiveViewModel.DropTatinHr" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Drop Incentive Amount<span style="color:red;">*</span></label>
+                                    <input asp-for="VehicleIncentiveViewModel.DropIncAmount" class="form-control" />
+                                    <span asp-validation-for="VehicleIncentiveViewModel.DropIncAmount" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Packaging Incentive</label>
+                                    <input asp-for="VehicleIncentiveViewModel.PackagingIncentive" class="form-control" />
+                                    <span asp-validation-for="VehicleIncentiveViewModel.PackagingIncentive" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Drop Image Incentive</label>
+                                    <input asp-for="VehicleIncentiveViewModel.DropImageIncentive" class="form-control" />
+                                    <span asp-validation-for="VehicleIncentiveViewModel.DropImageIncentive" class="text-danger"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        @if (accessRule != null && accessRule.CanView)
+                                        {
+                                            <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                        }
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <input type="submit" value="Save" class="btn btn-primary mainshadow" />
+                                        }
+                                    </div>
+
+                                </div>
+</form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script>
+    var BUId = null;
+    var ProductCatId = null;
+    var ProductTypeId = null;
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        // Autocomplete for Business Unit dropdown
+        $("#ddlBU").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/VehicleIncentive/Manage?handler=SearchBUName", {
+                    term: extractLast(request.term)
+                }, response);
+            },
+
+            select: function (event, ui) {
+                this.value = ui.item.value; // Set the selected value
+
+                BUId = ui.item.text;
+                $('#hdnbuid').val(BUId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $(this).val(""); // Clear the input field
+                    BUId = null; // Clear BUId
+                    $('#hdnbuid').val(""); // Clear associated hidden field
+                }
+            }
+        });
+    });
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        // Autocomplete for Product Category dropdown
+        $("#ddlCategory").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/VehicleIncentive/Manage?handler=AutoProductCatName", {
+                    term: extractLast(request.term)
+                }, response);
+            },
+
+            select: function (event, ui) {
+                this.value = ui.item.value; // Set the selected value
+
+                ProductCatId = ui.item.text;
+                $("#hdncatid").val(ProductCatId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $(this).val(""); // Clear the input field
+                    ProductCatId = null; // Clear ProductCatId
+                    $("#hdncatid").val(""); // Clear associated hidden field
+                }
+            }
+        });
+    });
+
+    if (ProductCatId === null) {
+             ProductCatId = $('#hdncatid').val();
+     }
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        // Autocomplete for Product Type dropdown
+        $("#ddlType").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/VehicleIncentive/Manage", {
+                    handler: "AutoProductTypeName",
+                    term: extractLast(request.term),
+                    term2: ProductCatId
+                }, response);
+            },
+
+            select: function (event, ui) {
+                this.value = ui.item.value; // Set the selected value
+
+                ProductTypeId = ui.item.text;
+                $("#hdntypeid").val(ProductTypeId);
+                CheckAvailability();
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $(this).val(""); // Clear the input field
+                    ProductTypeId = null; // Clear ProductTypeId
+                    $("#hdntypeid").val(""); // Clear associated hidden field
+                }
+            }
+        });
+    });
+
+
+    function CheckAvailability() {
+
+        $('#ddlType').text('');
+        var name = $("#ddlType").val();
+       
+        var category = $("#ddlCategory").val();
+       
+        var BuId = $("#ddlBU").val();
+        
+        var id = $("#hdnId").val();
+        if (name === '') {
+            $("#message").html(" ");
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["URLPrefixforProd"]/VehicleIncentive/Manage?handler=CheckDuplicate",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "type": name, "Category": category, "Id": id, "BUId": BuId },
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    $("#message").html(" ");
+                } else {
+                    $("#message").css("color", "red");
+                    $("#message").html("This vehicle incentive is already exist for this category, product type and Company.");
+                    $('#Savebtn').prop('disabled', true);
+                }
+            },
+        });
+    }
+
+</script>
+

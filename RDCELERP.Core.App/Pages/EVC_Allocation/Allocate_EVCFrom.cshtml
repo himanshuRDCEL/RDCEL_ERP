@@ -1,0 +1,368 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC_Allocation.Allocate_EVCFromModel
+@{
+    int Allocate_EVCFromViewModels = Model.Allocate_EVCFromViewModels.Count();
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    int x = 0;
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<style>
+    #AllocateForm .custom-select {
+        width: 100% !important;
+        min-width: 320px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0">
+                                    Allocate EVC
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <form method="post" id="AllocateForm">
+                            <div class="table-responsive customtInputwidth">
+                                <table class="table align-items-center table-flush">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th class="border-bottom" scope="col">Order Reg No</th>
+                                            <th class="border-bottom" scope="col">Customer PinCode</th>
+                                            <th class="border-bottom" scope="col">Customer City</th>
+                                            <th class="border-bottom" scope="col">Product Catrgory</th>
+                                            <th class="border-bottom" scope="col">Product Type </th>
+                                            <th class="border-bottom" scope="col">Bonus</th>
+                                            <th class="border-bottom" scope="col">Final Amount After QC</th>
+                                            <th class="border-bottom" scope="col">Expected EVC Price</th>
+                                            <th class="border-bottom" scope="col">EVC Reg Number</th>
+                                            <th class="border-bottom" scope="col">EVC Partner Code</th>
+                                            <th class="border-bottom" scope="col">EVC Current Wallet Amount</th>
+                                            <th class="border-bottom" scope="col">EVC Clear Balance</th>
+                                            <th class="border-bottom" scope="col">Select EVC Partner for order Assign</th>
+                                            <th class="border-bottom" scope="col">EVC Partner Pincode</th>
+                                            <th class="border-bottom" scope="col">EVC Partner City</th>
+                                            <th class="border-bottom" scope="col">Full Address for EVC Partner</th>
+                                           
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <input type="hidden" asp-for="Allocate_EVCFromViewModels.Count" id="hdnCount" />
+                                        <input type="hidden" asp-for="Allocate_EVCFromViewModel.NotAllocatelistids" id="hdnids" />
+
+
+                                        @for (int i = 0; i < Allocate_EVCFromViewModels; i++)
+                                        {
+                                            <tr id="Row_@i">
+                                                <td>
+                                                    <input type="hidden" id="txtOrderTransId_@i" asp-for="Allocate_EVCFromViewModels[i].orderTransId" />
+                                                    <input class="form-control txtEVCPin" asp-for="Allocate_EVCFromViewModels[i].RegdNo" readonly />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control txtEVCPin" asp-for="Allocate_EVCFromViewModels[i].CustPin" readonly />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control txtEVCPin" asp-for="Allocate_EVCFromViewModels[i].CustCity" readonly />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control txtEVCPin" asp-for="Allocate_EVCFromViewModels[i].ExchProdGroup" readonly />
+                                                </td>
+                                                <td>
+                                                    <input class="form-control txtEVCPin" asp-for="Allocate_EVCFromViewModels[i].OldProdType" readonly />
+                                                </td>
+                                                <td>
+                                                    <div class="input-group">
+                                                        <input class="form-control txtEVCPin" asp-for="Allocate_EVCFromViewModels[i].Bonus" readonly />
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control txtEVCPin" asp-for="Allocate_EVCFromViewModels[i].ActualBasePrice" readonly />
+                                                </td>
+                                                <td>
+                                                    @if (Model.Allocate_EVCFromViewModels[i].ExpectedPrice != null)
+                                                    {
+                                                        <input class="form-control txtEVCPin" id="TxtExPrice_@i" asp-for="Allocate_EVCFromViewModels[i].ExpectedPrice" readonly />
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>Expected Price Not Found</label>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <input id="txtEVCRNo_@i" class="form-control txtEVCRNo" readonly />
+                                                </td>
+                                                <td>
+                                                    <input id="txtEVCStoreCode_@i" class="form-control txtEVCStoreCode" readonly />
+                                                </td>
+                                                <td>
+                                                    <input id="txtEVCWalletAmount_@i" class="form-control txtEVCWalletAmount" readonly />
+                                                </td>
+                                                <td>
+                                                    <input id="txtEVCRuningBalance_@i" class="form-control txtEVCRuningBalance" readonly />
+                                                </td>
+                                                <td>
+
+                                                    @if (Model.Allocate_EVCFromViewModels[i].EVCLists != null)
+                                                    {
+                                                        <!--<input class="DropEvc_ form-control autocomplete" + @i data-evcrowid="@i" asp-for="Allocate_EVCFromViewModels[i].EVCLists"--> @*onchange="GetEVCList(@i)"*@
+                                                        <!--/>
+                                                        <input type="hidden" asp-for="Allocate_EVCFromViewModels[i].SelectEVCId" id="hdnevcids_@i" />-->
+                                                        @*@Html.DropDownListFor(x => Model.Allocate_EVCFromViewModels[i].SelectEVCId,
+new SelectList(Model.Allocate_EVCFromViewModels[i].EVCLists, "EvcregistrationId", "CombinedDisplay", "0"), "None",
+htmlAttributes: new { @class = "custom-select my-1 mr-sm-2 form-select", @Onchange = "SelectEVC(this.value," + @i + ")", id = "DropEvc_" + @i }) ;*@
+
+
+                                                        @Html.DropDownListFor(x => Model.Allocate_EVCFromViewModels[i].SelectEVCId,
+                                                       new SelectList(Model.Allocate_EVCFromViewModels[i].EVCLists, "EvcregistrationId", "CombinedDisplay", "0"), "None",
+                                                       htmlAttributes: new { @class = "custom-select my-1 mr-sm-2 form-select", @Onchange = "SelectEVC(this.value," + @i + ")", id = "DropEvc_" + @i })
+                                                        ;
+                                                    }
+                                                    else if (Model.Allocate_EVCFromViewModels[i].eVCPartnerViewModels != null)
+                                                    {
+                                                        @Html.DropDownListFor(x => Model.Allocate_EVCFromViewModels[i].SelectEVCId,
+                                                new SelectList(Model.Allocate_EVCFromViewModels[i].eVCPartnerViewModels, "EvcPartnerId", "CombinedEVCPDisplay", "0"), "None",
+                                                htmlAttributes: new { @class = "custom-select my-1 mr-sm-2 form-select", @Onchange = "SelectEVC(this.value," + @i + ")", id = "DropEvc_" + @i })
+                                                        ;
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>EVC NotFound</label>
+                                                    }
+                                                    <input type="hidden" id="hdnid" class="form-control txtEVCRNo" value=@i />
+                                                </td>
+                                               
+                                                <td>
+                                                    <input id="txtEVCPin_@i" class="form-control txtEVCPin" readonly />
+                                                </td>
+                                                <td>
+                                                    <input id="txtEVCCity_@i" class="form-control txtEVCCity" readonly />
+                                                </td>
+                                                <td>
+                                                    <input id="txtEVCAddress_@i" class="form-control txtEVCAddress" readonly />
+                                                </td>
+                                                
+                                                <td>
+                                                    <div class="col-12">
+                                                        <hr class="my-4">
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-6">
+
+                                    <a asp-page="./Not_Allocated" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">
+                                        Back to List
+                                    </a>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <button value="Save" id="btnsave" class="btn btn-primary mainshadow" disabled="disabled">Save</button>
+                                    @*<input type="submit" value="Save" id="btnsave" class="btn btn-primary mainshadow" disabled="disabled"/>*@
+                                    @*@if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                        <input type="submit" value="Save" class="btn btn-primary mainshadow" />
+                                        }
+                                        @if (accessRule != null && accessRule.CanView)
+                                        {
+                                        <a asp-page="./Not_Allocated" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">
+                                        Back to List
+                                        </a>
+                                        }*@
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script type="text/javascript">
+    function SelectEVC(a, i) {
+        debugger;
+        var item = $("#DropEvc_" + i).val();
+        var orderTransId = $("#txtOrderTransId_" + i).val();
+       // var ExPrice = $("#TxtExPrice_" + i).text();
+        var ExPrice = $("#TxtExPrice_" + i).val("");
+        if (item > 0) {
+            $.get("@URLPrefixforProd/EVC_Allocation/Allocate_EVCFrom?handler=EVCDetailsByEVCRegNo&evcPartnerId=" + $("#DropEvc_" + i).val() + "&orderTransId=" + orderTransId).done(function (data) {
+                $("#txtEVCRNo_" + i).val(data.evcregdNo);
+                $("#txtEVCPin_" + i).val(data.pinCode);
+                $("#txtEVCCity_" + i).val(data.cityName);
+                $("#txtEVCAddress_" + i).val(data.address);
+                $("#txtEVCWalletAmount_" + i).val(data.evcwalletAmount);
+                $("#txtEVCRuningBalance_" + i).val(data.runingBalance);
+                $("#txtEVCStoreCode_" + i).val(data.evcStoreCode);
+                ExPrice = $("#TxtExPrice_" + i).val(data.expectedPrice);
+                console.log("ExPrice " + ExPrice); console.log("data.expectedPrice " + data.expectedPrice);
+                if (ExPrice != null) {
+                    $('#btnsave').prop('disabled', false);
+                }
+            });
+        }
+        else {
+            $("#txtEVCRNo_" + i).val("");
+            $("#txtEVCPin_" + i).val("");
+            $("#txtEVCCity_" + i).val("");
+            $("#txtEVCAddress_" + i).val("");
+            $("#txtEVCWalletAmount_" + i).val("");
+            $("#txtEVCRuningBalance_" + i).val("");
+            $("#txtEVCStoreCode_" + i).val("");
+            $("#TxtExPrice_ " + i).val("");
+        }
+    }
+    $('#btnsave').click(function () {
+
+        $('#btnsave').prop('disabled', true);
+        $('#loader').show();
+        $('#AllocateForm').submit();
+    });
+</script>
+
+<!--<script type="text/javascript">
+    var ids = $("#hdnids").val();
+    var words = ids.split(",");
+    var idscount = words.length;
+    var a = null;
+
+    function SelectEVC(a,x) {
+
+        var item = $("#DropEvc_" + i).val();
+        var item = a;
+        var ExPrice = $("#TxtExPrice_ " + i).text();
+        if (item >0) {
+            $.get("@URLPrefixforProd/EVC_Allocation/Allocate_EVCFrom?handler=EVCDetailsByEVCRegNo&EvcregdNId=" + $("#DropEvc_" + i).val()).done(function (data) {
+                $("#txtEVCRNo_" + i).val(data.evcregdNo);
+                $("#txtEVCPin_" + i).val(data.pinCode);
+                $("#txtEVCCity_" + i).val(data.city);
+                $("#txtEVCAddress_" + i).val(data.regdAddressLine1);
+                $("#txtEVCWalletAmount_" + i).val(data.evcwalletAmount);
+                $("#txtEVCRuningBalance_" + i).val(data.runingBalance);
+                if (ExPrice != null) {
+                    $('#btnsave').prop('disabled', false);
+                    }
+            });
+        }-->
+        @*var ExPrice = $("#TxtExPrice_ " + x).text();
+        if (item > 0) {
+            //$.get("@URLPrefixforProd/EVC_Allocation/Allocate_EVCFrom?handler=EVCDetailsByEVCRegNo&EvcregdNId=" + $("#DropEvc_" + i).val()).done(function (data) {
+            $.get("@URLPrefixforProd/EVC_Allocation/Allocate_EVCFrom?handler=EVCDetailsByEVCRegNo&EvcregdNId=" + a).done(function (data) {
+                $("#txtEVCRNo_" + x).val(data.evcregdNo);
+                $("#txtEVCPin_" + x).val(data.pinCode);
+                $("#txtEVCCity_" + x).val(data.city);
+                $("#txtEVCAddress_" + x).val(data.regdAddressLine1);
+                $("#txtEVCWalletAmount_" + x).val(data.evcwalletAmount);
+                $("#txtEVCRuningBalance_" + x).val(data.runingBalance);
+
+                if (ExPrice != null) {
+                    $('#btnsave').prop('disabled', false);
+                    }
+            });
+        }*@
+    <!--}
+    $('#btnsave').click(function () {
+
+        $('#btnsave').prop('disabled', true);
+        $('#loader').show();
+        $('#AllocateForm').submit();
+    });-->
+
+    @*$(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        $(".DropEvc_").keydown(function (e) {
+            var k = e.keyCode || e.which;
+            var ok = k >= 65 && k <= 90 || // A-Z
+                k >= 96 && k <= 105 || // a-z
+                k >= 35 && k <= 40 || // arrows
+                k == 9 || //tab
+                k == 46 || //del
+                k == 8 || // backspaces
+                (!e.shiftKey && k >= 48 && k <= 57); // only 0-9 (ignore SHIFT options)
+            if (!ok || (e.ctrlKey && e.altKey)) {
+                e.preventDefault();
+            }
+        });
+        $(".DropEvc_").on("click", function () {
+            $(this).autocomplete("search", "#");
+            })
+            .autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/EVC_Allocation/Allocate_EVCFrom", {
+                        handler: "SearchEVCList",
+                        term: extractLast(request.term),
+                        term2: ids
+                    }, function (data) {
+                        response(data.slice(0, 20));
+                    });
+                },
+                focus: function () {
+
+                },
+                open: function (event, ui) {
+                    var menu = $(this).autocomplete("widget");
+                    menu.css({ "max-height": "200px", "overflow": "hidden", "overflow-y": "scroll" });
+                },
+                select: function (event, ui) {
+                    var terms = split(this.value);
+
+                    terms.pop();
+                    // add the selected item
+                    terms.push(ui.item.value);
+                    this.value = terms;
+
+                    //a = ui.item.value;
+                    a = ui.item.key;
+                    var x = $(this).data("evcrowid");
+                    GetEVCList(x);
+                    //SelectEVC(a, x);
+                   // GetEVCList(lineno);
+                    return false;
+                }
+            });
+      })*@
+
+    <!--//$(".DropEvc_").change(function () {
+    //    console.log("hi");
+    ////$(".DropEvc_").on("change", function () {
+    //    GetEVCList(x);
+    //});
+
+    //function GetEVCList(x) {
+    //    SelectEVC(a, x);
+    //    var list = $('#hdnevcids_' + x).val(a);
+    //    console.log(list);
+    //}
+</script>-->

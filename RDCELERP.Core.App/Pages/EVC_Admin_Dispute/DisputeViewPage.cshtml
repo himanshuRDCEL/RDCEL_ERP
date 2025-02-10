@@ -1,0 +1,138 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC_Admin_Dispute.DisputeViewPageModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    int imageLabelViewModelsCount = Model.imageLabelVMList.Count();
+    int count = 1;
+}
+
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+    alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header card-header-wrapper">
+                        <div class="row align-items-center card-title">
+                            <div class="col-md-6">
+                                <h2 class="fs-5 mb-0">
+                                    Order Details
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body DisputeViewPage">
+                        <div class="row detailed-reporting">
+                            <div class="pt-4"></div>
+                            <div class="col-md-12 mb-3">
+                                <p><h4>Order Details</h4> </p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Order Number</span> @Html.DisplayFor(model => model.lGCOrderViewModel.RegdNo)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Ticket Number</span>@Html.DisplayFor(model => model.lGCOrderViewModel.TicketNumber)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Product Category</span>@Html.DisplayFor(model => model.lGCOrderViewModel.ProductCategory)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Product Type</span>@Html.DisplayFor(model => model.lGCOrderViewModel.ProductType)</p>
+                            </div>
+                            @if (@Model.lGCOrderViewModel.podVM.FullPoDUrl != null && Model.lGCOrderViewModel.podVM.FullDebitNoteUrl != null && @Model.lGCOrderViewModel.podVM.FullInvoiceUrl != null)
+                            {
+                                <div class="col-md-3 mb-3">
+                                    <p><span class="mb-2">Proof of Delivery   </span><a href="@Model.lGCOrderViewModel.podVM.FullPoDUrl" download="" class="btn btn-sm btn-primary mr-1" target="_blank"><i class="fa-solid fa-download"></i> </a>&nbsp;<a href="@Model.lGCOrderViewModel.podVM.FullPoDUrl"><i class="btn btn-sm btn-primary fa-solid fa-eye"></i></a></p>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <p><span class="mb-2">Debit Note   </span><a href="@Model.lGCOrderViewModel.podVM.FullDebitNoteUrl" download="" class="btn btn-sm btn-primary mr-1" target="_blank"><i class="fa-solid fa-download"></i> </a>&nbsp;<a href="@Model.lGCOrderViewModel.podVM.FullDebitNoteUrl"><i class="btn btn-sm btn-primary fa-solid fa-eye"></i></a></p>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <p><span class="mb-2">Invoice   </span><a href="@Model.lGCOrderViewModel.podVM.FullInvoiceUrl" download="" class="btn btn-sm btn-primary mr-1" target="_blank"><i class="fa-solid fa-download"></i> </a>&nbsp;<a href="@Model.lGCOrderViewModel.podVM.FullInvoiceUrl"><i class="btn btn-sm btn-primary fa-solid fa-eye"></i></a></p>
+                                </div>
+                            }
+                            @if (@Model.lGCOrderViewModel.podVM.FullCustDeclUrl != null)
+                            {
+                                <div class="col-md-3 mb-3">
+                                    <p><span class="mb-2">Customer Declaration   </span><a href="@Model.lGCOrderViewModel.podVM.FullCustDeclUrl" download="" class="btn btn-sm btn-primary mr-1" target="_blank"><i class="fa-solid fa-download"></i> </a>&nbsp;<a href="@Model.lGCOrderViewModel.podVM.FullCustDeclUrl"><i class="btn btn-sm btn-primary fa-solid fa-eye"></i></a></p>
+                                </div>
+                            }
+                            <div>
+                                <hr />
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <p><h4>QC Images</h4> </p>
+                            </div>
+                            @foreach (var item in Model.OrderImageUploadViewModel.Where(x => x.LgcpickDrop == null))
+                            {
+                                <div class="col-md-3 mb-3">
+                                    <div class="showimgwrap">
+                                        <img src="@item.ImageWithPath" class="img-responsive" />
+                                    </div>
+                                </div>
+                            }
+                            <div>
+                                <hr />
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <p><h4>LGC Pickup Images</h4></p>
+                            </div>
+                            <div class="row">
+                                @foreach (var item in Model.OrderImageUploadViewModel.Where(x => x.LgcpickDrop == "Pickup"))
+                                {
+                                    <div class="col-md-3 mb-3 p-1">
+                                        <div class="showimgwrap">
+                                            <img src="@item.ImageWithPath" />
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <hr />
+
+                            @*<div class="col-md-12 mb-3">
+                                <p><h4>LGC Drop Images</h4></p>
+                            </div>
+                            <div class="row">
+                                @foreach (var item in Model.OrderImageUploadViewModel.Where(x => x.LgcpickDrop == "Drop"))
+                                {
+                                    <div class="col-md-3 mb-3 p-1">
+                                        <div class="showimgwrap">
+                                            <img src="@item.ImageWithPath" />
+                                        </div>
+                                    </div>
+                                }
+                            </div>*@
+
+                            <div class="col-md-12 mb-3">
+                                <p><h4>Dispute Images</h4> </p>
+                            </div>
+                            @foreach (var item in Model.OrderImageUploadViewModel.Where(x => x.LgcpickDrop == "EVCDispute"))
+                            {
+                                <div class="col-md-3 mb-3">
+                                    <div class="showimgwrap">
+                                        <img src="@item.ImageWithPath" />
+                                    </div>
+                                </div>
+                            }
+                            <div>
+                                <hr />
+                            </div>
+                            <a href='javascript:history.go(-1)' class="btn btn-primary">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

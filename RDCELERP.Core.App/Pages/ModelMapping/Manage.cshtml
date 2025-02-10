@@ -1,0 +1,340 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ModelMapping.ManageModel
+
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+<style>
+    /*Styling by AK 05/10/2023*/
+    .form-check .form-check-input {
+        float: none;
+    }
+
+    @@media (max-width:447px) {
+        .form-check {
+            display: block !important;
+        }
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>Model Mapping
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" id="myForm">
+                            <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                <input type="hidden" asp-for="ModelMappingViewModel.Id" id="hdnId" />
+                                <input type="hidden" asp-for="ModelMappingViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="ModelMappingViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="ModelMappingViewModel.IsActive" />
+                                <input type="hidden" asp-for="ModelMappingViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="ModelMappingViewModel.ModifiedDate" />
+                                <input type="hidden" asp-for="ModelMappingViewModel.BusinessUnitId" id="hdnbuid" />
+                                <input type="hidden" asp-for="ModelMappingViewModel.BrandId" id="hdnbrandid" />
+                                <input type="hidden" asp-for="ModelMappingViewModel.BusinessPartnerId" id="hdnBPid" />
+                                
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Select Company<span style="color:red;">*</span></label>
+                                    @if (Model.ModelMappingViewModel.Id > 0)
+                                    {
+                                        <input id="ddlBU" asp-for="ModelMappingViewModel.BusinessUnitName" class="form-control" readonly />
+                                    }
+                                    else
+                                    {
+                                        <input id="ddlBU" asp-for="ModelMappingViewModel.BusinessUnitName" class="form-control" />
+                                    }
+                                    
+
+                                    <span asp-validation-for="ModelMappingViewModel.BusinessUnitName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                <label class="" for="">Select Business Partner<span style="color:red;">*</span></label>
+                                    <input id="ddlBP" asp-for="ModelMappingViewModel.BusinessPartnerName" class="form-control" />
+                                    <span asp-validation-for="ModelMappingViewModel.BusinessPartnerName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for=""> Model Name <span style="color:red;">*</span></label>
+                                    @if (Model.ModelMappingViewModel.Id > 0)
+                                    {
+                                        <input asp-for="ModelMappingViewModel.ModelName" class="form-control" readonly />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="ModelMappingViewModel.ModelName" class="form-control" />
+                                    }
+                                    
+                                    <span asp-validation-for="ModelMappingViewModel.ModelName" class="text-danger"></span>
+                                    <span class="text-danger" id="message"></span>
+                                </div>
+                               
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Select Brand <span style="color:red;">*</span></label>
+                                   
+                                    <input id="txtbrandname" asp-for="ModelMappingViewModel.BrandName" class="form-control" />
+
+                                    <span asp-validation-for="ModelMappingViewModel.BrandName" class="text-danger"></span>
+                                </div>
+
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Sweetner Business Unit Baised <span style="color:red;">*</span></label>
+                                    @if (Model.ModelMappingViewModel.Id > 0)
+                                    {
+                                        <input asp-for="ModelMappingViewModel.SweetenerBu" class="form-control" readonly/>
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="ModelMappingViewModel.SweetenerBu" class="form-control" />
+                                    }
+
+                                    <span asp-validation-for="ModelMappingViewModel.SweetenerBu" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Sweetner Business Partner Baised <span style="color:red;">*</span></label>
+                                    <input asp-for="ModelMappingViewModel.SweetenerBp" class="form-control"/>
+       
+                                    <span asp-validation-for="ModelMappingViewModel.SweetenerBp" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Sweetner Digi2l Baised <span style="color:red;">*</span></label>
+                                    @if (Model.ModelMappingViewModel.Id > 0)
+                                    {
+                                        <input asp-for="ModelMappingViewModel.SweetenerDigi2l" class="form-control" readonly />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="ModelMappingViewModel.SweetenerDigi2l" class="form-control" />
+                                    }
+                                    <span asp-validation-for="ModelMappingViewModel.SweetenerDigi2l" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    @if (Model.ModelMappingViewModel.IsDefault == true)
+                                    {
+                                        <label class="" for="">Default Model</label>
+                                        <input name="ModelMappingViewModel.IsDefault" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="IsDealerChk form-check-input">
+                                        <input name="ModelMappingViewModel.IsDefault" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for=""> Default Model
+                                        </label>
+                                           
+                                        <input name="ModelMappingViewModel.IsDefault" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="form-check-input">
+                                        <input name="ModelMappingViewModel.IsDefault" type="hidden" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+                                    }
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                    }
+                                </div>
+                                <div class="col-6 text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <input type="submit" id="Savebtn" value="Save" class="btn btn-primary mainshadow" />
+                                    }
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script>
+
+    var BUId = null;
+    var BUAbbId = null;
+    var BrandId = null;
+    var BrandAbbId = null;
+    var ProductCatId = null;
+    var ProductTypeId = null;
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlBU").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/ModelMapping/Manage", {
+                    handler: "SearchBUName",
+                    term: extractLast(request.term),
+                }, response);
+            },
+
+            select: function (event, ui) {
+                // $("#ddlBU").val(ui.item.value); // Set the selected value
+
+                var terms = split(this.value);
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                this.value = terms;
+
+                BUId = ui.item.text;
+                $('#hdnbuid').val(BUId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $("#ddlBU").val(""); // Clear the input field
+                }
+            }
+        });
+    })
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#txtbrandname").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/ModelMapping/Manage?handler=SearchBrandName", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+                focus: function () {
+                    // prevent value inserted on focus
+                    return false;
+                },
+                open: function (event, ui) {
+                    // Get the menu element
+                    var menu = $(this).autocomplete("widget");
+
+                    // Set max-height and overflow properties
+                    menu.css("max-height", "200px");
+                    menu.css("overflow-y", "auto");
+                },
+                select: function (event, ui) {
+                    var terms = split(this.value);
+                    terms.pop();
+                    // add the selected item
+                    terms.push(ui.item.value);
+                    this.value = terms;
+
+                    BrandId = ui.item.text;
+                    $('#hdnbrandid').val(BrandId);
+                    return false;
+                }
+            });
+    })
+
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+
+
+        $(function () {
+            function split(val) {
+                return val.split(/,\s*/);
+            }
+            function extractLast(term) {
+                return split(term).pop();
+            }
+            $("#ddlBP").on("keydown", function (event) {
+                if (event.keyCode === $.ui.keyCode.TAB &&
+                    $(this).autocomplete("instance").menu.active) {
+                    event.preventDefault();
+                }
+            })
+                .autocomplete({
+                    minLength: 1,
+                    source: function (request, response) {
+                        $.get("@URLPrefixforProd/ModelMapping/Manage?handler=SearchBPName", {
+                            term: extractLast(request.term)
+                        }, response);
+                    },
+                    select: function (event, ui) {
+                        var terms = split(this.value);
+                        terms.pop();
+                        // add the selected item
+                        terms.push(ui.item.value);
+                        this.value = terms;
+
+                        BusinessPartnerId = ui.item.text;
+                        $('#hdnBPid').val(BusinessPartnerId);
+                        return false;
+                    },
+                    change: function (event, ui) {
+                        if (!ui.item) {
+                            $("#ddlBP").val(""); // Clear the input field
+                        }
+                    }
+                });
+        })
+    });
+
+        $(function () {
+
+            $('.IsDealerChk').each(function () {
+                var Ischecked = $(this).val();
+
+                if (Ischecked == "true") {
+
+                    $(this).attr('checked', 'checked');
+                }
+            });
+        });
+
+
+</script>
+
+
+

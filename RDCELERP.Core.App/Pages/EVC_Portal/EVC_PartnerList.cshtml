@@ -1,0 +1,509 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC_Portal.EVC_PartnerListModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+@if (accessRule != null && accessRule.CanView)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="card border-0 shadow">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h2 class="fs-5 fw-bold mb-0">Partner Address List</h2>
+                                </div>
+                                <div class="col text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <a asp-page="EVC_StoreRegistrastion" asp-route-userId="@Model.userId"
+                                           class="btn btn-primary">
+                                            <i class="fa-solid fa-plus"></i>&nbsp; Add New Partner
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="EVC_PartnerDatatable" class="table align-items-center table-flush" border="1">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th class="all notexport">EVCPartner Id</th>
+                                            <th class="all notexport">Actions</th>
+                                            <th class="all">EVC Registration No</th>
+                                            <th class="all">Partner Code</th>
+                                            <th class="all">Business Name</th>
+                                            <th class="all">Partner State Name</th>
+                                            <th class="all">Partner City Name</th>
+                                            <th class="all">Partner Pincode</th>
+                                            <th class="all">Partner Address</th>
+                                            <th class="all">Date</th>
+                                            @*<th class="all">Type Of Entity</th>*@                                            
+                                        </tr>
+                                    </thead>
+                                </table>
+
+                            </div>
+                            @*List Page Common Filters Code VK 19-May*@
+                            <div class="filters">
+                                <div class="p-4">
+                                    <h4 class="">Filters</h4>
+                                    @* Order Date Range Filter *@
+                                    <p class="filterheading">
+                                        <input type="checkbox" name="" id="chkOrderDateRange">
+                                        <label for="chkOrderDateRange">Date Range</label>
+                                    </p>
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline mb-2" id="orderStartDate" readonly placeholder="Start Date" autocomplete="off">
+                                        <input type="text" class="form-control d-inline mb-2" id="orderEndDate" readonly placeholder="End Date" autocomplete="off">
+                                    </div>
+                                    <div class="filter-seprator"></div>
+
+                                    @* Phone Number Filter *@
+                                    <p class="filterheading">
+                                        <input type="checkbox" name="" id="chkPhoneNo">
+                                        <label for="chkPhoneNo">Phone Number</label>
+                                    </p>
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="phoneNo" placeholder="Search Phone Number">
+                                    </div>
+                                    <div class="filter-seprator"></div>
+
+                                    @* Cust State Filter *@
+                                    <p class="filterheading"><input type="checkbox" name="" id="chkCustState"><label for="chkCustCity">EVC State</label></p>
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="custState" placeholder="Search State">
+                                    </div>
+                                    <div class="filter-seprator"></div>
+
+
+                                    @* Cust City Filter *@
+                                    <p class="filterheading"><input type="checkbox" name="" id="chkCustCity"><label for="chkCustCity">EVC City</label></p>
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="custCity" placeholder="Search City">
+                                    </div>
+                                    <div class="filter-seprator"></div>
+
+                                    @* Cust City Filter *@
+                                    <p class="filterheading"><input type="checkbox" name="" id="chkCustPin"><label for="chkCustCity">EVC PinCode</label></p>
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="custPin" placeholder="Search Pin">
+                                    </div>
+                                    <div class="filter-seprator"></div>
+
+                                    @* EVCRegd No Filter *@
+                                    <p class="filterheading">
+                                        <input type="checkbox" name="" id="chkevcregdNo">
+                                        <label for="chkevcregdNo">EVC Regd No</label>
+                                    </p>
+                                    <div class="filterbox">
+                                        @*<input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">*@
+                                        <input type="text" class="form-control d-inline" id="evcregdNo" placeholder="Search EVCRegdNo">
+
+                                    </div>
+
+
+                                    @* Submit Filter *@
+                                    <div class="filterbtnwrap">
+                                        <a id="btnFilter" class="btn btn-primary">Filter</a>
+                                        <a id="btnCloseFilter" class="btn btn-sm btn-secondary py-2">Cancel</a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            @* <a asp-page="./EVC_Dashboard" class="btn btn-primary">Back to List</a> *@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="delete-conformation" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+        <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+            <div class="modal-content">
+                <div class="modal-header" style="background:#d9534f;color:white;">
+                    <h4 class="modal-title" id="delete-conformation">
+                        Delete Confirmation
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="row">
+                            <div class="form-group">
+                                <input type="hidden" asp-for="TblEvcPartners.EvcPartnerId" id="hdnId" />
+                                <div class="col-sm-12">
+                                    <span>
+                                        Are you sure you want to delete this store?
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <input type="submit" asp-page-handler="Delete" class="btn btn-danger" value="Delete" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+}
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+
+<script type="text/javascript">
+    $(window).on('pageshow', function () {
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+    });
+    //variable declaration
+    var table = null;
+
+    //Document (Page Load) ready Function Call
+    $(document).ready(function () {
+        //Date Picker
+        $("#orderStartDate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                $("#orderEndDate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#orderEndDate").datepicker({
+            defaultDate: null,
+        });
+        //Hide Filters Dive
+        $('.filters').hide();
+        //Table Count 1 Start
+        var url = "@URLPrefixforProd/api/EVCList/GetEVC_PartnerList?LoggingId=" + @Model.userId
+        DataTable(url);
+
+    });
+
+    //Filter Close Button Click Event
+    $('#btnCloseFilter').click(function () {
+        $('#orderStartDate').val("");
+        $('#orderEndDate').val("");
+        $('#phoneNo').val("");
+        $('#custState').val("");
+        $('#custCity').val("");
+        $('#custPin').val("");
+        $('#evcregdNo').val("");
+        // Unchecks it
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        CommonFilter();
+    });
+
+    //Check Box Date Range change Event
+    $("#chkOrderDateRange").click(function () {
+        if (!this.checked) {
+            $('#orderStartDate').val("");
+            $('#orderEndDate').val("");
+        }
+    });
+
+
+
+    //Check Box Phone Number change Event
+    $("#chkPhoneNo").click(function () {
+        if (!this.checked) {
+            $('#phoneNo').val("");
+        }
+    });
+    //Check Box Customer State change Event
+    $("#chkCustState").click(function () {
+        if (!this.checked) {
+            $('#custState').val("");
+        }
+    });
+
+    //Check Box Customer City change Event
+    $("#chkCustCity").click(function () {
+        if (!this.checked) {
+            $('#custCity').val("");
+        }
+    });
+
+    //Check Box Customer City change Event
+    $("#chkCustPin").click(function () {
+        if (!this.checked) {
+            $('#custPin').val("");
+        }
+    });
+
+    //Check Box EVCRegd Number change Event
+    $("#chkevcregdNo").click(function () {
+        if (!this.checked) {
+            $('#evcregdNo').val("");
+        }
+    });
+    // Follow-up list multi Search Filter
+    $('#btnFilter').click(function () {
+        CommonFilter();
+    });
+
+    function DataTable(url) {
+        table = $('#EVC_PartnerDatatable').DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    text: '<button class="btn btn-primary" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters').toggle();
+                        //$('.content').toggleClass('maincontent');
+                        //$('.filters').insertBefore('table.dataTable');
+                    }
+                },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper "><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'EVC Partner List',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Record found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+
+            "columns": [
+                { "data": "evcPartnerId", "name": "EvcPartnerId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "evcregdNo", "name": "EvcregdNo", "autoWidth": true, "orderable": false },
+                { "data": "evcStoreCode", "name": "EvcStoreCode", "autoWidth": true, "orderable": false },
+                { "data": "bussinessName", "name": "BussinessName", "autoWidth": true, "orderable": false },              
+                { "data": "stateName", "name": "StateName", "autoWidth": true, "orderable": false },
+                { "data": "cityName", "name": "CityName", "autoWidth": true, "orderable": false },
+                { "data": "pinCode", "name": "PinCode", "autoWidth": true, "orderable": false },
+                // { "data": "name", "name": "Name", "autoWidth": true, "orderable": false },
+                { "data": "address", "name": "Address", "autoWidth": true, "orderable": false},
+                { "data": "date", "name": "Date", "autoWidth": true, "orderable": false },
+                
+            ]
+        });
+    }
+
+    function GetURLData(orderStartDate = null, orderEndDate = null, phoneNo = null, custState = null, custCity = null, custPin = null, evcregdNo = null) {
+        var urlData = "";
+        if (orderStartDate != null && orderEndDate != null) {
+            urlData += '&orderStartDate=' + orderStartDate + '&orderEndDate=' + orderEndDate;
+        }
+        if (phoneNo != null) {
+            urlData += '&phoneNo=' + phoneNo;
+        }
+        if (custState != null) {
+            urlData += '&custState=' + custState;
+        }
+        if (custCity != null) {
+            urlData += '&custCity=' + custCity;
+        }
+        if (custPin != null) {
+            urlData += '&custPin=' + custPin;
+        }
+        if (evcregdNo != null) {
+            urlData += '&evcregdNo=' + evcregdNo;
+        }
+        return urlData;
+    }
+
+    //Filter Function
+    function CommonFilter() {
+
+        var orderStartDate = $('#orderStartDate').val();
+        orderStartDate = $('#orderStartDate').val() == "" ? null : $('#orderStartDate').val();
+        var orderEndDate = $('#orderEndDate').val();
+        orderEndDate = $('#orderEndDate').val() == "" ? null : $('#orderEndDate').val();
+
+        var phoneNo = $('#phoneNo').val();
+        phoneNo = $('#phoneNo').val() == "" ? null : $('#phoneNo').val();
+
+        var custState = $('#custState').val();
+        custState = $('#custState').val() == "" ? null : $('#custState').val();
+
+        var custCity = $('#custCity').val();
+        custCity = $('#custCity').val() == "" ? null : $('#custCity').val();
+
+        var custPin = $('#custPin').val();
+        custPin = $('#custPin').val() == "" ? null : $('#custPin').val();
+
+        var evcregdNo = $('#evcregdNo').val();
+        evcregdNo = $('#evcregdNo').val() == "" ? null : $('#evcregdNo').val();
+
+        var urlData = GetURLData(orderStartDate, orderEndDate, phoneNo, custState, custCity, custPin, evcregdNo);
+
+        var url = null;
+        url = "@URLPrefixforProd/api/EVCList/GetEVC_PartnerList?LoggingId=" + @Model.userId + urlData;
+
+
+        // Destroy the existing DataTable
+        table = $('#EVC_PartnerDatatable').DataTable();
+        // Destroy the existing DataTable
+        table.clear().destroy();
+        //Re-Initialize Datatable
+        DataTable(url);
+
+        $('.filters').hide();
+    }
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+
+    //Delete EVC
+    function deleteConfirm(_EvcregistrationId) {
+        $('#hdnId').val(_EvcregistrationId);
+        CheckAvailability(_EvcregistrationId);
+    }
+
+    function CheckAvailability(_EvcregistrationId) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Page("EVC_PartnerList", "CheckOrder")",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { evcregistrationId: _EvcregistrationId },
+            success: function (response) {
+                if (response == false || response == "False" || response == "false") {
+                    $('#delete-conformation').modal('show');
+                } else {
+                    Swal.fire({
+                        title: 'Deleted Failed',
+                        text: 'Please clear the bucket orders in order to get the new ones',
+                        icon: 'warning',
+                        confirmButtonText: 'Ok',
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                }
+            },
+        });
+    }
+
+    
+</script>
+
+@*AutoPopulate EVCRegd No search filter*@
+<script>
+    // $(function () {
+    //     function split(val) {
+    //         return val.split(/,\s*/);
+    //     }
+    //     function extractLast(term) {
+    //         return split(term).pop();
+    //     }
+
+    //     $("#evcregdNo").on("keydown", function (event) {
+    //         if (event.keyCode === $.ui.keyCode.TAB &&
+    //             $(this).autocomplete("instance").menu.active) {
+    //             event.preventDefault();
+    //         }
+    //     })
+    //         .autocomplete({
+    //             minLength: 3,
+    //             source: function (request, response) {
+    //                 $.get("@URLPrefixforProd/EVC/EVC_Approved?handler=SearchEVCRegdNo", {
+    //                     term: extractLast(request.term)
+    //                 }, response);
+    //             },
+    //             focus: function () {
+    //                 // prevent value inserted on focus
+    //                 return false;
+    //             },
+    //             open: function (event, ui) {
+    //                 // Get the menu element
+    //                 var menu = $(this).autocomplete("widget");
+
+    //                 // Set max-height and overflow properties
+    //                 menu.css("max-height", "200px");
+    //                 menu.css("overflow-y", "auto");
+    //             },
+    //             select: function (event, ui) {
+    //                 var terms = split(this.value);
+    //                 console.log(terms);
+    //                 // remove the current input
+    //                 terms.pop();
+    //                 // add the selected item
+    //                 terms.push(ui.item.value);
+
+    //                 this.value = ui.item.value;
+    //                 return false;
+    //             }
+    //         });
+
+    // })
+
+
+</script>

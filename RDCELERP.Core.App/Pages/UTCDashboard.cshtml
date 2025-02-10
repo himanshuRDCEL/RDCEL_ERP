@@ -1,0 +1,281 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.UTCDashboard
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+@if (Model.tblBusinessUnit.IsBulkOrder == true)
+{
+    <div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="card-body text-center d-flex justify-content-center align-items-center" style="height: 600px;">
+                            <div>
+                            <img class="w-50 d-block mx-auto mb-4" src="~/images/logo.svg" />
+                                <h1 class="fw-bold"><strong>Welcome to Digi2L</strong></h1>
+
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+}
+else
+{
+    <div class="row datefilter mt-2 mb-4">
+    <div class="col-md-4 mb-2">
+        <h5 class="welcometxt m-0">
+            This Month
+        </h5>
+        <small class="text-muted small">March 1 2022 to March 28 2022</small>
+    </div>
+
+    <div class="col-md-8 text-right datefilter-right">
+        <input type="text" class="form-control d-inline mb-2" id="startdate" placeholder="Start Date">
+        <input type="text" class="form-control d-inline mb-2" id="enddate" placeholder="End Date">
+        <input type="submit" class="d-inline btn btn-primary" value="Submit">
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="#">
+                <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-xl-8 px-xl-4">
+                                <h2 class="h6 mb-0 newcolor">ABB Orders</h2>
+                                <h3 class="fw-extrabold mb-2">19931</h3>
+                            </div>
+                            <div class="col-12 col-xl-4 text-xl-center mb-3 mb-xl-0  ">
+                                <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                    <i class="fa-solid fa-wallet"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="#">
+                <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-xl-8 px-xl-4">
+
+                                <h2 class="h6 mb-0 newcolor">Exchange Orders</h2>
+                                <h3 class="fw-extrabold mb-2">10030</h3>
+
+                            </div>
+                            <div class="col-12 col-xl-4 text-xl-center mb-3 mb-xl-0">
+                                <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="#">
+                <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-xl-8 px-xl-4">
+
+                                <h2 class="h6 mb-0 newcolor">ABB Redemptions</h2>
+                                <h3 class="fw-extrabold mb-2">23</h3>
+
+                            </div>
+                            <div class="col-12 col-xl-4 text-xl-center mb-3 mb-xl-0">
+                                <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                    <i class="fa-solid fa-truck-fast"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="#">
+                <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-xl-8 px-xl-4">
+
+                                <h2 class="h6  mb-0 newcolor">EVC Disputes</h2>
+                                <h3 class="fw-extrabold mb-2">8</h3>
+
+                            </div>
+                            <div class="col-12 col-xl-4 text-xl-center mb-3 mb-xl-0">
+                                <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                    <i class="fa-solid fa-truck-ramp-box"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="#">
+                <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-xl-8 px-xl-4">
+                                <h2 class="h6 newcolor mb-0">Pending ABB for Approvals</h2>
+                                <h3 class="fw-extrabold mb-2">24</h3>
+                            </div>
+                            <div class="col-12 col-xl-4 text-xl-center mb-3 mb-xl-0">
+                                <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                    <i class="fa-solid fa-box"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="#">
+                <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-xl-8 px-xl-4">
+                                <h2 class="h6 newcolor mb-0">EVC Allocations</h2>
+                                <h3 class="fw-extrabold mb-2">3242</h3>
+                            </div>
+                            <div class="col-12 col-xl-4 text-xl-center mb-3 mb-xl-0">
+                                <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                    <i class="fa-solid fa-clipboard-check"></i>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                </div>
+                </a>
+        </div>
+       
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="#">
+                <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-xl-8 px-xl-4">
+                                <h2 class="h6 newcolor mb-0">QC Done</h2>
+                                <h3 class="fw-extrabold mb-2">3242</h3>
+                            </div>
+                            <div class="col-12 col-xl-4 text-xl-center mb-3 mb-xl-0">
+                                <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                    <i class="fa-solid fa-clipboard-check"></i>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                </div>
+                </a>
+        </div>
+       
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="#">
+                <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-xl-8 px-xl-4">
+                                <h2 class="h6 newcolor mb-0">Pick up Done</h2>
+                                <h3 class="fw-extrabold mb-2">3242</h3>
+                            </div>
+                            <div class="col-12 col-xl-4 text-xl-center mb-3 mb-xl-0">
+                                <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                    <i class="fa-solid fa-clipboard-check"></i>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                </div>
+                </a>
+        </div>
+        
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="#">
+                <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-xl-8 px-xl-4">
+                                <h2 class="h6 newcolor mb-0">Drop Done</h2>
+                                <h3 class="fw-extrabold mb-2">3242</h3>
+                            </div>
+                            <div class="col-12 col-xl-4 text-xl-center mb-3 mb-xl-0">
+                                <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                    <i class="fa-solid fa-clipboard-check"></i>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                </div>
+                </a>
+        </div>
+        
+    </div>
+</div>
+}
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<script>
+    $(document).ready(function () {
+        $('#sidemenu-main li').each(function () {
+            if (window.location.pathname.includes($(this).attr('data-val'))) {
+                $(this).addClass('active');
+            }
+            else {
+                $(this).removeClass('active');
+            }
+        });
+    });
+
+</script>

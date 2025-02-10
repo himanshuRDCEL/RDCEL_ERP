@@ -1,0 +1,47 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.BusinessPartner.DeletBusinessPartnerById
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "_Layout";
+}
+
+<div class="row content-area">
+    <!--For Lead details-->
+    <div class="col-12">
+        <div class="box">
+            <hr />
+            <dl class="row">
+                <h5>
+                    Are you sure you want to delete <b>@Html.DisplayFor(model => model.TblBusinessPartner.Name)</b>
+                </h5>
+            </dl>
+            <form method="post">
+                <input type="hidden" asp-for="TblBusinessPartner.BusinessPartnerId" id="hdnId" />
+                <input type="hidden" asp-for="TblBusinessPartner.CreatedBy" />
+                <input type="hidden" asp-for="TblBusinessPartner.CreatedDate" />
+                <input type="hidden" asp-for="TblBusinessPartner.IsActive" />
+                <input type="hidden" asp-for="TblBusinessPartner.ModifiedBy" />
+                <input type="hidden" asp-for="TblBusinessPartner.ModifiedDate" />
+                <input type="hidden" asp-for="TblBusinessPartner.Email" />
+                <input type="hidden" asp-for="TblBusinessPartner.StoreCode" />
+                <input type="hidden" asp-for="TblBusinessPartner.City" />
+                <input type="hidden" asp-for="TblBusinessPartner.SponsorName" />
+                <input type="hidden" asp-for="TblBusinessPartner.State" />
+                <input type="hidden" asp-for="TblBusinessPartner.ContactPersonFirstName" />
+                <input type="hidden" asp-for="TblBusinessPartner.ContactPersonLastName" />
+                <input type="hidden" asp-for="TblBusinessPartner.PhoneNumber" />
+                <input type="hidden" asp-for="TblBusinessPartner.AddressLine1" />
+                <input type="hidden" asp-for="TblBusinessPartner.AddressLine2" />
+                <input type="hidden" asp-for="TblBusinessPartner.Gstnumber" />
+                <input type="hidden" asp-for="TblBusinessPartner.BankDetails" />
+                <input type="hidden" asp-for="TblBusinessPartner.AccountNo" />
+                <input type="hidden" asp-for="TblBusinessPartner.Ifsccode" />
+                <input type="hidden" asp-for="TblBusinessPartner.PaymentToCustomer" />
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+                <a asp-page="./Index" class="btn btn-primary mainshadow">Back to List</a>
+            </form>
+        </div>
+    </div>
+</div>
+

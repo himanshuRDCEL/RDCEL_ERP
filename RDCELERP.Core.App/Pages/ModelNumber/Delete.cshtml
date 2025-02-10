@@ -1,0 +1,113 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ModelNumber.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "ModelNumber";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>TblModelNumber</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblModelNumber.ModelName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblModelNumber.ModelName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblModelNumber.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblModelNumber.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblModelNumber.Code)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblModelNumber.Code)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblModelNumber.IsActive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblModelNumber.IsActive)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblModelNumber.CreatedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblModelNumber.CreatedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblModelNumber.CreatedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblModelNumber.CreatedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblModelNumber.ModifiedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblModelNumber.ModifiedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblModelNumber.ModifiedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblModelNumber.ModifiedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblModelNumber.SweetnerForDtd)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblModelNumber.SweetnerForDtd)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblModelNumber.SweetnerForDtc)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblModelNumber.SweetnerForDtc)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblModelNumber.IsDefaultProduct)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblModelNumber.IsDefaultProduct)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblModelNumber.Brand)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblModelNumber.Brand.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblModelNumber.BusinessUnit)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblModelNumber.BusinessUnit.BusinessUnitId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblModelNumber.ProductCategory)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblModelNumber.ProductCategory.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblModelNumber.ProductType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblModelNumber.ProductType.Id)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="TblModelNumber.ModelNumberId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

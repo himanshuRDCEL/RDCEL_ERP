@@ -1,0 +1,349 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ModelMapping.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int i = 0;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<link href="~/NewLayout/css/jquery.dataTables.min.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-md-3">
+                                <h2 class="fs-5 fw-bold mb-0">Model Mapping List</h2>
+                            </div>
+                            <div class="col-md-9 text-md-end">
+                                @* @if (accessRule != null && accessRule.CanAdd)
+                                {
+                                    <a asp-page="Manage"
+                                       class="btn btn-sm btn-primary my-1">
+                                        New Model
+                                    </a>
+                                } *@
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="table-responsive">
+                            <table id="ModelMappingDatatable" class="table align-items-center table-flush" border="1">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="all">Id</th>
+                                        <th class="all">Action</th>
+                                        <th class="all">Company Name</th>
+                                        <th class="all">Business Partner</th>
+                                        <th class="all">Model Name</th>
+                                        <th class="all">Brand</th>
+                                        <th class="all">Sweetener Bu</th>
+                                        <th class="all">Sweetener Bp</th>
+                                        <th class="all">Sweetener Digi2l</th>
+                                        <th class="all">Date</th>
+
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    @*List Page Common Filters Code By Kranti Silawat*@
+                    <div class="filters">
+                        <div class="p-4">
+
+                            <h4 class="">Filters</h4>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkDateRange">Date Range</p>
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline mb-2" id="startdate" placeholder="Start Date" autocomplete="off">
+                                <input type="text" class="form-control d-inline mb-2" id="enddate" placeholder="End Date" autocomplete="off">
+                            </div>
+
+
+                            <div class="filter-seprator"></div>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkBuId">Company Name</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="BuId" placeholder="Search Company Name">
+                            </div>
+
+                            <div class="filter-seprator"></div>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkbusinesspartner">Business Partner</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="businesspartner" placeholder="Search Business Partner">
+                            </div>
+
+                            <div class="filter-seprator"></div>
+                            <p class="filterheading"><input type="checkbox" name="" id="chkmodelName">Model Name</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="modelName" placeholder="Search Model Name">
+                            </div>
+
+                            <div class="filter-seprator"></div>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkBrand">Brand</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="Brand" placeholder="Search Brand">
+                            </div>
+
+                            <div class="filterbtnwrap">
+                                <a id="btnFilter" class="btn btn-primary">Filter</a>
+                                <a id="btnCloseFilter" class="btn btn-sm btn-secondary py-2">Clear</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+<script type="text/javascript">
+    var table = null;
+    $(document).ready(function () {
+        $("#chkBU").val(0);
+        var url = "@URLPrefixforProd/api/ListPage/GetModelMappingList";
+        var startDate = $('#startdate').val();
+        var endDate = $('#enddate').val();
+        DataTable(url, startDate, endDate);
+
+        //Hide Filters Dive
+        $('.filters').hide();
+
+        $("#startdate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                $("#enddate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#enddate").datepicker({
+            defaultDate: null,
+
+        });
+
+
+    });
+
+
+
+    //DataTable Function Call
+    function DataTable(url, startDate, endDate) {
+        table = $('#ModelMappingDatatable').DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": false,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    text: '<button class="btn btn-primary" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters').toggle();
+                        //$('.content').toggleClass('maincontent');
+                        //$('.filters').insertBefore('table.dataTable');
+                    }
+                },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Model Mapping List',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Data found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+            "columns": [
+
+                { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "businessUnitName", "name": "BusinessUnitName", "autoWidth": true, "orderable": true },
+                { "data": "businessPartnerName", "name": "BusinessPartnerName", "autoWidth": true, "orderable": true },
+                { "data": "modelName", "name": "ModelName", "autoWidth": true, "orderable": true },
+                { "data": "brandName", "name": "BrandName", "autoWidth": true, "orderable": true },
+                { "data": "sweetenerBu", "name": "SweetenerBu", "autoWidth": true, "orderable": true },
+                { "data": "sweetenerBp", "name": "SweetenerBp", "autoWidth": true, "orderable": true },
+                { "data": "sweetenerDigi2l", "name": "SweetenerDigi2l", "autoWidth": true, "orderable": true },
+                { "data": "date", "name": "Date", "autoWidth": true, "orderable": true },
+
+            ]
+        });
+    }
+
+    //Filter Clsoe Button Click Event
+    $('#btnCloseFilter').click(function () {
+        $('#startdate').val("");
+        $('#enddate').val("");
+        $('#chkBU').val("");
+        $('#chkBP').val("");
+        $('#chkmodelName').val("");
+        $('#chkBrand').val("");
+        
+        // Unchecks it
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        CommonFilter();
+    });
+
+    //Check Box Date Range change Event
+    $("#chkDateRange").click(function () {
+        if (!this.checked) {
+            $('#startdate').val("");
+            $('#enddate').val("");
+        }
+    });
+
+    //Check Box Regd Number change Event
+    $("#chkBU").click(function () {
+        if (!this.checked) {
+            $('#BuId').val("");
+        }
+    });
+
+    //Check Box Brand Name change Event
+    $("#chkBP").click(function () {
+        if (!this.checked) {
+            $('#businesspartner').val("");
+        }
+    });
+
+    //Check Box Brand Name change Event
+    $("#chkBrand").click(function () {
+        if (!this.checked) {
+            $('#Brand').val("");
+        }
+    });
+
+
+    //Check Box Brand Name change Event
+    $("#chkmodelName").click(function () {
+        if (!this.checked) {
+            $('#modelName').val("");
+        }
+    });
+
+    // LGC Pickup multi Search Filter
+    $('#btnFilter').click(function () {
+        CommonFilter();
+    });
+
+    //Filter Function
+    function CommonFilter() {
+        var startDate = $('#startdate').val();
+        startDate = $('#startdate').val() == "" ? null : $('#startdate').val();
+        var endDate = $('#enddate').val();
+        endDate = $('#enddate').val() == "" ? null : $('#enddate').val();
+
+        var BuId = $('#BuId').val();
+        BuId = $('#BuId').val() == "" ? null : $('#BuId').val();
+        var businesspartner = $('#businesspartner').val();
+        businesspartner = $('#businesspartner').val() == "" ? null : $('#businesspartner').val();
+        var Brand = $('#Brand').val();
+        Brand = $('#Brand').val() == "" ? null : $('#Brand').val();
+        var modelName = $('#modelName').val();
+        modelName = $('#modelName').val() == "" ? null : $('#modelName').val();
+        var url = null;
+        if (startDate == null || endDate == null) {
+            url = "@URLPrefixforProd/api/ListPage/GetModelMappingList?" + '&BuId=' + BuId +
+                '&businesspartner=' + businesspartner + '&Brand=' + Brand + '&modelName=' + modelName;
+        }
+        else {
+            url = "@ViewData["URLPrefixforProd"]/api/ListPage/GetModelMappingList?" + '&BuId=' + BuId +
+                '&businesspartner=' + businesspartner + '&Brand=' + Brand + '&modelName=' + modelName + '&startDate=' + startDate + ' &endDate=' + endDate;
+           
+        }
+
+
+        // Destroy the existing DataTable
+        table = $('#ModelMappingDatatable').DataTable();
+        // Destroy the existing DataTable
+        table.destroy();
+
+        DataTable(url, startDate, endDate);
+        $('.filters').hide();
+    }
+
+
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+    //For Export Buttons available inside jquery-datatable "server side processing" - End
+
+    
+
+</script>
+

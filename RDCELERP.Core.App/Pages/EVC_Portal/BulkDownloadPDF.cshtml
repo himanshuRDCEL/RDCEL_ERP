@@ -1,0 +1,554 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC_Portal.BulkDownloadPDFModel
+@{
+    ViewData["Title"] = "EVC Invoices";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="row align-items-center">
+            <div class="col-md-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <h2 class="fs-5 fw-bold mb-0 card-title">Bulk Download</h2>
+                    </div>
+                    <div class="card-body datefilter-right">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Start Date</label>
+                                <input type="text" class="form-control d-inline mb-2" id="startdate" placeholder="MM/DD/YYYY" autocomplete="off">
+                            </div>
+                            <div class="col-md-3">
+                                <label>End Date</label>
+                                <input type="text" class="form-control d-inline mb-2" id="enddate" placeholder="MM/DD/YYYY" autocomplete="off">
+                            </div>
+                            <div class="col-md-3" style="display:inline-block">
+                                <label>EVC Partner</label>
+                                <select id="ddlEVCpartner" class="form-control d-inline" asp-items="ViewBag.EVCPartnerList">
+                                    <option value="0">---Select EVC Partner---</option>
+                                </select>
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="col-md-3 text-start d-flex align-items-center gap-2">
+                                <button id="filter-dates" class="btn btn-primary mt-4">Filter</button>
+                                <button id="filter-clear" class="btn btn-primary mt-4">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active shadow" id="nav-home-tab1" data-bs-toggle="tab"
+                           href="#UsercustomerdeclarationDatatable" role="tab" aria-controls="nav-home1" aria-selected="true">
+                            Customer Declaration
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab2" data-bs-toggle="tab"
+                           href="#UserDebitnoteDatatable" role="tab" aria-controls="nav-home" aria-selected="true">
+                            Debit Note
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab3" data-bs-toggle="tab"
+                           href="#UserInvoiceDatatable" role="tab" aria-controls="nav-profile"
+                           aria-selected="false">
+                            Invoice
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab4" data-bs-toggle="tab"
+                           href="#UserPODDatatable" role="tab" aria-controls="nav-profile"
+                           aria-selected="false">
+                            POD
+                        </a>
+                    </div>
+                </nav>
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow noborderradius">
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- Tab -->
+                                <div class="tab-content" id="nav-tabContent">
+
+                                    <div class="tab-pane fade show active" id="UsercustomerdeclarationDatatable" role="tabpanel"
+                                         aria-labelledby="nav-home-tab1">
+                                        <table id="EVC_UsercustomerdeclarationDatatable"
+                                               class="table table-striped dt-responsive mainshadow" width="100%"
+                                               border="0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="border-bottom all notexport" scope="col">Id</th>
+                                                    <th class="border-bottom all" scope="col">RegdNo</th>
+                                                    <th class="border-bottom all" scope="col">Customer Declaration Pdf Name</th>
+                                                    <th class="border-bottom all" scope="col">Product Category </th>
+                                                    <th class="border-bottom all" scope="col">Customer Name</th>
+                                                    <th class="border-bottom all" scope="col">EVC Partner Code</th>
+                                                    <th class="border-bottom all" scope="col">EVC Bussiness Name</th>
+                                                    <th class="border-bottom all" scope="col">EVC Partner City</th>
+                                                    <th class="border-bottom all" scope="col">Customer Declaration Date</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+
+                                    <div class="tab-pane fade show" id="UserDebitnoteDatatable" role="tabpanel"
+                                         aria-labelledby="nav-home-tab">
+                                        <table id="EVC_UserDebitnoteDatatable"
+                                               class="table table-striped dt-responsive mainshadow" width="100%"
+                                               border="0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="border-bottom all notexport" scope="col">Id</th>
+                                                    <th class="border-bottom all" scope="col">Debit Note Pdf Name</th>
+                                                    <th class="border-bottom all" scope="col">Debit Note Amount</th>
+                                                    <th class="border-bottom all" scope="col">EVC Partner Code</th>
+                                                    <th class="border-bottom all" scope="col">EVC Bussiness Name</th>
+                                                    <th class="border-bottom all" scope="col">EVC Partner City</th>
+                                                    <th class="border-bottom all" scope="col">Debit Note Date</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane fade" id="UserInvoiceDatatable" role="tabpanel"
+                                         aria-labelledby="nav-profile-tab">
+                                        <table id="EVC_UserInvoiceDatatable"
+                                               class="table table-striped dt-responsive mainshadow" width="100%"
+                                               border="0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="border-bottom all notexport" scope="col">Id</th>
+                                                    <th class="border-bottom all" scope="col">Invoice Pdf Name</th>
+                                                    <th class="border-bottom all" scope="col">Invoice Amount</th>
+                                                    <th class="border-bottom all" scope="col">EVC Partner Code</th>
+                                                    <th class="border-bottom all" scope="col">EVC Bussiness Name</th>
+                                                    <th class="border-bottom all" scope="col">EVC Partner City</th>
+                                                    <th class="border-bottom all" scope="col">Invoice Date</th>
+
+
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane fade" id="UserPODDatatable" role="tabpanel"
+                                         aria-labelledby="nav-profile-tab">
+                                        <table id="EVC_UserPODDatatable"
+                                               class="table table-striped dt-responsive mainshadow" width="100%"
+                                               border="0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="border-bottom all notexport" scope="col">Id</th>
+                                                    <th class="border-bottom all" scope="col">POD Pdf Name</th>
+                                                    <th class="border-bottom all" scope="col">EVC Partner Code</th>
+                                                    <th class="border-bottom all" scope="col">EVC Bussiness Name</th>
+                                                    <th class="border-bottom all" scope="col">EVC Partner City</th>
+                                                    <th class="border-bottom all" scope="col">POD Date</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    @* <a href='javascript:history.go(-1)' class="btn btn-primary">Back to List</a>*@
+                                </div>
+                                <!-- End of tab -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+
+
+<script>
+    $(window).on('pageshow', function () {
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+    });
+    $(document).ready(function () {
+        var table = null;
+        var customerdeclarationtable = null;
+        var Debitnotetable = null;
+        var Invoicetable = null;
+        var PODtable = null;
+        DataTable();    
+        //date range Filter
+        $('#filter-dates').click(function () {
+            customerdeclarationtable = $('#EVC_UsercustomerdeclarationDatatable').DataTable();
+            // Destroy the existing DataTable
+            customerdeclarationtable.destroy();
+            Debitnotetable = $('#EVC_UserDebitnoteDatatable').DataTable();
+            // Destroy the existing DataTable
+            Debitnotetable.destroy();
+            Invoicetable = $('#EVC_UserInvoiceDatatable').DataTable();
+            // Destroy the existing DataTable
+            Invoicetable.destroy();
+            PODtable = $('#EVC_UserPODDatatable').DataTable();
+            // Destroy the existing DataTable
+            PODtable.destroy();
+            DataTable();
+
+        });
+
+        $('#filter-clear').click(function () {
+            $.datepicker._clearDate('#startdate');
+            $.datepicker._clearDate('#enddate');
+            $('#ddlEVCpartner').val('0');
+
+            customerdeclarationtable = $('#EVC_UsercustomerdeclarationDatatable').DataTable();
+            // Destroy the existing DataTable
+            customerdeclarationtable.destroy();
+            Debitnotetable = $('#EVC_UserDebitnoteDatatable').DataTable();
+            // Destroy the existing DataTable
+            Debitnotetable.destroy();
+            Invoicetable = $('#EVC_UserInvoiceDatatable').DataTable();
+            // Destroy the existing DataTable
+            Invoicetable.destroy();
+            PODtable = $('#EVC_UserPODDatatable').DataTable();
+            // Destroy the existing DataTable
+            PODtable.destroy();
+            DataTable();
+
+        });
+        // Assume the server sends the difference in days as a variable
+        var differenceInDays = @Model.EVCBulkzipdownloddiff;/* Get the difference from the server or set it dynamically */;
+        function updateEndDate(selectedDate) {
+            // Parse the selected start date
+            var startDate = new Date(selectedDate);
+
+            // Calculate the maximum date for the end date picker (n days from the selected start date)
+            var maxEndDate = new Date(startDate);
+            maxEndDate.setDate(startDate.getDate() + differenceInDays);
+            // Set the maximum date for the end date picker
+
+            $("#enddate").datepicker("option", { maxDate: maxEndDate, minDate: startDate });
+        }
+        function updateStartDate(selectedDate) {
+            // Parse the selected start date
+            var enddate = new Date(selectedDate);
+
+            // Calculate the maximum date for the end date picker (n days from the selected start date)
+            var minStartDate = new Date(enddate);
+            minStartDate.setDate(enddate.getDate() - differenceInDays);
+            // Set the maximum date for the end date picker
+            $("#startdate").datepicker("option", { minDate: minStartDate, maxDate: enddate });
+        }
+
+        function datepickerFn() {
+
+            $("#startdate").datepicker({
+                defaultDate: null,
+                onSelect: function (selectedDate) {
+                    updateEndDate(selectedDate);
+                }
+            });
+
+            $("#enddate").datepicker({
+                defaultDate: null,
+                onSelect: function (selectedDate) {
+                    updateStartDate(selectedDate);
+                }
+            });
+        }
+
+        datepickerFn();
+    });
+    function DataTable() {
+        var startDate = $('#startdate').val();
+        var endDate = $('#enddate').val();
+        var evcpartnerId = $('#ddlEVCpartner').val();
+        customerdeclarationtable = $('#EVC_UsercustomerdeclarationDatatable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": false,
+            "searching": false,
+            "paging": true,
+            "data": { startDate: startDate, endDate: endDate, evcPartnerId: evcpartnerId },
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper "><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Zip</button></div>', id: "exportbtn",
+                    title: 'Not Approve EVC List',
+                    action: function (e, dt, button, config) {
+                        // Call your custom function with required parameters
+                        var startDate1 = $('#startdate').val();
+                        var endDate1 = $('#enddate').val();
+                        var evcpartnerId1 = $('#ddlEVCpartner').val();
+                        var Downloadziptype1 = "CD";
+                        downloadZip(startDate1, endDate1, evcpartnerId1, Downloadziptype1);
+                    },
+
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Data Avalible found"
+            },
+            "ajax": {
+                "url": "@URLPrefixforProd/api/EVCList/GetCDList?loggingId=" + @Model.userId +"&EvcPartnerId=" + evcpartnerId + " &startDate=" + startDate + "&endDate=" + endDate,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+
+            "columns": [
+                { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false, "visible": true },
+                { "data": "cdPdfName", "name": "CDPdfName", "autoWidth": true, "orderable": false, "visible": true },
+                { "data": "productCatName", "name": "ProductCatName", "autoWidth": true, "orderable": false, "visible": true },
+                { "data": "custName", "name": "CustName", "autoWidth": true, "orderable": false },
+                { "data": "evcPartnerCode", "name": "EVCPartnerCode", "autoWidth": true, "orderable": false },
+                { "data": "evcBussinessName", "name": "EVCBussinessName", "autoWidth": true, "orderable": false },
+                { "data": "evcCity", "name": "EVCCity", "autoWidth": true, "orderable": false },
+                { "data": "cdDate", "name": "CDDate", "autoWidth": true, "orderable": false },
+            ]
+        });
+
+        Debitnotetable = $('#EVC_UserDebitnoteDatatable').dataTable({
+
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": false,
+            "searching": false,
+            "paging": true,
+            "data": { startDate: startDate, endDate: endDate, evcPartnerId: evcpartnerId },
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper "><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Zip</button></div>', id: "exportbtn",
+                    title: 'Not Approve EVC List',
+                    action: function (e, dt, button, config) {
+                        // Call your custom function with required parameters
+                        var startDate1 = $('#startdate').val();
+                        var endDate1 = $('#enddate').val();
+                        var evcpartnerId1 = $('#ddlEVCpartner').val();
+                        var Downloadziptype1 = "DebitNote";
+                        downloadZip(startDate1, endDate1, evcpartnerId1, Downloadziptype1);
+                    },
+
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Data Avalible found"
+            },
+            "ajax": {
+                "url": "@URLPrefixforProd/api/EVCList/GetDebitnoteList?loggingId=" + @Model.userId +"&EvcPartnerId=" + evcpartnerId + " &startDate=" + startDate + "&endDate=" + endDate,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+
+            "columns": [
+                { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                { "data": "debitNotePdfName", "name": "DebitNotePdfName", "autoWidth": true, "orderable": false, "visible": true },
+                { "data": "debitNoteAmount", "name": "DebitNoteAmount", "autoWidth": true, "orderable": false },
+                { "data": "evcPartnerCode", "name": "EVCPartnerCode", "autoWidth": true, "orderable": false },
+                { "data": "evcBussinessName", "name": "EVCBussinessName", "autoWidth": true, "orderable": false },
+                { "data": "evcCity", "name": "EVCCity", "autoWidth": true, "orderable": false },
+                { "data": "debitNoteDate", "name": "DebitNoteDate", "autoWidth": true, "orderable": false },
+            ]
+        });
+
+        Invoicetable = $('#EVC_UserInvoiceDatatable').dataTable({
+
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": false,
+            "searching": false,
+            "paging": true,
+            "data": { startDate: startDate, endDate: endDate, evcPartnerId: evcpartnerId },
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper "><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Zip</button></div>', id: "exportbtn",
+                    title: 'Not Approve EVC List',
+                    action: function (e, dt, button, config) {
+                        // Call your custom function with required parameters
+                        var startDate1 = $('#startdate').val();
+                        var endDate1 = $('#enddate').val();
+                        var evcpartnerId1 = $('#ddlEVCpartner').val();
+                        var Downloadziptype1 = "Invoice";
+                        downloadZip(startDate1, endDate1, evcpartnerId1, Downloadziptype1);
+                    },
+
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Data Avalible found"
+            },
+            "ajax": {
+                "url": "@URLPrefixforProd/api/EVCList/GetInvoiceList?loggingId=" + @Model.userId +"&EvcPartnerId=" + evcpartnerId + " &startDate=" + startDate + "&endDate=" + endDate,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+            "columns": [
+                { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                { "data": "invoicePdfName", "name": "InvoicePdfName", "autoWidth": true, "orderable": false, "visible": true },
+                { "data": "invoiceAmount", "name": "InvoiceAmount", "autoWidth": true, "orderable": false, "visible": true },
+                { "data": "evcPartnerCode", "name": "EVCPartnerCode", "autoWidth": true, "orderable": false },
+                { "data": "evcBussinessName", "name": "EVCBussinessName", "autoWidth": true, "orderable": false },
+                { "data": "evcCity", "name": "EVCCity", "autoWidth": true, "orderable": false },
+                { "data": "invoiceDate", "name": "InvoiceDate", "autoWidth": true, "orderable": false },
+            ]
+        });
+
+        PODtable = $('#EVC_UserPODDatatable').dataTable({
+
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": false,
+            "searching": false,
+            "paging": true,
+            "data": { startDate: startDate, endDate: endDate, evcPartnerId: evcpartnerId },
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper "><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Zip</button></div>', id: "exportbtn",
+                    title: 'Not Approve EVC List',
+                    action: function (e, dt, button, config) {
+                        // Call your custom function with required parameters
+                        var startDate1 = $('#startdate').val();
+                        var endDate1 = $('#enddate').val();
+                        var evcpartnerId1 = $('#ddlEVCpartner').val();
+                        var Downloadziptype1 = "POD";
+                        downloadZip(startDate1, endDate1, evcpartnerId1, Downloadziptype1);
+                    },
+
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Data Avalible found"
+            },
+            "ajax": {
+                "url": "@URLPrefixforProd/api/EVCList/GetPODList?loggingId=" + @Model.userId +"&EvcPartnerId=" + evcpartnerId + " &startDate=" + startDate + "&endDate=" + endDate,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+            "columns": [
+                { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                { "data": "podPdfName", "name": "PODPdfName", "autoWidth": true, "orderable": false, "visible": true },
+                { "data": "evcPartnerCode", "name": "EVCPartnerCode", "autoWidth": true, "orderable": false },
+                { "data": "evcBussinessName", "name": "EVCBussinessName", "autoWidth": true, "orderable": false },
+                { "data": "evcCity", "name": "EVCCity", "autoWidth": true, "orderable": false },
+                { "data": "podDate", "name": "PODDate", "autoWidth": true, "orderable": false },
+            ]
+        });
+    }
+    function downloadZip(startDate, endDate, evcpartnerId, Downloadziptype) {
+        var file = null;
+        // AJAX call to the handler
+        var EvcregistrationId = @Model.EVCRegistrationId;
+        var url = '@ViewData["URLPrefixforProd"]/EVC_Portal/BulkDownloadPDF?handler=GenerateZip';
+        if (startDate != "" && endDate != "" && evcpartnerId >= 0 && Downloadziptype != "") {
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: { startDate: startDate, endDate: endDate, evcPartnerId: evcpartnerId, Downloadziptype, EvcregistrationId },
+                success: function (data) {
+                    if (data === "Data does not exist.") {
+                        Swal.fire({
+                            title: 'Not Avaliable',
+                            text: 'pdf not available',
+                            icon: 'warning',
+                            confirmButtonText: 'Ok',
+                            customClass: {
+                                confirmButton: 'btn btn-dark'
+                            }
+                        });
+
+                        location.reload();
+                    }
+                    else {
+                        window.location.href = data;
+                    }
+                },
+                error: function (status, error) {
+                    console.error(responseText);
+                    // Handle error, if needed
+                }
+            });
+        }
+        else {
+            Swal.fire({
+                title: 'Try Again',
+                text: 'Select Date Rang Filter and try again',
+                icon: 'warning',
+                confirmButtonText: 'Ok',
+                customClass: {
+                    confirmButton: 'btn btn-dark'
+                }
+            });
+
+
+            //alert('Apply Required Filter and try again');
+        }
+    }
+
+    $('#nav-home-tab1').click(function () {
+        let table = $('#EVC_UsercustomerdeclarationDatatable').DataTable();
+        table.ajax.reload();
+    })
+    $('#nav-home-tab2').click(function () {
+        let table = $('#EVC_UserDebitnoteDatatable').DataTable();
+        table.ajax.reload();
+    })
+    $('#nav-home-tab3').click(function () {
+        let table = $('#EVC_UserInvoiceDatatable').DataTable();
+        table.ajax.reload();
+    })
+    $('#nav-home-tab4').click(function () {
+        let table = $('#EVC_UserPODDatatable').DataTable();
+        table.ajax.reload();
+    })
+
+</script>

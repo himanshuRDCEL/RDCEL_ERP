@@ -1,0 +1,151 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.NewPriceMasterName.ManageModel
+
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                
+                                    <h2 class="fs-5 mb-0 card-title">
+                                        <a href="#"></a>Price Master Name
+                                    </h2>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="PriceMasterNameViewModel.PriceMasterNameId" id="hdnId" />
+                                <input type="hidden" asp-for="PriceMasterNameViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="PriceMasterNameViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="PriceMasterNameViewModel.IsActive" />
+                                <input type="hidden" asp-for="PriceMasterNameViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="PriceMasterNameViewModel.ModifiedDate" />
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for=""> Name <span style="color:red;">*</span></label>
+                                    <input type="text" asp-for="PriceMasterNameViewModel.Name" class="form-control" id="txtName" />
+                                    <span id="errorTxtName" class="text-danger"></span>
+                                    <span class="text-danger" id="message"></span>
+                                    <span asp-validation-for="PriceMasterNameViewModel.Name" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Description <span style="color:red;">*</span></label>
+                                    <input asp-for="PriceMasterNameViewModel.Description" class="form-control" />
+                                    <span asp-validation-for="PriceMasterNameViewModel.Description" class="text-danger"></span>
+                                </div>
+                              
+                            </div>
+
+                            <div class="float-right">
+                                @if (accessRule != null && accessRule.CanAdd)
+                                {
+
+                                    if (Model.PriceMasterNameViewModel.PriceMasterNameId == 0)
+                                    {
+                                        <input type="submit" id="Savebtn" value="Save" class="btn btn-primary mainshadow" />
+                                    }
+                                    else
+                                    {
+                                        <input type="submit" id="UpdateButton" value="Update" class="btn btn-primary mainshadow" />
+                                    }
+                                }
+                                @if (accessRule != null && accessRule.CanView)
+                                {
+                                    <a asp-page="./Index" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">Back</a>
+                                }
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/compressor.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Bind to the input event of the input field to clear the message whenever the input changes
+        //$("#txtName").on('input', function () {
+        //    $("#message").html(" ");
+        //    checkErrors();
+        //});
+        $('#txtName').change(function () {
+            var mastername = $("#txtName").val();
+            console.log(mastername);
+            $.ajax({
+                type: "POST",
+                url: "@ViewData["URLPrefixforProd"]/NewPriceMasterName/Manage?handler=CheckName",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: { "mastername": mastername },
+                success: function (response) {
+                    if (response == true || response == "True" || response == "true") {
+                        $('#Savebtn').show();
+                        $('#errorTxtName').text("");
+                    } else {
+                        if (response == 'NullValue') {
+                            $('#Savebtn').hide();
+                            $('#errorTxtName').text("Blank spaces are not allowed");
+                        }
+                        else {
+                            $('#Savebtn').hide();
+                            $('#errorTxtName').text("This name is already exist.");
+                        }
+
+                    }
+                },
+            });
+        });
+    });
+
+    $(function () {
+
+           $('.IsDealerChk').each(function () {
+               var Ischecked = $(this).val();
+
+               if (Ischecked == "true") {
+
+                   $(this).attr('checked', 'checked');
+               }
+           });
+       });
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

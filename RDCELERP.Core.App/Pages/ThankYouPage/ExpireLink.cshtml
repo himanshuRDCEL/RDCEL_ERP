@@ -1,0 +1,504 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ThankYouPage.ExpireLinkModel
+@{
+    ViewData["Title"] = "ExpireLink";
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>ExpireLink</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+          integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+
+    <link rel="stylesheet" href="css/style.css">
+
+   <style>
+       body {
+           background: url('../Images/bg.png') no-repeat center center;
+           background-size: 160%;
+           font-family: 'Poppins', sans-serif;
+           line-height: 1.8;
+       }
+
+       img {
+           width: 100%;
+       }
+
+       .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+           line-height: 1.6;
+       }
+
+
+       #wrapper {
+           position: relative;
+           min-height: 100vh;
+           height: 100%;
+           padding-bottom: 80px;
+       }
+
+       .topnav {
+           border-bottom: 1px solid #e6e6e6;
+           background: #fff;
+           padding: 8px 0;
+       }
+
+           .topnav p {
+               margin: 18px 0 0;
+               font-size: 14px;
+               font-weight: 600;
+               color: #002554;
+           }
+
+       .logowrapper {
+           max-width: 150px;
+           margin: 0 auto;
+       }
+
+           .logowrapper .logo {
+               width: 100%;
+           }
+
+       .table th {
+           font-size: 14px;
+       }
+
+       .form-control,
+       .custom-select {
+           border-radius: 6px;
+           box-shadow: none;
+           border: 1px solid #e8e8e8 !important;
+           height: 38px;
+       }
+
+           .form-control:focus {
+               outline: none;
+               box-shadow: none;
+           }
+
+       .form-group {
+           padding: 0 20px;
+       }
+
+           .form-group label {
+               font-size: 13px;
+           }
+
+       .mainformarea {
+           background-color: #fff;
+           -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+           box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+           padding-bottom: 20px;
+       }
+
+       .main {
+           padding: 40px 0;
+       }
+
+
+       .btn {
+           border-radius: 8px;
+           padding: 10px 30px;
+           /* box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px; */
+           margin: 3px;
+           border: none;
+           box-shadow: none;
+           font-size: 14px;
+       }
+
+           .btn:hover {
+               transition: 0.1s;
+           }
+
+       .btn-primary {
+           background: rgb(51, 37, 176);
+           background: -moz-linear-gradient(-45deg, rgba(51, 37, 176, 1) 0%, rgb(87, 29, 135) 100%);
+           background: -webkit-linear-gradient(-45deg, rgba(51, 37, 176, 1) 0%, rgba(40, 29, 135, 1) 100%);
+           background: linear-gradient(135deg, rgba(51, 37, 176, 1) 0%, rgba(40, 29, 135, 1) 100%);
+           filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3325b0', endColorstr='#281d87', GradientType=1);
+       }
+
+           .btn-primary:hover {
+               opacity: 0.95;
+           }
+
+       .btn-secondary {
+           background-color: #fff;
+           color: #002554;
+           border: 1px solid #002554;
+       }
+
+           .btn-secondary:hover {
+               background-color: #f2f2f2;
+               color: #002554;
+           }
+
+       .footer {
+           padding: 30px 0;
+           background-color: #0d004c;
+           position: absolute;
+           bottom: 0;
+           width: 100%;
+           height: 80px;
+       }
+
+           .footer:after {
+               content: '';
+               position: absolute;
+               right: 0;
+               bottom: 0;
+               height: 60px;
+               width: 100%;
+               background: url(../DBFiles/UPITemplate/footer-pattern-01.png) no-repeat right center;
+               background-size: contain;
+           }
+
+           .footer a {
+               color: #fff;
+           }
+
+           .footer img {
+               width: 100%;
+               max-width: 60px;
+           }
+
+           .footer p {
+               margin: 0;
+           }
+
+           .footer label {
+               margin: 0;
+           }
+
+           .footer a {
+               margin: 5px;
+               font-size: 14px;
+               color: #002554;
+               vertical-align: bottom;
+           }
+
+               .footer a:hover {
+                   text-decoration: none;
+               }
+
+       .input-group {
+           display: flex;
+           align-items: center;
+       }
+
+           .input-group .form-control {
+               border-radius: 0 6px 6px 0;
+               font-size: 13px;
+           }
+
+
+
+           .input-group i {
+               border-right: 0;
+               padding: 10px 15px;
+               height: 38px;
+               border-radius: 6px 0 0 6px;
+               border: 1px solid #e8e8e8 !important
+           }
+
+       .card {
+           display: block;
+           padding: 24px;
+           border: 1px solid #e8e8e8;
+           border-radius: 6px;
+           margin: 12px;
+       }
+
+       .heading {
+           font-size: 20px;
+           margin-bottom: 26px;
+           border-bottom: 1px solid #f6f6f6;
+           padding-bottom: 15px;
+       }
+
+       ::placeholder {
+           font-size: 13px;
+       }
+
+       .form-control:hover {
+           border: 1px solid #ccc !important;
+       }
+
+       .text-muted {
+           font-size: 11px;
+           margin-top: 7px;
+       }
+
+       .astrik {
+           color: red;
+       }
+
+
+       .footer-social a {
+           margin: 20px 10px;
+       }
+
+           .footer-social a img {
+               width: 20px;
+               max-height: 20px;
+           }
+
+       strong {
+           color: #002554;
+           font-weight: 500;
+       }
+
+
+       .detailbox p {
+           font-size: 14px;
+       }
+
+           .detailbox p span {
+               display: block;
+               font-size: 16px;
+               margin-top: 8px;
+               padding: 6px 0;
+               border-top: 1px solid #eee;
+               font-weight: 500;
+           }
+
+           .detailbox p i {
+               margin-right: 6px;
+               opacity: 0.5;
+           }
+
+       .primary-color {
+           color: #002554;
+       }
+
+       @@media (max-width: 770px) {
+           #wrapper {
+               padding-bottom: 100px;
+           }
+
+           .footer {
+               text-align: center;
+               padding-bottom: 100px;
+           }
+       }
+
+       @@media screen and (max-width: 600px) {
+           .logowrapper {
+               max-width: 120px;
+           }
+
+           .topnav p {
+               font-size: 12px;
+           }
+
+           label {
+               font-size: 13px;
+           }
+
+           .heading {
+               font-size: 18px;
+               margin-bottom: 22px;
+           }
+       }
+
+       .check-container {
+           width: 6.25rem;
+           height: 7.5rem;
+           display: flex;
+           flex-flow: column;
+           align-items: center;
+           justify-content: space-between;
+       }
+
+           .check-container .check-background {
+               width: 100%;
+               height: calc(100% - 1.25rem);
+               background: linear-gradient(to bottom right, #24ba60, #41d67c);
+               box-shadow: 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset;
+               transform: scale(0.84);
+               border-radius: 50%;
+               animation: animateContainer 0.75s ease-out forwards 0.75s;
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               opacity: 0;
+           }
+
+               .check-container .check-background svg {
+                   width: 65%;
+                   transform: translateY(0.25rem);
+                   stroke-dasharray: 80;
+                   stroke-dashoffset: 80;
+                   animation: animateCheck 0.35s forwards 1.25s ease-out;
+               }
+
+           .check-container .check-shadow {
+               bottom: calc(-15% - 5px);
+               left: 0;
+               border-radius: 50%;
+               background: radial-gradient(closest-side, #49da83, transparent);
+               animation: animateShadow 0.75s ease-out forwards 0.75s;
+           }
+
+       @@keyframes animateContainer {
+           0% {
+               opacity: 0;
+               transform: scale(0);
+               box-shadow: 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset;
+           }
+
+           25% {
+               opacity: 1;
+               transform: scale(0.9);
+               box-shadow: 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset;
+           }
+
+           43.75% {
+               transform: scale(1.15);
+               box-shadow: 0px 0px 0px 43.334px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset;
+           }
+
+           62.5% {
+               transform: scale(1);
+               box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 21.667px rgba(255, 255, 255, 0.25) inset;
+           }
+
+           81.25% {
+               box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 0px rgba(255, 255, 255, 0.25) inset;
+           }
+
+           100% {
+               opacity: 1;
+               box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 0px rgba(255, 255, 255, 0.25) inset;
+           }
+       }
+
+       @@keyframes animateCheck {
+           from {
+               stroke-dashoffset: 80;
+           }
+
+           to {
+               stroke-dashoffset: 0;
+           }
+       }
+
+       @@keyframes animateShadow {
+           0% {
+               opacity: 0;
+               width: 100%;
+               height: 15%;
+           }
+
+           25% {
+               opacity: 0.25;
+           }
+
+           43.75% {
+               width: 40%;
+               height: 7%;
+               opacity: 0.35;
+           }
+
+           100% {
+               width: 85%;
+               height: 15%;
+               opacity: 0.25;
+           }
+       }
+   </style>
+
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <div class="topnav">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 py-3 text-center">
+                        <div class="logowrapper">
+                            <img src="https://digi2l.in/wp-content/uploads/2022/09/logo.svg" alt="">
+
+                        </div>
+                        <p>India's 1st Digital Platform To Sell Used Appliances</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="container">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-12 text-center">
+
+                            @*<h3 class="heading text-center"></h3>*@
+                            <p>
+                                Uh-oh! Your Link has Expired
+                                Retry or contact customer support for help 📱 +91 9321276341..
+                            </p>
+                        </div>
+
+
+                        
+
+                        
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <p>
+                            <a href="https://digi2l.in" target="_blank">
+                                <label style="color:white">Powered by</label>
+
+                                <img src="https://digi2l.in/wp-content/uploads/2022/09/logo-Digi2L.png">
+                            </a>
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-md-right footer-pattern">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+
+
+</body>
+
+</html>
+

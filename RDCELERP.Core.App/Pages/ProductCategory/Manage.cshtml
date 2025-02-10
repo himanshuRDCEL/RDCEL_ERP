@@ -1,0 +1,343 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ProductCategory.ManageModel
+
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>Product Category
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" id="myForm" enctype="multipart/form-data">
+                            <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="ProductCategoryViewModel.Id" id="hdnId" />
+                                <input type="hidden" asp-for="ProductCategoryViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="ProductCategoryViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="ProductCategoryViewModel.IsActive" />
+                                <input type="hidden" asp-for="ProductCategoryViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="ProductCategoryViewModel.ProductCategoryImageUrl" />
+                                <input type="hidden" asp-for="ProductCategoryViewModel.ModifiedDate" />
+
+                                <div class="col-12 mb-4 text-center">
+                                    <div class="editprofilepicbox mx-auto mb-4">
+                                        @if (!string.IsNullOrEmpty(Model.ProductCategoryViewModel.ProductCategoryImageUrl))
+                                        {
+                                            <img src="@Model.ProductCategoryViewModel.ProductCategoryImageUrl" id="imgprev" accept="image/*" class="rounded-circle" style="width:160px;height:160px;object-fit: contain;" alt="Brand Image" onload="ShowImagePreview(this)">
+                                        }
+                                        else
+                                        {
+                                            <img src="@ViewData["URLPrefixforProd"]/images/favicon.png" id="imgprev" accept="image/*" alt="Logo" class="rounded-circle" style="width:160px;height:160px;object-fit: contain;" />
+                                        }
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for=""> Name <span style="color:red;">*</span></label>
+                                    <input type="text" asp-for="ProductCategoryViewModel.Name" class="form-control" id="txtName" onkeyup="CheckAvailability();" />
+                                    <span asp-validation-for="ProductCategoryViewModel.Name" class="text-danger"></span>
+                                    <span class="text-danger" id="message"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Description <span style="color:red;">*</span></label>
+                                    <input asp-for="ProductCategoryViewModel.Description" class="form-control" id="txtDesc" onkeyup="CheckAvailabilityDesc();" />
+                                    <span asp-validation-for="ProductCategoryViewModel.Description" class="text-danger"></span>
+                                    <span class="text-danger" id="messagess"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Description for ABB <span style="color:red;">*</span></label>
+                                    <input asp-for="ProductCategoryViewModel.DescriptionForAbb" class="form-control" />
+                                    <span asp-validation-for="ProductCategoryViewModel.DescriptionForAbb" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Code<span style="color:red;">*</span></label>
+                                    <input asp-for="ProductCategoryViewModel.Code" class="form-control" id="txtCode" onkeyup="CheckAvailabal();" />
+                                    <span asp-validation-for="ProductCategoryViewModel.Code" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Upload Product Category Image :</label>
+                                    <input name="ProductCategoryImage" type="file" accept="image/jpeg,image/png,jpg|png" class="form-control" onchange="return ShowImagePreview(this)" />
+                                    <span asp-validation-for="ProductCategoryViewModel.ProductCategoryImageUrl" class="text-danger"></span>
+                                    <span class="text-danger" id="planErrorTxt"></span>
+                                </div>
+                        
+                          
+                                <div class="col-md-12 mb-3"></div>
+                                <div class="col-md-4">
+                                    @if (Model.ProductCategoryViewModel.IsAllowedForNew == true)
+                                    {
+                                        <label class="" for="">Allowed For New</label>
+                                        <input name="ProductCategoryViewModel.IsAllowedForNew" type="checkbox" id="IsChecked" value="true" class="form-check-input IsDealerChk" data-val-required="The IsChecked field is required.">
+                                        <input name="ProductCategoryViewModel.IsAllowedForNew" type="hidden" data-val="false" id="IsChecked" value="false" data-val-required="The IsChecked field is required.">
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">Allowed For New</label>
+                                        <input name="ProductCategoryViewModel.IsAllowedForNew" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="form-check-input">
+                                        <input name="ProductCategoryViewModel.IsAllowedForNew" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    @if (Model.ProductCategoryViewModel.IsAllowedForOld == true)
+                                    {
+                                        <label class="" for="">Allowed For Old</label>
+                                        <input name="ProductCategoryViewModel.IsAllowedForOld" type="checkbox" id="IsChecked" value="true" class="form-check-input IsDealerChk" data-val-required="The IsChecked field is required.">
+                                        <input name="ProductCategoryViewModel.IsAllowedForOld" type="hidden" data-val="false" id="IsChecked" value="false" data-val-required="The IsChecked field is required.">
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">Allowed For Old</label>
+                                        <input name="ProductCategoryViewModel.IsAllowedForOld" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="form-check-input">
+                                        <input name="ProductCategoryViewModel.IsAllowedForOld" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+                                  
+                                </div>
+                                <div class="col-md-12"><p class="text-danger" id="planErrorTxtCheck"></p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                    }
+                                </div>
+                                <div class="col-6 text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <input type="submit" id="Savebtn" value="Save" class="btn btn-primary mainshadow" />
+                                    }
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/compressor.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Bind to the input event of the input field to clear the message whenever the input changes
+        $("#txtName").on('input', function () {
+            $("#message").html(" ");
+            checkErrors();
+        });
+    });
+
+    function CheckAvailability() {
+        var name = $("#txtName").val();
+        var id = $("#hdnId").val();
+        if (name === '') {
+            $("#message").html(" ");
+            checkErrors();
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["URLPrefixforProd"]/ProductCategory/Manage?handler=CheckName",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "Name": name, "CategoryId": id },
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    $("#message").html(" ");
+                    checkErrors();
+                } else {
+                    $("#message").css("color", "red");
+                    $("#message").html("This product category already exists.");
+                    checkErrors();
+                }
+            },
+        });
+    }
+
+    $(document).ready(function () {
+        // Bind to the input event of the input field to clear the message whenever the input changes
+        $("#txtCode").on('input', function () {
+            $("#messages").html(" ");
+            checkErrors();
+        });
+    });
+
+    $(document).ready(function () {
+        $('#myForm').submit(function () {
+            if ($('input[name="ProductCategoryViewModel.IsAllowedForNew"]:checked').length == 0 &&
+                $('input[name="ProductCategoryViewModel.IsAllowedForOld"]:checked').length == 0) {
+                $('#planErrorTxtCheck').text('Please select at least one option from Allowed For New & Allowed For Old.');
+                return false;
+            }
+        });
+    });
+
+    function ShowImagePreview(input) {
+
+        if (input.files && input.files[0]) {
+            var filePath = input.value;
+            var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+            if (!allowedExtensions.exec(filePath)) {
+                $('#planErrorTxt').text('Please upload logo in image format');
+                input.value = '';
+                $('#Savebtn').prop('disabled', true);
+                return false;
+            }
+            else {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imgprev').prop('src', e.target.result);
+                };
+                $('#planErrorTxt').text('');
+                $('#Savebtn').prop('disabled', false);
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    }
+
+    $(function () {
+
+        $('.IsDealerChk').each(function () {
+            var Ischecked = $(this).val();
+
+            if (Ischecked == "true") {
+
+                $(this).attr('checked', 'checked');
+            }
+        });
+    });
+
+
+    function CheckAvailabal() {
+        var code = $("#txtCode").val();
+        var id = $("#hdnId").val();
+        if (code === '') {
+            $("#messages").html(" ");
+            checkErrors();
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["URLPrefixforProd"]/ProductCategory/Manage?handler=CheckCode",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "code": code, "Id": id },
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    $("#messages").html(" ");
+                    checkErrors();
+                }
+                else {
+                    $("#messages").css("color", "red");
+                    $("#messages").html("This code is already exists ");
+                    checkErrors();
+                }
+            },
+        });
+    }
+
+
+    $(document).ready(function () {
+        // Bind to the input event of the input field to clear the message whenever the input changes
+        $("#txtDesc").on('input', function () {
+            $("#messagess").html(" ");
+            checkErrors();
+        });
+    });
+
+    function CheckAvailabilityDesc() {
+        var desc = $("#txtDesc").val();
+        var id = $("#hdnId").val();
+        if (desc === '') {
+            $("#messagess").html(" ");
+            checkErrors();
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["URLPrefixforProd"]/ProductCategory/Manage?handler=CheckDesc",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "Desc": desc, "CategoryId": id },
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    $("#messagess").html(" ");
+                    checkErrors();
+                } else {
+                    $("#messagess").css("color", "red");
+                    $("#messagess").html("This description already exists.");
+                    checkErrors();
+                }
+            },
+        });
+    }
+
+    
+
+    function checkErrors() {
+        var nameError = $("#message").html().trim();
+        var codeError = $("#messages").html().trim();
+        var descError = $("#messagess").html().trim();
+
+        if (nameError || codeError || descError) {
+            $('#Savebtn').prop('disabled', true);
+        } else {
+            $('#Savebtn').prop('disabled', false);
+        }
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

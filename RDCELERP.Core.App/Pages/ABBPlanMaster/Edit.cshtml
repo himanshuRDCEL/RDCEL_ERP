@@ -1,0 +1,106 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ABBPlanMaster.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "ABBPlanMaster";
+}
+
+<h1>Edit</h1>
+
+<h4>TblAbbplanMaster</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblAbbplanMaster.PlanMasterId" />
+            <div class="form-group">
+                <label asp-for="TblAbbplanMaster.BusinessUnitId" class="control-label"></label>
+                <select asp-for="TblAbbplanMaster.BusinessUnitId" class="form-control" asp-items="ViewBag.BusinessUnitId"></select>
+                <span asp-validation-for="TblAbbplanMaster.BusinessUnitId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbplanMaster.Sponsor" class="control-label"></label>
+                <input asp-for="TblAbbplanMaster.Sponsor" class="form-control" />
+                <span asp-validation-for="TblAbbplanMaster.Sponsor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbplanMaster.FromMonth" class="control-label"></label>
+                <input asp-for="TblAbbplanMaster.FromMonth" class="form-control" />
+                <span asp-validation-for="TblAbbplanMaster.FromMonth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbplanMaster.ToMonth" class="control-label"></label>
+                <input asp-for="TblAbbplanMaster.ToMonth" class="form-control" />
+                <span asp-validation-for="TblAbbplanMaster.ToMonth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbplanMaster.AssuredBuyBackPercentage" class="control-label"></label>
+                <input asp-for="TblAbbplanMaster.AssuredBuyBackPercentage" class="form-control" />
+                <span asp-validation-for="TblAbbplanMaster.AssuredBuyBackPercentage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbplanMaster.PlanPeriodInMonth" class="control-label"></label>
+                <input asp-for="TblAbbplanMaster.PlanPeriodInMonth" class="form-control" />
+                <span asp-validation-for="TblAbbplanMaster.PlanPeriodInMonth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbplanMaster.ProductCatId" class="control-label"></label>
+                <select asp-for="TblAbbplanMaster.ProductCatId" class="form-control" asp-items="ViewBag.ProductCatId"></select>
+                <span asp-validation-for="TblAbbplanMaster.ProductCatId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbplanMaster.ProductTypeId" class="control-label"></label>
+                <select asp-for="TblAbbplanMaster.ProductTypeId" class="form-control" asp-items="ViewBag.ProductTypeId"></select>
+                <span asp-validation-for="TblAbbplanMaster.ProductTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbplanMaster.AbbplanName" class="control-label"></label>
+                <input asp-for="TblAbbplanMaster.AbbplanName" class="form-control" />
+                <span asp-validation-for="TblAbbplanMaster.AbbplanName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbplanMaster.NoClaimPeriod" class="control-label"></label>
+                <input asp-for="TblAbbplanMaster.NoClaimPeriod" class="form-control" />
+                <span asp-validation-for="TblAbbplanMaster.NoClaimPeriod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbplanMaster.IsActive" class="control-label"></label>
+                <input asp-for="TblAbbplanMaster.IsActive" class="form-control" />
+                <span asp-validation-for="TblAbbplanMaster.IsActive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbplanMaster.CreatedBy" class="control-label"></label>
+                <input asp-for="TblAbbplanMaster.CreatedBy" class="form-control" />
+                <span asp-validation-for="TblAbbplanMaster.CreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbplanMaster.CreatedDate" class="control-label"></label>
+                <input asp-for="TblAbbplanMaster.CreatedDate" class="form-control" />
+                <span asp-validation-for="TblAbbplanMaster.CreatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbplanMaster.ModifiedBy" class="control-label"></label>
+                <input asp-for="TblAbbplanMaster.ModifiedBy" class="form-control" />
+                <span asp-validation-for="TblAbbplanMaster.ModifiedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbplanMaster.ModifiedDate" class="control-label"></label>
+                <input asp-for="TblAbbplanMaster.ModifiedDate" class="form-control" />
+                <span asp-validation-for="TblAbbplanMaster.ModifiedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

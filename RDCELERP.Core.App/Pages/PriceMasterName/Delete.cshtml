@@ -1,0 +1,35 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.PriceMasterName.DeletProductCategoryById
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "_Layout";
+
+}
+
+<div class="row content-area">
+    <!--For Lead details-->
+    <div class="col-12">
+        <div class="box">
+            <hr />
+            <dl class="row">
+                <h5>
+                    Are you sure you want to delete <b>@Html.DisplayFor(model => model.TblProductCategory.Name)</b> 
+                   
+                </h5>
+            </dl>
+            <form method="post">
+                <input type="hidden" asp-for="TblProductCategory.Id" id="hdnId" />
+                <input type="hidden" asp-for="TblProductCategory.CreatedBy" />
+                <input type="hidden" asp-for="TblProductCategory.CreatedDate" />
+                <input type="hidden" asp-for="TblProductCategory.IsActive" />
+                <input type="hidden" asp-for="TblProductCategory.ModifiedBy" />
+                <input type="hidden" asp-for="TblProductCategory.ModifiedDate" />
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+                <a asp-page="./Index" class="btn btn-primary mainshadow">Back to List</a>
+                
+                
+            </form>
+        </div>
+    </div>
+</div>

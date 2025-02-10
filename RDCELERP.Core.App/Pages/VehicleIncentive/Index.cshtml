@@ -1,0 +1,418 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.VehicleIncentive.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int i = 0;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">Vehicle Incentive List</h2>
+                            </div>
+                            <div class="col text-end">
+                                @if (accessRule != null && accessRule.CanAdd)
+                                {
+                                    <a asp-page="Manage"
+                                       class="btn btn-primary">
+                                        New Vehicle Incentive
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        
+                        <div class="table-responsive">
+                            <table id="VehicleIndecntiveDatatable" class="table align-items-center table-flush" border="1">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="all">IncentiveId</th>
+                                        <th class="all">Actions</th>
+                                        <th class="all">Product Category</th>
+                                        <th class="all">Product Type</th>
+                                        <th class="all">Company</th>
+                                        <th class="all">Base Price</th>
+                                        <th class="all">Pickup Time in Hr</th>
+                                        <th class="all">Pickup Incentive Amount</th>
+                                        <th class="all">Drop Time in Hr</th>
+                                        <th class="all">Drop Incentive Amount</th>
+                                        <th class="all">Date</th>
+                                      
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    @*List Page Common Filters Code By Kranti Silawat*@
+                    <div class="filters">
+                        <div class="p-4">
+
+                            <h4 class="">Filters</h4>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkDateRange">Date Range</p>
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline mb-2" id="startdate" placeholder="Start Date" autocomplete="off">
+                                <input type="text" class="form-control d-inline mb-2" id="enddate" placeholder="End Date" autocomplete="off">
+                            </div>
+
+
+                            <div class="filter-seprator"></div>
+
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkProductCategory">Product Category</p>
+
+                            <div class="filterbox">
+                                <select asp-for="VehicleIncentiveVM.ProductCategoryId" id="ddlprodcatid" class="form-control d-inline" asp-items="ViewBag.ProductGroup">
+                                    <option value='0'>-select--</option>
+                                </select>
+                                <span asp-validation-for="VehicleIncentiveVM.ProductCategoryId" class="text-danger"></span>
+                            </div>
+
+                            <div class="filter-seprator"></div>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkProductType">Product Type</p>
+
+                            <div class="filterbox">
+                                <select asp-for="VehicleIncentiveVM.ProductTypeId" id="ddlprodcattypeid" class="form-control d-inline" asp-items="ViewBag.productTypeList">
+                                    <option value='0'>--Product Type--</option>
+                                </select>
+                                <span asp-validation-for="VehicleIncentiveVM.ProductTypeId" class="text-danger"></span>
+                            </div>
+
+                           
+
+                            <div class="filter-seprator"></div>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkBuId">Company Name</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="BuId" placeholder="Search Company Name">
+                            </div>
+
+                            
+                            <div class="filterbtnwrap">
+                                <a id="btnFilter" class="btn btn-primary">Filter</a>
+                                <a id="btnCloseFilter" class="btn btn-sm btn-secondary py-2">Clear</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delete-conformation" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="delete-conformation">
+                    Delete Confirmation
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="TblVehicleIncentiveObj.IncentiveId" id="hdnId" />
+                            <div class="col-sm-12">
+                                <span>
+                                    Are you sure you want to delete?
+                                </span>
+                                @*<strong class="deletedValueName">
+                                    </strong>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="Delete" class="btn btn-danger" value="Delete" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+<script type="text/javascript">
+    var table = null;
+    
+    $(document).ready(function () {
+        $('#ddlprodcatid').val(0);
+        $('#ddlprodcattypeid').val(0);
+        var url = "@URLPrefixforProd/api/ListPage/GetVehicleIncentiveList";
+        
+        var startDate = $('#startdate').val();
+        var endDate = $('#enddate').val();
+        // DataTable(url, startDate, endDate);
+        CommonFilter();
+
+        //Hide Filters Dive
+        $('.filters').hide();
+
+        //Date Picker Validation
+        $("#startdate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                $("#enddate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#enddate").datepicker({
+            defaultDate: null,
+
+        });
+    });
+
+
+    //delete EVC
+    function deleteConfirmVehicleIncentive(_Id) {
+       // alert(_dealId);
+        $('#hdnId').val(_Id);
+        $('#delete-conformation').modal('show');
+    }
+
+   
+    //data table
+    function DataTable(url, startDate, endDate) {
+        table = $('#VehicleIndecntiveDatatable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "paging": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    text: '<button class="btn btn-primary" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters').toggle();
+                        //$('.content').toggleClass('maincontent');
+                        //$('.filters').insertBefore('table.dataTable');
+                    }
+                },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Vehicle Incentive List',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Data found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "responsive": true,
+            "columns": [
+                { "data": "incentiveId", "name": "IncentiveId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Actions", "autoWidth": true, "orderable": false },
+                { "data": "productCategoryName", "name": "ProductCategoryName", "autoWidth": true, "orderable": true },
+                { "data": "productTypeName", "name": "ProductTypeName", "autoWidth": true, "orderable": true },
+                { "data": "businessUnitName", "name": "BusinessUnitName", "autoWidth": true, "orderable": true },
+                { "data": "basePrice", "name": "BasePrice", "autoWidth": true, "orderable": true },
+                { "data": "pickupTat", "name": "PickupTat", "autoWidth": true, "orderable": true },
+                { "data": "pickupIncAmount", "name": "PickupIncAmount", "autoWidth": true, "orderable": true },
+                { "data": "dropTat", "name": "DropTat", "autoWidth": true, "orderable": true },
+                { "data": "dropIncAmount", "name": "DropIncAmount", "autoWidth": true, "orderable": true },
+                { "data": "date", "name": "Date", "autoWidth": true, "orderable": true },
+                
+            ]
+        });
+    }
+
+    //Filter Clsoe Button Click Event
+    $('#btnCloseFilter').click(function () {
+        $('#startdate').val("");
+        $('#enddate').val("");
+        $('#ddlprodcatid').val(0);
+        $('#ddlprodcattypeid').val(0);
+        $('#BuId').val("");
+       
+        $.get("@URLPrefixforProd/VehicleIncentive/Index?handler=ProductCategoryType&VehicleIncentiveVM.ProductCategoryId=" + $(this).val()).done(function (data) {
+            console.log(data);
+            $("#ddlprodcattypeid").empty();
+            $("#ddlprodcattypeid").append($("<option></option>").val('0').html('Select ProductType'));
+                $.each(data, function (i, producttype) {
+                $("#ddlprodcattypeid").append($("<option></option>").val(producttype.id).html(producttype.description + " " +producttype.size));
+                });
+        });
+        // Unchecks it
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        CommonFilter();
+    });
+
+    //Check Box Date Range change Event
+    $("#chkDateRange").click(function () {
+        if (!this.checked) {
+            $('#startdate').val("");
+            $('#enddate').val("");
+        }
+    });
+
+    //Check Box Product Category change Event
+    $("#chkProductCategory").click(function () {
+        if (!this.checked) {
+            $('#ddlprodcatid').val(0);
+            $.get("@URLPrefixforProd/VehicleIncentive/Index?handler=ProductCategoryType&VehicleIncentiveVM.ProductCategoryId=" + $(this).val()).done(function (data) {
+                console.log(data);
+                $("#ddlprodcattypeid").empty();
+                $("#ddlprodcattypeid").append($("<option> </option>").val('0').html('Select ProductType'));
+                    $.each(data, function (i, producttype) {
+                    $("#ddlprodcattypeid").append($("<option></option>").val(producttype.id).html(producttype.description +" "+ producttype.size));
+                    });
+            });
+        }
+    });
+
+    //Check Box Product Type change Event
+    $("#chkProductCategory").click(function () {
+        if (!this.checked) {
+            $('#ddlprodcattypeid').val(0);
+        }
+    });
+
+
+    //Check Box Product Type change Event
+    $("#chkProductType").click(function () {
+        if (!this.checked) {
+            $('#ddlprodcattypeid').val(0);
+        }
+    });
+
+    //Check Box Business Unit change Event
+    $("#chkBuId").click(function () {
+        if (!this.checked) {
+            $('#BuId').val("");
+        }
+    });
+
+    $('#btnFilter').click(function () {
+        CommonFilter();
+    });
+    // Changes for Implement Multiple Filters
+    $("#ddlprodcatid").change(function () {
+        $.get("@URLPrefixforProd/ModelNumber/Index?handler=ProductCategoryType&ModelNumberVM.ProductCategoryId=" + $(this).val()).done(function (data) {
+            console.log(data);
+            $("#ddlprodcattypeid").empty();
+            $("#ddlprodcattypeid").append($("<option></option>").val('0').html('Select ProductType'));
+            $.each(data, function (i, producttype) {
+                $("#ddlprodcattypeid").append($("<option></option>").val(producttype.id).html(producttype.description +" "+ producttype.size));
+            });
+        });
+    });
+
+    //Filter Function
+    function CommonFilter() {
+
+        var startDate = $('#startDate').val();
+        startDate = $('#endDate').val() == "" ? null : $('#startDate').val();
+        var endDate = $('#endDate').val();
+        endDate = $('#endDate').val() == "" ? null : $('#endDate').val();
+
+        var ddlprodcatid = $('#ddlprodcatid').val();
+        ddlprodcatid = $('#ddlprodcatid').val() == "" ? null : $('#ddlprodcatid').val();
+
+        var ddlprodcattypeid = $('#ddlprodcattypeid').val();
+        ddlprodcattypeid = $('#ddlprodcattypeid').val() == "" ? null : $('#ddlprodcattypeid').val();
+
+        var BuId = $('#BuId').val();
+        BuId = $('#BuId').val() == "" ? null : $('#BuId').val();
+        var url = null;
+        if (startDate == null || endDate == null) {
+            url = "@ViewData["URLPrefixforProd"]/api/ListPage/GetVehicleIncentiveList?" + '&ddlprodcatid=' + ddlprodcatid + "&ddlprodcattypeid=" + ddlprodcattypeid + "&BuId=" +
+                BuId;
+        }
+        else {
+
+            url = "@ViewData["URLPrefixforProd"]/api/ListPage/GetVehicleIncentiveList?" + '&startDate=' + startDate + ' &endDate=' + endDate + '&ddlprodcatid=' + ddlprodcatid + "&ddlprodcattypeid=" + ddlprodcattypeid + "&BuId=" +
+                BuId;
+        }
+        
+        
+
+        // Destroy the existing DataTable
+        table = $('#VehicleIndecntiveDatatable').DataTable();
+        // Destroy the existing DataTable
+        table.clear().destroy();
+        //Re-Initialize Datatable
+        DataTable(url);
+
+        $('.filters').hide();
+    }
+
+
+
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+    //For Export Buttons available inside jquery-datatable "server side processing" - End
+</script>
+

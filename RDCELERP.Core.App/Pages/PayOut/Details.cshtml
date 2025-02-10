@@ -1,0 +1,237 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.PayOut.DetailsModel
+@{
+    ViewData["Title"] = "PayOutConfirmation";
+    Layout = null;
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+    //<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css"
+}
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Details</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+          integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+
+  
+    <link href="~/PayoutDetails/DetailsStyle.css" rel="stylesheet" />
+    <style>
+        .check-container {
+            width: 6.25rem;
+            height: 7.5rem;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .check-container .check-background {
+            width: 100%;
+            height: calc(100% - 1.25rem);
+            background: linear-gradient(to bottom right, #24ba60, #41d67c);
+            box-shadow: 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset;
+            transform: scale(0.84);
+            border-radius: 50%;
+            animation: animateContainer 0.75s ease-out forwards 0.75s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+        }
+
+        .check-container .check-background svg {
+            width: 65%;
+            transform: translateY(0.25rem);
+            stroke-dasharray: 80;
+            stroke-dashoffset: 80;
+            animation: animateCheck 0.35s forwards 1.25s ease-out;
+        }
+
+        .check-container .check-shadow {
+            bottom: calc(-15% - 5px);
+            left: 0;
+            border-radius: 50%;
+            background: radial-gradient(closest-side, #49da83, transparent);
+            animation: animateShadow 0.75s ease-out forwards 0.75s;
+        }
+
+        @@keyframes animateContainer {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+                box-shadow: 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset;
+            }
+
+            25% {
+                opacity: 1;
+                transform: scale(0.9);
+                box-shadow: 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset;
+            }
+
+            43.75% {
+                transform: scale(1.15);
+                box-shadow: 0px 0px 0px 43.334px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 65px rgba(255, 255, 255, 0.25) inset;
+            }
+
+            62.5% {
+                transform: scale(1);
+                box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 21.667px rgba(255, 255, 255, 0.25) inset;
+            }
+
+            81.25% {
+                box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 0px rgba(255, 255, 255, 0.25) inset;
+            }
+
+            100% {
+                opacity: 1;
+                box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.25) inset, 0px 0px 0px 0px rgba(255, 255, 255, 0.25) inset;
+            }
+        }
+
+        @@keyframes animateCheck {
+            from {
+                stroke-dashoffset: 80;
+            }
+
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @@keyframes animateShadow {
+            0% {
+                opacity: 0;
+                width: 100%;
+                height: 15%;
+            }
+
+            25% {
+                opacity: 0.25;
+            }
+
+            43.75% {
+                width: 40%;
+                height: 7%;
+                opacity: 0.35;
+            }
+
+            100% {
+                width: 85%;
+                height: 15%;
+                opacity: 0.25;
+            }
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <div class="topnav">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 py-3 text-center">
+                        <div class="logowrapper">
+                            <img src="https://digi2l.in/wp-content/uploads/2022/09/logo.svg" alt="">
+
+                        </div>
+                        <p>India's 1st Digital Platform To Sell Used Appliances</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="container">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <div class="check-container mx-auto">
+                                <div class="check-background">
+                                    <svg viewBox="0 0 65 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M7 25L27.3077 44L58.5 7" stroke="white" stroke-width="13"
+                                              stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                                <div class="check-shadow"></div>
+                            </div>
+                            <h3 class="heading text-center">Thank you!</h3>
+                        </div>
+
+                        <div class="col-12 text-center" >
+
+                            <p>
+                             @Model.messageObj.Message
+                            </p>
+                        </div>
+
+                        <div class="col-12 mb-4 text-center">
+                            <a href="@Model.messageObj.PageRedirectionURL"class="btn btn-primary">Back</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>
+                            <a href="https://digi2l.in" target="_blank">
+                                <label style="color:white">Powered by</label>
+
+                                <img src="https://digi2l.in/wp-content/uploads/2022/09/logo-Digi2L.png">
+                            </a>
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-md-right footer-pattern">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+
+
+</body>
+
+</html>

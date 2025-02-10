@@ -1,0 +1,323 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ABBRegistration.ABBApprovedModel
+@{
+    ViewData["Title"] = "ABBApprovedModel";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+    alert("@ViewData["UserAuth"]");
+    </script>
+}
+<link href="~/NewLayout/css/jquery.dataTables.min.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">Approved List</h2>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="ABBDatatable"
+                                   class="table align-items-center" border="1">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="all notexport">AbbregistrationId</th>
+                                        <th class="all notexport">Actions</th>
+                                        <th class="all">Company Name</th>
+                                        <th class="all">Regd No.</th>
+                                        <th class="all">Customer FullName</th>
+                                        <th class="all">Product Type</th>
+                                        <th class="all">Registration Date</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="filters">
+                        <div class="p-4">
+
+                            <h4 class="">Filters</h4>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkDateRange">Date Range</p>
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline mb-2" id="startdate" readonly placeholder="Start Date" autocomplete="off">
+                                <input type="text" class="form-control d-inline mb-2" id="enddate" readonly placeholder="End Date" autocomplete="off">
+                            </div>
+
+
+                            <div class="filter-seprator"></div>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkregdNo">Regd No</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">
+                            </div>
+
+                            <div class="filter-seprator"></div>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkcompanyName">Company Name</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="companyName" placeholder="Search Company Name">
+                            </div>
+
+                            <div class="filter-seprator"></div>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkcustomerName">Customer FirstName</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="customerName" placeholder="Search Customer Name">
+                            </div>
+
+                            <div class="filterbtnwrap">
+                                <a id="btnFilter" class="btn btn-primary">Filter</a>
+                                <a id="btnCloseFilter" class="btn btn-sm btn-secondary py-2">Clear</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+
+<script>
+    @*$(document).ready(function () {
+        var url = "@ViewData["URLPrefixforProd"]/api/ABBList/ABBApproveList";*@
+     var table = null;
+    $(document).ready(function () {
+
+        var url = "@ViewData["URLPrefixforProd"]/api/ABBList/ABBApproveList?companyId=" + @ViewBag.CompanyId;
+        var startDate = $('#startdate').val();
+        var endDate = $('#enddate').val();
+        DataTable(url, startDate, endDate);
+
+        //Hide Filters Dive
+        $('.filters').hide();
+
+        //date range Filter
+        @*$('#filter-dates').click(function () {
+            startDate = $('#startdate').val();
+            endDate = $('#enddate').val();
+            var url = "@ViewData["URLPrefixforProd"]/api/ABBList/ABBApproveList?companyId=" + @ViewBag.CompanyId + '&startDate=' + startDate + ' &endDate=' + endDate;
+            table = $('#ABBDatatable').DataTable();
+            // Destroy the existing DataTable
+            table.destroy();
+            DataTable(url,startDate,endDate);
+        });*@
+
+        $("#startdate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                $("#enddate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#enddate").datepicker({
+            defaultDate: null,
+
+        });
+    });
+
+        function DataTable(url, startDate, endDate) {
+            table = $('#ABBDatatable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "searching": false,
+            "filter": true,
+            "data": { startDate: startDate, endDate: endDate },
+            "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        text: '<button class="btn btn-primary" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                        action: function (e, dt, node, config) {
+                            $('.filters').toggle();
+                            //$('.content').toggleClass('maincontent');
+                            //$('.filters').insertBefore('table.dataTable');
+                        }
+                    },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'ABB Approve List',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Data found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+             "responsive": true,
+            "columns": [
+                { "data": "abbregistrationId", "name": "AbbregistrationId", "autoWidth": true },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "companyName", "name": "companyName", "autoWidth": true },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true },
+                { "data": "custFullName", "name": "custFullName", "autoWidth": true },
+                { "data": "newProductCategoryType", "name": "newProductCategoryType", "autoWidth": true },
+                { "data": "registrationDate", "name": "registrationDate", "autoWidth": true },
+
+            ]
+        });
+    }
+
+       //Filter Clsoe Button Click Event
+    $('#btnCloseFilter').click(function () {
+        $('#startdate').val("");
+        $('#enddate').val("");
+        $('#regdNo').val("");
+        $('#companyName').val("");
+        $('#customerName').val("");
+        // Unchecks it
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        CommonFilter();
+    });
+
+    //Check Box Date Range change Event
+    $("#chkDateRange").click(function () {
+        if (!this.checked) {
+            $('#startdate').val("");
+            $('#enddate').val("");
+        }
+    });
+
+    //Check Box Regd Number change Event
+    $("#chkregdNo").click(function () {
+        if (!this.checked) {
+            $('#regdNo').val("");
+        }
+    });
+
+    //Check Box Brand Name change Event
+    $("#chkcompanyName").click(function () {
+        if (!this.checked) {
+            $('#companyName').val("");
+        }
+    });
+
+    //Check Box Brand Name change Event
+    $("#chkcustomerName").click(function () {
+        if (!this.checked) {
+            $('#customerName').val("");
+        }
+    });
+      // LGC Pickup multi Search Filter
+    $('#btnFilter').click(function () {
+        CommonFilter();
+    });
+
+    //Filter Function
+    function CommonFilter() {
+        var startDate = $('#startdate').val();
+        startDate = $('#startdate').val() == "" ? null : $('#startdate').val();
+        var endDate = $('#enddate').val();
+        endDate = $('#enddate').val() == "" ? null : $('#enddate').val();
+        //var newProductCategoryType = $('#newProductCategoryType').val();
+        //newProductCategoryType = $('#newProductCategoryType').val() == "" ? 0 : $('#newProductCategoryType').val();
+        var regdNo = $('#regdNo').val();
+        regdNo = $('#regdNo').val() == "" ? null : $('#regdNo').val();
+        var companyName = $('#companyName').val();
+        companyName = $('#companyName').val() == "" ? null : $('#companyName').val();
+        var custFirstName = $('#customerName').val();
+        custFirstName = $('#customerName').val() == "" ? null : $('#customerName').val();
+        var url = null;
+        if (startDate == null || endDate == null) {
+            url = "@ViewData["URLPrefixforProd"]/api/ABBList/ABBApproveList?companyId=" + @ViewBag.CompanyId + "&regdNo=" +
+                regdNo + "&companyName=" + companyName + "&custFirstName=" + custFirstName;
+        }
+        else {
+            url = "@ViewData["URLPrefixforProd"]/api/ABBList/ABBApproveList?companyId=" + @ViewBag.CompanyId + '&startDate=' + startDate + ' &endDate=' + endDate + "&regdNo=" +
+                regdNo + "&companyName=" + companyName + "&custFirstName=" + custFirstName;
+        }
+
+
+        // Destroy the existing DataTable
+        table = $('#ABBDatatable').DataTable();
+        // Destroy the existing DataTable
+        table.destroy();
+
+        DataTable(url, startDate, endDate);
+        $('.filters').hide();
+    }
+
+
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+    //For Export Buttons available inside jquery-datatable "server side processing" - End
+
+     function RecordView(id) {
+        $('#loader').show();
+        $.get("@ViewData["URLPrefixforProd"]/ABB/Bosch_Edit?handler=ABBEditById&AbbregistrationId=" + id).done(function (data) {
+            console.log(data);
+            
+            location.reload(true);
+        });
+    }
+
+</script>

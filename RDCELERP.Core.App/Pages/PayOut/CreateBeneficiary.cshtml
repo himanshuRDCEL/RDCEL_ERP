@@ -1,0 +1,122 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.PayOut.CreateBeneficiaryModel
+@{
+    ViewData["Title"] = "Create Beneficiary";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a> Add New Beneficiary 
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="row">
+                                    <input type="hidden" asp-for="addBeneficiary.beneId" id="beneId" />
+                                    <input type="hidden" asp-for="addBeneficiary.name" id="name" />
+                                    <input type="hidden" asp-for="addBeneficiary.email" id="email" />
+                                    <input type="hidden" asp-for="addBeneficiary.phone" id="phone" />
+                                    <input type="hidden" asp-for="addBeneficiary.address1" id="address1" />
+                                    <input type="hidden" asp-for="addBeneficiary.city" id="city" />
+                                    <input type="hidden" asp-for="addBeneficiary.state" id="state" />
+                                    <input type="hidden" asp-for="addBeneficiary.pincode" id="pincode" />
+
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Beneficiary Id<span style="color:red;"> *</span></label>
+
+                                    <input id="ddlempid" asp-for="@Model.addBeneficiary.beneId" class="form-control" readonly />
+                                    <span asp-validation-for="@Model.addBeneficiary.beneId" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Beneficiary Name </label>
+                                    <input asp-for="@Model.addBeneficiary.name" id="txtEmployeeName" class="form-control" readonly/>
+                                    <span asp-validation-for="@Model.addBeneficiary.name" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Email </label>
+                                    <input asp-for="@Model.addBeneficiary.email" id="txtEmployeeEMail" class="form-control" readonly />
+                                    <span asp-validation-for="@Model.addBeneficiary.email" class="validEmail"></span>
+                                </div>
+                                <div class="col-12">
+                                    <hr class="my-4">
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Phone <span style="color:red;">*</span> </label>
+                                    <input asp-for="@Model.addBeneficiary.phone" maxlength="10" accept="0-9" class="form-control" readonly />
+                                    <span asp-validation-for="@Model.addBeneficiary.phone" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Address <span style="color:red;">*</span></label>
+                                    <input asp-for="@Model.addBeneficiary.address1" class="form-control" readonly />
+                                    <span asp-validation-for="@Model.addBeneficiary.address1" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">City <span style="color:red;">*</span></label>
+                                    <input asp-for="@Model.addBeneficiary.city" class="form-control" readonly />
+                                    <span asp-validation-for="@Model.addBeneficiary.city" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">State <span style="color:red;">*</span></label>
+                                    <input asp-for="@Model.addBeneficiary.state" class="form-control" readonly />
+                                    <span asp-validation-for="@Model.addBeneficiary.state" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">PinCode <span style="color:red;">*</span></label>
+                                    <input asp-for="@Model.addBeneficiary.pincode" class="form-control" readonly />
+                                    <span asp-validation-for="@Model.addBeneficiary.pincode" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">UPI ID <span style="color:red;">*</span></label>
+                                    <input type="text" asp-for="@Model.addBeneficiary.vpa" class="form-control" />
+                                    <span asp-validation-for="@Model.addBeneficiary.vpa" class="text-danger"></span>
+                                    <input type="hidden" asp-for="addBeneficiary.vpa" id="vpa" />
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a href='javascript:history.go(-1)' class="btn btn-secondary">Back</a>
+                                    }
+                                </div>
+                                <div class="col-6 text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <input type="submit" value="Add Beneficiary" class="btn btn-primary" asp-page-handler="Beneficiary" id="btnformSubmit" />
+                                    }
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

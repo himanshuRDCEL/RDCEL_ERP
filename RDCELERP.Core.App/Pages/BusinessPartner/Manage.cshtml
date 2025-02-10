@@ -1,0 +1,653 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.BusinessPartner.ManageModel
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    var BaseUrl = ViewData["BaseUrl"];
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>Business Partner
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" id="myForm">
+                            <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="BusinessPartnerViewModel.BusinessPartnerId" id="hdnId" />
+                                <input type="hidden" asp-for="BusinessPartnerViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="BusinessPartnerViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="BusinessPartnerViewModel.IsActive" />
+                                <input type="hidden" asp-for="BusinessPartnerViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="BusinessPartnerViewModel.ModifiedDate" />
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Company Name <span style="color:red;">*</span></label>
+                                    <input id="ddlBU" asp-for="BusinessPartnerViewModel.SponsorName" class="form-control" />
+                                    <span asp-validation-for="BusinessPartnerViewModel.SponsorName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Name<span style="color:red;">*</span></label>
+                                    <input asp-for="BusinessPartnerViewModel.Name" class="form-control" />
+                                    <span asp-validation-for="BusinessPartnerViewModel.Name" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for=""> Store Code <span style="color:red;">*</span></label>
+                                    <input type="text" asp-for="BusinessPartnerViewModel.StoreCode" class="form-control" />
+                                    <span asp-validation-for="BusinessPartnerViewModel.StoreCode" class="text-danger"></span>
+                                   
+                                </div>
+                               
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Email<span style="color:red;">*</span></label>
+
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="far fa-envelope text-gray-600"></i>
+                                        </span>
+                                        <input asp-for="BusinessPartnerViewModel.Email" class="form-control emailinputbox" />
+
+                                    </div>
+                                    <span asp-validation-for="BusinessPartnerViewModel.Email" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Contact Person First Name</label>
+                                    <input asp-for="BusinessPartnerViewModel.ContactPersonFirstName" class="form-control" />
+                                    <span asp-validation-for="BusinessPartnerViewModel.ContactPersonFirstName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Contact Person Last Name</label>
+                                    <input asp-for="BusinessPartnerViewModel.ContactPersonLastName" class="form-control" />
+                                    <span asp-validation-for="BusinessPartnerViewModel.ContactPersonLastName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Phone Number<span style="color:red;">*</span></label>
+                                    <input asp-for="BusinessPartnerViewModel.PhoneNumber" type="number" class="form-control" />
+                                    <span asp-validation-for="BusinessPartnerViewModel.PhoneNumber" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Address Line 1<span style="color:red;">*</span></label>
+                                    <input asp-for="BusinessPartnerViewModel.AddressLine1" class="form-control" />
+                                    <span asp-validation-for="BusinessPartnerViewModel.AddressLine1" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Address Line 2</label>
+                                    <input asp-for="BusinessPartnerViewModel.AddressLine2" class="form-control" />
+                                    <span asp-validation-for="BusinessPartnerViewModel.AddressLine2" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">State <span style="color:red;">*</span></label>
+
+                                    <input id="ddlState" asp-for="BusinessPartnerViewModel.State" class="form-control" />
+                                    <span asp-validation-for="BusinessPartnerViewModel.State" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">City <span style="color:red;">*</span></label>
+
+                                    <input id="ddlCity" asp-for="BusinessPartnerViewModel.City" class="form-control" />
+                                    <span asp-validation-for="BusinessPartnerViewModel.City" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Pin Code<span style="color:red;">*</span></label>
+                                    <input id="ddlPinCode" asp-for="BusinessPartnerViewModel.Pincode" class="form-control" />
+                                    <span asp-validation-for="BusinessPartnerViewModel.Pincode" class="text-danger"></span>
+                                </div>
+                             
+
+                            
+                                
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Business Partner's Password<span style="color:red;">*</span></label>
+                                   <div class="input-group">
+                                        <input asp-for="BusinessPartnerViewModel.Bppassword" value="@Model.BusinessPartnerViewModel.Bppassword" type="password" class="form-control" autocomplete="off" />
+                                    
+                                     <i class="fa-solid fa-eye" id="PasswordViewToggle"></i>
+                                   </div>
+                                   <span asp-validation-for="BusinessPartnerViewModel.Bppassword" class="text-danger"></span>
+                                   
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Associate Code<span style="color:red;">*</span></label>
+                                    <input asp-for="BusinessPartnerViewModel.AssociateCode" class="form-control" />
+                                    <span asp-validation-for="BusinessPartnerViewModel.AssociateCode" class="text-danger"></span>
+
+                                    <label class="" for=""><span class="text-danger">@ViewData["Msg"]</span></label>
+
+                                </div>
+
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Format Name<span style="color:red;">*</span></label>
+
+                                    <select asp-for="BusinessPartnerViewModel.FormatName" class="form-control">
+                                        <option value="">Select </option>
+                                        <option value="Dealer">Dealer</option>
+                                        <option value="Home">Home</option>
+                                        <option value="Warehouse">Warehouse </option>
+                                    </select>
+                                    <span asp-validation-for="BusinessPartnerViewModel.FormatName" class="text-danger"></span>
+                                </div>
+
+                               
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Store Type</label>
+                                    <input asp-for="BusinessPartnerViewModel.StoreType" class="form-control" />
+                                    <span asp-validation-for="BusinessPartnerViewModel.StoreType" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Business Partner UPI</label>
+                                    <input asp-for="BusinessPartnerViewModel.Upiid" class="form-control" />
+                                    <span asp-validation-for="BusinessPartnerViewModel.Upiid" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="col-md-4 mb-4 d-none" id="vouchertype">
+                                    <label for="">Voucher Type<span style="color:red;">*</span></label>
+                                    <select asp-for="BusinessPartnerViewModel.VoucherType" class="form-control" asp-items="ViewBag.VoucherTypeList">
+                                        <option value=''>--None--</option>
+                                    </select>
+                                    <span asp-validation-for="BusinessPartnerViewModel.VoucherType" class="text-danger"></span>
+                                </div>
+
+                             @*   <div class="col-md-4 mb-4">
+                                    <label asp-for="BusinessPartnerViewModel.Gstnumber" class="control-label"></label>
+                                    <input asp-for="BusinessPartnerViewModel.Gstnumber" class="form-control" />
+                                    <span asp-validation-for="BusinessPartnerViewModel.Gstnumber" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label asp-for="BusinessPartnerViewModel.BankDetails" class="control-label"></label>
+                                    <input asp-for="BusinessPartnerViewModel.BankDetails" class="form-control" />
+                                    <span asp-validation-for="BusinessPartnerViewModel.BankDetails" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label asp-for="BusinessPartnerViewModel.AccountNo" class="control-label"></label>
+                                    <input asp-for="BusinessPartnerViewModel.AccountNo" class="form-control" />
+                                    <span asp-validation-for="BusinessPartnerViewModel.AccountNo" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label asp-for="BusinessPartnerViewModel.Ifsccode" class="control-label"></label>
+                                    <input asp-for="BusinessPartnerViewModel.Ifsccode" class="form-control" />
+                                    <span asp-validation-for="BusinessPartnerViewModel.Ifsccode" class="text-danger"></span>
+                                </div>*@
+                                 <div class="col-md-12 mb-3"></div>
+                                 
+                                <div class="col-md-3 mb-3">
+                                    @if (Model.BusinessPartnerViewModel.IsAbbbp == true)
+                                    {
+                                        <label class="" for="">ABB</label>
+                                        <input name="BusinessPartnerViewModel.IsAbbbp" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsABBBPChecked" value="true" class="IsABBChk form-check-input">
+                                        <input name="BusinessPartnerViewModel.IsAbbbp" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsABBBPChecked" value="false">
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">ABB</label>
+                                        <input name="BusinessPartnerViewModel.IsAbbbp" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsABBBPChecked" value="true" class="IsABBChkclose  form-check-input">
+                                        <input name="BusinessPartnerViewModel.IsAbbbp" type="hidden" data-val-required="The IsChecked field is required." id="IsABBBPChecked" value="false">
+
+
+
+                                    }
+
+                                    <span asp-validation-for="BusinessPartnerViewModel.IsAbbbp" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    @if (Model.BusinessPartnerViewModel.IsExchangeBp == true)
+                                    {
+                                        <label class="" for="">Exchange</label>
+                                        <input name="BusinessPartnerViewModel.IsExchangeBp" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class=" form-check-input IsDealerChk">
+                                        <input name="BusinessPartnerViewModel.IsExchangeBp" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">Exchange</label>
+                                        <input name="BusinessPartnerViewModel.IsExchangeBp" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="form-check-input">
+                                        <input name="BusinessPartnerViewModel.IsExchangeBp" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+
+                                    <span asp-validation-for="BusinessPartnerViewModel.IsExchangeBp" class="text-danger"></span>
+                                </div>
+
+
+                                
+                                <div class="col-md-3 mb-3">
+                                    @if (Model.BusinessPartnerViewModel.IsDealer == true)
+                                    {
+                                        <label class="" for="">Dealer</label>
+                                        <input name="BusinessPartnerViewModel.IsDealer" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class=" form-check-input IsDealerChk">
+                                        <input name="BusinessPartnerViewModel.IsDealer" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">Dealer</label>
+                                        <input name="BusinessPartnerViewModel.IsDealer" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" class="form-check-input" value="true">
+                                        <input name="BusinessPartnerViewModel.IsDealer" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+                                    }
+                                    <span asp-validation-for="BusinessPartnerViewModel.IsDealer" class="text-danger"></span>
+                                </div>
+                                
+
+                                <div class="col-md-3 mb-3">
+                                    @if (Model.BusinessPartnerViewModel.IsORC == true)
+                                    {
+                                        <label class="" for="">ORC</label>
+                                        <input name="BusinessPartnerViewModel.IsORC" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="form-check-input IsDealerChk">
+                                        <input name="BusinessPartnerViewModel.IsORC" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">ORC</label>
+                                        <input name="BusinessPartnerViewModel.IsORC" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" class="form-check-input" value="true">
+                                        <input name="BusinessPartnerViewModel.IsORC" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+
+                                    <span asp-validation-for="BusinessPartnerViewModel.IsORC" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-12"><p class="text-danger" id="planErrorTxt"></p></div>
+
+                                <div class="col-md-3 mb-3">
+                                    @if (Model.BusinessPartnerViewModel.IsDefferedSettlement == true)
+                                    {
+                                        <label class="" for="">Deffered Settlement</label>
+                                        <input name="BusinessPartnerViewModel.IsDefferedSettlement" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="IsDealerChk form-check-input">
+                                        <input name="BusinessPartnerViewModel.IsDefferedSettlement" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">Deffered Settlement</label>
+                                        <input name="BusinessPartnerViewModel.IsDefferedSettlement" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" class="form-check-input" value="true">
+                                        <input name="BusinessPartnerViewModel.IsDefferedSettlement" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+
+                                    <span asp-validation-for="BusinessPartnerViewModel.IsDefferedSettlement" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-3 mb-3 d-none" id="DefferedABB">
+                                    @if (Model.BusinessPartnerViewModel.IsDefferedAbb == true)
+                                    {
+                                        <label class="" for="">Deffered ABB</label>
+                                        <input name="BusinessPartnerViewModel.IsDefferedAbb" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="form-check-input IsDealerChk">
+                                        <input name="BusinessPartnerViewModel.IsDefferedAbb" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">Deffered ABB</label>
+                                        <input name="BusinessPartnerViewModel.IsDefferedAbb" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" class="form-check-input" value="true">
+                                        <input name="BusinessPartnerViewModel.IsDefferedAbb" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+
+                                    <span asp-validation-for="BusinessPartnerViewModel.IsDefferedAbb" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    @if (Model.BusinessPartnerViewModel.IsD2c == true)
+                                    {
+                                        <label class="" for="">D2c</label>
+                                        <input name="BusinessPartnerViewModel.IsD2c" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="form-check-input IsDealerChk">
+                                        <input name="BusinessPartnerViewModel.IsD2c" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">D2c</label>
+                                        <input name="BusinessPartnerViewModel.IsD2c" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." class="form-check-input" id="IsChecked" value="true">
+                                        <input name="BusinessPartnerViewModel.IsD2c" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+
+                                    <span asp-validation-for="BusinessPartnerViewModel.IsD2c" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    @if (Model.BusinessPartnerViewModel.IsVoucher == true)
+                                    {
+                                        <label class="" for="">Voucher</label>
+                                        <input name="BusinessPartnerViewModel.IsVoucher" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="form-check-input IsDealerChkVoucher">
+                                        <input name="BusinessPartnerViewModel.IsVoucher" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">Voucher</label>
+                                        <input name="BusinessPartnerViewModel.IsVoucher" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="form-check-input IsDealerChkClose">
+                                        <input name="BusinessPartnerViewModel.IsVoucher" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+
+                                    <span asp-validation-for="BusinessPartnerViewModel.IsVoucher" class="text-danger"></span>
+                                </div>
+
+                                
+                                <div class="col-md-3 mb-3">
+                                    @if (Model.BusinessPartnerViewModel.PaymentToCustomer == true)
+                                    {
+                                        <label class="" for="">Payment To Customer</label>
+                                        <input name="BusinessPartnerViewModel.PaymentToCustomer" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="form-check-input IsDealerChk">
+                                        <input name="BusinessPartnerViewModel.PaymentToCustomer" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">Payment To Customer</label>
+                                        <input name="BusinessPartnerViewModel.PaymentToCustomer" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="form-check-input">
+                                        <input name="BusinessPartnerViewModel.PaymentToCustomer" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+                                    <span asp-validation-for="BusinessPartnerViewModel.PaymentToCustomer" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                    }
+                                </div>
+                                <div class="col-6 text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <input type="submit" value="Save" class="btn btn-primary mainshadow" />
+                                    }
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script>
+   
+    $(function () {
+
+        $('.IsDealerChk').each(function () {
+            var Ischecked = $(this).val();
+
+            if (Ischecked == "true") {
+
+                $(this).attr('checked', 'checked');
+            }
+        });
+    });
+
+    $(function () {
+
+        $('.IsABBChk').each(function () {
+            var IsABBBPChecked = $(this).val();
+
+            if (IsABBBPChecked == "true") {
+
+                $(this).attr('checked', 'checked');
+            }
+        });
+    });
+
+    $(function () {
+
+        $('.IsDealerChkVoucher').each(function () {
+            var IsChecked = $(this).val();
+
+            if (IsChecked == "true") {
+
+                $(this).attr('checked', 'checked');
+            }
+        });
+    });
+
+
+
+
+    $(function () {
+
+        if ($('.IsDealerChkVoucher').val() == "true") {
+            $('#vouchertype').toggleClass('d-none');
+            $(this).attr('checked', 'checked');
+        }
+
+    });
+
+
+    // $('.IsDealerChk').click(function () {
+    //     $('#vouchertype').toggleClass('d-none');
+    // });
+
+
+    $('.IsDealerChkClose').click(function () {
+        $('#vouchertype').toggleClass('d-none');
+    });
+
+    $('.IsDealerChkVoucher').click(function () {
+        $('#vouchertype').toggleClass('d-none');
+    });
+
+
+    $(function () {
+
+        if ($('.IsABBChk').val() == "true") {
+            $('#DefferedABB').toggleClass('d-none');
+            $(this).attr('checked', 'checked');
+        }
+
+    });
+
+
+    $('.IsABBChk').click(function () {
+        $('#DefferedABB').toggleClass('d-none');
+    });
+
+
+    $('.IsABBChkclose').click(function () {
+        $('#DefferedABB').toggleClass('d-none');
+    });
+    
+     $('#PasswordViewToggle').click(function () {
+      $(this).toggleClass('fa-eye fa-eye-slash');
+      var x = document.getElementById("BusinessPartnerViewModel_Bppassword");
+      if (x.type === "password") {
+          x.type = "text";
+      } else {
+          x.type = "password";
+      }
+  });
+
+</script>
+<script src="~/js/compressor.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#myForm').change(function () {
+            if ($('input[name="BusinessPartnerViewModel.IsAbbbp"]:Checked').length == 0 &&
+                $('input[name="BusinessPartnerViewModel.IsExchangeBp"]:Checked').length == 0) {
+                $('#planErrorTxt').text('Please select at least one option from ABB & Exchange');
+
+
+
+                return false;
+            }
+            else {
+                $('#planErrorTxt').text('  ');
+
+            }
+        });
+
+
+        $(document).ready(function () {
+            $('#myForm').submit(function () {
+                // Check if neither checkbox is checked
+                if ($('input[name="BusinessPartnerViewModel.IsAbbbp"]:checked').length === 0 &&
+                    $('input[name="BusinessPartnerViewModel.IsExchangeBp"]:checked').length === 0) {
+                    // Display error message
+                    $('#planErrorTxt').text('Please select at least one option from ABB & Exchange');
+                    return false;
+                } else {
+                    // Clear error message
+                    $('#planErrorTxt').text(' ');
+                }
+            });
+        });
+
+
+        $('#txtName').on("keydown", function () {
+
+            $('#txtName-error').text('');
+        })
+    });
+
+
+
+
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        $("#ddlState").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/BusinessPartner/Manage?handler=AutoStateName", {
+                    term: extractLast(request.term)
+                }, response);
+            },
+            select: function (event, ui) {
+                $("#ddlState").val(ui.item.value); // Set the selected value
+                StateId = ui.item.text;
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $("#ddlState").val(""); // Clear the input field
+                    StateId = null;
+                }
+            }
+        });
+
+        $("#ddlCity").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/BusinessPartner/Manage", {
+                    handler: "AutoCityName",
+                    term: extractLast(request.term),
+                    term2: StateId
+                }, response);
+            },
+            select: function (event, ui) {
+                $("#ddlCity").val(ui.item.value); // Set the selected value
+                CityId = ui.item.text;
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $("#ddlCity").val(""); // Clear the input field
+                    CityId = null;
+                }
+            }
+        });
+
+        $("#ddlPinCode").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/BusinessPartner/Manage", {
+                    handler: "AutoPinCode",
+                    term: extractLast(request.term),
+                    term2: CityId,
+                }, response);
+            },
+            select: function (event, ui) {
+                $("#ddlPinCode").val(ui.item.value); // Set the selected value
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $("#ddlPinCode").val(""); // Clear the input field
+                }
+            }
+        });
+
+        $("#ddlBU").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/BusinessPartner/Manage", {
+                    handler: "AutoBusinessUnit",
+                    term: extractLast(request.term),
+                }, response);
+            },
+            select: function (event, ui) {
+                $("#ddlBU").val(ui.item.value); // Set the selected value
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $("#ddlBU").val(""); // Clear the input field
+                }
+            }
+        });
+    });
+
+</script>
+
+
+
+
+
+

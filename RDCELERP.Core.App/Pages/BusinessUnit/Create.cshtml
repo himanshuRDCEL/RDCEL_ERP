@@ -1,0 +1,248 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.BusinessUnit.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    var BaseUrl = ViewData["BaseUrl"];
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a> Create Business Unit
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="BusinessUnitViewModel.BusinessUnitId" id="hdnId" />
+                                <input type="hidden" asp-for="BusinessUnitViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="BusinessUnitViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="BusinessUnitViewModel.IsActive" />
+                                <input type="hidden" asp-for="BusinessUnitViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="BusinessUnitViewModel.ModifiedDate" />
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Name <span style="color:red;">*</span></label>
+                                    <input type="text" asp-for="BusinessUnitViewModel.Name" class="form-control" id="txtName" onchange="CheckAvailability();" />
+                                    <span asp-validation-for="BusinessUnitViewModel.Name" class="text-danger"></span>
+                                    <span class="text-danger" id="message"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Description<span style="color:red;">*</span></label>
+                                    <input asp-for="BusinessUnitViewModel.Description" class="form-control" />
+                                    <span asp-validation-for="BusinessUnitViewModel.Description" class="text-danger"></span>
+
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Email<span style="color:red;">*</span></label>
+
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="far fa-envelope text-gray-600"></i>
+                                        </span>
+                                        <input asp-for="BusinessUnitViewModel.Email" class="form-control emailinputbox" />
+                                        <span asp-validation-for="BusinessUnitViewModel.Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Expected Delivery Hours<span style="color:red;">*</span></label>
+                                    <input asp-for="BusinessUnitViewModel.ExpectedDeliveryHours" class="form-control" />
+                                    <span asp-validation-for="BusinessUnitViewModel.ExpectedDeliveryHours" class="text-danger"></span>
+
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Voucher Expiry Time<span style="color:red;">*</span></label>
+                                    <input asp-for="BusinessUnitViewModel.VoucherExpiryTime" class="form-control" />
+                                    <span asp-validation-for="BusinessUnitViewModel.VoucherExpiryTime" class="text-danger"></span>
+
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Sweetner For Dtd<span style="color:red;">*</span></label>
+                                    <input asp-for="BusinessUnitViewModel.SweetnerForDtd" class="form-control" />
+                                    <span asp-validation-for="BusinessUnitViewModel.SweetnerForDtd" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Sweetner For Dtc<span style="color:red;">*</span></label>
+                                    <input asp-for="BusinessUnitViewModel.SweetnerForDtc" class="form-control" />
+                                    <span asp-validation-for="BusinessUnitViewModel.SweetnerForDtc" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    @if (Model.BusinessUnitViewModel.IsSweetnerModelBased == true)
+                                    {
+                                        <label class="" for="">Is Sweetner Model Based</label>
+                                        <input name="BusinessUnitViewModel.IsSweetnerModelBased" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="IsDealerChk">
+                                        <input name="BusinessUnitViewModel.IsSweetnerModelBased" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">Is Sweetner Model Based</label>
+                                        <input name="BusinessUnitViewModel.IsSweetnerModelBased" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true">
+                                        <input name="BusinessUnitViewModel.IsSweetnerModelBased" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+
+                                    <span asp-validation-for="BusinessUnitViewModel.IsSweetnerModelBased" class="text-danger"></span>
+
+                                </div>
+
+
+                                <div class="col-md-4 mb-4">
+                                    @if (Model.BusinessUnitViewModel.IsBud2c == true)
+                                    {
+                                        <label class="" for="">Is Bud2c</label>
+                                        <input name="BusinessUnitViewModel.IsBud2c" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="IsDealerChk">
+                                        <input name="BusinessUnitViewModel.IsBud2c" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">Is Bud2c</label>
+                                        <input name="BusinessUnitViewModel.IsBud2c" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true">
+                                        <input name="BusinessUnitViewModel.IsBud2c" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+
+                                    <span asp-validation-for="BusinessUnitViewModel.IsBud2c" class="text-danger"></span>
+
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    @if (Model.BusinessUnitViewModel.IsAbb == true)
+                                    {
+                                        <label class="" for="">Is ABB</label>
+                                        <input name="BusinessUnitViewModel.IsAbb" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="IsDealerChk">
+                                        <input name="BusinessUnitViewModel.IsAbb" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">Is ABB</label>
+                                        <input name="BusinessUnitViewModel.IsAbb" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true">
+                                        <input name="BusinessUnitViewModel.IsAbb" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+
+                                    <span asp-validation-for="BusinessUnitViewModel.IsAbb" class="text-danger"></span>
+
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    @if (Model.BusinessUnitViewModel.IsExchange == true)
+                                    {
+                                        <label class="" for="">Is Exchange</label>
+                                        <input name="BusinessUnitViewModel.IsExchange" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="IsDealerChk">
+                                        <input name="BusinessUnitViewModel.IsExchange" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">Is Exchange</label>
+                                        <input name="BusinessUnitViewModel.IsExchange" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true">
+                                        <input name="BusinessUnitViewModel.IsExchange" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+
+                                    <span asp-validation-for="BusinessUnitViewModel.IsExchange" class="text-danger"></span>
+
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    @if (Model.BusinessUnitViewModel.IsBumultiBrand == true)
+                                    {
+                                        <label class="" for="">Is Bumulti Brand</label>
+                                        <input name="BusinessUnitViewModel.IsBumultiBrand" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="IsDealerChk">
+                                        <input name="BusinessUnitViewModel.IsBumultiBrand" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">Is Bumulti Brand</label>
+                                        <input name="BusinessUnitViewModel.IsBumultiBrand" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true">
+                                        <input name="BusinessUnitViewModel.IsBumultiBrand" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+
+                                    <span asp-validation-for="BusinessUnitViewModel.IsBumultiBrand" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            <div class="float-right">
+                                @if (accessRule != null && accessRule.CanAdd)
+                                {
+                                    <input type="submit" value="Save" id="Savebtn" class="btn btn-primary mainshadow" />
+                                }
+                                @if (accessRule != null && accessRule.CanView)
+                                {
+                                    <a asp-page="./Index" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">Cancel</a>
+                                }
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+<script src="~/js/compressor.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+    // Bind to the input event of the input field to clear the message whenever the input changes
+    $("#txtName").on('input', function () {
+        $("#message").html(" ");
+        $('#Savebtn').prop('disabled', false);
+    });
+});
+
+function CheckAvailability() {
+    var name = $("#txtName").val();
+    if (name === '') {
+        $("#message").html(" ");
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "@ViewData["URLPrefixforProd"]/BusinessUnit/Create?handler=CheckName",
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("XSRF-TOKEN",
+                $('input:hidden[name="__RequestVerificationToken"]').val());
+        },
+        data: { "name": name },
+        success: function (response) {
+            if (response == true || response == "True" || response == "true") {
+                $("#message").html(" ");
+            } else {
+                $("#message").css("color", "red");
+                $("#message").html("This name is already exist.");
+                $('#Savebtn').prop('disabled', true);
+            }
+        },
+    });
+}
+
+
+</script>

@@ -1,0 +1,425 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ABBRedemption.ABBRedemptionModel
+@{
+    ViewData["Title"] = "Manager";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var InvoiceImageURL = ViewData["InvoiceImageURL"];
+    var currentDate = DateTime.Now.Date;
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+    alert("@ViewData["UserAuth"]");
+    </script>
+    //<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css"
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">ABB Redemption Form </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            <div>
+                                @*@Html.Partial("_MessagePartial")*@
+                            </div>
+                            <div class="row">
+                                <input type="hidden" asp-for="AbbRedemptionModel.RedemptionId" id="hdnUserId" />
+                                <input type="hidden" asp-for="AbbRedemptionModel.ABBRegistrationId" id="hdnAbbregId" />
+                                @*<input type="hidden" asp-for="AbbRedemptionModel.RegdNo" id="hdregdno" />*@
+                                <input type="hidden" asp-for="AbbRedemptionModel.CreatedBy" />
+                                <input type="hidden" asp-for="AbbRedemptionModel.CreatedDate" />
+                                <input type="hidden" asp-for="AbbRedemptionModel.IsActive" />
+                                <input type="hidden" asp-for="AbbRedemptionModel.ModifiedBy" />
+                                <input type="hidden" asp-for="AbbRedemptionModel.ModifiedDate" />
+                                <input type="hidden" asp-for="AbbRedemptionModel.CustomerDetailsId" />
+                                <input type="hidden" asp-for="AbbRedemptionModel.IsCustomerDetailsEdittable" />
+                                <input type="hidden" id="hdnNoclaimPeriod" asp-for="AbbRedemptionModel.NoClaimPeriod" />
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Regd No</label>
+                                    <input asp-for="AbbRedemptionModel.RegdNo" id="txtcustfirstname" class="form-control" readonly />
+
+                                    <span asp-validation-for="AbbRedemptionModel.RegdNo" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0">Customer Details</h5>
+                                    <hr />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">FirstName </label>
+                                    @if (@Model.AbbRedemptionModel.IsCustomerDetailsEdittable == true)
+                                    {
+                                        <input asp-for="AbbRedemptionModel.CustFirstName" id="txtcustfirstname" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="AbbRedemptionModel.CustFirstName" id="txtcustfirstname" class="form-control" readonly />
+                                    }
+
+                                    <span asp-validation-for="AbbRedemptionModel.CustFirstName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">LastName </label>
+                                    @if (@Model.AbbRedemptionModel.IsCustomerDetailsEdittable == true)
+                                    {
+                                        <input asp-for="AbbRedemptionModel.CustLastName" id="txtcustlastname" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="AbbRedemptionModel.CustLastName" id="txtcustlastname" class="form-control" readonly />
+                                    }
+                                    <span asp-validation-for="AbbRedemptionModel.CustLastName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Mobile</label>
+                                    @if (@Model.AbbRedemptionModel.IsCustomerDetailsEdittable == true)
+                                    {
+                                        <input asp-for="AbbRedemptionModel.CustMobile" type="number" pattern="^\+91(7\d|8\d|9\d)\d{9}$" accept="0-9" id="txtcustmob" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="AbbRedemptionModel.CustMobile" id="txtcustmob" class="form-control" readonly />
+                                    }
+                                    <span asp-validation-for="AbbRedemptionModel.CustMobile" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">E-mail </label>
+                                    @if (@Model.AbbRedemptionModel.IsCustomerDetailsEdittable == true)
+                                    {
+                                        <input asp-for="AbbRedemptionModel.CustEmail" type="email" id="txtcustemail" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="AbbRedemptionModel.CustEmail" type="email" id="txtcustemail" class="form-control" readonly />
+                                    }
+                                    <span asp-validation-for="AbbRedemptionModel.CustEmail" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Address1 </label>
+                                    @if (@Model.AbbRedemptionModel.IsCustomerDetailsEdittable == true)
+                                    {
+                                        <input asp-for="AbbRedemptionModel.CustAddress1" id="txtcustaddress1" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="AbbRedemptionModel.CustAddress1" id="txtcustaddress1" class="form-control" readonly />
+                                    }
+                                    <span asp-validation-for="AbbRedemptionModel.CustAddress1" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Address2 </label>
+                                    @if (@Model.AbbRedemptionModel.IsCustomerDetailsEdittable == true)
+                                    {
+                                        <input asp-for="AbbRedemptionModel.CustAddress2" id="txtcustaddress2" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="AbbRedemptionModel.CustAddress2" id="txtcustaddress2" class="form-control" readonly />
+                                    }
+                                    <span asp-validation-for="AbbRedemptionModel.CustAddress2" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Pin Code</label>
+                                    @if (@Model.AbbRedemptionModel.IsCustomerDetailsEdittable == true)
+                                    {
+                                        <input asp-for="AbbRedemptionModel.CustPinCode" id="txtcustpincode" type="number" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="AbbRedemptionModel.CustPinCode" id="txtcustpincode" type="number" class="form-control" readonly />
+                                    }
+                                    <span asp-validation-for="AbbRedemptionModel.CustPinCode" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">City</label>
+                                    @if (@Model.AbbRedemptionModel.IsCustomerDetailsEdittable == true)
+                                    {
+                                        <input asp-for="AbbRedemptionModel.CustCity" id="txtcity" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="AbbRedemptionModel.CustCity" id="txtcity" class="form-control" readonly />
+                                    }
+                                    <span asp-validation-for="AbbRedemptionModel.CustCity" class="text-danger"></span>
+                                </div>
+                                @* <div class="col-md-4 mb-4">
+                                    <label for="">Location</label>
+                                    @if (@Model.AbbRedemptionModel.IsCustomerDetailsEdittable == true)
+                                    {
+                                        <input asp-for="AbbRedemptionModel.Location" id="txtcustlocation" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="AbbRedemptionModel.Location" id="txtcustlocation" class="form-control" readonly />
+                                    }
+                                    <span asp-validation-for="AbbRedemptionModel.Location" class="text-danger"></span>
+                                </div> *@
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0">Exchange Product Details</h5>
+                                    <hr />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Product Group</label>
+                                    <input asp-for="AbbRedemptionModel.NewProductCategoryName" id="txtprodcatid" class="form-control" asp-items="ViewBag.ProductGroup" readonly />
+                                    <span asp-validation-for="AbbRedemptionModel.NewProductCategoryType" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Product Type</label>
+                                    <input asp-for="AbbRedemptionModel.NewProductCategoryType" id="txtprodcattypeid" class="form-control" asp-items="ViewBag.ProductType" readonly />
+                                    <span asp-validation-for="AbbRedemptionModel.NewProductCategoryType" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Brand</label>
+                                    <input asp-for="AbbRedemptionModel.BrandName" id="txtbrandid" class="form-control" asp-items="ViewBag.SponserName" readonly />
+                                    <span asp-validation-for="AbbRedemptionModel.BrandName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Product Ser. No.</label>
+                                    <input asp-for="AbbRedemptionModel.ProductSrNo" id="txtproductsrno" class="form-control" readonly />
+                                    <span asp-validation-for="AbbRedemptionModel.ProductSrNo" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Model Number</label>
+                                    <input asp-for="AbbRedemptionModel.ModelName" id="txtmodelnumid" class="form-control" readonly />
+                                    <span asp-validation-for="AbbRedemptionModel.ModelName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">ABB Plan Name</label>
+                                    <input asp-for="AbbRedemptionModel.AbbplanName" id="txtabbplanename" class="form-control" readonly />
+                                    <span asp-validation-for="AbbRedemptionModel.AbbplanName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Product Net Price(Incl Of GST)</label>
+                                    <input asp-for="AbbRedemptionModel.ProductNetPrice" id="ddlprodnetprice" class="form-control calculate" readonly />
+                                    <span asp-validation-for="AbbRedemptionModel.ProductNetPrice" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">ABB Plan Period(In Months)</label>
+                                    <input asp-for="AbbRedemptionModel.AbbplanPeriod" id="txtabbplanperiod" class="form-control" readonly />
+                                    <span asp-validation-for="AbbRedemptionModel.AbbplanPeriod" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0">Invoice</h5>
+                                    <hr />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Invoice No</label>
+                                    <input asp-for="AbbRedemptionModel.InvoiceNo" id="txtinvoiceno" class="form-control" readonly />
+                                    <span asp-validation-for="AbbRedemptionModel.InvoiceNo" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Invoice Date</label>
+                                    <input asp-for="AbbRedemptionModel.InvoiceDate" id="txtinvoicedate" type="date" class="form-control" readonly />
+                                    <span asp-validation-for="AbbRedemptionModel.InvoiceDate" class="text-danger"></span>
+                                </div>
+
+                                @{ var imagePath = "";
+                                    imagePath = InvoiceImageURL + @Model.AbbRedemptionModel.InvoiceImage;
+                                }
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Invoice Image</label><br>
+                                    <img class="img-responsive" src="@Model.AbbRedemptionModel.InvoiceImage" alt="Sample Photo" class="form-control" />
+                                    <span asp-validation-for="AbbRedemptionModel.InvoiceImage" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0">Redemption</h5>
+                                    <hr />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Redemption Date</label>
+                                    @if (@Model.AbbRedemptionModel.isFutureDateAllow == true)
+                                    {
+                                        @if (@Model.AbbRedemptionModel.isPastDateAllow == true)
+                                        {
+                                            <input id="txtRedempDate" asp-for="AbbRedemptionModel.RedemptionDate" type="date" class="form-control" />
+                                        }
+                                        else
+                                        {
+                                            <input id="txtRedempDate" asp-for="AbbRedemptionModel.RedemptionDate" type="date" min="@Model.AbbRedemptionModel.currentDate.ToString("yyyy-MM-dd")" class="form-control" />
+                                        }
+                                    }
+                                    else
+                                    {
+                                        @if (@Model.AbbRedemptionModel.isPastDateAllow == true)
+                                        {
+                                            <input id="txtRedempDate" asp-for="AbbRedemptionModel.RedemptionDate" type="date" max="@Model.AbbRedemptionModel.currentDate.ToString("yyyy-MM-dd")" class="form-control" />
+                                        }
+                                        else
+                                        {
+                                            <input id="txtRedempDate" asp-for="AbbRedemptionModel.RedemptionDate" value="@Model.AbbRedemptionModel.currentDate.ToString("yyyy-MM-dd")" class="form-control" readonly />
+                                        }
+                                    }
+
+                                    @*asp-for="AbbRedemptionModel.RedemptionDate"*@
+                                    @*<span asp-validation-for="AbbRedemptionModel.RedemptionDate" class="text-danger"></span>*@
+                                </div>
+                                @if (@Model.AbbRedemptionModel.IsCustomerDetailsEdittable == true)
+                                {
+                                    <div class="col-md-4 mb-4">
+                                        <label for="">ReferenceId</label>
+                                        <input asp-for="AbbRedemptionModel.ReferenceId" id="txtcustfirstname" class="form-control" />
+                                        <span asp-validation-for="AbbRedemptionModel.ReferenceId" class="text-danger"></span>
+                                    </div>
+                                }
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Redemption Period(In Months)</label>
+
+                                    <input asp-for="AbbRedemptionModel.RedemptionPeriod" id="ddlredemperiod" class="form-control" readonly />
+
+                                    <span asp-validation-for="AbbRedemptionModel.RedemptionPeriod" id="ddlredemperiodValid" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Redemption Percentage</label>
+
+                                    <input asp-for="AbbRedemptionModel.RedemptionPercentage" id="ddlredempper" class="form-control" readonly />
+
+                                    <span asp-validation-for="AbbRedemptionModel.RedemptionPercentage" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Redemption Value</label>
+                                    <input asp-for="AbbRedemptionModel.RedemptionValue" id="ddlredempvalue" class="form-control" readonly />
+                                    <span asp-validation-for="AbbRedemptionModel.RedemptionValue" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="float-right">
+
+                                            @if (accessRule != null && accessRule.CanAdd)
+                                            {
+                                                <input type="submit" value="Submit" id="Submitbtn" class="btn btn-primary mainshadow" />
+                                            }
+                                            @if (accessRule != null && accessRule.CanView)
+                                            {
+                                                <a asp-page="./Index" id="btnReset" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">
+                                                    Reset
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#Submitbtn').hide();
+        var chkredemperiod = $('#ddlredemperiod').val();
+        var hdnNoclaimPeriod = $('#hdnNoclaimPeriod').val();
+
+        //if (chkredemperiod >= hdnNoclaimPeriod) {
+        //    console.log(hdnNoclaimPeriod);
+        //    console.log(chkredemperiod);
+
+        //    $('#Submitbtn').show();
+        //}
+
+
+
+    $('#txtRedempDate').change(function () {
+        $('#Submitbtn').hide();
+
+        var redemptiondate = $('#txtRedempDate').val();
+        var productNetPrice = @Model.AbbRedemptionModel.ProductNetPrice;
+        var proCatId = @Model.AbbRedemptionModel.NewProductCategoryId;
+        var startDate = $('#txtinvoicedate').val();
+        var proTypeId = @Model.AbbRedemptionModel.NewProductCategoryTypeId;
+        var BUID = @Model.AbbRedemptionModel.BusinessUnitId;
+
+        $.ajax({
+            url: "@ViewData["URLPrefixforProd"]/ABBRedemption/ABBRedemption?handler=RedemptionValue",
+            type: "GET",
+            data: {
+                redemptiondate: redemptiondate,
+                productNetPrice: productNetPrice,
+                proCatId: proCatId,
+                startDate: startDate,
+                proTypeId: proTypeId,
+                BUID: BUID
+            },
+            success: function (response) {
+                // Process the response and update the UI
+                console.log(response);
+                $("#ddlredemperiod").val(response.redemptionPeriod);
+
+                var ddlredemperiod = $('#ddlredemperiod').val();
+
+                var NoClaimPeriod = response.noClaimPeriod;
+
+                if (ddlredemperiod >= NoClaimPeriod) {
+                    $('#Submitbtn').show();
+                    $("#ddlredempper").val(response.redemptionPercentage);
+                    $("#ddlredempvalue").val(response.redemptionValue);
+                    $('#ddlredemperiodValid').text(" ");
+                    var redempvalue = $('#ddlredempvalue').val();
+
+                    if (redempvalue <= 0) {
+                        $('#Submitbtn').hide();
+                        $('#ddlredemperiodValid').text("Plan Expired");
+                    }
+                } else {
+                    $('#Submitbtn').hide();
+                    $("#ddlredempper").val("");
+                    $("#ddlredempvalue").val("");
+                    $('#ddlredemperiodValid').text("NoClaimPeriod " + NoClaimPeriod);
+                }
+
+            },
+            error: function (xhr, status, error) {
+                // Handle error
+                $("#ddlredemperiodValid").text("Not Available");
+                $("#ddlredempper").text("Not Available");
+                $("#ddlredempvalue").text("Not Available");
+            }
+        });
+
+
+
+    });
+});
+
+//on click submitbtn
+    $('#Submitbtn').click(function () {
+        $(this).hide();
+        $('#btnReset').hide();
+    });
+    // on change redemption date
+
+        // Your code here
+    function handleDateChange(event) {
+
+
+    }
+
+
+
+</script>
+
+

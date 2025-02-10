@@ -1,0 +1,204 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.LGC_Admin.LoadDoneListModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6" id="AllocateEVCbtn">
+            </div>
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">Load Complete</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row datefilter mt-2 mb-4">
+                            <div class="col-md-4 mb-2">
+
+                            </div>
+
+                            <div class="col-md-8 text-right datefilter-right">
+                                <input type="text" class="form-control d-inline mb-2" id="startdate" placeholder="Start Date" autocomplete="off">
+                                <input type="text" class="form-control d-inline mb-2" id="enddate" placeholder="End Date" autocomplete="off">
+                                @*<input type="submit" class="d-inline btn btn-primary" value="Submit">*@
+                                <button id="filter-dates" class="btn btn-primary">Filter</button>
+                            </div>
+
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush" id="LGC_DropDataTable">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="border-bottom all notexport" scope="col">Id</th>
+                                        <th class="border-bottom all notexport" scope="col">Action</th>
+                                        <th class="border-bottom all" scope="col">Order RegNo</th>
+                                        <th class="border-bottom all" scope="col">Status Code</th>
+                                        <th class="border-bottom all" scope="col">Service Partner Name</th>
+                                        <th class="border-bottom all" scope="col">Driver Name</th>
+                                        <th class="border-bottom all" scope="col">Driver PhoneNumber</th>
+                                        <th class="border-bottom all" scope="col">Vehicle Number</th>
+                                        <th class="border-bottom all" scope="col">City</th>
+                                        <th class="border-bottom all" scope="col">Date</th>
+                                        <th class="border-bottom all" scope="col">EVC Business Name</th>
+                                        <th class="border-bottom all" scope="col">EVC Partner Code</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        @*<a href='javascript:history.go(-1)' class="btn btn-primary">Back to List</a>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+<script type="text/javascript">
+    var table = null;
+    $(document).ready(function () {
+
+        var url = "@ViewData["URLPrefixforProd"]/api/LGCList/GetLoadDoneList?ServicePartnerId="+@Model.ServiceId;
+        var startDate = $('#startdate').val();
+        var endDate = $('#enddate').val();
+        DataTable(url, startDate, endDate);
+
+        //date range Filter
+        $('#filter-dates').click(function () {
+
+            startDate = $('#startdate').val();
+            endDate = $('#enddate').val();
+            var url = '@ViewData["URLPrefixforProd"]/api/LGCList/GetLoadDoneList?ServicePartnerId='+@Model.ServiceId+'&startDate=' + startDate + '&endDate=' + endDate;
+            table = $('#LGC_DropDataTable').DataTable();
+            // Destroy the existing DataTable
+            table.destroy();
+            DataTable(url,startDate,endDate);
+        });
+
+    });
+
+    $(document).ready(function () {
+        $("#startdate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                $("#enddate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#enddate").datepicker({
+            defaultDate: null,
+
+        });
+    });
+    function ReassignOrder(Id) {
+        $('#loader').show();
+         window.location.href = '@ViewData["URLPrefixforProd"]/EVC_Allocation/ReassignFrom?OId=' + Id;
+    }
+    //data table
+    function DataTable(url, startDate, endDate) {
+        table = $('#LGC_DropDataTable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "paging": true,
+            "filter": true,
+            "data": { startDate: startDate, endDate: endDate },
+            /*"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],*/
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Load Done',
+                    action: newexportaction,
+                    exportOptions: {
+
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current'
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Record Avalible found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "responsive": true,
+            "columns": [
+                { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                { "data": "statusCode", "name": "StatusCode", "autoWidth": true, "orderable": false },
+                { "data": "servicePartnerName", "name": "ServicePartnerName", "autoWidth": true, "orderable": false },
+                { "data": "driverName", "name": "DriverName", "autoWidth": true, "orderable": false },
+                { "data": "driverPhoneNumber", "name": "DriverPhoneNumber", "autoWidth": true, "orderable": false },
+                { "data": "vehicleNumber", "name": "VehicleNumber", "autoWidth": true, "orderable": true },
+                { "data": "city", "name": "City", "autoWidth": true, "orderable": true },
+                { "data": "date", "name": "Date", "autoWidth": true, "orderable": true },
+                { "data": "evcBusinessName", "name": "EVCBusinessName", "autoWidth": true, "orderable": true },
+                { "data": "evcStoreCode", "name": "EvcStoreCode", "autoWidth": true, "orderable": false },
+            ]
+        });
+    }
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+    //For Export Buttons available inside jquery-datatable "server side processing" - End
+</script>

@@ -1,0 +1,308 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC_Admin_Dispute.EVC_Admin_DisputeFormModel
+
+@{
+
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+<script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+</script>
+}
+
+    <form method="post" enctype="multipart/form-data" id="DisputFrom">
+        <div class="row">
+            <input type="hidden" asp-for="EVCDisputeViewModels.CreatedBy" />
+            <input type="hidden" asp-for="EVCDisputeViewModels.CreatedDate" />
+            <input type="hidden" asp-for="EVCDisputeViewModels.IsActive" />
+            <input type="hidden" asp-for="EVCDisputeViewModels.ModifiedBy" />
+            <input type="hidden" asp-for="EVCDisputeViewModels.ModifiedDate" />
+            <input type="hidden" asp-for="EVCDisputeViewModels.ProductTypeId" />
+            <input type="hidden" asp-for="EVCDisputeViewModels.ProductCatId" />
+            <input type="hidden" asp-for="EVCDisputeViewModels.EvcdisputeId" />
+            <input type="hidden" asp-for="EVCDisputeViewModels.Amount" />
+            <input type="hidden" asp-for="EVCDisputeViewModels.DisputeRegno" />
+            <input type="hidden" asp-for="EVCDisputeViewModels.Image1" />
+            <input type="hidden" asp-for="EVCDisputeViewModels.Image2" />
+            <input type="hidden" asp-for="EVCDisputeViewModels.Image3" />
+            <input type="hidden" id="ddlevcid" asp-for="EVCDisputeViewModels.EvcregistrationId" />
+
+            @if (@Model.EVCDisputeViewModels.EvcdisputeId == 0 && accessRule.CanAdd)
+            {
+                <div class="col-md-6 my-2">
+                    <label for="">EVC Order<span style="color:red;">*</span></label>
+                    @*<select asp-for="EVCDisputeViewModels.EvcregistrationId" class="form-control" id="ddlevcid" asp-items="ViewBag.EVCRegNoList">
+                    <option value='0'>--None--</option>
+                </select>*@
+                    <input id="ddlevcidauto" @*asp-for="EVCDisputeViewModels.Evcregistration"*@ class="form-control" />
+                    @*<span asp-validation-for="EVCDisputeViewModels.Evcregistration" class="text-danger"></span>*@
+
+                </div>
+                <div class="col-md-6 my-2">
+                    <label for="">Order Reg No<span style="color:red;">*</span></label>
+                    <select asp-for="EVCDisputeViewModels.orderTransId" class="form-control" id="ddlordid" asp-items="ViewBag.OrdersList">
+                        <option value='0'>--None--</option>
+                    </select>
+                    <span asp-validation-for="EVCDisputeViewModels.orderTransId" id="txtOrdertransh" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 my-2">
+                    <label for="">Product Category</label>
+                    <input asp-for="EVCDisputeViewModels.ProductTypeName" id="txtProTypeName" class="form-control" readonly />
+                    <span asp-validation-for="EVCDisputeViewModels.ProductTypeName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 my-2">
+                    <label for="">Product Type</label>
+                    <input asp-for="EVCDisputeViewModels.ProductCatName" id="txtProcatName" class="form-control" readonly />
+                    <span asp-validation-for="EVCDisputeViewModels.ProductCatName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-12 my-2">
+                    <label for="">Causes<span style="color:red;">*</span></label>
+                    <textarea asp-for="EVCDisputeViewModels.Evcdisputedescription" id="txtCauses" cols="30" rows="6" class="form-control"></textarea>
+                </div>
+            }
+
+            else
+            {
+                <input type="hidden" asp-for="EVCDisputeViewModels.EvcregistrationId" />
+                <input type="hidden" asp-for="EVCDisputeViewModels.orderTransId" />
+                <div class="col-md-6 my-2">
+                    <label for="">EVC Order</label>
+                    <input asp-for="EVCDisputeViewModels.EVCRegdNo" id="txtProTypeName" class="form-control" readonly />
+                    <span asp-validation-for="EVCDisputeViewModels.EVCRegdNo" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 my-2">
+                    <label for="">Order Reg No</label>
+                    <input asp-for="EVCDisputeViewModels.OrderRegdNo" id="txtProTypeName" class="form-control" readonly />
+                    <span asp-validation-for="EVCDisputeViewModels.OrderRegdNo" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 my-2">
+                    <label for="">Product Type</label>
+                    <input asp-for="EVCDisputeViewModels.ProductTypeName" id="txtProTypeName" class="form-control" readonly />
+                    <span asp-validation-for="EVCDisputeViewModels.ProductTypeName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 my-2">
+                    <label for="">Sub Type</label>
+                    <input asp-for="EVCDisputeViewModels.ProductCatName" id="txtProcatName" class="form-control" readonly />
+                    <span asp-validation-for="EVCDisputeViewModels.ProductCatName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-12 my-2">
+                    <label for="">Causes</label>
+                    <textarea asp-for="EVCDisputeViewModels.Evcdisputedescription" id="txtCauses" cols="30" rows="6" class="form-control" readonly></textarea>
+                </div>
+            }
+            @*<div class="col-md-6 my-2">
+            <label for="">Date</label>
+            <input type="date" class="form-control">
+        </div>*@
+            <div class="col-md-6 my-2">
+                @if (@Model.EVCDisputeViewModels.Status != null && @Model.EVCDisputeViewModels.EvcdisputeId != 0)
+                {
+                    if (accessRule.CanAdd)
+                    {
+                        <div class="col-md-6 my-2">
+                            <label for="">Status<span style="color:red;">*</span></label>
+                            <select asp-for="EVCDisputeViewModels.Status" class="form-control" id="ddlstatusId" asp-items="ViewBag.StatusList">
+                                <option value='0'>--None--</option>
+                            </select>
+                            <span asp-validation-for="EVCDisputeViewModels.Status" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 my-2">
+                            <label for="">Digi2L Response<span style="color:red;">*</span></label>
+                            <textarea asp-for="EVCDisputeViewModels.Digi2Lresponse" maxlength="200" id="txtDigiREs" cols="30" rows="6" class="form-control"></textarea>
+                        </div>
+                    }
+                    else
+                    {
+                        <input type="hidden" asp-for="EVCDisputeViewModels.Status" />
+                        <label for="">Status</label>
+                        <input id="StatusName" value="@Model.EVCDisputeViewModels.StatusName" class="form-control" readonly />
+                    }
+                }
+                else
+                {
+                    <input type="hidden" asp-for="EVCDisputeViewModels.Status" />
+                    <label for="">Status</label>
+                    <input id="txtProcatName" value="@Model.EVCDisputeViewModels.StatusName" class="form-control" readonly />
+                }
+            </div>
+            <div class="float-right">
+                @if (accessRule != null && accessRule.CanAdd)
+                {
+                    <input type="button" value="Save" class="btn btn-primary mainshadow" id="btnSubmit" disabled />
+                }
+
+                <a href='javascript:history.go(-1)' class="btn btn-primary">Back to List</a>
+                @if (accessRule != null && accessRule.CanView && @Model.EVCDisputeViewModels.Status != null && @Model.EVCDisputeViewModels.EvcdisputeId != 0)
+                {
+                    <a href='@URLPrefixforProd/EVC_Admin_Dispute/DisputeViewPage?OrderTransId=@Model.EVCDisputeViewModels.orderTransId' class="btn btn-primary">View Product Details</a>
+                    <a href='@URLPrefixforProd/Index1?OrderTransId=@Model.EVCDisputeViewModels.orderTransId' class="btn btn-primary">Time Line</a>
+                }
+            </div>
+        </div>
+    </form>
+
+    <script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+        function OnChangeEVCDetails(_evcId) {
+            $.get("@URLPrefixforProd/EVC_Admin_Dispute/EVC_Admin_DisputeForm?handler=GetOrderByEVCID&EVCDisputeViewModels.EvcregistrationId=" + _evcId).done(function (data) {
+            $("#ddlordid").empty(); // Clear the plese wait
+            $("#ddlordid").append($("<option></option>").val('').html('Select OrderID'));
+            $.each(data, function (i, Orders) {
+                //alert(Orders.exchangeOrderId);
+                $("#ddlordid").append($("<option></option>").val(Orders.orderTransId).html(Orders.regdNo));
+            });
+        });
+        }
+
+    $("#ddlordid").change(function () {
+       if ($("#ddlordid").val == 0) {
+           $("#txtProTypeName").val("");
+           $("#txtProcatName").val("");
+            $("#txtOrdertransh").html("Select Order");
+        }
+        else {
+            $("#txtOrdertransh").val("");
+           $.get("@URLPrefixforProd/EVC_Dispute/EVC_DisputeForm?handler=ProductDetailsByTransId&EVCDisputeViewModels.orderTransId=" + $(this).val()).done(function (data) {
+                $("#txtProTypeName").val(data.productTypeName);
+                $("#txtProcatName").val(data.productCatName);
+            });
+        }
+        EnableDisableSave();
+    });
+    $("#txtCauses").keyup(function () {
+        EnableDisableSave();
+    });
+
+    $("#ddlordid").change(function () {
+        EnableDisableSave();
+    });
+
+    function EnableDisableSave() {
+        if ($("#txtCauses").val() != null && $("#txtCauses").val() != "" && $("#ddlordid").val() > 0 && $("#ddlevcid").val() > 0) {
+            $("#txtOrdertransh").val("");
+            $("#txtCauses").focus();
+            $('#btnSubmit').prop('disabled', false);
+        }
+        else {
+            if ($("#ddlevcid").val == 0) {
+                //$("#txtEVC").html("Select EVC");
+                // $("#txtEVC").focus();
+                $("#ddlevcidauto").focus();
+            }
+            else if ($("#ddlordid").val == 0) {
+                $("#txtOrdertransh").html("Select Order");
+                $("#txtCauses").focus();
+            }
+            $('#btnSubmit').prop('disabled', true);
+        }
+    }
+
+    $("#txtDigiREs").keyup(function () {
+        if (!$("#txtDigiREs").val() || $('#ddlstatusId').val() == 0) {
+            $('#btnSubmit').prop('disabled', true);
+        }
+        else {
+            $("#txtDigiREs").focus();
+            $('#btnSubmit').prop('disabled', false);
+        }
+    });
+
+    $("#ddlstatusId").change(function () {
+        if (!$("#txtDigiREs").val() || $('#ddlstatusId').val() == 0) {
+            $('#btnSubmit').prop('disabled', true);
+        }
+        else {
+            $("#txtDigiREs").focus();
+            $('#btnSubmit').prop('disabled', false);
+        }
+    });
+    $('#btnSubmit').click(function () {
+        $('#btnSubmit').prop('disabled', true);
+        $('#loader').show();
+        $('#DisputFrom').submit();
+    });
+
+   $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+       $("#ddlevcidauto").on("keydown", function (event) {
+           if (event.keyCode === $.ui.keyCode.TAB &&
+               $(this).autocomplete("instance").menu.active) {
+               event.preventDefault();
+           }
+           $('#ddlevcid').val("");
+           $("#ddlordid").empty(); // Clear the plese wait
+           $("#ddlordid").append($("<option></option>").val('').html('--None--'));
+           $("#txtProTypeName").val(""); $("#txtProcatName").val("");
+           var k = event.keyCode || event.which;
+           var ok = k >= 65 && k <= 90 || // A-Z
+               k >= 96 && k <= 105 || // a-z
+               k >= 35 && k <= 40 || // arrows
+               k == 9 || //tab
+               k == 46 || //del
+               k == 8 || // backspaces
+               (!event.shiftKey && k >= 48 && k <= 57); // only 0-9 (ignore SHIFT options)
+           if (!ok || (event.ctrlKey && event.altKey)) {
+               event.preventDefault();
+           }
+           EnableDisableSave();
+       })
+
+       $("#ddlevcidauto").on("click", function (event) {
+           if ($(this).val() == "") {
+               $(this).autocomplete("search", "#");
+           }
+           else {
+               $(this).autocomplete("search", $(this).val());
+           }
+       })
+            .autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/EVC_Admin_Dispute/EVC_Admin_DisputeForm?handler=SearchEVCRedgid", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+                focus: function () {
+                    // prevent value inserted on focus
+                    return false;
+                },
+                open: function (event, ui) {
+                    // Get the menu element
+                    var menu = $(this).autocomplete("widget");
+
+                    // Set max-height and overflow properties
+                    menu.css("max-height", "200px");
+                    menu.css("overflow-y", "auto");
+                },
+                select: function (event, ui) {
+                    var terms = split(this.value);
+                    terms.pop();
+                    // add the selected item
+                    terms.push(ui.item.value);
+                    this.value = terms;
+                    EvcRegistrationId = ui.item.text;
+                    debugger;
+                    $('#ddlevcid').val(EvcRegistrationId);
+                    OnChangeEVCDetails(EvcRegistrationId);
+                    return false;
+                }
+            });
+       })
+    </script>
+

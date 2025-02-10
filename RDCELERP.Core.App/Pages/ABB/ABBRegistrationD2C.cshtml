@@ -1,0 +1,439 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.AbbReg.ABBRegistrationD2CModel
+@{
+    ViewData["Title"] = "Manage";
+    int i = 0;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    var InvoiceImageURL = ViewData["InvoiceImageURL"];
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>EVC Onboarding </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="~/NewLayout/vendor/jquery-ui/jquery-ui.css">
+
+    <link type="text/css" href="~/NewLayout/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+    <link type="text/css" href="~/NewLayout/css/jquery.dataTables.min.css" rel="stylesheet">
+
+
+
+    <link type="text/css" href="~/NewLayout/css/style.css" rel="stylesheet">
+
+    <link href="~/SelfQC-assets/css/style.css" rel="stylesheet" />
+
+    <script src="~/NewLayout/vendor/jquery/jquery-3.6.1.min.js"></script>
+    <script src="~/NewLayout/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/NewLayout/vendor/@@popperjs/core/dist/umd/popper.min.js"></script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    @* <script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>*@
+
+    <style>
+
+        .form-control, .form-select {
+            border: 1px solid #ccc;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="topwave">
+        <img src="~/SelfQC-assets/img/top-wave.svg" class="img-fluid rounded-top" />
+    </div>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-10 mx-auto">
+                <div class="topsec">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="topcontentsec">
+                                <h2>Welcome to Digi2L</h2>
+                                <p>
+                                    You are one step closer to register for ABB Plan. Please fill below details to register.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 text-center logo-order">
+                            <div class="logowrap">
+                                <img src="~/SelfQC-assets/img/digi2l-arrow-01.png" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <main class="content" style="margin: 0 !important;">
+        <div class="py-3">
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <div class="card border-0 shadow">
+                            <div class="card-header">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h2 class="fs-5 mb-0 card-title">ABB Registration </h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form method="post" enctype="multipart/form-data" id="formcontrol">
+                                    <div class="row" id="AbbReject">
+                                        <input type="hidden" asp-for="AbbRegistrationModel.AbbregistrationId" id="hdnUserId" />
+                                        <input type="hidden" asp-for="AbbRegistrationModel.RegdNo" id="hdnRegdno" />
+                                        <input type="hidden" asp-for="AbbRegistrationModel.CreatedBy" />
+                                        <input type="hidden" asp-for="AbbRegistrationModel.CreatedDate" />
+                                        <input type="hidden" asp-for="AbbRegistrationModel.IsActive" />
+                                        <input type="hidden" asp-for="AbbRegistrationModel.ModifiedBy" />
+                                        <input type="hidden" asp-for="AbbRegistrationModel.ModifiedDate" />
+                                        <input type="hidden" asp-for="AbbRegistrationModel.OrderId" />
+                                        <input type="hidden" asp-for="AbbRegistrationModel.YourRegistrationNo" />
+                                        <input type="hidden" asp-for="AbbRegistrationModel.StateId" />
+                                        <input type="hidden" asp-for="AbbRegistrationModel.NewProductCategoryName" />
+                                        <input type="hidden" asp-for="AbbRegistrationModel.NewProductCategoryType" />
+                                        <input type="hidden" asp-for="AbbRegistrationModel.CustomerId" />
+                                        <input type="hidden" asp-for="AbbRegistrationModel.UploadImage" />
+                                        <input type="hidden" asp-for="AbbRegistrationModel.AbbReject" id="hdnabbreject" />
+                                        <input type="hidden" asp-for="AbbRegistrationModel.AbbApprove" id="hdnabbapprove" />
+                                        @* Previous Invoice Image *@
+                                        <input type="hidden" asp-for="@Model.AbbRegistrationModel.InvoiceImage" />
+                                        <input type="hidden" asp-for="@Model.AbbRegistrationModel.BusinessUnitId" />
+                                        <input type="hidden" asp-for="@Model.AbbRegistrationModel.CustState" />
+
+
+                                        <div class="col-12 my-4">
+                                            <h5 class="fs-5 fw-bold mb-0">Customer Details</h5>
+                                            <hr />
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <label for="">First Name </label>
+                                            <input asp-for="AbbRegistrationModel.CustFirstName" id="txtcustfirstname" class="form-control" />
+                                            <span asp-validation-for="AbbRegistrationModel.CustFirstName" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <label for="">Last Name </label>
+                                            <input asp-for="AbbRegistrationModel.CustLastName" id="txtcustlastname" class="form-control" />
+                                            <span asp-validation-for="AbbRegistrationModel.CustLastName" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <label for="">Mobile<span style="color:red;">*</span></label>
+                                            <input asp-for="AbbRegistrationModel.CustMobile" type="number" pattern="^\+91(7\d|8\d|9\d)\d{9}$" accept="0-9" id="txtcustmob" class="form-control" />
+                                            <span asp-validation-for="AbbRegistrationModel.CustMobile" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <label for="">E-mail </label>
+                                            <input asp-for="AbbRegistrationModel.CustEmail" type="email" id="txtcustemail" class="form-control" asp-items="ViewBag.CustomerRecord" />
+                                            <span asp-validation-for="AbbRegistrationModel.CustEmail" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <label for="">Address1 </label>
+                                            <input asp-for="AbbRegistrationModel.CustAddress1" id="txtcustaddress1" class="form-control" />
+                                            <span asp-validation-for="AbbRegistrationModel.CustAddress1" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <label for="">Address2 </label>
+                                            <input asp-for="AbbRegistrationModel.CustAddress2" id="txtcustaddress2" class="form-control" />
+                                            <span asp-validation-for="AbbRegistrationModel.CustAddress2" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <label for="">Pin Code</label>
+                                            <input asp-for="AbbRegistrationModel.CustPinCode" id="txtcustpincode" type="number" class="form-control" />
+                                            <span asp-validation-for="AbbRegistrationModel.CustPinCode" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <label class="" for="">City</label>
+                                            <input asp-for="AbbRegistrationModel.CustCity" id="ddlcustcity" class="form-control" />
+
+                                            <span asp-validation-for="AbbRegistrationModel.CustCity" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-12 my-4">
+                                            <h5 class="fs-5 fw-bold mb-0">Product Details</h5>
+                                            <hr />
+                                        </div>
+
+                                        <div class="col-md-4 mb-4">
+                                            <label class="" for="">Product Group</label>
+                                            <select asp-for="AbbRegistrationModel.NewProductCategoryId" id="ddlprodcatid" class="form-select" asp-items="ViewBag.ProductGroup">
+                                                <option value=''>--None--</option>
+                                            </select>
+                                            <span asp-validation-for="AbbRegistrationModel.NewProductCategoryId" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <label class="" for="">Product Type</label>
+                                            <select asp-for="AbbRegistrationModel.NewProductCategoryTypeId" id="ddlprodcattypeid" class="form-select" asp-items="ViewBag.ProductType">
+                                                <option value=''>--None--</option>
+                                            </select>
+                                            <span asp-validation-for="AbbRegistrationModel.NewProductCategoryTypeId" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <label class="" for="">Brand</label>
+                                            <select asp-for="AbbRegistrationModel.NewBrandId" id="ddlbrandid" class="form-select" asp-items="ViewBag.NewBrandId">
+                                                <option value=''>--None--</option>
+                                            </select>
+                                            <span asp-validation-for="AbbRegistrationModel.NewBrandId" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <label for="">Product Serial Number</label>
+                                            <input asp-for="AbbRegistrationModel.ProductSrNo" id="txtproductsrno" class="form-control" />
+                                            <span asp-validation-for="AbbRegistrationModel.ProductSrNo" class="text-danger"></span>
+                                        </div>
+
+                                        @*<div class="col-md-4 mb-4">
+                                                <label for="">Model Number</label>
+                                                <input asp-for="AbbRegistrationModel.ModelNumber" id="ddlmodelnumid" class="form-control" />
+                                                <span asp-validation-for="AbbRegistrationModel.ModelNumber" class="text-danger"></span>
+                                            </div>*@
+
+                                        <div class="col-md-4 mb-4">
+                                            <label for="">Amount</label>
+                                            <input asp-for="AbbRegistrationModel.ProductNetPrice" type="number" id="txtamount" class="form-control" />
+                                            <span asp-validation-for="AbbRegistrationModel.ProductNetPrice" class="text-danger"></span>
+                                        </div>
+
+
+                                        <div class="col-12 my-4">
+                                            <h5 class="fs-5 fw-bold mb-0">ABB Plan Details</h5>
+                                            <hr />
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <label for="">ABB Fees</label>
+                                            <input asp-for="AbbRegistrationModel.Abbfees" id="txtabbfees" class="form-control" readonly />
+                                            <span asp-validation-for="AbbRegistrationModel.Abbfees" id="txtabbfeesERROR" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="col-md-4 mb-4">
+                                            <label for="">ABB Plan Period(Months)</label>
+                                            <input asp-for="AbbRegistrationModel.AbbplanPeriod" id="txtabbplanperiod" class="form-control" readonly />
+                                            <span asp-validation-for="AbbRegistrationModel.AbbplanPeriod" id="txtabbplanperiodERROR" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <label for="">No Claim Period(Months) </label>
+
+                                            <input asp-for="AbbRegistrationModel.NoOfClaimPeriod" id="txtnoclaimperiod" class="form-control" readonly />
+
+                                            <span asp-validation-for="AbbRegistrationModel.NoOfClaimPeriod" id="txtnoclaimperiodERROR" class="text-danger"></span>
+                                        </div>
+
+
+                                        <div class="col-12 text-end">
+
+                                            @*<a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>*@
+                                            <div class="form-group text-right d-inline" id="divSubmit" style="display:none">
+                                                <input type="submit" value="Save" class="btn btn-primary mainshadow" id="btnSubmit" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="~/NewLayout/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="~/NewLayout/assets/js/custom.js"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>*@
+    <script src="~/js/compressor.js"></script>
+    <script type="text/javascript">
+    $("#ddlprodcatid").change(function () {
+        $.get("@URLPrefixforProd/ABB/ABBRegistrationD2C?handler=ProductCategoryType&AbbRegistrationModel.NewProductCategoryId=" + $(this).val()).done(function (data) {
+            console.log(data);
+            $("#ddlprodcattypeid").empty();
+            $("#txtabbfees").val("");
+            $("#txtnoclaimperiod").val("");
+            $("#txtabbplanperiod").val("");
+            $("#txtamount").val("");
+            $("#ddlmodelnumid").empty();
+            $("#ddlprodcattypeid").append($("<option></option>").val('').html('Select ProductType'));
+            $.each(data, function (i, producttype) {
+                $("#ddlprodcattypeid").append($("<option></option>").val(producttype.id).html(producttype.description));
+            });
+        });
+    });
+
+    @*$("#ddlprodcattypeid").change(function () {
+        $.get("@URLPrefixforProd/ABB/ABBRegistrationD2C?handler=Brand&AbbRegistrationModel.NewProductCategoryId=" + $(this).val()).done(function (data) {
+            console.log(data);
+            $("#txtabbfees").val("");
+            $("#ddlbrandid").empty();
+            $("#txtnoclaimperiod").val("");
+            $("#txtabbplanperiod").val("");
+            $("#txtamount").val("");
+            $("#ddlbrandid").append($("<option></option>").val('').html('Select Brand'));
+            $.each(data, function (i, brandList) {
+                $("#ddlbrandid").append($("<option></option>").val(brandList.id).html(brandList.name));
+            });
+        });
+    });*@
+
+     $('#ddlprodcattypeid').change(function () {
+        var cat = $("#ddlprodcatid").val();
+        $("#message").html("");
+        $('#btnSubmit').prop('disabled', false);
+            if (cat != null && cat != undefined && cat != "" ) {
+            $.ajax({
+                type: "GET",
+                url: "@ViewData["URLPrefixforProd"]/ABB/ABBRegistrationD2C?handler=Brand",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: { cat: cat},
+                success: function (data) {
+                    debugger;
+
+                    if (data) {
+                        console.log(data);
+                        $("#txtabbfees").val("");
+                        $("#ddlbrandid").empty();
+                        $("#txtnoclaimperiod").val("");
+                        $("#txtabbplanperiod").val("");
+                        $("#txtamount").val("");
+                        //$("#btnSubmit").prop(false, "disabled");
+                        $("#ddlbrandid").append($("<option></option>").val('').html('Select Brand'));
+                        $.each(data, function (i, brandList) {
+                            $("#ddlbrandid").append($("<option></option>").val(brandList.id).html(brandList.name));
+                        });
+                    }
+                    else {
+                        $("#txtabbfees").val("");
+                        $("#ddlbrandid").empty();
+                        $("#txtnoclaimperiod").val("");
+                        $("#txtabbplanperiod").val("");
+                        $("#txtamount").val("");
+
+                    }
+                }
+
+            });
+        }           
+    });
+    //// on change product type
+    @*$("#ddlprodcattypeid").change(function () {
+        var productCatId = $("#ddlprodcatid").val();
+        $("#ddlmodelnumid").empty();
+        $("#ddlbrandid").empty();
+        $("#txtabbfees").val("");
+        $("#txtnoclaimperiod").val("");
+        $("#txtabbplanperiod").val("");
+        $("#txtamount").val("");
+        $("#txtabbfeesERROR").text("");
+        $("#txtabbplanperiodERROR").text("");
+        $("#txtnoclaimperiodERROR").text("");
+        $.get("@URLPrefixforProd/ABB/ABBRegistrationD2C?handler=Brand&AbbRegistrationModel.NewProductCategoryId=" + $(this).val()).done(function (data) {
+            $("#ddlbrandid").append($("<option></option>").val('').html('Select ProductType'));
+            $.each(data, function (i, producttype) {
+                $("#ddlprodcattypeid").append($("<option></option>").val(producttype.id).html(producttype.description));
+            });
+
+    });*@
+    /// on change brand
+    $("#ddlbrandid").change(function () {
+        $("#txtabbfees").val("");
+        $("#txtnoclaimperiod").val("");
+        $("#txtabbplanperiod").val("");
+        $("#txtamount").val("");
+    });
+
+    $('#txtamount').change(function () {
+        var amount = $('#txtamount').val();
+        var cat = $("#ddlprodcatid").val();
+        var type = $("#ddlprodcattypeid").val();
+        $("#message").html("");
+        $('#btnSubmit').prop('disabled', false);
+        if (amount != null && amount != undefined && amount != "" ) {
+            $.ajax({
+                type: "GET",
+                url: "@ViewData["URLPrefixforProd"]/ABB/ABBRegistrationD2C?handler=AbbPlanPrice",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: { amount: amount, cat: cat, type: type},
+                success: function (data) {
+                    debugger;
+
+                    if (data) {
+                        console.log(data);
+                        $("#txtabbfees").val(data.planprice);
+                        $("#txtnoclaimperiod").val(data.noClaimPeriod);
+                        $("#txtabbplanperiod").val(data.planduration);
+                        $("#btnSubmit").show();
+                        $("#txtabbfeesERROR").text("");
+                        $("#txtabbplanperiodERROR").text("");
+                        $("#txtnoclaimperiodERROR").text("");
+                        //$("#btnSubmit").prop(false, "disabled");
+
+                    }
+                    else {
+                        $("#txtabbfeesERROR").text("Not Available");
+                        $("#txtabbplanperiodERROR").text("Not Available");
+                        $("#txtnoclaimperiodERROR").text("Not Available");
+                    //    $("#btnSubmit").prop(true,"disabled");
+                        $("#btnSubmit").hide();
+
+                    }
+                }
+
+            });
+        }           
+    });
+
+    $('#btnSubmit').click(function () {
+        if (validateLeadForm()) {
+            SendOTP();
+            $('#btnSubmit').hide();
+        }
+    });
+    </script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

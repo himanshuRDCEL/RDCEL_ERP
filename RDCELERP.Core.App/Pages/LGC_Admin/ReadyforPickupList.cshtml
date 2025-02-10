@@ -1,0 +1,271 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.LGC_Admin.ReadyforPickupListModel
+@{ 
+ ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int i = 0;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6" id="AllocateEVCbtn">
+            </div>
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">Ready For Pickup</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-body">
+                            <div class="row datefilter mt-2 mb-4">
+                                <div class="col-md-4 mb-2">
+
+                                </div>
+
+                                <div class="col-md-8 text-right datefilter-right">
+                                    <input type="text" class="form-control d-inline mb-2" id="startdate" placeholder="Start Date" autocomplete="off">
+                                    <input type="text" class="form-control d-inline mb-2" id="enddate" placeholder="End Date" autocomplete="off">
+                                    @*<input type="submit" class="d-inline btn btn-primary" value="Submit">*@
+                                    <button id="filter-dates" class="btn btn-primary">Filter</button>
+                                </div>
+
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table align-items-center table-flush" id="LGC_PickupDataTable">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th class="border-bottom all notexport" scope="col">Id</th>
+                                            <th class="border-bottom all notexport" scope="col">Action</th>
+                                            <th class="border-bottom all" scope="col">Status Code</th>
+                                            <th class="border-bottom all" scope="col">Order Number</th>                                            
+                                            <th class="border-bottom all" scope="col">Pickup Schedule Date</th>
+                                            <th class="border-bottom all" scope="col">Pickup Schedule Time</th>
+                                            <th class="border-bottom all" scope="col">Service Partner Name</th>
+                                            <th class="border-bottom all" scope="col">Ticket Number</th>
+                                            <th class="border-bottom all" scope="col">Product Category</th>
+                                            <th class="border-bottom all" scope="col">Product Type</th>
+                                            <th class="border-bottom all" scope="col">Amount Payable LGC</th>
+                                            <th class="border-bottom all" scope="col">Date</th>
+                                            <th class="border-bottom all" scope="col">City</th>
+                                 
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            @*<a href='javascript:history.go(-1)' class="btn btn-primary">Back to List</a>*@
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="modal fade" id="Add-conformation" tabindex="-1" role="dialog" aria-labelledby="modal-default"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form method="post">
+                    <div class="modal-header bg-primary">
+                        <h2 class="h6 modal-title">Add Comment</h2>
+                        <button type="button" id="btnCansel" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row my-3">
+                            <div class="col-12">
+                                <label>Comment</label>
+                                <input type="hidden" asp-for="pickupOrderViewModel.orderTransId" id="hdnOrdertrans" />
+                            <textarea asp-for="pickupOrderViewModel.Comment" id="txtcomment" maxlength="200" cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnclose" class="btn btn-secondary ms-auto" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" asp-page-handler="CancelTicketByUTC" id="btnsave" class="btn btn-primary" value="Save" disabled="disabled" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+    <script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+    <script src="~/NewLayout/assets/js/exportTable.js"></script>
+    <script type="text/javascript">
+    var table = null;
+    $(document).ready(function () {
+
+        var url = "@ViewData["URLPrefixforProd"]/api/LGCList/ReadyforPickup?ServicePartnerId="+@Model.ServiceId;
+        var startDate = $('#startdate').val();
+        var endDate = $('#enddate').val();
+        DataTable(url, startDate, endDate);
+
+        //date range Filter
+        $('#filter-dates').click(function () {
+
+            startDate = $('#startdate').val();
+            endDate = $('#enddate').val();
+            var url = '@ViewData["URLPrefixforProd"]/api/LGCList/ReadyforPickup?ServicePartnerId='+@Model.ServiceId+'&startDate=' + startDate + '&endDate=' + endDate;
+            table = $('#LGC_PickupDataTable').DataTable();
+            // Destroy the existing DataTable
+            table.destroy();
+            DataTable(url,startDate,endDate);
+        });
+
+    });
+
+    $(document).ready(function () {
+        $("#startdate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                $("#enddate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#enddate").datepicker({
+            defaultDate: null,
+
+        });
+    });
+        function ReassignOrder(Id) {
+            $('#loader').show();
+         window.location.href = '@ViewData["URLPrefixforProd"]/EVC_Allocation/ReassignFrom?OId=' + Id;
+    }
+    //data table
+    function DataTable(url, startDate, endDate) {
+        table = $('#LGC_PickupDataTable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "paging": true,
+            "filter": true,
+            "data": { startDate: startDate, endDate: endDate },
+            /*"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],*/
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Ready for Pickup List',
+                    action: newexportaction,
+                    exportOptions: {
+
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current'
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No EVC Avalible found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "responsive": true,
+            "columns": [
+                { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "statusCode", "name": "StatusCode", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                { "data": "pickupScheduleDate", "name": "PickupScheduleDate", "autoWidth": true, "orderable": true },
+                { "data": "pickupScheduleTime", "name": "PickupScheduleTime", "autoWidth": true, "orderable": true },
+                { "data": "servicePartnerName", "name": "ServicePartnerName", "autoWidth": true, "orderable": false },
+                { "data": "ticketNumber", "name": "TicketNumber", "autoWidth": true, "orderable": false },
+                { "data": "productCategory", "name": "ProductCategory", "autoWidth": true, "orderable": true },
+                { "data": "productType", "name": "ProductType", "autoWidth": true, "orderable": true },
+                { "data": "amountPayableThroughLGC", "name": "AmountPayableThroughLGC", "autoWidth": true, "orderable": true },
+                { "data": "date", "name": "Date", "autoWidth": true, "orderable": true },
+                { "data": "city", "name": "City", "autoWidth": true, "orderable": true },
+               // { "data": "edit", "name": "Edit", "autoWidth": true, "orderable": false },
+            ]
+        });
+    }
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+    //For Export Buttons available inside jquery-datatable "server side processing" - End
+
+        //Add Commend 
+        function CancelTicket(OrderTransId) {
+            // alert(_dealId);
+            $('#hdnOrdertrans').val(OrderTransId);
+            $('#Add-conformation').modal('show');
+        }
+        $('#btnCansel').click(function () {
+            $('#btnDecline').show();
+            $('#btnAccept').show();
+
+        });
+        $('#btnclose').click(function () {
+            $('#btnDecline').show();
+            $('#btnAccept').show();
+        });
+
+        $('#btnsave').click(function () {
+            $('#loader').show();
+        });
+
+        $('#txtcomment').keyup(function () {
+            if ($('#txtcomment').val().trim() !== '') {
+                $('#btnsave').prop('disabled', false);
+            }
+            else {
+                $('#btnsave').prop('disabled', true);
+            }
+        });
+    </script>

@@ -1,0 +1,203 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.BusinessUnit.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "BusinessUnit";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>TblBusinessUnit</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.RegistrationNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.RegistrationNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.QrcodeUrl)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.QrcodeUrl)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.LogoName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.LogoName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.ContactPersonFirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.ContactPersonFirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.ContactPersonLastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.ContactPersonLastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.PhoneNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.PhoneNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.AddressLine1)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.AddressLine1)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.AddressLine2)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.AddressLine2)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.Pincode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.Pincode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.City)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.City)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.State)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.State)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.IsActive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.IsActive)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.CreatedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.CreatedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.CreatedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.CreatedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.ModifiedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.ModifiedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.ModifiedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.ModifiedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.ZohoSponsorId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.ZohoSponsorId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.ExpectedDeliveryHours)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.ExpectedDeliveryHours)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.VoucherExpiryTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.VoucherExpiryTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.SweetnerForDtd)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.SweetnerForDtd)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.SweetnerForDtc)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.SweetnerForDtc)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.IsSweetnerModelBased)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.IsSweetnerModelBased)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.IsBud2c)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.IsBud2c)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.IsAbb)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.IsAbb)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.IsExchange)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.IsExchange)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.IsBumultiBrand)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.IsBumultiBrand)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblBusinessUnit.Login)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblBusinessUnit.Login.Password)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="TblBusinessUnit.BusinessUnitId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

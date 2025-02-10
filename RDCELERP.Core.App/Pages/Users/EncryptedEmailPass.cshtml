@@ -1,0 +1,67 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.Users.EncryptedEmailPassModel
+@{
+    ViewData["Title"] = "DecryptedMailPass";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a> Encrypted Email & Pass
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="row detailed-reporting">
+
+
+                                <input type="hidden" asp-for="UserViewModel.UserId" id="hdnUserId" />
+                                <input type="hidden" asp-for="UserViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="UserViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="UserViewModel.IsActive" />
+                                <input type="hidden" asp-for="UserViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="UserViewModel.ModifiedDate" />
+                                <input type="hidden" asp-for="UserViewModel.ZohoUserId" />
+                                <input type="hidden" asp-for="UserViewModel.UserStatus" />
+                                <input type="hidden" asp-for="UserViewModel.CompanyId" />
+                                <input type="hidden" asp-for="UserViewModel.LastLogin" />
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Email <span style="color:red;">*</span></label>
+                                    <input asp-for="UserViewModel.Email" class="form-control" placeholder="Email" />
+                                    <span asp-validation-for="UserViewModel.Email" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Password <span style="color:red;">*</span></label>
+                                    <input asp-for="UserViewModel.Password" class="form-control" />
+                                    <span asp-validation-for="UserViewModel.Password" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Phone <span style="color:red;">*</span></label>
+                                    <input asp-for="UserViewModel.Phone" class="form-control" />
+                                    <span asp-validation-for="UserViewModel.Phone" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

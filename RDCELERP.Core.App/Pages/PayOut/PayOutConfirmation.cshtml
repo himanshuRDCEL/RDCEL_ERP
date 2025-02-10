@@ -1,0 +1,124 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.PayOut.PayOutConfirmationModel
+@{
+
+    ViewData["Title"] = "PayOutConfirmation";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+    //<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css"
+}
+<div class="py-4">
+</div>
+
+
+<div class="row ">
+    <div class="col-12 mb-4">
+        <div class="card shadow border-0">
+            <div class="card-header">
+                <h2 class="fs-5 mb-0 card-title">Payout</h2>
+            </div>
+            @if (@Model.getbeneficiary.data != null)
+            {
+                <div class="card-body payment-page">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="paymentinnerbox">
+                                <i class="fas fa-user"></i>
+                                <span><label id="customername">@Model.getbeneficiary.data.name</label></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="paymentinnerbox">
+                                <i class="fa fa-at" aria-hidden="true"></i>
+                                <span><label id="">@Model.getbeneficiary.data.vpa</label></span>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-6">
+                            <div class="paymentinnerbox">
+                                <i class="fas fa-phone"></i>
+                                <span><label id="phoneNumber">@Model.getbeneficiary.data.phone</label></span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="paymentinnerbox">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span><label id="address">@Model.getbeneficiary.data.address1</label></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="paymentinnerbox">
+                                <i class="fas fa-envelope"></i>
+                                <span><label id="custEmail">@Model.getbeneficiary.data.email</label></span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <div class="paymentinnerbox">
+                                <i class="fa-solid fa-indian-rupee-sign"></i>
+                                <span><label id="custEmail">@Model.getbeneficiary.data.FinalExchangePrice</label></span>
+                            </div>
+                        </div>
+
+
+
+                        @*<div class="col-12 text-right">
+                        <a href="#" class="btn btn-primary">Proceed  <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>*@
+
+
+                        <form method="post" enctype="multipart/form-data" id="PayOutFormForm">
+                            <div class="row">
+                                @*     <input type="submit" value="Export" asp-page-handler="ExportExcel_StoreData" id="SubmitButtonForExport" />*@
+                                <input type="hidden" asp-for="getbeneficiary.data.name" id="hdnname" />
+                                <input type="hidden" asp-for="getbeneficiary.data.email" id="hdnemail" />
+                                <input type="hidden" asp-for="getbeneficiary.data.vpa" id="hdnvpa" />
+                                <input type="hidden" asp-for="getbeneficiary.data.phone" id="hdnphone" />
+                                <input type="hidden" asp-for="getbeneficiary.data.FinalExchangePrice" id="hdnFinalExchangePrice" />
+                                <input type="hidden" asp-for="getbeneficiary.data.address1" id="hdnaddress1" />
+                                <input type="hidden" asp-for="getbeneficiary.data.beneId" id="hdnbeneId" />
+                                <input type="hidden" asp-for="getbeneficiary.data.ExchangeId" id="hdnExchangeId" />
+                                <input type="hidden" asp-for="getbeneficiary.data.ordertype" id="hdnordertype" />
+                            </div>
+                            <div class="col-md-12 text-right">
+                                <input type="submit" value="Proceed" class="btn btn-primary" asp-page-handler="PayOut" id="btnformSubmit">
+
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            }
+            </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

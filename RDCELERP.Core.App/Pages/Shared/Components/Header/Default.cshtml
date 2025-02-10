@@ -1,0 +1,74 @@
+﻿@*@model RDCELERP.Model.MasterList.AccessListViewModel*@
+@{
+    RDCELERP.Model.Users.LoginViewModel loginVM = (RDCELERP.Model.Users.LoginViewModel)ViewBag.LoginUser;
+    int i = 0;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+<nav class="navbar navbar-top navbar-expand navbar-dashboard navbar-dark ps-0  pb-0">
+    <div class="container-fluid px-0">
+        <div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
+            <div class="d-flex align-items-center searchwrapper">
+                <div class="d-flex">
+                    <button type="button" id="collapsebtn">
+                        <span class="hamburger-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+
+                    </button>
+                </div>
+               
+            </div>
+            
+            <!-- Navbar links -->
+            <div style="text-align:center">
+                @Html.Partial("_MessagePartial")
+            </div>
+            <ul class="navbar-nav align-items-center profilewrapperbox">
+                <li class="nav-item dropdown ms-lg-3">
+                    <a class="nav-link dropdown-toggle pt-1 px-0" asp-page="/Profile/Details" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="media d-flex align-items-center">
+                            @if (loginVM != null)
+                            {
+                            @if (String.IsNullOrEmpty(Model.ImageName))
+                            {
+                            <img class="avatar rounded-circle" alt="Image placeholder" src="~/NewLayout/assets/img/team/profile-picture-3.jpg">
+                            }
+                            else
+                            {
+                            <img class="avatar rounded-circle" alt="Image placeholder" src="~/DBFiles/Users/@Model.ImageName">
+                            }
+                            <div class="media-body ms-2 text-dark align-items-center d-lg-block">
+                                <span class="mb-0 font-small fw-bold text-gray-900">@Model.FirstName @Model.LastName </span>
+                                @*<p>@loginVM.RoleViewModel.RoleName</p>*@
+                            </div>
+                            }
+                            else
+                            {
+                            Context.Response.Redirect("/index");
+                            }
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-1">
+                        <a class="dropdown-item d-flex align-items-center" href="@ViewData["URLPrefixforProd"]/Profile/Details?id=@Model.UserId">
+                            <i data-feather="user" class="dropdown-icon text-gray-400 me-2 mt-1"></i>
+                            My Profile
+                        </a>
+                        <a class="dropdown-item d-flex align-items-center" href="@ViewData["URLPrefixforProd"]/Users/ChangePassword?id=@Model.UserId">
+                            <i data-feather="key" class="dropdown-icon text-gray-400 me-2 mt-1"></i>
+                            Change Password
+                        </a>
+
+                    </div>
+                    <div class="logoutwrapper">
+                        <a asp-page="/Logout" id="logoutbtnwrap1" class="logoutbtn">
+                          
+                            <i data-feather="log-out" style="color: #f05a29"></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

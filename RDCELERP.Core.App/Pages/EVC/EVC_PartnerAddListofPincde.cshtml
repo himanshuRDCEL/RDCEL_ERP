@@ -1,0 +1,210 @@
+﻿@page
+@using Newtonsoft.Json;
+@model RDCELERP.Core.App.Pages.EVC.EVC_PartnerAddListofPincdeModel
+@{
+    ViewData["Title"] = "Pincode specification";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    var BaseUrl = ViewData["BaseUrl"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">Store Details</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="detailed-reporting">
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <label for="">EVC Partner Code</label>
+                                    <input type="text" asp-for="eVC_PartnerListModels.EvcStoreCode" class="form-control" placeholder="Partner Regd No." readonly>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Business Name</label>
+                                    <input type="text" asp-for="eVC_PartnerListModels.BussinessName" class="form-control" placeholder="Business Name" readonly>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">EVC Registration No</label>
+                                    <input type="text" asp-for="eVC_PartnerListModels.EvcregdNo" class="form-control" placeholder="Registration No." readonly>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Partner Pincode</label>
+                                    <input type="text" asp-for="eVC_PartnerListModels.PinCode" class="form-control" placeholder="Registration No." readonly>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Partner Email Id</label>
+                                    <input type="text" asp-for="eVC_PartnerListModels.EmailId" class="form-control" placeholder="Registration No." readonly>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Partner Contact Number</label>
+                                    <input type="text" asp-for="eVC_PartnerListModels.ContactNumber" class="form-control" placeholder="Registration No." readonly>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Partner Address</label>
+                                    <input type="text" asp-for="eVC_PartnerListModels.Address" class="form-control" placeholder="Registration No." readonly>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Partner City</label>
+                                    <input type="text" asp-for="eVC_PartnerListModels.CityName" class="form-control" placeholder="Registration No." readonly>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Partner State</label>
+                                    <input type="text" asp-for="eVC_PartnerListModels.StateName" class="form-control" placeholder="Registration No." readonly>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">Specification</h2>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <form method="post" enctype="multipart/form-data" id="lgcLoadForm">
+                            <div class="row">
+                                <input type="hidden" id="hdnEVCPartnerId" asp-for="eVC_StoreRegistrastionViewModels.EvcPartnerId" />
+                                <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.EvcregistrationId" />
+                                <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.StateId" id="hdnstateid" />
+                                <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.CityId" id="hdncityid" />                         
+                                <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.EvcStoreCode" />
+                                <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.CreatedBy" />
+                                <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.CreatedDate" />
+                                <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.IsActive" />           
+                                <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.userId" />
+                                <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.IsApprove" />
+                                <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.PinCode" />
+                                <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.EmailId" />
+                                <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.Address1" />
+                                <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.Address2" />
+                                <input type="hidden" asp-for="eVC_StoreRegistrastionViewModels.ContactNumber" />                           
+
+
+                                <div class="col-12">
+                                    <input type="text" id="txtPinCode" placeholder="Enter serviceable pincode here " class="form-control mb-3">
+                                </div>
+                                <div class="col-12 pincodeboxes mb-3">
+                                </div>
+                                <div class="col-md-12">
+                                    @*  <textarea name="" id="pincodeValues" class="form-control" cols="30" rows="10"></textarea> *@
+                                    <input type="hidden" class="form-control" onchange="chacklistofpincodeval()" asp-for="eVC_StoreRegistrastionViewModels.ListOfPincode" id="pincodeValues" />
+                                </div>
+                            </div>
+                            <button id="btnsubmit" type="submit" class="btn btn-success mb-4" disabled="disabled"><i class="fa-solid fa-check"></i>&nbsp; Approve Partner</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"></script>
+<script type="text/javascript">
+
+    $(document).keypress(function (event) {
+        if (event.keyCode === 10 || event.keyCode === 13) {
+            event.preventDefault();
+        }
+    });
+
+    var availableTags = @Html.Raw(JsonConvert.SerializeObject(@Model.PinCodeList));
+    console.log(availableTags);
+    var filteredPincode = [];
+    availableTags.forEach(item => {
+        filteredPincode.push(item.Value);
+    })
+  
+
+    var selectedPincodes = @Html.Raw(JsonConvert.SerializeObject(@Model.eVC_StoreRegistrastionViewModels.ListOfPincode));
+
+    if (selectedPincodes !== null)  {
+       
+        selectedPincodesFiltered = selectedPincodes.replace(/,*$/, '');
+
+        if (selectedPincodesFiltered != null) {
+
+            var selectedLocation = selectedPincodesFiltered.split(',');
+
+            selectedLocation.forEach(item => {
+                if (item == " ") { }
+                else {
+                    $('.pincodeboxes').append(`<button type="button" class="utctags">${item}</button>`);
+                }
+            });
+        }
+    }
+
+    $("#txtPinCode").autocomplete({
+        source: filteredPincode,
+        maxResults: 10,
+        select: function (event, ui) {
+            var label = ui.item.value;
+            var value = ui.item.value;
+
+            if ($('.utctags:contains(' + value + ')').length === 0) {               
+                $('.pincodeboxes').append(`<button type="button" class="utctags">${value}</button>`);
+                $('#pincodeValues').val($('#pincodeValues').val() + `${value}, `);
+                if ($('#pincodeValues').val() != "") {
+                    $('#btnsubmit').prop('disabled', false);
+                }
+                else {
+                    $('#btnsubmit').prop('disabled', true);
+                }
+                $("#txtPinCode").val(""); // Clear the input field                    
+            }
+        }
+    });
+       
+    $(document).on('click', '.utctags', function () {
+        let clickedValue = $(this).text().trim();
+        let textareaContent = $('#pincodeValues').val();
+        textareaContent = textareaContent.replace(new RegExp(clickedValue + ', ', 'g'), '');
+        $('#pincodeValues').val(textareaContent);
+        $(this).remove();
+        if ($('#pincodeValues').val() != "") {          
+            $('#btnsubmit').prop('disabled', false);
+        }
+        else {
+            $('#btnsubmit').prop('disabled', true);
+        }
+    })
+   
+</script>
+
+
+
+
+
+

@@ -1,0 +1,622 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.LGC.LGCDropDetailsModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    int imageLabelViewModelsCount = Model.imageLabelVMList.Count();
+    int count = 1;
+}
+
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+    alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header card-header-wrapper">
+                        <div class="row align-items-center card-title">
+                            <div class="col-md-6">
+                                <h2 class="fs-5 mb-0">
+                                    LGC Details
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row detailed-reporting">
+                            <div class="pt-4"></div>
+                            @* <div class="col-md-12 mb-3">
+                                <p><h4>EVC Details</h4> </p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Bussiness Name </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.BussinessName)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Contact Person </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.ContactPerson)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Phone Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.EvcmobileNumber)</p>
+                                <input type="hidden" asp-for="lGCOrderViewModel.Tblevcregistration.EvcmobileNumber" id="hdnPhoneNumber" />
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Alt Phone Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.AlternateMobileNumber)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Email </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.EmailId)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Address1 </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.RegdAddressLine1)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Address2 </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.RegdAddressLine2)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>City </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.City.Name)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>State </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.State.Name)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Pincode </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.PinCode)</p>
+                            </div>
+                            <hr /> *@
+
+                            <div class="col-md-12 mb-3">
+                                <p><h4>EVC Details</h4> </p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Bussiness Name </span>@Html.DisplayFor(model => model.lGCOrderViewModel.EVCBusinessName)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Contact Person </span>@Html.DisplayFor(model => model.lGCOrderViewModel.EVCContactPerson)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Store Code </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.EvcStoreCode)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Phone Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.ContactNumber)</p>
+                                <input type="hidden" asp-for="lGCOrderViewModel.evcPartnerDetailsVM.ContactNumber" id="hdnPhoneNumber" />
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Alt Phone Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.EVCMobileNumber)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Email </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.EmailId)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Address1 </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.Address1)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Address2 </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.Address2)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>City </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.CityName)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>State </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.StateName)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Pincode </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.PinCode)</p>
+                            </div>
+
+                            <div class="pt-4"></div>
+                            <div>
+                                <hr />
+                            </div>
+
+
+                            <form method="post" enctype="multipart/form-data" id="lgcDropForm">
+                                <div class="row detailed-reporting">
+                                    <input type="hidden" asp-for="PODVM.RegdNo" value="@Model.lGCOrderViewModel?.RegdNo" />
+                                    <input type="hidden" asp-for="PODVM.DriverId" value="@Model.lGCOrderViewModel?.DriverId" />
+                                    <input type="hidden" asp-for="PODVM.EVCRegistrationId" value="@Model.lGCOrderViewModel?.EVCRegistrationId" />
+                                    <input type="hidden" asp-for="PODVM.EvcPartnerId" value="@Model.lGCOrderViewModel?.EvcpartnerId" />
+                                    <input type="hidden" asp-for="PODVM.evcDetailsVM.Name" value="@Model.lGCOrderViewModel?.EVCBusinessName" />
+                                    <input type="hidden" asp-for="PODVM.evcDetailsVM.EvcStoreCode" value="@Model.lGCOrderViewModel?.evcPartnerDetailsVM?.EvcStoreCode" />
+                                    <input type="hidden" asp-for="PODVM.evcDetailsVM.Address" value="@Model.lGCOrderViewModel?.evcPartnerDetailsVM?.Address1" />
+                                    <input type="hidden" asp-for="PODVM.evcDetailsVM.City" value="@Model.lGCOrderViewModel?.evcPartnerDetailsVM?.CityName" />
+                                    <input type="hidden" asp-for="PODVM.evcDetailsVM.State" value="@Model.lGCOrderViewModel?.evcPartnerDetailsVM?.StateName" />
+                                    <input type="hidden" asp-for="PODVM.evcDetailsVM.Pincode" value="@Model.lGCOrderViewModel?.evcPartnerDetailsVM?.PinCode" />
+                                    <input type="hidden" asp-for="PODVM.TicketNo" value="@Model.lGCOrderViewModel?.TicketNumber" />
+                                    <input type="hidden" asp-for="PODVM.ProductCatName" value="@Model.lGCOrderViewModel?.ProductCategory" />
+                                    <input type="hidden" asp-for="PODVM.CustName" value="@Model.lGCOrderViewModel?.CustomerName" />
+                                    <input type="hidden" asp-for="PODVM.CustPincode" value="@Model.lGCOrderViewModel?.TblCustomerDetail.ZipCode" />
+
+                                    <div id="mainDropLoadDiv">
+                                        <h4 style="text-align: center;">LGC Drop</h4>
+                                        <div class="table-responsive">
+                                            <table class="table align-items-center table-flush" id="LGC_DropLoadDT">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th class="border-bottom all notexport" scope="col">Id</th>
+                                                 @*     <th class="border-bottom all notexport" scope="col">Action</th> *@
+                                                        <th class="border-bottom all" scope="col">Order Number</th>
+                                                        <th class="border-bottom all" scope="col">Ticktet Number</th>
+                                                        <th class="border-bottom all" scope="col">Product Category</th>
+                                                        <th class="border-bottom all" scope="col">Product Type</th>
+                                                        <th class="border-bottom all" scope="col">Created Date</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    @*List Page Common Filters Code VK 15-Nov*@
+                                    <div class="filters">
+                                        <div class="p-4">
+                                            <h4 class="">Filters</h4>
+                                            @* Order Date Range Filter *@
+                                            <p class="filterheading">
+                                                <input type="checkbox" name="" id="chkOrderDateRange">
+                                                <label for="chkOrderDateRange">Order Date Range</label>
+                                            </p>
+                                            <div class="filterbox">
+                                                <input type="text" class="form-control d-inline mb-2" id="orderStartDate" readonly placeholder="Start Date" autocomplete="off">
+                                                <input type="text" class="form-control d-inline mb-2" id="orderEndDate" readonly placeholder="End Date" autocomplete="off">
+                                            </div>
+                                            <div class="filter-seprator"></div>
+
+                                            @* Regd No Filter *@
+                                            <p class="filterheading">
+                                                <input type="checkbox" name="" id="chkregdNo">
+                                                <label for="chkregdNo">Regd No</label>
+                                            </p>
+                                            <div class="filterbox">
+                                                <input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">
+                                            </div>
+                                            <div class="filter-seprator"></div>
+
+                                            @* Product Group Filter *@
+                                            <p class="filterheading">
+                                                <input type="checkbox" name="" id="chkProductCategory">
+                                                <label for="chkProductCategory">Product Group</label>
+                                            </p>
+                                            <div class="filterbox">
+                                                <select name="ProductCatId" id="ddlprodcatid" class="form-control d-inline" asp-items="ViewBag.ProductGroup">
+                                                    <option value='0'>--Product Cat--</option>
+                                                </select>
+                                            </div>
+                                            <div class="filter-seprator"></div>
+
+                                            <p class="filterheading">
+                                                <input type="checkbox" name="" id="chkProductType">
+                                                <label for="chkProductType">Product Type</label>
+                                            </p>
+                                            <div class="filterbox">
+                                                <select name="ProductTypeId" id="ddlprodcattypeid" class="form-control d-inline" asp-items="ViewBag.productTypeList">
+                                                    <option value='0'>--Product Type--</option>
+                                                </select>
+                                            </div>
+                                            <div class="filter-seprator"></div>
+
+                                            @* Ticket Number Filter *@
+                                            <p class="filterheading">
+                                                <input type="checkbox" name="" id="chkticketnumber">
+                                                <label for="chkticketnumber">Ticket Number</label>
+                                            </p>
+                                            <div class="filterbox">
+                                                <input type="text" class="form-control d-inline" id="ticketnumber" placeholder="Search Ticket Number">
+                                            </div>
+                                            <div class="filter-seprator"></div>
+
+                                            @* Submit Filter *@
+                                            <div class="filterbtnwrap">
+                                                <a id="btnFilter" class="btn btn-primary">Filter</a>
+                                                <a id="btnCloseFilter" class="btn btn-sm btn-secondary py-2">Clear</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="col-12 mb-4 text-right">
+                                        @if (accessRule != null)
+                                        {
+                                            if (accessRule != null && accessRule.CanAdd)
+                                            {
+                                                <input type="button" value="Send OTP" class="btn btn-primary mainshadow" id="btnSubmit" />
+                                            }
+                                            if (accessRule != null && accessRule.CanView)
+                                            {
+                                                <a asp-page="./LogiPickDrop" class="btn mainshadow" id="btnBackToList" style="background: #3d3d6e;color: #fff;">
+                                                    Back to List
+                                                </a>
+                                            }
+                                        }
+
+                                    </div>
+
+                                    <div class="form-group otpwrapper" id="divShowOTP" style="display:none">
+                                        <div class="otpbox text-center">
+                                            <p>OTP has been sent to <strong id="txtmobileOTP"></strong></p>
+                                            <input type="number" id="digit-1" name="digit-1" data-next="digit-2" placeholder="please enter OTP" maxlength="4" />
+                                            <input type="button" id="btnOTPVerification" value="Verify OTP" class="btn btn-secondary" style="margin-top:2px;">
+                                            <input type="button" id="btnOTPResend" value="Re-Send OTP" class="btn btn-secondary" style="margin-top:2px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/js/compressor.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+
+@* Page Scripts *@
+<script type="text/javascript">
+    $('#btnSubmit').click(function () {
+        if (validateImages()) {
+            SendOTP();
+            $('#btnSubmit').hide();
+        }
+        $('#btnBackToList').hide();
+    });
+
+    $('#btnOTPResend').click(function () {
+        if (validateImages()) {
+            SendOTP();
+            $($("#btnOTPVerification")).prop('disabled', false);
+        }
+    })
+
+    $("#btnOTPVerification").click(function () {
+        if (validateImages()) {
+            var mobnumber = $('#hdnPhoneNumber').val();
+            var OTP = $('#digit-1').val();
+
+            $.ajax({
+                type: "POST",
+                url: "@ViewData["URLPrefixforProd"]/LGC/LGCDropDetails?handler=VerifyOTP",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: { mobnumber: mobnumber, OTP: OTP },
+                success: function (response) {
+                    if (response == true || response == "True" || response == "true") {
+                        $($("#btnOTPVerification")).prop('disabled', true);
+                        $("#lgcDropForm").submit();
+                    }
+                    else {
+                        document.getElementById("digit-1").value = "";
+                        alert("OTP is not correct. Please enter correct OTP");
+                    }
+                }
+            });
+        }
+    });
+
+    function SendOTP() {
+
+        var mobnumber = $('#hdnPhoneNumber').val();
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["URLPrefixforProd"]/LGC/LGCDropDetails?handler=SendOTP",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { mobnumber: mobnumber, tempaltename: "SMS_Drop_OTP" },
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    $("#txtmobileOTP").text(mobnumber);
+                    alert("OTP has been sent to mobile number: " + mobnumber);
+                    $("#divShowOTP").show();
+                }
+                else {
+                    alert("Unable to send OTP. Please check your Mobile Number");
+                }
+            },
+        });
+    }
+
+    function validateImages() {
+
+        var flag = true;
+    @*var a = $('#hdnCount').val();
+            for (let i = 1; i <= a; i++) {
+            var imgBase = $("#hdnBase64StringValue").val();
+
+            if ($("#hdnBase64StringValue_" + i).val() == '' || $("#hdnBase64StringValue_" + i).val() == null) {
+            $("#Image_Upload_" + i).css("border", "2px solid red");
+            $("#Image_Upload_" + i).focus();
+            $("#showimgbox_" + i).css("display", "flex");
+            $("#showImg_" + i).attr('src', "");
+            $("#lblFileErr_" + i).text("Please Upload Correct Image.");
+            flag = false;
+            }
+            else {
+            $("#Image_Upload_" + i).css("border", ""); $("#lblFileErr_" + i).text("");
+            }
+            }*@
+            return flag;
+    }
+
+    $(document).ready(function () {
+        var a = $('#hdnCount').val();
+        for (let i = 1; i <= a; i++) {
+            $("#Image_Upload_" + i).bind('change', function () {
+                $("#lblFileErr_" + i).text("");
+                $("#hdnBase64StringValue_" + i).val("");
+                $("#showImg_" + i).attr('src', "");
+                $("#Image_Upload_" + i).css("border", "");
+                $("#lbInvoicelFileName_" + i).append(this.files[0].name);
+            });
+
+            $("#Image_Upload_" + i).resizeImg(function () {
+                var value = parseInt("350");
+                var Weight = parseInt("2");
+                let type, quality;
+                {
+                    type = "image/jpeg";
+                    quality = 0.8;
+                }
+                return {
+                    use_reader: false,
+                    mode: Weight,
+                    val: value,
+                    type: type,
+                    quality: quality,
+                    callback: function (result) {
+                        $("#showimgbox_" + i).css("display", "flex");
+                        $("#showImg_" + i).attr('src', result);
+                        $("#hdnBase64StringValue_" + i).val(result.substr(result.indexOf(',') + 1)).css("height", 100);
+                        $("#Image_Upload_" + i).val(null);
+                    }
+                };
+            });
+        }
+    });
+</script>
+
+@* Advanced Filters *@
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Date Picker
+        $("#orderStartDate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                $("#orderEndDate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#orderEndDate").datepicker({
+            defaultDate: null,
+        });
+        //Hide Filters Dive
+        $('.filters').hide();
+
+        var userId="@Model.tblServicePartner.UserId";
+        var DriverDetailsId = "@Model.lGCOrderViewModel.DriverId";
+        var EvcPartnerId = "@Model.lGCOrderViewModel.EvcpartnerId";
+
+        var startDate = $('#startdate').val();
+        var endDate = $('#enddate').val();
+        var url = "@URLPrefixforProd/api/ListPage/GetListForLGCDropLoad?userId=" + userId + "&DriverDetailsId=" + DriverDetailsId + "&EVCPartnerId=" + EvcPartnerId;
+        DataTable(url);
+    });
+
+    // Advanced Filters
+    //Check Box Regd Number change Event
+    $("#chkregdNo").click(function () {
+        if (!this.checked) {
+            $('#regdNo').val("");
+        }
+    });
+
+    //Check Box Product Category change Event
+    $("#chkProductCategory").click(function () {
+        if (!this.checked) {
+            $('#ddlprodcatid').val(0);
+        }
+    });
+
+    //On Change Event for Get Product type by Product Category
+    $("#ddlprodcatid").change(function () {
+        $.get("@URLPrefixforProd/api/Dropdown/OnGetProductCategoryTypeAsync?productCatId=" + $(this).val()).done(function (data) {
+
+            $("#ddlprodcattypeid").empty();
+            $("#ddlprodcattypeid").append($("<option></option>").val('0').html('Select ProductType'));
+            $.each(data, function (i, producttype) {
+                $("#ddlprodcattypeid").append($("<option></option>").val(producttype.text).html(producttype.value));
+            });
+        });
+    });
+
+    //Check Box Product Type change Event
+    $("#chkProductType").click(function () {
+        if (!this.checked) {
+            $('#ddlprodcattypeid').val(0);
+        }
+    });
+
+    //Check Box Ticket Number change Event
+    $("#chkticketnumber").click(function () {
+        if (!this.checked) {
+            $('#ticketnumber').val("");
+        }
+    });
+
+    //Check Box Customer City change Event
+    $("#chkCustCity").click(function () {
+        if (!this.checked) {
+            $('#custCity').val("");
+        }
+    });
+
+    // Follow-up list multi Search Filter
+    $('#btnFilter').click(function () {
+        $('.filters').hide();
+        CommonFilter();
+    });
+
+    //Pickup Filter Close Button Click Event
+    $('#btnCloseFilter').click(function () {
+        $('#orderStartDate').val("");
+        $('#orderEndDate').val("");
+        $('#regdNo').val("");
+        $('#ddlprodcatid').val(0);
+        $('#ddlprodcattypeid').empty();
+        $('#ddlprodcattypeid').append("<option value='0'>--Product Type--</option>");
+        $('#ticketnumber').val("");
+        $('#custCity').val("");
+        // Unchecks it
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        CommonFilter();
+    });
+
+    function CommonFilter() {
+        var _urlData = GetURLData();
+        var userId = "@Model.tblServicePartner.UserId";
+        var DriverDetailsId = "@Model.lGCOrderViewModel.DriverId";
+        var EvcPartnerId = "@Model.lGCOrderViewModel.EvcpartnerId";
+        var url = "@URLPrefixforProd/api/ListPage/GetListForLGCDropLoad?userId=" + userId + "&DriverDetailsId=" + DriverDetailsId + "&EVCPartnerId=" + EvcPartnerId + _urlData;
+
+        table = $('#LGC_DropLoadDT').DataTable();
+        // Destroy the existing DataTable
+        table.clear().destroy();
+        DataTable(url);
+        $('.filters').hide();
+    }
+
+    function SetURLData(orderStartDate = null, orderEndDate = null, regdNo = null, productCatId = null, productTypeId = null, ticketnumber = null, custCity = null) {
+        var urlData = "";
+        if (orderStartDate != null && orderEndDate != null) {
+            urlData += '&orderStartDate=' + orderStartDate + '&orderEndDate=' + orderEndDate;
+        }
+        if (regdNo != null) {
+            urlData += '&regdNo=' + regdNo;
+        }
+        if (productCatId != null && productCatId > 0) {
+            urlData += '&productCatId=' + productCatId;
+        }
+        if (productTypeId != null && productTypeId > 0) {
+            urlData += '&productTypeId=' + productTypeId;
+        }
+        if (ticketnumber != null) {
+            urlData += '&ticketNo=' + ticketnumber;
+        }
+        if (custCity != null) {
+            urlData += '&custCity=' + custCity;
+        }
+        return urlData;
+    }
+    //Filter Function
+    function GetURLData() {
+        var orderStartDate = $('#orderStartDate').val() == "" ? null : $('#orderStartDate').val();
+        var orderEndDate = $('#orderEndDate').val() == "" ? null : $('#orderEndDate').val();
+        var regdNo = $('#regdNo').val() == "" ? null : $('#regdNo').val();
+        var productCatId = $('#ddlprodcatid').val() == "" ? 0 : $('#ddlprodcatid').val();
+        var productTypeId = $('#ddlprodcattypeid').val() == "" ? 0 : $('#ddlprodcattypeid').val();
+        var ticketnumber = $('#ticketnumber').val() == "" ? null : $('#ticketnumber').val();
+        var custCity = $('#custCity').val() == "" ? null : $('#custCity').val();
+
+        var urlData = SetURLData(orderStartDate, orderEndDate, regdNo, productCatId, productTypeId, ticketnumber, custCity);
+
+        return urlData;
+    }
+    /// LGC PickUp DataTable
+    function DataTable(url) {
+        $('#LGC_DropLoadDT').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    text: '<button class="btn btn-primary" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters').toggle();
+                    }
+                },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'LGC Drop List',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "searching": false,
+            "info": true,
+            "paging": true,
+            "oLanguage": {
+            "sEmptyTable": "No data found"
+            },
+            "ajax": {
+            "url": url,
+            "type": "POST",
+            "datatype": "json"
+            },
+            "columnDefs": [{
+            "targets": [0],
+            "visible": false,
+            "searchable": false
+            }],
+            "responsive": true,
+
+            "columns": [
+                { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                //   { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                { "data": "ticketNumber", "name": "TicketNumber", "autoWidth": true, "orderable": false },
+                { "data": "productCategory", "name": "ProductCategory", "autoWidth": true, "orderable": true },
+                { "data": "productType", "name": "ProductType", "autoWidth": true, "orderable": true },
+                { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+            ]
+            });
+        }
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+    //For Export Buttons available inside jquery-datatable "server side processing" - End
+</script>

@@ -1,0 +1,964 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.LGCOrderTracking.UnAssignedOrdersListModel
+@{
+    ViewData["Title"] = "Un-Assigned Orders List";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]"); 
+    </script>
+}
+@* @if (Model.SPId == 0)
+{
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card border-0 shadow noborderradius">
+                <div class="card-body">
+                    <div class="row">
+                        <h3>Select Details for Assign Order</h3>
+                        <div class="col-3">
+                            <label for="ddlServicePartner">Select Service Partner</label>
+                            <input type="text" id="ddlServicePartner" class="form-control d-inline ddlServicePartner" placeholder="Search Service Partner Name">
+                        </div>
+                        <div class="col-3">
+                            <label for="ddlServicePartner">Select Customer City</label>
+                            <input type="text" id="ddlCustomerCity" class="form-control d-inline ddlCustomerCity" placeholder="Search Customer City">
+                        </div>
+                        <div class="col-3 mt-4">
+                            <input type="button" value="Filter" id="OrderFilterBtn" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+} *@
+
+<div class="row">
+    @* @if (Model.SPId > 0)
+    {
+        <div class="col-md-6" id="AssignOrderBtnDiv">
+            <button id="AssignOrderBtn" type="button" onclick="AssignOrder()" class="btn btn-primary mb-4" disabled="disabled">Assign</button>
+        </div>
+    } *@
+    <div class="col-md-12">
+        <div class="row align-items-center">
+            <div class="col">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link shadow active" id="nav-tab-1" data-bs-toggle="tab"
+                           href="#UpcomingOrders" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">Upcoming Orders</a>
+                        <a class="nav-item nav-link shadow" id="nav-tab-2" data-bs-toggle="tab"
+                           href="#DriverRejectOrders" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">Driver Rejected Orders</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow noborderradius">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- Tab -->
+                                <div class="tab-content" id="nav-tabContent">
+                                    <div class="tab-pane fade" id="UpcomingOrders" tab-id="1" role="tabpanel"
+                                         aria-labelledby="nav-profile-tab">
+                                        <table id="UpcomingOrdersDatatable"
+                                               class="table table-striped dt-responsive mainshadow" width="100%"
+                                               border="0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="all notexport">Id</th>
+                                                    @* <th class="all notexport">Actions</th> *@
+                                                    @* <th class="all notexport">
+                                                        <input type='checkbox' id='select_all' />
+                                                    </th> *@
+                                                    <th class="border-bottom all" scope="col">Service Partner Name</th>
+                                                    <th class="border-bottom all" scope="col">Regd No.</th>
+                                                    <th class="border-bottom all" scope="col">Ticket Number</th>
+                                                    <th class="border-bottom all" scope="col">Product Category</th>
+                                                    <th class="border-bottom all" scope="col">Product Type</th>
+                                                    <th class="border-bottom all" scope="col">Customer City</th>
+                                                    <th class="border-bottom all" scope="col">Order Date</th>
+                                                    @* <th class="all notexport">Actions</th>  *@
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane fade" id="DriverRejectOrders" tab-id="2" role="tabpanel"
+                                         aria-labelledby="nav-home-tab">
+                                        <table id="DriverRejectOrdersDatatable"
+                                               class="table table-striped dt-responsive mainshadow" width="100%"
+                                               border="0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="all notexport">Id</th>
+                                                    <th class="all notexport">Actions</th>
+                                                   @*  <th class="all notexport">
+                                                        <input type='checkbox' id='select_all' />
+                                                    </th> *@
+                                                    <th class="all">Service Partner Name</th>
+                                                    <th class="all">RegdNo</th>
+                                                    <th class="all">Ticket Number</th>
+                                                    <th class="all">Driver Name</th>
+                                                    <th class="all">Driver Phone No.</th>
+                                                    <th class="all">Vehicle No.</th>
+                                                    <th class="all">Driver City</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- End of tab -->
+                            </div>
+                        </div>
+                    </div>
+
+                    @*List Page Common Filters Code Pooja 21-Aug*@
+                    <div class="filters">
+                        <div class="p-4">
+                            <h4 class="">Filters</h4>
+
+                            @* Order Date Range Filter *@
+                            <p class="filterheading">
+                                <input type="checkbox" name="" id="chkOrderDateRange">
+                                <label for="chkOrderDateRange">Order Date Range</label>
+                            </p>
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline mb-2" id="orderStartDate" readonly placeholder="Start Date" autocomplete="off">
+                                <input type="text" class="form-control d-inline mb-2" id="orderEndDate" readonly placeholder="End Date" autocomplete="off">
+                            </div>
+                            <div class="filter-seprator"></div>
+
+                            @if (Model.SPId == 0)
+                            {
+                                @* Service Partner Name Filter *@
+                                <p class="filterheading">
+                                    <input type="checkbox" name="" id="chkservicepartneName">
+                                    <label for="chkservicepartneName">Service Partner Name</label>
+                                </p>
+                                <div class="filterbox">
+                                    <input type="text" class="form-control d-inline ddlServicePartner" id="servicepartnerName" placeholder="Search Service Partner Name">
+                                </div>
+                                <div class="filter-seprator"></div>
+                            }
+
+                            @* Regd No Filter *@
+                            <p class="filterheading">
+                                <input type="checkbox" name="" id="chkregdNo">
+                                <label for="chkregdNo">Regd No.</label>
+                            </p>
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">
+                            </div>
+                            <div class="filter-seprator"></div>
+
+                            @* Ticket Number Filter *@
+                            <p class="filterheading">
+                                <input type="checkbox" name="" id="chkticketnumber">
+                                <label for="chkticketnumber">Ticket Number</label>
+                            </p>
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="ticketnumber" placeholder="Search Ticket Number">
+                            </div>
+                            <div class="filter-seprator"></div>
+
+                            @* Customer City Filter *@
+                            <p class="filterheading">
+                                <input type="checkbox" name="" id="chkcustomercity">
+                                <label for="chkcustomercity">Customer City</label>
+                            </p>
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="customercity" placeholder="Search Customer City">
+                            </div>
+                            <div class="filter-seprator"></div>
+
+                            @* Driver Name Filter *@
+                            <p class="filterheading">
+                                <input type="checkbox" name="" id="chkdriverName">
+                                <label for="chkdriverName">Driver Name</label>
+                            </p>
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="driverName" placeholder="Search Driver Name">
+                            </div>
+                            <div class="filter-seprator"></div>
+
+                            @* Phone Number Filter *@
+                            <p class="filterheading">
+                                <input type="checkbox" name="" id="chkdriverphoneNo">
+                                <label for="chkdriverphoneNo"> Driver Phone Number</label>
+                            </p>
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="driverphoneNo" placeholder="Search Driver Phone Number">
+                            </div>
+                            <div class="filter-seprator"></div>
+
+                            @* Driver Vehicle No. Filter *@
+                            <p class="filterheading">
+                                <input type="checkbox" name="" id="chkvehicleno">
+                                <label for="chkvehicleno">Vehicle No.</label>
+                            </p>
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="vehicleno" placeholder="Search Vehicle No.">
+                            </div>
+                            <div class="filter-seprator"></div>
+
+                            @* Driver City Filter *@
+                            <!--<p class="filterheading">
+                                <input type="checkbox" name="" id="chkdrivercity">
+                                <label for="chkdrivercity">Driver City</label>
+                            </p>
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="drivercity" placeholder="Search Driver City">
+                            </div>
+                            <div class="filter-seprator"></div>-->
+                            @* Submit Filter *@
+                            <div class="filterbtnwrap">
+                                <a id="btnFilter" class="btn btn-primary">Filter</a>
+                                <a id="btnCloseFilter" class="btn btn-sm btn-secondary py-2">Clear</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* <div class="row">
+    <div class="col-12 mb-4">
+        <div class="card border-0 shadow noborderradius">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <label for="ddlServicePartner">Select Service Partner</label>
+                        <input type="text" id="ddlServicePartner" class="form-control d-inline ddlServicePartner" placeholder="Search Service Partner Name">
+                    </div>
+                    <div class="col-6">
+                        <label for="ddlServicePartner">Select Customer City</label>
+                        <input type="text" id="ddlCustomerCity" class="form-control d-inline ddlServicePartner" placeholder="Search Service Partner Name">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> *@
+
+@*Model for Assign Order to Driver*@
+<div class="modal fade" id="OrderAssignToDriverModel" tabindex="-1" role="dialog" aria-labelledby="OrderAssignToDriverModel">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="Add-conformation">
+                    Assign Order To Driver
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="row my-3">
+                        <div class="col-6">
+                            Select Service Partner
+                        </div>
+                        <div class="col-6">
+                            <input type="hidden" asp-for="assignRequestVM.LGCId" id="hdnServicePartnerId" value="@Model.SPId" />
+                            @if (Model.SPId > 0 && Model.servicePartnerVM != null)
+                            {
+                                <input type="text" class="form-control" value="@Model.servicePartnerVM.ServicePartnerBusinessName" disabled />
+                            }
+                            else
+                            {
+                                <input id="ddlServicePartner" type="text" class="ddlServicePartner form-control autocomplete" />
+                            }
+                        </div>
+                        <div class="col-6">
+                            Select Driver
+                        </div>
+                        <div class="col-6">
+                            <input type="hidden" asp-for="OrderTransListString" id="hdnOrderTransIdList" />
+                            <input type="hidden" asp-for="assignRequestVM.DriverDetailsId" id="hdnDriverDetailsId" />
+                            <input id="ddlDriverDetails" type="text" class="form-control autocomplete" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="AssignOrderToDriver" id="submitButton" class="btn btn-danger" value="Assign" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Model for Assign Order to Driver*@
+<div class="modal fade" id="CancelTicketModel" tabindex="-1" role="dialog" aria-labelledby="CancelTicketModel">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="Add-conformation">
+                    Cancel Ticket
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="row my-3">
+                        <div class="col-6">
+                            Comment for Cancel ticket
+                        </div>
+                        <div class="col-6">
+                            <input type="hidden" asp-for="rejectLGCOrderVM.OrdertransId" id="hdnOrderTransId" />
+                            <input type="hidden" asp-for="rejectLGCOrderVM.LGCId" value="@Model.SPId" />
+                            <textarea asp-for="rejectLGCOrderVM.RejectComment" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="RejectOrderLGC" id="submitButton" class="btn btn-danger" value="Cancel Ticket" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+@* Assign Order to Driver *@
+<script type="text/javascript">
+    //$(function () {
+    //    debugger;
+    //    $('.checkboxinput').click(function () {
+    //        debugger;
+    //        var flag = false;
+    //        $('.checkboxinput').each(function () {
+    //            debugger;
+    //            if (this.checked) {
+    //                flag = true;
+    //            }
+    //        });
+    //        if (flag) {
+    //            $('#AssignOrderBtn').prop('disabled', false);
+    //        }
+    //        else {
+    //            $('#AssignOrderBtn').prop('disabled', true);
+    //        }
+    //    });
+    //});
+
+    function AssignOrder() {
+        debugger;
+        var custCity = $("#customercity").val();
+        var servicePartner = $("#customercity").val();
+        if (custCity == null || custCity == "" || EligiableForAssignOrder == false) {
+            alert("Please apply city filter on the order list");
+        }
+        // if (custCity == null || custCity == "") {
+        //     alert("Please apply city filter on the order list");
+        // }
+        else{
+            var selectedIDs = "";
+            $('.checkboxinput').each(function () {
+                if (this.checked) {
+                    selectedIDs += this.value + ",";
+                }
+            });
+
+            selectedIDs = selectedIDs.replace(/,\s*$/, "");
+            $("#hdnOrderTransIdList").val(selectedIDs);
+            $('#OrderAssignToDriverModel').modal('show');
+        }
+    }
+
+    function OnCheckBoxCheck() {
+        counter = 0;
+        $('.checkboxinput').each(function () {
+            if (this.checked) {
+                counter++;
+            }
+            else {
+                counter - 1;
+            }
+            if (counter > 10) {
+                alert("You can only select up to 6 Orders.");
+                $(this).prop('checked', false);
+                return false; // Prevent further action
+            }
+        });
+        var flag = counter > 0;
+        if (flag) {
+            $('#AssignOrderBtn').prop('disabled', false);
+        } else {
+            $('#AssignOrderBtn').prop('disabled', true);
+        }
+    }
+
+    function RejectOrder(_orderTransId) {
+        debugger;
+        $("#hdnOrderTransId").val(_orderTransId);
+        $('#CancelTicketModel').modal('show');
+    }
+</script>
+
+<script type="text/javascript">
+    //variable declaration
+    var table = null;
+    var EligiableForAssignOrder = false;
+    //Document (Page Load) ready Function Call
+    $(document).ready(function () {
+        //Date Picker
+        $("#orderStartDate").datepicker({
+            defaultDate: null,
+            maxDate: 'today',
+            onSelect: function (selectedDate) {
+                $("#orderEndDate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#orderEndDate").datepicker({
+            defaultDate: null,
+            maxDate: 'today',
+        });
+        CommonFilter();
+        //Hide Filters Dive
+        $('.filters').hide();
+        
+        //Filter Close Button Click Event
+        $('#btnCloseFilter').click(function () {
+            $('.filters').hide();
+            $('#orderStartDate').val("");
+            $('#orderEndDate').val("");
+            $('#regdNo').val("");
+            $('#servicepartnerName').val("");
+            $('#driverName').val("");
+            $('#driverphoneNo').val("");
+            $('#vehicleno').val("");
+            $('#drivercity').val("");
+            $('#customercity').val("");
+            $('#ticketnumber').val("");
+          //  $('#chkactionorder').val("");
+            // Unchecks it
+            $('.filters input[type="checkbox"]').prop('checked', false);
+            $('.filterbox').hide();
+            CommonFilter();
+            EligiableForAssignOrder = false;
+        });
+
+        $("#chkOrderDateRange").click(function () {
+            if (!this.checked) {
+                $('#orderStartDate').val("");
+                $('#orderEndDate').val("");
+            }
+        });
+
+        //Check Box Service Partne Name change Event
+        $("#chkservicepartneName").click(function () {
+            if (!this.checked) {
+                $('#servicepartnerName').val("");
+            }
+        });
+
+        //Check Box Regd Number change Event
+        $("#chkregdNo").click(function () {
+            if (!this.checked) {
+                $('#regdNo').val("");
+            }
+        });
+
+        //Check Box Ticket Number change Event
+        $("#chkticketnumber").click(function () {
+            if (!this.checked) {
+                $('#kticketnumber').val("");
+            }
+        });
+
+        //Check Box Customer City change Event
+        $("#chkcustomercity").click(function () {
+            if (!this.checked) {
+                $('#chkcustomercity').val("");
+            }
+        });
+
+        //Check Box Driver Name change Event
+        $("#chkdriverName").click(function () {
+            if (!this.checked) {
+                $('#driverName').val("");
+            }
+        });
+
+        //Check Box Driver Phone Number change Event
+        $("#chkdriverphoneNo").click(function () {
+            if (!this.checked) {
+                $('#driverphoneNo').val("");
+            }
+        });
+
+        //Check Box Vehicle no. change Event
+        $("#chkvehicleno").click(function () {
+            if (!this.checked) {
+                $('#vehicleno').val("");
+            }
+        });
+
+        //Check Box Driver City change Event
+        $("#chkdrivercity").click(function () {
+            if (!this.checked) {
+                $('#drivercity').val("");
+            }
+        });
+
+        // Follow-up list multi Search Filter
+        $('#btnFilter').click(function () {
+            $('.filters').hide();
+            ApplyFilters();
+        });
+    });
+
+    function GetURLData(orderStartDate = null, orderEndDate = null, servicepartnerName = null, regdNo = null, ticketnumber = null, customercity = null, driverName = null, driverphoneNo = null, vehicleno = null, drivercity = null) {
+        var urlData = "";
+        if (orderStartDate != null && orderEndDate != null) {
+            urlData += '&orderStartDate=' + orderStartDate + '&orderEndDate=' + orderEndDate;
+        }
+        if (servicepartnerName != null) {
+            urlData += '&servicepartnerName=' + servicepartnerName;
+        }
+        if (regdNo != null) {
+            urlData += '&regdNo=' + regdNo;
+        }
+        if (ticketnumber != null) {
+            urlData += '&ticketnumber=' + ticketnumber;
+        }
+        if (customercity != null) {
+            urlData += '&customerCity=' + customercity;
+        }
+        if (driverName != null) {
+            urlData += '&driverName=' + driverName;
+        }
+        if (driverphoneNo != null) {
+            urlData += '&driverphoneNo=' + driverphoneNo;
+        }
+        if (vehicleno != null) {
+            urlData += '&vehicleno=' + vehicleno;
+        }
+        if (drivercity != null) {
+            urlData += '&drivercity=' + drivercity;
+        }
+        return urlData;
+    }
+    //Filter Function
+    function ApplyFilters() {
+        var orderStartDate = $('#orderStartDate').val() == "" ? null : $('#orderStartDate').val();
+        var orderEndDate = $('#orderEndDate').val() == "" ? null : $('#orderEndDate').val();
+        var servicepartnerName = $('#servicepartnerName').val() == "" ? null : $('#servicepartnerName').val();
+        var regdNo = $('#regdNo').val() == "" ? null : $('#regdNo').val();
+        var ticketnumber = $('#ticketnumber').val() == "" ? null : $('#ticketnumber').val();
+        var customercity = $('#customercity').val() == "" ? null : $('#customercity').val();
+        var driverName = $('#driverName').val() == "" ? null : $('#driverName').val();
+        var driverphoneNo = $('#driverphoneNo').val() == "" ? null : $('#driverphoneNo').val();
+        var vehicleno = $('#vehicleno').val() == "" ? null : $('#vehicleno').val();
+        var drivercity = $('#drivercity').val() == "" ? null : $('#drivercity').val();
+
+        var urlData = GetURLData(orderStartDate, orderEndDate, servicepartnerName, regdNo, ticketnumber, customercity, driverName, driverphoneNo, vehicleno, drivercity);
+
+        CommonFilter(urlData);
+        EligiableForAssignOrder = true;
+        $('.filterbox').hide();
+    }
+    //Apply Filter Function
+    function CommonFilter(_urlData = "") {
+        //Table Count 2 Start
+        var url1 = "@URLPrefixforProd/api/LGCMobileApp/UpcomingOrdersList?companyId=" + @ViewBag.CompanyId + "&SPId=" + @Model.SPId + _urlData;
+        //Table Count 1 Start
+        var url2 = "@URLPrefixforProd/api/LGCMobileApp/OrderRejectbyDriverlist?companyId=" + @ViewBag.CompanyId + "&SPId=" + @Model.SPId + _urlData;
+
+        // Destroy the existing DataTable
+        table = $('#UpcomingOrdersDatatable').DataTable();
+        // Destroy the existing DataTable
+        table.clear();
+        table.destroy();
+        //Re-Initialize Datatable
+        DataTable(url1);
+        //End Table Count 1
+
+        // Destroy the existing DataTable
+        table = $('#DriverRejectOrdersDatatable').DataTable();
+        // Destroy the existing DataTable
+        table.clear();
+        table.destroy();
+        //Re-Initialize Datatable
+        DataTable2(url2);
+        $('.filterbox').hide();
+    }
+    //UpcomingOrdersDatatable  ----Accept
+    function DataTable(url, data = null) {
+        table = $('#UpcomingOrdersDatatable').dataTable({
+
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "data": data,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    text: '<button class="btn btn-primary" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters').toggle();
+                    }
+                },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Order Accept By Driver List',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                },
+                //{
+                //    text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="AssignOrderBtn" ><i class="fa-solid fa-arrow-rotate-left"></i>&nbsp; Assign Order </button></div>',
+                //    action: function (e, dt, node, config) {
+                //        $("#OrderAssignToDriverModel").modal("show");
+                //    }
+                //},
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Record found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+
+            "columns": [
+                { "data": "logisticId", "name": "LogisticId", "autoWidth": true },
+                // { "data": "edit", "name": "Edit", "autoWidth": true, "orderable": false },
+                { "data": "servicePartnerBusinessName", "name": "ServicePartnerBusinessName", "autoWidth": true },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true },
+                { "data": "ticketNumber", "name": "TicketNumber", "autoWidth": true },
+                { "data": "productCategory", "name": "ProductCategory", "autoWidth": true, "orderable": true },
+                { "data": "productType", "name": "ProductType", "autoWidth": true, "orderable": true },
+                { "data": "custCity", "name": "CustCity", "autoWidth": true, "orderable": true },
+                { "data": "orderDate", "name": "OrderDate", "autoWidth": true, "orderable": true },
+                // { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+            ]
+        });
+    }
+    //DriverRejectOrdersDatatable  ----Reject
+    function DataTable2(url2, data = null) {
+        table = $('#DriverRejectOrdersDatatable').DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    text: '<button class="btn btn-primary" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters').toggle();
+                    }
+                },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper "><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Order Reject By Driver List',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Record found"
+            },
+            "ajax": {
+                "url": url2, //Reject order
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+
+            "columns": [
+                { "data": "logisticId", "name": "LogisticId", "autoWidth": true },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                // { "data": "edit", "name": "Edit", "autoWidth": true, "orderable": false },
+                { "data": "servicePartnerBusinessName", "name": "ServicePartnerBusinessName", "autoWidth": true },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true },
+                { "data": "ticketNumber", "name": "TicketNumber", "autoWidth": true },
+                { "data": "driverName", "name": "DriverName", "autoWidth": true },
+                { "data": "driverPhoneNo", "name": "DriverPhoneNo", "autoWidth": true },
+                { "data": "vehicleNo", "name": "VehicleNo", "autoWidth": true },
+                { "data": "driverCity", "name": "DriverCity", "autoWidth": true },
+            ]
+        });
+    }
+
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        var CurrentTabId = @Model.ActiveTabId;
+            $('.nav-item.nav-link[tab-id="' + CurrentTabId + '"]').addClass('active');
+        $('.tab-pane[tab-id="' + CurrentTabId + '"]').addClass('active show');
+    });
+</script>
+
+@* //AutoComplet Dropdown for Driver List *@
+<script>
+    //AutoComplet Dropdown for Driver List
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlDriverDetails").keydown(function (e) {
+            $('#submitButton').prop('disabled', true);
+            $('#hdnDriverDetailsId').val("");
+            var k = e.keyCode || e.which;
+            var ok = k >= 65 && k <= 90 || // A-Z
+                k >= 96 && k <= 105 || // a-z
+                k >= 35 && k <= 40 || // arrows
+                k == 9 || //tab
+                k == 46 || //del
+                k == 8 || // backspaces
+                (!e.shiftKey && k >= 48 && k <= 57); // only 0-9 (ignore SHIFT options)
+            if (!ok || (e.ctrlKey && e.altKey)) {
+                e.preventDefault();
+            }
+        });
+
+        $("#ddlDriverDetails").on("click", function () {
+            // var custCity = $("#customercity").val();
+            $(this).autocomplete("search", "#");
+        }).autocomplete({
+            classes: {
+                "ui-autocomplete": "autocompleteOnModal"
+            },
+            minLength: 0,
+            scroll: true,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/LGCOrderTracking/UnAssignedOrdersList?handler=SearchDriverList", {
+                    term: extractLast(request.term),
+                    ServicePartnerId: @Model.SPId,
+                    custCity: $("#customercity").val(),
+                }, function (data) {
+                    response(data.slice(0, 20));
+                });
+            },
+            focus: function (event, ui) {
+
+            },
+            open: function (event, ui) {
+                var menu = $(this).autocomplete("widget");
+                menu.css({
+                    "max-height": "200px", "overflow": "hidden", "overflow-y": "scroll"
+                });
+            },
+            select: function (event, ui) {
+                var terms = split(this.value);
+                terms.pop();
+                terms.push(ui.item.value);
+                this.value = terms;
+                driverDetailsId = ui.item.text;
+
+                $('#hdnDriverDetailsId').val(driverDetailsId);
+                return false;
+            }
+        });
+    });
+    //Auto Complete for Service Partner
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $(".ddlServicePartner").keydown(function (e) {
+            $('#submitButton').prop('disabled', true);
+            $('#hdnServicePartnerId').val("");
+            var k = e.keyCode || e.which;
+            var ok = k >= 65 && k <= 90 || // A-Z
+                k >= 96 && k <= 105 || // a-z
+                k >= 35 && k <= 40 || // arrows
+                k == 9 || //tab
+                k == 46 || //del
+                k == 8 || // backspaces
+                (!e.shiftKey && k >= 48 && k <= 57); // only 0-9 (ignore SHIFT options)
+            if (!ok || (e.ctrlKey && e.altKey)) {
+                e.preventDefault();
+            }
+        });
+
+        $(".ddlServicePartner").on("click", function () {
+            // var custCity = $("#customercity").val();
+            $(this).autocomplete("search", "#");
+        }).autocomplete({
+            classes: {
+                "ui-autocomplete": "autocompleteOnModal"
+            },
+            minLength: 0,
+            scroll: true,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/LGCOrderTracking/UnAssignedOrdersList?handler=SearchServicePartner", {
+                    term: extractLast(request.term),
+                    ServicePartnerId: @Model.SPId,
+                    custCity: $("#customercity").val(),
+                }, function (data) {
+                    response(data.slice(0, 20));
+                });
+            },
+            focus: function (event, ui) {
+
+            },
+            open: function (event, ui) {
+                var menu = $(this).autocomplete("widget");
+                menu.css({
+                    "max-height": "200px", "overflow": "hidden", "overflow-y": "scroll"
+                });
+            },
+            select: function (event, ui) {
+                var terms = split(this.value);
+                terms.pop();
+                terms.push(ui.item.value);
+                this.value = terms;
+                ServicePartnerId = ui.item.text;
+
+                $('#hdnServicePartnerId').val(ServicePartnerId);
+                return false;
+            }
+        });
+    });
+    //Auto Complete for Customer City
+    // $(function () {
+    //     function split(val) {
+    //         return val.split(/,\s*/);
+    //     }
+    //     function extractLast(term) {
+    //         return split(term).pop();
+    //     }
+    //     $("#customercity").keydown(function (e) {
+    //         $('#submitButton').prop('disabled', true);
+    //         $("#customercity").val("");
+    //        // $('#hdnServicePartnerId').val("");
+    //         var k = e.keyCode || e.which;
+    //         var ok = k >= 65 && k <= 90 || // A-Z
+    //             k >= 96 && k <= 105 || // a-z
+    //             k >= 35 && k <= 40 || // arrows
+    //             k == 9 || //tab
+    //             k == 46 || //del
+    //             k == 8 || // backspaces
+    //             (!e.shiftKey && k >= 48 && k <= 57); // only 0-9 (ignore SHIFT options)
+    //         if (!ok || (e.ctrlKey && e.altKey)) {
+    //             e.preventDefault();
+    //         }
+    //     });
+
+    //     $("#customercity").on("click", function () {
+    //         // var custCity = $("#customercity").val();
+    //         $(this).autocomplete("search", "#");
+    //     }).autocomplete({
+    //         classes: {
+    //             "ui-autocomplete": "autocompleteOnModal"
+    //         },
+    //         minLength: 0,
+    //         scroll: true,
+    //         source: function (request, response) {
+    //             $.get("@URLPrefixforProd/LGCOrderTracking/UnAssignedOrdersList?handler=SearchCustCityList", {
+    //                 term: extractLast(request.term),
+    //                 ServicePartnerId: @Model.SPId,
+    //             }, function (data) {
+    //                 response(data.slice(0, 20));
+    //             });
+    //         },
+    //         focus: function (event, ui) {
+
+    //         },
+    //         open: function (event, ui) {
+    //             var menu = $(this).autocomplete("widget");
+    //             menu.css({
+    //                 "max-height": "200px", "overflow": "hidden", "overflow-y": "scroll"
+    //             });
+    //         },
+    //         select: function (event, ui) {
+    //             var terms = split(this.value);
+    //             terms.pop();
+    //             terms.push(ui.item.value);
+    //             this.value = terms;
+    //             return false;
+    //         }
+    //     });
+    // });
+    $('#nav-tab-2').click(function () {
+        let table = $('#DriverRejectOrdersDatatable').DataTable();
+        table.ajax.reload();
+    })
+</script>

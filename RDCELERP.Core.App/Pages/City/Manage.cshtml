@@ -1,0 +1,318 @@
+﻿
+@page
+@model RDCELERP.Core.App.Pages.City.ManageModel
+@{ ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule; }
+    
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>City
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="CityViewModel.CityId" id="hdnId" />
+                                <input type="hidden" asp-for="CityViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="CityViewModel.CreatedDate" />
+                                 <input type="hidden" asp-for="CityViewModel.IsActive" />
+                                <input type="hidden" asp-for="CityViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="CityViewModel.ModifiedDate" />
+                                <input type="hidden" asp-for="CityViewModel.StateId" id="hdnstateid" />
+                                <input type="hidden" asp-for="CityViewModel.CityLogoUrl"/>
+
+                                <div class="col-12 mb-4 text-center">
+                                    <div class="editprofilepicbox mx-auto mb-4">
+                                        @if (!string.IsNullOrEmpty(Model.CityViewModel.CityLogoUrl))
+                                        {
+                                            <img src="@Model.CityViewModel.CityLogoUrl" id="imgprev" class="rounded-circle" style="width:160px;height:160px;object-fit: contain;" alt="CityLogo">
+                                        }
+                                        else
+                                        {
+                                            <img src="@ViewData["URLPrefixforProd"]/images/620px-City_logo_2012.svg.png" id="imgprev" accept="image/*" alt="Logo" class="rounded-circle" style="width:160px;height:160px;object-fit: contain;" />
+                                        }
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for=""> City Name <span style="color:red;">*</span></label>
+                                    <input type="text" asp-for="CityViewModel.Name" class="form-control" id="txtName" onkeyup="CheckAvailability();" />
+                                    <span asp-validation-for="CityViewModel.Name" class="text-danger"></span>
+                                    <span class="text-danger" id="message"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">City Code <span style="color:red;">*</span></label>
+                                    <input type="text" asp-for="CityViewModel.CityCode" class="form-control" id="txtCode" onkeyup="CheckAvailabal();" />
+                                    <span asp-validation-for="CityViewModel.CityCode" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">State <span style="color:red;">*</span></label>
+                                    @if (Model.CityViewModel.CityId > 0 && Model.CityViewModel.StateId > 0)
+                                    {
+                                        <input id="txtstatename" asp-for="CityViewModel.StateName" class="form-control" />
+                                      
+                                     }
+                                    else
+                                    {
+                                        <input id="txtstatename" asp-for="CityViewModel.StateName" class="form-control" />
+                                        
+                                    }
+                                    <span asp-validation-for="CityViewModel.StateName" class="text-danger"></span>
+                                </div>
+
+                              @*   <div class="col-md-4 mb-4">
+                                    <label for="">Is Active </label>
+                                    <select asp-for="CityViewModel.IsActive" class="form-control">
+                                        <option>Select </option>
+                                        <option>true</option>
+                                        <option>false</option>
+                                    </select>
+                                </div> *@
+                                <div class="row">
+                                    <div class="col-md-4 mb-4">
+                                        <label for="">Upload City Logo :</label>
+                                        <input name="CityLogo" type="file" accept="image/png" class="form-control" onchange="return ShowImagePreview(this)" />
+                                        <span asp-validation-for="CityViewModel.CityLogoUrl" class="text-danger"></span>
+                                        <span class="text-danger" id="planErrorTxt"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    @if (Model.CityViewModel.IsMetro == true)
+                                    {
+                                        <label class="" for="">Is Metro</label>
+                                        <input name="CityViewModel.IsMetro" type="checkbox" id="IsChecked" value="true" class="form-check-input IsDealerChk" data-val-required="The IsChecked field is required.">
+                                        <input name="CityViewModel.IsMetro" type="hidden" data-val="false" id="IsChecked" value="false" data-val-required="The IsChecked field is required.">
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">Is Metro</label>
+                                        <input name="CityViewModel.IsMetro" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="IsChecked" value="true" class="form-check-input">
+                                        <input name="CityViewModel.IsMetro" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="IsChecked" value="false">
+
+                                    }
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                    }
+                                </div>
+                                <div class="col-6 text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <input type="submit" id="Savebtn" value="Save" class="btn btn-primary mainshadow" />
+                                    }
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/js/compressor.js"></script>
+
+<script type="text/javascript">
+    var StateId = null;
+    $(function () {
+
+        $("#txtstatename").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+        .autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/City/Manage?handler=SearchStateName", {
+                    term: request.term
+                }, response);
+            },
+            focus: function () {
+                // Prevent value inserted on focus
+                return false;
+            },
+            open: function (event, ui) {
+                // Get the menu element
+                var menu = $(this).autocomplete("widget");
+
+                // Set max-height and overflow properties
+                menu.css("max-height", "200px");
+                menu.css("overflow-y", "auto");
+            },
+            select: function (event, ui) {
+                this.value = ui.item.value; // Set the selected value
+
+                StateId = ui.item.text;
+                $('#hdnstateid').val(StateId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    // If the selected item is not in the list, clear the input
+                    $(this).val("");
+                    $("#hdnstateid").val(""); // Also clear the hidden field
+                }
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        // Bind to the input event of the input field to clear the message whenever the input changes
+        $("#txtName").on('input', function () {
+            $("#message").text('');
+            checkErrors();
+        });
+
+    });
+
+    function ShowImagePreview(input) {
+
+        if (input.files && input.files[0]) {
+            var filePath = input.value;
+            var allowedExtensions = /(\.png)$/i;
+            if (!allowedExtensions.exec(filePath)) {
+                $('#planErrorTxt').text('Please upload logo in PNG format only');
+                input.value = '';
+                $('#Savebtn').prop('disabled', true);
+                return false;
+            }
+            else {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imgprev').prop('src', e.target.result);
+                };
+                $('#planErrorTxt').text('');
+                $('#Savebtn').prop('disabled', false);
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    }
+
+    function CheckAvailability() {
+        var name = $("#txtName").val();
+        var cityId = $("#hdnId").val();
+        if (name === '') {
+            $("#message").text('');
+            checkErrors();
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["URLPrefixforProd"]/City/Manage?handler=CheckName",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "name": name, "cityId": cityId },
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    $("#message").text('');
+                    checkErrors();
+                } else {
+                    $("#message").css("color", "red");
+                    $("#message").text("This name is already exist.");
+                    checkErrors();
+                }
+            },
+        });
+    }
+
+    $(document).ready(function () {
+        // Bind to the input event of the input field to clear the message whenever the input changes
+        $("#txtCode").on('input', function () {
+            $("#messages").text('');
+            checkErrors();
+        });
+    });
+
+    function CheckAvailabal() {
+        var name = $("#txtCode").val();
+        var cityId = $("#hdnId").val();
+        if (name === '') {
+            $("#messages").text('');
+            checkErrors();
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["URLPrefixforProd"]/City/Manage?handler=CheckCode",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "citycode": $("#txtCode").val(), "cityId": $("#hdnId").val() },
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    $("#messages").text('');
+                    checkErrors();
+                }
+                else {
+                    $("#messages").css("color", "red");
+                    $("#messages").text("This code is already exists");
+                    checkErrors();
+                }
+            },
+        });
+    }
+
+    $(function () {
+
+        $('.IsDealerChk').each(function () {
+            var Ischecked = $(this).val();
+
+            if (Ischecked == "true") {
+
+                $(this).attr('checked', 'checked');
+            }
+        });
+    });
+
+    function checkErrors() {
+        
+        var nameError = $("#message");
+        var codeError = $("#messages");
+
+        if (nameError.text().length > 0 || codeError.text().length > 0) {
+            $('#Savebtn').prop('disabled', true);
+        } else {
+            $('#Savebtn').prop('disabled', false);
+        }
+    }
+
+</script>
+
+
+

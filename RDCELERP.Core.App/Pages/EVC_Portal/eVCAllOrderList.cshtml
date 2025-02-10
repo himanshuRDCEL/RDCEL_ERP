@@ -1,0 +1,436 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC_Portal.eVCAllOrderListModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+@if (accessRule != null && accessRule.CanView)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="card border-0 shadow">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h2 class="fs-5 fw-bold mb-0">All WALLET Utilization</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="EVC_ApprovedDatatable" class="table table-striped dt-responsive mainshadow" width="100%" border="1">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th class="all">Evc RegistrationId </th>
+                                            <th class="all">Regd No </th>
+                                            <th class="all">Partner Code</th>
+                                            <th class="all">Order Amount</th>
+                                            <th class="all">Produt Type Name</th>
+                                            <th class="all">Produt Category Name</th>
+                                            <th class="all">Wallet Status</th> 
+                                            <th class="all">Assign Date</th>
+                                            <th class="all">In Progress Date</th>
+                                            <th class="all">Complete Date</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            @*List Page Common Filters Code VK 19-May*@
+                            <div class="filters">
+                                <div class="p-4">
+                                    <h4 class="">Filters</h4>
+                                    @* Order Date Range Filter *@
+                                    <p class="filterheading">
+                                        <input type="checkbox" name="" id="chkOrderDateRange">
+                                        <label for="chkOrderDateRange">Order Date Range</label>
+                                    </p>
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline mb-2" id="orderStartDate" readonly placeholder="Start Date" autocomplete="off">
+                                        <input type="text" class="form-control d-inline mb-2" id="orderEndDate" readonly placeholder="End Date" autocomplete="off">
+                                    </div>
+                                    <div class="filter-seprator"></div>
+
+                                    @* Product Group Filter *@
+                                    <p class="filterheading">
+                                        <input type="checkbox" name="" id="chkProductCategory">
+                                        <label for="chkProductCategory">Product Group</label>
+                                    </p>
+                                    <div class="filterbox">
+                                        <select asp-for="searchFilterVM.ProductCatId" id="ddlprodcatid" class="form-control d-inline" asp-items="ViewBag.ProductGroup">
+                                            <option value='0'>--Product Cat--</option>
+                                        </select>
+                                        <span asp-validation-for="searchFilterVM.ProductCatId" class="text-danger"></span>
+                                    </div>
+                                    <div class="filter-seprator"></div>
+
+                                    <p class="filterheading">
+                                        <input type="checkbox" name="" id="chkProductType">
+                                        <label for="chkProductType">Product Type</label>
+                                    </p>
+                                    <div class="filterbox">
+                                        <select asp-for="searchFilterVM.ProductTypeId" id="ddlprodcattypeid" class="form-control d-inline" asp-items="ViewBag.productTypeList">
+                                            <option value='0'>--Product Type--</option>
+                                        </select>
+                                        <span asp-validation-for="searchFilterVM.ProductTypeId" class="text-danger"></span>
+                                    </div>
+                                    <div class="filter-seprator"></div>
+
+                                    @* Regd No Filter *@
+                                    <p class="filterheading">
+                                        <input type="checkbox" name="" id="chkregdNo">
+                                        <label for="chkregdNo">Regd No</label>
+                                    </p>
+                                    <div class="filterbox">
+                                        @*<input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">*@
+                                        <input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">
+                                    </div>
+                                    <div class="filter-seprator"></div>
+                                  
+                                    @* EVCStoreCode No Filter *@
+                                    <p class="filterheading">
+                                        <input type="checkbox" name="" id="chkevcstoreCode">
+                                        <label for="chkevcstoreCode">EVC Partner Code</label>
+                                    </p>
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="evcstoreCode" placeholder="Search EVC Partner Code">
+
+                                    </div>
+
+
+                                    @* Submit Filter *@
+                                    <div class="filterbtnwrap">
+                                        <a id="btnFilter" class="btn btn-primary">Filter</a>
+                                        <a id="btnCloseFilter" class="btn btn-sm btn-secondary py-2">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+
+<script type="text/javascript">
+    $(window).on('pageshow', function () {
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+    });
+    //variable declaration
+    var table = null;
+
+    //Document (Page Load) ready Function Call
+    $(document).ready(function () {
+        //Date Picker
+        $("#orderStartDate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                $("#orderEndDate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#orderEndDate").datepicker({
+            defaultDate: null,
+        });
+
+
+        //Hide Filters Dive
+        $('.filters').hide();
+        //Table Count 1 Start
+        var url = "@URLPrefixforProd/api/EVCList/EVC_WalletUtilization?LoggingId=" + @Model.userId;
+        DataTable(url);
+
+    });
+
+    //Filter Close Button Click Event
+    $('#btnCloseFilter').click(function () {
+        $('#orderStartDate').val("");
+        $('#orderEndDate').val("");
+        $('#ddlprodcatid').val(0);
+        $('#ddlprodcattypeid').empty();
+        $('#ddlprodcattypeid').append("<option value='0'>--Product Type--</option>");
+        $('#regdNo').val("");        
+        $('#evcstoreCode').val("");
+        // Unchecks it
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        CommonFilter();
+    });
+
+    //Check Box Date Range change Event
+    $("#chkOrderDateRange").click(function () {
+        if (!this.checked) {
+            $('#orderStartDate').val("");
+            $('#orderEndDate').val("");
+        }
+        });
+
+
+    //Check Box Product Category change Event
+    $("#chkProductCategory").click(function () {
+        if (!this.checked) {
+            $('#ddlprodcatid').val(0);
+        }
+    });
+
+    //On Change Event for Get Product type by Product Category
+    $("#ddlprodcatid").change(function () {
+        $.get("@URLPrefixforProd/api/Dropdown/OnGetProductCategoryTypeAsync?productCatId=" + $(this).val()).done(function (data) {
+
+            $("#ddlprodcattypeid").empty();
+            $("#ddlprodcattypeid").append($("<option></option>").val('0').html('Select ProductType'));
+            $.each(data, function (i, producttype) {
+                $("#ddlprodcattypeid").append($("<option></option>").val(producttype.text).html(producttype.value));
+            });
+        });
+    });
+
+    //Check Box Product Type change Event
+    $("#chkProductType").click(function () {
+        if (!this.checked) {
+            $('#ddlprodcattypeid').val(0);
+        }
+    });
+
+    //Check Box Regd Number change Event
+    $("#chkregdNo").click(function () {
+        if (!this.checked) {
+            $('#regdNo').val("");
+        }
+    });
+
+   
+    //Check Box EVCStoreCode Number change Event
+    $("#chkevcstoreCode").click(function () {
+        if (!this.checked) {
+            $('#evcstoreCode').val("");
+        }
+    });
+
+    // Follow-up list multi Search Filter
+    $('#btnFilter').click(function () {
+     CommonFilter();
+    });
+
+    function DataTable(url) {
+        table = $('#EVC_ApprovedDatatable').DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    text: '<button class="btn btn-primary" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters').toggle();
+                        //$('.content').toggleClass('maincontent');
+                        //$('.filters').insertBefore('table.dataTable');
+                    }
+                },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper "><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Wallet Utilization',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Record found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+
+            "columns": [
+                { "data": "evcRegistrationId", "name": "evcRegistrationId", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "regdNo", "autoWidth": true, "orderable": false },
+                { "data": "storecode", "name": "storecode", "autoWidth": true, "orderable": false },
+                { "data": "orderAmount", "name": "orderAmount", "autoWidth": true, "orderable": false },
+                { "data": "productTypeName", "name": "productTypeName", "autoWidth": true, "orderable": false },
+                { "data": "productCategoryName", "name": "productCategoryName", "autoWidth": true, "orderable": false },
+                { "data": "walletStatus", "name": "walletStatus", "autoWidth": true, "orderable": false },
+                { "data": "finalDate", "name": "FinalDate", "autoWidth": true, "orderable": false },
+                { "data": "dateInProg", "name": "dateInProg", "autoWidth": true, "orderable": false },
+                { "data": "dateComplete", "name": "dateComplete", "autoWidth": true, "orderable": false },                
+            ]
+        });
+    }
+
+    function GetURLData(orderStartDate = null, orderEndDate = null, productCatId = null, productTypeId = null, regdNo = null, evcstoreCode = null) {
+      var urlData = "";
+        if (orderStartDate != null && orderEndDate != null) {
+            urlData += '&orderStartDate=' + orderStartDate + '&orderEndDate=' + orderEndDate;
+        }
+        if (productCatId != null && productCatId > 0) {
+            urlData += '&productCatId=' + productCatId;
+        }
+        if (productTypeId != null && productTypeId > 0) {
+            urlData += '&productTypeId=' + productTypeId;
+        }
+        if (regdNo != null) {
+            urlData += '&regdNo=' + regdNo;
+        }
+        
+        if (evcstoreCode != null) {
+            urlData += '&evcstoreCode=' + evcstoreCode;
+        }
+        return urlData;
+    }
+
+    //Filter Function
+    function CommonFilter() {
+      
+        var productCatId = $('#ddlprodcatid').val();
+        productCatId = $('#ddlprodcatid').val() == "" ? 0 : $('#ddlprodcatid').val();
+        var productTypeId = $('#ddlprodcattypeid').val();
+        productTypeId = $('#ddlprodcattypeid').val() == "" ? 0 : $('#ddlprodcattypeid').val();
+
+        var orderStartDate = $('#orderStartDate').val();
+        orderStartDate = $('#orderStartDate').val() == "" ? null : $('#orderStartDate').val();
+        var orderEndDate = $('#orderEndDate').val();
+        orderEndDate = $('#orderEndDate').val() == "" ? null : $('#orderEndDate').val();
+
+        var regdNo = $('#regdNo').val();
+        regdNo = $('#regdNo').val() == "" ? null : $('#regdNo').val();
+      
+        var evcstoreCode = $('#evcstoreCode').val();
+        evcstoreCode = $('#evcstoreCode').val() == "" ? null : $('#evcstoreCode').val();
+
+        var urlData = GetURLData(orderStartDate, orderEndDate, productCatId, productTypeId, regdNo,evcstoreCode);
+
+        var url = null;
+        url = "@URLPrefixforProd/api/EVCList/EVC_WalletUtilization?LoggingId=" + @Model.userId + urlData;
+
+
+        // Destroy the existing DataTable
+        table = $('#EVC_ApprovedDatatable').DataTable();
+        // Destroy the existing DataTable
+        table.clear().destroy();
+        //Re-Initialize Datatable
+        DataTable(url);
+
+        $('.filters').hide();
+    }
+        //All Data Export--
+    function newexportaction(e, dt, button, config) {
+            var self = this;
+            var oldStart = dt.settings()[0]._iDisplayStart;
+            dt.one('preXhr', function (e, s, data) {
+                // Just this once, load all data from the server...
+                data.start = 0;
+                data.length = 2147483647;
+                dt.one('preDraw', function (e, settings) {
+                    // Call the original action function
+                    if (button[0].className.indexOf('buttons-copy') >= 0) {
+                        $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                        $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                    }
+                    dt.one('preXhr', function (e, s, data) {
+                        // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                        // Set the property to what it was before exporting.
+                        settings._iDisplayStart = oldStart;
+                        data.start = oldStart;
+                    });
+                    // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                    setTimeout(dt.ajax.reload, 0);
+                    // Prevent rendering of the full data to the DOM
+                    return false;
+                });
+            });
+            // Requery the server with the new one-time export settings
+            dt.ajax.reload();
+    };
+
+</script>
+
+@*AutoPopulate Regd No search filter*@
+@* <script>
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        $("#regdNo").on("keydown", function (event) {
+                if (event.keyCode === $.ui.keyCode.TAB &&
+                    $(this).autocomplete("instance").menu.active) {
+                    event.preventDefault();
+                }
+            })
+            .autocomplete({
+                minLength: 3,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/EVC_Allocation/Assign_Order?handler=SearchRegdNo", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+                focus: function () {
+                    // prevent value inserted on focus
+                    return false;
+                },
+                open: function (event, ui) {
+                    // Get the menu element
+                    var menu = $(this).autocomplete("widget");
+
+                    // Set max-height and overflow properties
+                    menu.css("max-height", "200px");
+                    menu.css("overflow-y", "auto");
+                },
+                select: function (event, ui) {
+                    var terms = split(this.value);
+                    console.log(terms);
+                    // remove the current input
+                    terms.pop();
+                    // add the selected item
+                    terms.push(ui.item.value);
+                   
+                    this.value = ui.item.value;
+                    return false;
+                }
+            });
+    })
+</script> *@
+
+
+

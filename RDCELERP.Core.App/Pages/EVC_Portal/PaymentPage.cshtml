@@ -1,0 +1,76 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC_Portal.PaymentPageModel
+@{
+    ViewBag.Title = "PaymentPage";
+}
+
+<!-- // Click this button automatically when this page load using javascript -->
+<!-- You can hide this button -->
+<button id="plr-button1" hidden>Pay Now</button>
+<script src="https://checkout-staging.pluralonline.com/v1/web-sdk-checkout.js"></script>
+<script>
+    const options = {
+    "theme": "default", // "default" or "black"
+    "orderToken": "@Html.DisplayFor(model => model.OrderModel1.orderToken)",
+    "channelId": "WEB", // "APP" or "WEB"
+    "paymentMode": "@Html.DisplayFor(model => model.OrderModel1.paymentMode)",// comma separated - Example - 'CREDIT_DEBIT,NETBANKING,UPI,WALLET,EMI,DEBIT_EMI'
+    "countryCode": "91",// type = string, default "91"
+    "mobileNumber": "@Html.DisplayFor(model => model.OrderModel1.mobileNumber)", // type = string, default = null
+        "emailId": "@Html.DisplayFor(model => model.OrderModel1.emailId)", //default null
+        "showSavedCardsFeature": true, // type = boolean, default = true
+        "successHandler": async function (response) {         
+    //Handle success response
+            document.getElementById('hdnPaymentId').value = response.payment_id;        
+            document.getElementById('hdnOrderId').value = response.plural_order_id;
+           
+        // // Let's submit the form automatically
+        document.getElementById('pl-paymentresponse').click();
+        },
+        "failedHandler": async function (response) {
+            
+            // Handle failure response
+            document.getElementById('hdnPaymentId').value = response.payment_id;
+            document.getElementById('hdnOrderId').value = response.plural_order_id;
+            document.getElementById('hdnerrrorResponse').value = response.error_message;
+            document.getElementById('hdnerrorcode').value = response.response_code;
+            // // Let's submit the form automatically
+            document.getElementById('pl-paymentresponse').click();
+        }
+    };
+    //<!-- onload function -->
+    const plural = new Plural(options);
+
+    window.onload = function () {
+        document.getElementById('plr-button1').click();
+        
+    };
+    document.getElementById('plr-button1').onclick = function (e) {
+
+        plural.open(options);
+        e.preventDefault();
+       
+    }
+
+</script>
+
+
+
+<!-- This form is hidden, and submit when payment successfully made -->
+<Form method="post" >
+    @Html.AntiForgeryToken()   
+    @Html.Hidden("pl_paymentid")
+    @Html.Hidden("pl_orderid")
+    @Html.Hidden("pl_ErrorMessage")
+    @Html.Hidden("pl_errorCode")
+    @Html.HiddenFor(model => model.OrderModel1.amount, new { id = "hdnAmount" })
+    @Html.HiddenFor(model => model.OrderModel1.OrderId, new { id = "hdnOrderId" })
+    @Html.HiddenFor(model => model.OrderModel1.PaymentId, new { id = "hdnPaymentId" })
+    @Html.HiddenFor(model => model.OrderModel1.errorcode, new { id = "hdnerrorcode" })
+    @Html.HiddenFor(model => model.OrderModel1.errrorResponse, new { id = "hdnerrrorResponse" })
+
+
+
+    <button type="submit" id="pl-paymentresponse" class="btn btn-primary" hidden>Submit</button>
+</Form>
+
+

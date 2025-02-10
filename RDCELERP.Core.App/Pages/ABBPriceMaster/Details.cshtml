@@ -1,0 +1,128 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ABBPriceMaster.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "ABBPriceMaster";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>TblAbbpriceMaster</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblAbbpriceMaster.FeeTypeId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblAbbpriceMaster.FeeTypeId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblAbbpriceMaster.Sponsor)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblAbbpriceMaster.Sponsor)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblAbbpriceMaster.ProductCategory)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblAbbpriceMaster.ProductCategory)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblAbbpriceMaster.ProductSabcategory)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblAbbpriceMaster.ProductSabcategory)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblAbbpriceMaster.PriceStartRange)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblAbbpriceMaster.PriceStartRange)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblAbbpriceMaster.PriceEndRange)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblAbbpriceMaster.PriceEndRange)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblAbbpriceMaster.FeeType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblAbbpriceMaster.FeeType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblAbbpriceMaster.FeesApplicableAmt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblAbbpriceMaster.FeesApplicableAmt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblAbbpriceMaster.FeesApplicablePercentage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblAbbpriceMaster.FeesApplicablePercentage)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblAbbpriceMaster.PlanPeriodInMonths)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblAbbpriceMaster.PlanPeriodInMonths)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblAbbpriceMaster.IsActive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblAbbpriceMaster.IsActive)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblAbbpriceMaster.CreatedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblAbbpriceMaster.CreatedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblAbbpriceMaster.CreatedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblAbbpriceMaster.CreatedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblAbbpriceMaster.ModifiedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblAbbpriceMaster.ModifiedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblAbbpriceMaster.ModifiedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblAbbpriceMaster.ModifiedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblAbbpriceMaster.BusinessUnit)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblAbbpriceMaster.BusinessUnit.BusinessUnitId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblAbbpriceMaster.ProductCat)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblAbbpriceMaster.ProductCat.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblAbbpriceMaster.ProductType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblAbbpriceMaster.ProductType.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.TblAbbpriceMaster.PriceMasterId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

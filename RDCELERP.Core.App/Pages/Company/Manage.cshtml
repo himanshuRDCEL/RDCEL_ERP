@@ -1,0 +1,191 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.Company.ManageModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row content-area">
+
+    <div class="col-12">
+        <div class="card border-0 shadow">
+            <div class="card-header with-border">
+                <h3 class="fs-5 fw-bold mb-0">
+                    <span class="m-0">New Company</span>
+                </h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="card-body no-padding">
+                <div class="row detailbox" style="padding: 20px 0;">
+                    <div class="col-12">
+                        <div class="mainshadow setting-right">
+                            <form method="post" enctype="multipart/form-data">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="CompanyViewModel.CompanyId" id="hdnCompanyId" />
+                                <input type="hidden" asp-for="CompanyViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="CompanyViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="CompanyViewModel.IsActive" />
+                                <input type="hidden" asp-for="CompanyViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="CompanyViewModel.ModifiedDate" />
+                                <input type="hidden" asp-for="CompanyViewModel.CompanyLogoUrl" />
+                                <input type="hidden" asp-for="CompanyViewModel.BusinessUnitId" id="hdnbuid" />
+                                
+                                <div class="row">
+                                    <div class="col-12 mb-4 text-center">
+                                        <div class="editprofilepicbox mx-auto">
+                                            @*class="rounded-circle" style="width:140px;height:130px"*@
+                                            @if (!string.IsNullOrEmpty(Model.CompanyViewModel.CompanyLogoUrl))
+                                            {
+                                                <img src="~/DBFiles/Company/@Model.CompanyViewModel.CompanyLogoUrl" id="imgprev" accept="image/*" class="rounded-circle" style="width:160px;height:150px" alt="Company Image">
+                                            }
+                                            else
+                                            {
+                                                <img src="~/ds/img/default-company-image.jpg" id="imgprev" accept="image/*" alt="Company Image">
+                                            }
+                                            @*<input name="CompanyLogo" type="file"><a><i class="fas fa-pen"></i></a></input>*@
+                                            @*<a><i class="fas fa-pen"></i></a>*@
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-4">
+                                        <label for="">Company Name <span style="color:red;">*</span></label>
+                                        <input asp-for="CompanyViewModel.CompanyName" class="form-control" />
+                                        <span asp-validation-for="CompanyViewModel.CompanyName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4 mb-4">
+                                        <label for="">Business Unit Name <span style="color:red;">*</span></label>
+                                        @if (Model.CompanyViewModel.CompanyId > 0 && Model.CompanyViewModel.BusinessUnitId > 0)
+                                        {
+
+                                            <input id="ddlBU" asp-for="CompanyViewModel.BusinessUnitName" class="form-control" />
+
+                                        }
+
+                                        else
+                                        {
+                                            <input id="ddlBU" asp-for="CompanyViewModel.BusinessUnitName" class="form-control" />
+
+                                        }
+                                       
+                                        <span asp-validation-for="CompanyViewModel.BusinessUnitName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4 mb-4">
+                                        <label for="">Email <span style="color:red;">*</span></label>
+                                        <input asp-for="CompanyViewModel.Email" class="form-control" />
+                                        <span asp-validation-for="CompanyViewModel.Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4 mb-4">
+                                        <label for="">Phone Number <span style="color:red;">*</span></label>
+                                        <input asp-for="CompanyViewModel.Phone" type="number" class="form-control" />
+                                        <span asp-validation-for="CompanyViewModel.Phone" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-4 mb-4">
+                                        <label for="">Website <span style="color:red;">*</span></label>
+                                        <input asp-for="CompanyViewModel.Website" class="form-control" />
+                                        <span asp-validation-for="CompanyViewModel.Website" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-8 mb-4 mt-3">
+                                        <label for="" class="mt-4">Upload Company Logo :</label>
+                                        <input name="CompanyLogo" type="file" onchange="ShowImagePreview(this)" />
+                                    </div>
+                                </div>
+                            <div class="row">
+
+                                <div class="col-12">
+                                    <div class="float-right">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <input type="submit" value="Save" class="btn btn-primary mainshadow" />
+                                        }
+                                        @if (accessRule != null && accessRule.CanView)
+                                        {
+                                            <a asp-page="./Index" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">Back to List</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+        <!-- activity -->
+
+    </div>
+
+</div>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+
+<script>
+    function ShowImagePreview(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imgprev').prop('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+    var BUId = null;
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlBU").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/Company/Manage", {
+                    handler: "SearchBUName",
+                    term: extractLast(request.term),
+                }, response);
+            },
+
+            select: function (event, ui) {
+                // $("#ddlBU").val(ui.item.value); // Set the selected value
+
+                var terms = split(this.value);
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                this.value = terms;
+
+                BUId = ui.item.text;
+                $('#hdnbuid').val(BUId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $("#ddlBU").val(""); // Clear the input field
+                }
+            }
+        });
+    })
+
+</script>

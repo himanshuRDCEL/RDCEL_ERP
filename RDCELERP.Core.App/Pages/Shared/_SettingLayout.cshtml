@@ -1,0 +1,237 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <title>@ViewData["Title"]</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/ds/css/style.css">
+</head>
+
+@{
+    RDCELERP.Model.Users.LoginViewModel loginVM = (RDCELERP.Model.Users.LoginViewModel)ViewBag.LoginUser;
+}
+<body>
+
+    <div id="wrapper">
+
+        <div class="container-fluid">
+            <div class="row">
+                <!--start setting sidebar -->
+                <div class="col-md-3" id="mainsidebar-wrapper">
+                    @if (loginVM != null)
+                    {
+                        <div class="row" style="height: 100%;">
+                            <div class="mainsidebar col-md-3" id="mainsidebar">
+
+                                <div id="sidebar">
+                                    <div class="logo"><a asp-area="" asp-page="/Dashboard"><img src="~/ds/img/demo-logo-01.png" alt=""></a></div>
+                                    <ul>
+
+                                        <!--Load in for loop where parent 0 -->
+                                        <li> <a asp-page="/Dashboard"><i class="fas fa-dollar-sign"></i> <span>Sales</span></a></li>
+                                        <li> <a href="#"><i class="fas fa-truck"></i> <span>Delivery</span></a></li>
+                                        <li> <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span>Accounting</span></a></li>
+                                        <li> <a href="#"><i class="fas fa-cogs"></i> <span>Operations</span></a></li>
+                                        <li> <a href="#"><i class="fas fa-boxes"></i> <span>Inventory</span></a></li>
+
+                                        <li> <a asp-area="" asp-page="/Users/Manage" asp-route-id="@loginVM.UserViewModel.UserId"><i class="fas fa-sliders-h"></i> <span>Setting</span></a></li>
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                            <div class="sidebar-2 col-md-9 settingpage-sidebar" id="togglesidebar">
+                                <div class="subnav" id="subnav">
+
+                                    <div id="navtoggle"><i class="fa fa-bars" aria-hidden="true"></i></div>
+                                    <ul>
+                                        
+                                            @if (loginVM.UserViewModel.FirstName + " " + loginVM.UserViewModel.LastName == "Himanshu Pathak" || loginVM.UserViewModel.FirstName + " " + loginVM.UserViewModel.LastName == "Priyanka Patel")
+                                            {
+                                                <li class="treeview">
+                                                    <a>
+                                                        <i class="fas fa-cog"></i> General <i class="fas treeviewicon fa-angle-right"></i>
+                                                    </a>
+
+                                                    <ul class="treeview-menu" style="display:none">
+                                                        <li><a asp-area="" asp-page="/Users/Manage" asp-route-id="@loginVM.UserViewModel.UserId"><i class="fas fa-user-cog"></i> Personal Setting</a></li>
+                                                        <li><a asp-area="" asp-page="/Company/Index"><i class="far fa-building"></i> Company Details</a></li>
+                                                        <li><a asp-area="" asp-page="/Company/RoleList"><i class="fas fa-user-tie"></i> Roles</a></li>
+                                                    </ul>
+                                                </li>
+
+                                                <li class="treeview">
+                                                    <a>
+                                                        <i class="fas fa-user-cog"></i> User and Control <i class="fas treeviewicon fa-angle-right"></i>
+                                                    </a>
+                                                    <ul class="treeview-menu" style="display:none">
+                                                        <li><a asp-area="" asp-page="/Users/Index"><i class="fas fa-users"></i> Users</a></li>
+
+                                                        <li><a asp-area="" asp-page="/Users/Index"><i class="far fa-id-badge"></i> Profile</a></li>
+                                                    </ul>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="treeview">
+                                                    <a>
+                                                        <i class="fas fa-cog"></i> General <i class="fas treeviewicon fa-angle-right"></i>
+                                                    </a>
+
+                                                    <ul class="treeview-menu" style="display:none">
+                                                        <li><a asp-area="" asp-page="/Users/Manage" asp-route-id="@loginVM.UserViewModel.UserId"><i class="fas fa-user-cog"></i> Personal Setting</a></li>
+                                                    </ul>
+                                                </li>
+                                            }
+
+                                        <li style="position: relative;">
+                                            <div id="nav-togglebtn">
+                                                <button id="togglebtn">
+                                                    <i id="toggleicon"
+                                                       class="fas fa-chevron-left"></i>
+                                                </button>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                    <div class="topsidebartoggle">
+                                        <button id="topsidebartoggle">
+                                            <i id="toggleicon"
+                                               class="fas fa-chevron-up"></i>
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!--end setting Sidebar-->
+
+                <div class="col-md-9" id="main">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="main-wrapper">
+                                <!--start header-->
+                                <div class="row topnav align-center">
+                                    <div class="col-md-6">
+                                        <div class="searchinput form-group">
+                                            <form autocomplete="off">
+                                                <input type="text" name="s" id="" class="form-control" placeholder="Search">
+                                                <button class="btn"><i class="fas fa-search"></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 text-right">
+                                        @if (loginVM != null)
+                                        {
+                                            <div class="topuserbtn d-inline dropdown">
+                                                <button class="btn" type="button" id="userdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <div class="btn userbtn">
+
+                                                        <h6>
+                                                            Hey,<span> @loginVM.UserViewModel.FirstName @loginVM.UserViewModel.LastName</span>
+                                                            <p>@*@loginVM.UserViewModel.*@</p>
+                                                        </h6>
+                                                        @if (String.IsNullOrEmpty(@loginVM.UserViewModel.ImageName))
+                                                        {
+                                                            <a><img src="https://cdn.landesa.org/wp-content/uploads/default-user-image.png" alt=""></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a><img src="~/DBFiles/Users/@loginVM.UserViewModel.ImageName" alt=""></a>
+                                                        }
+
+                                                    </div>
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="userdropdown">
+                                                    <a class="dropdown-item" asp-area="" asp-page="/Users/Manage" asp-route-id="@loginVM.UserViewModel.UserId"> <i class="fas fa-user"></i> Profile</a>
+                                                    <a class="dropdown-item" asp-area="" asp-page="/Logout"> <i class="fas fa-sign-out-alt"></i> Logout</a>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            Context.Response.Redirect("/index");
+                                        }
+                                        <div class="d-inline dropdown">
+                                            <button class="btn notificationbtn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                <a href="#"><i class="far fa-bell"></i></a>
+                                            </button>
+                                            <div class="notification-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="fa fa-arrow-right text-muted" aria-hidden="true"></i> 46+
+                                                    New leads <span class="text-muted">Today</span>
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="fa fa-arrow-right text-muted" aria-hidden="true"></i> 4
+                                                    Tasks Required Action
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="fa fa-arrow-right text-muted" aria-hidden="true"></i> 4
+                                                    Quotes Accepted
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!--end header-->
+
+                                @RenderBody()
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="footer">
+                        <p class="text-muted">&copy; <a href="#"><span style="color: #0067ff; font-weight: 600;">UTC DIGITAL TECHNOLOGIES</span> PVT. LTD.</a> | All Right Reserved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--start footer-->
+    <!-- JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <link href="https://nightly.datatables.net/select/css/select.dataTables.css?_=766c9ac11eda67c01f759bab53b4774d.css"
+          rel="stylesheet" type="text/css" />
+    <script src="https://nightly.datatables.net/select/js/dataTables.select.js?_=766c9ac11eda67c01f759bab53b4774d">
+    </script>
+    <script src="~/ds/js/custom.js"></script>
+
+    @*new*@
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>*@
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    @*@await RenderSectionAsync("Scripts", required: false)*@
+</body>
+
+</html>
+<!--end footer-->

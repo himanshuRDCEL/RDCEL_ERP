@@ -1,0 +1,472 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ABB.ABBRegistrationModel
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int i = 0;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    var InvoiceImageURL = ViewData["InvoiceImageURL"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">ABB Registration View</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data" id="formcontrol">
+                            <div class="row" id="AbbReject">
+                                <input type="hidden" asp-for="AbbRegistrationModel.AbbregistrationId" id="hdnUserId" />
+                                <input type="hidden" asp-for="AbbRegistrationModel.RegdNo" id="hdnRegdno" />
+                                <input type="hidden" asp-for="AbbRegistrationModel.CreatedBy" />
+                                <input type="hidden" asp-for="AbbRegistrationModel.CreatedDate" />
+                                <input type="hidden" asp-for="AbbRegistrationModel.IsActive" />
+                                <input type="hidden" asp-for="AbbRegistrationModel.ModifiedBy" />
+                                <input type="hidden" asp-for="AbbRegistrationModel.ModifiedDate" />
+                                <input type="hidden" asp-for="AbbRegistrationModel.OrderId" />
+                                <input type="hidden" asp-for="AbbRegistrationModel.YourRegistrationNo" />
+                                <input type="hidden" asp-for="AbbRegistrationModel.StateId" />
+                                <input type="hidden" asp-for="AbbRegistrationModel.NewProductCategoryName" />
+                                <input type="hidden" asp-for="AbbRegistrationModel.NewProductCategoryType" />
+                                <input type="hidden" asp-for="AbbRegistrationModel.CustomerId" />
+                                <input type="hidden" asp-for="AbbRegistrationModel.UploadImage" />
+                                <input type="hidden" asp-for="AbbRegistrationModel.AbbReject" id="hdnabbreject" />
+                                <input type="hidden" asp-for="AbbRegistrationModel.AbbApprove" id="hdnabbapprove" />
+                                @* Previous Invoice Image *@
+                                <input type="hidden" asp-for="@Model.AbbRegistrationModel.InvoiceImage" />
+                                <input type="hidden" asp-for="@Model.AbbRegistrationModel.BusinessUnitId" />
+                                <input type="hidden" asp-for="@Model.AbbRegistrationModel.CustState" />
+
+                                <div class="col-md-4 mb-4">
+                                    @Html.AntiForgeryToken()
+                                    <label for="">Regd No</label>
+                                    <input asp-for="AbbRegistrationModel.RegdNo" type="text" id="hdnRegdno" name="RegdNo" class="form-control" readonly />
+                                    <input type="hidden" id="hdnRegdno" asp-for="AbbRegistrationModel.RegdNo" />
+                                    <span asp-validation-for="AbbRegistrationModel.RegdNo" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Sponsor Order No. </label>
+                                    <input asp-for="AbbRegistrationModel.SponsorOrderNo" id="txtsponsororderno" class="form-control" readonly />
+                                    <span asp-validation-for="AbbRegistrationModel.SponsorOrderNo" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Store Code</label>
+                                    <input asp-for="AbbRegistrationModel.StoreCode" id="txtStoreCodeauto" class="form-control" readonly />
+
+                                    @*<select asp-for="AbbRegistrationModel.BusinessPartnerId" id="txtstorecode" class="form-select" asp-items="ViewBag.StoreCode">
+                                    <option value=''>--None--</option>
+                                    </select>*@
+                                    <span asp-validation-for="AbbRegistrationModel.StoreCode" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Store Name </label>
+                                    <input asp-for="AbbRegistrationModel.StoreName" id="txtstorename" class="form-control" readonly />
+                                    @*<select asp-for="AbbRegistrationModel.BusinessPartnerId" id="txtstorename" class="form-select" asp-items="ViewBag.Storename">
+                                    <option value=''>--None--</option>
+                                    </select>*@
+                                    <span asp-validation-for="AbbRegistrationModel.StoreName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Store Manager E-mail</label>
+                                    <input asp-for="AbbRegistrationModel.StoreManagerEmail" id="txtsponsororderno" class="form-control" readonly />
+
+                                    @*<select asp-for="AbbRegistrationModel.BusinessPartnerId" id="txtstoremanageemail" class="form-select" asp-items="ViewBag.Storeemail">
+                                    <option value=''>--None--</option>
+                                    </select>*@
+                                    <span asp-validation-for="AbbRegistrationModel.StoreManagerEmail" class="text-danger"></span>
+                                </div>
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0">Customer Details</h5>
+                                    <hr />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer First Name </label>
+                                    <input asp-for="AbbRegistrationModel.CustFirstName" id="txtcustfirstname" class="form-control" />
+                                    <span asp-validation-for="AbbRegistrationModel.CustFirstName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer Last Name </label>
+                                    <input asp-for="AbbRegistrationModel.CustLastName" id="txtcustlastname" class="form-control" />
+                                    <span asp-validation-for="AbbRegistrationModel.CustLastName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer Mobile<span style="color:red;">*</span></label>
+                                    <input asp-for="AbbRegistrationModel.CustMobile" type="number" id="txtcustmob" class="form-control" />
+                                    <span asp-validation-for="AbbRegistrationModel.CustMobile" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer E-mail </label>
+                                    <input asp-for="AbbRegistrationModel.CustEmail" type="email" id="txtcustemail" class="form-control" asp-items="ViewBag.CustomerRecord" />
+                                    <span asp-validation-for="AbbRegistrationModel.CustEmail" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer Address1 </label>
+                                    <input asp-for="AbbRegistrationModel.CustAddress1" id="txtcustaddress1" class="form-control" />
+                                    <span asp-validation-for="AbbRegistrationModel.CustAddress1" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer Address2 </label>
+                                    <input asp-for="AbbRegistrationModel.CustAddress2" id="txtcustaddress2" class="form-control" />
+                                    <span asp-validation-for="AbbRegistrationModel.CustAddress2" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer Pin Code</label>
+                                    <input asp-for="AbbRegistrationModel.CustPinCode" id="txtcustpincode" type="number" class="form-control" />
+                                    <span asp-validation-for="AbbRegistrationModel.CustPinCode" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Customer City</label>
+                                    <input asp-for="AbbRegistrationModel.CustCity" id="ddlcustcity" class="form-control" />
+                                    @*<select id="ddlcustcity" asp-for="AbbRegistrationModel.CustCity" class="custom-select my-1 mr-sm-2 form-select" asp-items="ViewBag.list">
+                                    <option value=''>--None--</option>
+                                    </select>*@
+                                    <span asp-validation-for="AbbRegistrationModel.CustCity" class="text-danger"></span>
+                                </div>
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0">Product Details</h5>
+                                    <hr />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">New Brand</label>
+                                    <input asp-for="AbbRegistrationModel.BrandName" id="txtsponsororderno" class="form-control" readonly />
+
+                                    @*<select asp-for="AbbRegistrationModel.NewBrandId" id="ddlbrandid" class="form-select" asp-items="ViewBag.NewBrandId">
+                                    <option value=''>--None--</option>
+                                    </select>*@
+                                    <span asp-validation-for="AbbRegistrationModel.BrandName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">New Product Group</label>
+                                    <input asp-for="AbbRegistrationModel.NewProductCategoryName" id="txtsponsororderno" class="form-control" readonly />
+
+                                    @*<select asp-for="AbbRegistrationModel.NewProductCategoryId" id="ddlprodcatid" class="form-select" asp-items="ViewBag.ProductGroup">
+                                    <option value=''>--None--</option>
+                                    </select>*@
+                                    <span asp-validation-for="AbbRegistrationModel.NewProductCategoryName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">New Product Type</label>
+                                    <input asp-for="AbbRegistrationModel.NewProductCategoryType" id="txtsponsororderno" class="form-control" readonly />
+
+                                    @*<select asp-for="AbbRegistrationModel.NewProductCategoryType" id="ddlprodcattypeid" class="form-select" asp-items="ViewBag.ProductType">
+                                    <option value=''>--None--</option>
+                                    </select>*@
+                                    <span asp-validation-for="AbbRegistrationModel.NewProductCategoryType" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Product Sr. No.</label>
+                                    <input asp-for="AbbRegistrationModel.ProductSrNo" id="txtproductsrno" class="form-control" />
+                                    <span asp-validation-for="AbbRegistrationModel.ProductSrNo" class="text-danger"></span>
+                                </div>
+                                @* <div class="col-md-4 mb-4">
+                                <label for="">Model Number</label>
+                                <input asp-for="AbbRegistrationModel.ModelNumberId" id="txtmodelnumid" class="form-control" readonly/>
+                                <span asp-validation-for="AbbRegistrationModel.ModelNumberId" class="text-danger"></span>
+                                </div>*@
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Model Number</label>
+                                    <input asp-for="AbbRegistrationModel.ModelName" id="txtsponsororderno" class="form-control" />
+
+                                    @*<select asp-for="AbbRegistrationModel.ModelNumberId" id="ddlmodelnumid" class="form-select" asp-items="ViewBag.ModelNumList">
+                                    <option value=''>--None--</option>
+                                    </select>*@
+                                    <span asp-validation-for="AbbRegistrationModel.ModelName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">ABB Plan Name</label>
+                                    <input asp-for="AbbRegistrationModel.AbbplanName" id="txtabbplanename" class="form-control" readonly />
+                                    <span asp-validation-for="AbbRegistrationModel.AbbplanName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Invoice Date</label>
+                                    <input asp-for="AbbRegistrationModel.InvoiceDate" id="txtInvoiceDate" type="date" class="form-control" readonly />
+                                    <span asp-validation-for="AbbRegistrationModel.InvoiceDate" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Invoice No.</label>
+                                    <input asp-for="AbbRegistrationModel.InvoiceNo" id="txtinvoiceno" class="form-control" type="text" readonly />
+                                    <span asp-validation-for="AbbRegistrationModel.InvoiceNo" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">ABB Fees</label>
+                                    <input asp-for="AbbRegistrationModel.Abbfees" id="txtabbfees" class="form-control" readonly />
+                                    <span asp-validation-for="AbbRegistrationModel.Abbfees" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Product Price(Incl Of GST)</label>
+                                    <input asp-for="AbbRegistrationModel.ProductNetPrice" id="txtprodnetprice" class="form-control" readonly />
+                                    <span asp-validation-for="AbbRegistrationModel.ProductNetPrice" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">ABB Plan Period(Months)</label>
+                                    <input asp-for="AbbRegistrationModel.AbbplanPeriod" id="txtabbplanperiod" class="form-control" readonly />
+                                    <span asp-validation-for="AbbRegistrationModel.AbbplanPeriod" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">No Claim Period(Months) </label>
+                                    @using Microsoft.Extensions.Configuration
+                                    @inject IConfiguration Configuration
+                                    <input asp-for="AbbRegistrationModel.NoOfClaimPeriod" id="txtnoclaimperiod" class="form-control" readonly />
+                                    <span asp-validation-for="AbbRegistrationModel.NoOfClaimPeriod" class="text-danger"></span>
+
+                                    @*<label asp-for="AbbRegistrationModel.NoOfClaimPeriod" id="txtnoclaimperiod" class="form-control" readonly>*@
+                                </div>
+                                @*<div class="col-md-4 mb-4">
+                                <label for="">ABB Price Id</label>
+                                <input asp-for="AbbRegistrationModel.AbbpriceId" id="txtabbpriceid" class="form-control" readonly />
+                                <span asp-validation-for="AbbRegistrationModel.AbbpriceId" class="text-danger"></span>
+
+                                </div>*@
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Upload Date & Time</label>
+                                    <input asp-for="AbbRegistrationModel.UploadDateTime" id="txtDateTime" type="date" class="form-control" readonly />
+                                    <span asp-validation-for="AbbRegistrationModel.UploadDateTime" class="text-danger"></span>
+                                </div>
+
+                                @{
+                                    var imagePath = "";
+                                    imagePath = InvoiceImageURL + @Model.AbbRegistrationModel.InvoiceImage;
+                                }
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Invoice Image</label><br>
+                                    <img class="img-responsive" src="@Model.AbbRegistrationModel.InvoiceImageWithPath" alt="Sample Photo" class="form-control" />
+                                </div>
+                                @*<div class="col-md-4 mb-4">
+                                <label for="">Upload Invoice Image</label><br>
+                                <input id="Image_Upload_" accept="image/*" type="file" asp-for="AbbRegistrationModel.FileName" class="form-control" />
+                                <input type="hidden" asp-for="AbbRegistrationModel.Base64StringValue" id="hdnbase64stringvalue_" />
+                                </div>*@
+                                <div class="col-md-4">
+                                    <div class="showimgbox showimgbox1">
+                                        <img id="Image_1" class="ct-square" alt="Image Not found1" />
+                                        <div class="my-2">
+                                            <a href="@Model.AbbRegistrationModel.Base64StringValue" class="btn btn-light border w-100"></a>
+                                        </div>
+                                    </div>
+                                    @*<div class="my-2">
+                                    <small class="mb-2 mt-3 text-muted d-block">Upload Invoice Image</small>
+                                    <input type="hidden" asp-for="@Model.AbbRegistrationModel.Base64StringValue" id="BaseImageformFile1" />
+                                    <input name="Base64StringValue" class="form-control imginputbox1" id="ImageformFile1" type="file" accept="image/jpeg,image/png,jpg|png" />
+                                    </div>*@
+                                </div>
+
+                                @if (@Model.AbbRegistrationModel.AbbApprove != true)
+                                {
+                                    <div class="col-12" id="btnupdatehide">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="float-right">
+                                                    <input type="submit" value="Update" class="btn btn-primary mainshadow viewableWithAddPermission" />
+                                                    @*<a asp-page="./NotApproved" id="btnapprove" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">
+                                                Approve
+                                                </a>*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                @if (@Model.AbbRegistrationModel.AbbApprove == true)
+                                {
+                                    <div class="col-12" id="btnapprovehide">
+                                        <div class="col-md-6">
+                                            <div class="float-right">
+                                                <a asp-page="./ABBApproved" class="btn mainshadow viewableWithAddPermission" id="btnBack" style="background: #3d3d6e;color: #fff;">
+                                                    Back
+                                                </a>
+                                                @if (@Model.RedemptionButtonActive == true)
+                                                {
+                                                    <a asp-page="/ABBRedemption/ABBRedemption" asp-route-id="@Model.AbbRegistrationModel.AbbregistrationId" id="btnRedeem" class="btn btn-primary mainshadow my-2 viewableWithAddPermission">
+                                                        Redeem Now
+                                                    </a>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                @if (@Model.AbbRegistrationModel.AbbReject == true)
+                                {
+                                    <div class="col-12">
+                                        <div class="col-md-6">
+                                            <div class="float-right">
+                                                <a asp-page="./ABBReject" class="btn mainshadow viewableWithAddPermission " style="background: #3d3d6e;color: #fff;">
+                                                    Back
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/js/compressor.js"></script>
+<script type="text/javascript">
+
+    $("#txtcustmob").change(function () {
+        $.get("@ViewData["URLPrefixforProd"]/ABB/ABBRegistration?handler=ABBDetailsByCustMob&AbbRegistrationModel.CustMobile=" + $(this).val()).done(function (data) {
+            $("#txtcustfirstname").val(data.custFirstName);
+            $("#txtcustlastname").val(data.custLastName);
+            $("#txtcustemail").val(data.custEmail);
+            $("#txtcustaddress1").val(data.custAddress1);
+            $("#txtcustaddress2").val(data.custAddress2);
+            $("#txtcustpincode").val(data.custPinCode);
+            $("#txtcustcity").val(data.custCity);
+            $("#txtcustlocation").val(data.landmark);
+        });
+    });
+
+    $("#txtstorecode").change(function () {
+        $.get("@ViewData["URLPrefixforProd"]/ABB/ABBRegistration?handler=StoreManageEmail&AbbRegistrationModel.StoreCode=" + $(this).val()).done(function (data) {
+            $("#txtstoremanageemail").val(data.storeManagerEmail);
+
+        });
+    });
+
+    $("#txtcustemail").change(function () {
+        $.get("@ViewData["URLPrefixforProd"]/ABB/ABBRegistration?handler=ABBEditById&AbbRegistrationModel.AbbregistrationId=" + $(this).val()).done(function (data) {
+            $("#txtcustfirstname").val(data.firstName);
+            $("#txtcustemail").val(data.custEmail);
+        });
+    });
+
+
+
+
+    $("#btnapprove").click(function () {
+        var regdid = $("#hdnUserId").val();
+        $.get("@ViewData["URLPrefixforProd"]/ABB/NotApproved?handler=ABBApprove&AbbregistrationId=" + regdid).done(function (data) {
+            console.log(data);
+            location.reload(false);
+        });
+    });
+
+    $("#ddlprodcatid").change(function () {
+        $.get("@URLPrefixforProd/ABB/ABBRegistration?handler=ProductCategoryType&AbbRegistrationModel.NewProductCategoryId=" + $(this).val()).done(function (data) {
+            console.log(data);
+            $("#ddlprodcattypeid").empty();
+            $("#ddlmodelnumid").empty();
+            $("#ddlprodcattypeid").append($("<option></option>").val('').html('Select ProductType'));
+            $.each(data, function (i, producttype) {
+                $("#ddlprodcattypeid").append($("<option></option>").val(producttype.id).html(producttype.description));
+            });
+        });
+    });
+
+    //// VK Changes for ModelNumber Dropdown
+    $("#ddlprodcattypeid").change(function () {
+        var productCatId = $("#ddlprodcatid").val();
+        if (productCatId != null && parseInt(productCatId) > 0 && $(this).val() != null && parseInt($(this).val()) > 0) {
+            $.get("@URLPrefixforProd/ABB/ABBRegistration?handler=ModelNoDropdownList&AbbRegistrationModel.NewProductCategoryId=" + productCatId + "&AbbRegistrationModel.NewProductCategoryTypeId=" + $(this).val()).done(function (data) {
+                console.log(data);
+                $("#ddlmodelnumid").empty();
+                $("#ddlmodelnumid").append($("<option></option>").val('').html('Select Model'));
+                $.each(data, function (i, item) {
+                    $("#ddlmodelnumid").append($("<option></option>").val(item.value).html(item.text));
+                });
+            });
+
+        }
+
+    });
+    //// Vk Changes
+
+    var abbreject = $('#hdnabbreject').val();
+    if (abbreject == true || abbreject == "True" || abbreject == "true") {
+        $("#btnupdatehide").hide();
+        $("#btnapprovehide").hide();
+        $("#AbbReject input").prop('readonly', true);
+        $("#AbbReject select").prop('disabled', true);
+    }
+
+    var abbapprove = $('#hdnabbapprove').val();
+    if (abbapprove == true || abbapprove == "True" || abbapprove == "true") {
+        $("#AbbReject input").prop('readonly', true);
+        $("#AbbReject select").prop('disabled', true);
+    }
+
+    $('.imginputbox1').change(function () {
+        $('.showimgbox1').css('display', 'flex')
+    });
+    $(document).ready(function () {
+        txtDateTime.max = new Date().toISOString().slice(0, -14);
+        $('#formDiv').hide();
+        $("#ImageformFile1").bind('change', function () {
+        });
+        $("#ImageformFile1").resizeImg(function () {
+            var value = parseInt("350");
+            var Weight = parseInt("2");
+            let type, quality;
+            {
+                type = "image/jpeg";
+                quality = 0.8;
+            }
+            return {
+                use_reader: false,
+                mode: Weight,
+                val: value,
+                type: type,
+                quality: quality,
+                callback: function (result) {
+
+                    $("#showimgbox").css("display", "flex");
+                    $("#Image_1").attr('src', result);
+                    $("#BaseImageformFile1").val(result.substr(result.indexOf(',') + 1)).css("height", 100);
+                    $("#Image_Upload_1").val(null);
+                }
+            };
+        });
+    });
+
+    //this method is not Used
+    $("#txtmodelnumid").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '@ViewData["URLPrefixforProd"]/ABB/ABBRegistration?handler=ModelNoAutoComplete',
+                data: { "prefix": request.term },
+                dataType: 'json',
+                type: "Get",
+                success: function (data) {
+
+                    console.log(data);
+                    response($.map(data, function (item) {
+                        return ({ label: item.text, value: item.value });
+                    }))
+                }
+            });
+        },
+        minLength: 1
+    });
+
+    $('#formcontrol').change(function () {
+        $('#btnapprove').hide();
+    });
+
+    $('#btnRedeem').click(function () {
+        $(this).hide();
+        $('#btnBack').hide();
+    });
+
+</script>

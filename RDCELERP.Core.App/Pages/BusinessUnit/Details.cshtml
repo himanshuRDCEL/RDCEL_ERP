@@ -1,0 +1,92 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.BusinessUnit.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+   
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>Select Product Category
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="row">  
+                                <div class="col-12 mb-3">
+                                    <h6 class="sectitle">Product Category List</h6>
+                                    <div class="assignrolebox assignwithaccesslist rolebox">
+                                       <ul id="tree3" class="tree">
+
+                                            @for (int i = 0; i < Model.ProductCategoryViewModelList.Count; i++)
+                                            {
+
+                                                <input type="hidden" asp-for="@Model.ProductCategoryViewModelList[i].Buid" />
+                                                <input type="hidden" asp-for="@Model.ProductCategoryViewModelList[i].Id" />
+                                                <input type="checkbox" class="clsHowistheinformationcollected_parent" asp-for="@Model.ProductCategoryViewModelList[i].Selected" />
+                                                <label class="control-label">@Model.ProductCategoryViewModelList[i].Description</label>
+                                                <br>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="float-right">
+                                       
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <input type="submit" asp-page-handler="AddMappingtable" value="Save" class="btn btn-primary mainshadow" />
+                                        }
+                                        @if (accessRule != null && accessRule.CanView)
+                                        {
+                                            <a asp-page="./Create" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">Back to Page</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+    <!-- activity -->
+</div>
+
+<script>
+
+    $(function () {
+     //   alert("chek1");
+        $("input[type='checkbox']").change(function () {
+          //  alert("check2");
+            $(this).siblings('div')
+                .find("input[type='checkbox']")
+                .prop('checked', this.checked).find("input[]").prop("checked", false);
+        });
+    });
+</script>
+
+

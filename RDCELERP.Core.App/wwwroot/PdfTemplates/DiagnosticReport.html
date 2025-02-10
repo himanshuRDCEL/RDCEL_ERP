@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Report - Digi2L</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+    <style>
+        
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            line-height: normal;
+            font-size: 14px;
+        }
+
+        tr td {
+            border: 1px solid #ccc;
+        }
+
+
+
+        .questions thead tr.heading td,
+        .questions tr.totalrow td {
+            color: #fff;
+        }
+
+        .questions tbody tr td:last-child {
+            font-size: 13px;
+            color: #333;
+        }
+
+        .questions tr.totalrow td:first-child {
+            color: #fff;
+        }
+
+        .result tr td:last-child {
+            background: var(--secondary-color) !important;
+            color: #fff;
+        }
+
+        .questions thead td {
+            background-color: var(--tertiary-color) !important;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0) !important;
+        }
+
+            .table-striped tbody tr:nth-of-type(odd) td {
+                background-color: rgba(0, 0, 0, 0.027) !important;
+            }
+
+        table.questions tr.totalrow td {
+            background: var(--tertiary-color) !important;
+            color: #fff;
+        }
+
+        @media print {
+            tr td {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        .primary-color {
+            background: linear-gradient(109deg, #ab01fc -90%, #3325b0 100%) no-repeat padding-box !important;
+        }
+
+        .secondary-color {
+            background: linear-gradient(109deg, #ab01fc -90%, #3325b0 100%) no-repeat padding-box !important;
+        }
+
+        .tertiary-color {
+            background: #3325b0 !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <table class="table table-striped topnav mt-4">
+            <tr style="text-align: center;">
+                <td colspan="4" style="background-color: #fff;">
+                    <img src="https://digi2l.in/wp-content/uploads/2022/09/logo.svg" alt="">
+                    <span class="ml-4" style="color: #333;">UTC Digital Technologies Pvt. Ltd. (Digi2L)</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Customer Name</td>
+                <td class="valuebox">[Customer_Name]</td>
+                <td>Order No.</td>
+                <td class="valuebox">[RegdNo]</td>
+
+            </tr>
+            <tr>
+                <td>Date :</td>
+                <td class="valuebox">[Date]</td>
+                <td>Product Category</td>
+                <td class="valuebox">[Product_Category]</td>
+
+            </tr>
+            <tr>
+                <td>Type</td>
+                <td class="valuebox">[Product_Type]</td>
+                <td>Brand</td>
+                <td class="valuebox">[Brand_Name]</td>
+
+
+            </tr>
+
+            <tr>
+                <td>Technology</td>
+                <td class="valuebox">[Product_Technology]</td>
+                <td>Size</td>
+                <td class="valuebox">[Product_Size]</td>
+
+            </tr>
+
+        </table>
+        <table class="table table-striped questions">
+
+            <thead>
+                <tr class="heading">
+                    <td class="tertiary-color">Sr. No</td>
+                    <td class="tertiary-color">Points</td>
+                    <td class="tertiary-color">Condition</td>
+                    <td class="tertiary-color">QC Remarks</td>
+                </tr>
+            </thead>
+            <tbody>
+                BunchRow
+            </tbody>
+                
+        </table>
+
+        <table class="table table-striped result">
+            <tr>
+                <td>Final Price</td>
+                <td class="primary-color">₹ [Final_Price]</td>
+
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>

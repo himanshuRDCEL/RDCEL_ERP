@@ -1,0 +1,481 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ABBPlanMaster.ManageModel
+
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    var BaseUrl = ViewData["BaseUrl"];
+}
+
+<div class="d-none">
+    <div class="RemovePlanBtn"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>ABB Plan Master
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <form method="post" id="form" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-12 text-end">
+                                    <button type="button" class="btn btn-primary" id="addPlanBtn">Add Plans</button>
+                                </div>
+                            </div>
+                            <!-- Existing entries -->
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <input type="hidden" asp-for="ABBPlanMasterViewModel.PlanMasterId" id="hdnId" />
+                            <input type="hidden" asp-for="ABBPlanMasterViewModel.CreatedBy" />
+                            <input type="hidden" asp-for="ABBPlanMasterViewModel.CreatedDate" />
+                            <input type="hidden" asp-for="ABBPlanMasterViewModel.IsActive" />
+                            <input type="hidden" asp-for="ABBPlanMasterViewModel.ModifiedBy" />
+                            <input type="hidden" asp-for="ABBPlanMasterViewModel.ModifiedDate" />
+                            <input type="hidden" asp-for="ABBPlanMasterViewModel.BusinessUnitId" id="hdnbuid" />
+                            <input type="hidden" asp-for="ABBPlanMasterViewModel.ProductCatId" id="hdncatid" />
+                            <input type="hidden" asp-for="ABBPlanMasterViewModel.ProductTypeId" id="hdntypeid" />
+                          
+                            <input type="hidden" id="hiddenPlanList" name="hiddenPlanList" />
+
+
+                            @*  @for (int i = 0; i < Model.ABBPlanMasterViewModel.ListOfEntries.Count; i++)
+                            {  *@
+                            <div class="entry">
+                                <div class="row">
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">Company Name <span style="color:red;">*</span></label>
+                                        @if (Model.ABBPlanMasterViewModel.PlanMasterId > 0 && Model.ABBPlanMasterViewModel.BusinessUnitId > 0)
+                                        {
+                                            <input id="ddlBU" asp-for="ABBPlanMasterViewModel.BusinessUnitName" class="form-control" />
+                                        }
+                                        else
+                                        {
+                                            <input id="ddlBU" asp-for="ABBPlanMasterViewModel.BusinessUnitName" class="form-control" />
+
+                                        }
+                                        <span asp-validation-for="ABBPlanMasterViewModel.BusinessUnitName" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">ABB Plan Name <span style="color:red;">*</span></label>
+                                        <input asp-for="ABBPlanMasterViewModel.AbbplanName" class="form-control" />
+                                        <span asp-validation-for="ABBPlanMasterViewModel.AbbplanName" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">Product Category <span style="color:red;">*</span></label>
+                                        @if (Model.ABBPlanMasterViewModel.PlanMasterId > 0 && Model.ABBPlanMasterViewModel.ProductCatId > 0)
+                                        {
+
+                                            <input id="ddlCategory" asp-for="ABBPlanMasterViewModel.ProductCategoryName" class="form-control" />
+                                        }
+
+                                        else
+                                        {
+                                            <input id="ddlCategory" asp-for="ABBPlanMasterViewModel.ProductCategoryName" class="form-control" />
+                                        }
+                                        <span asp-validation-for="ABBPlanMasterViewModel.ProductCategoryName" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">Product Type <span style="color:red;">*</span></label>
+                                        @if (Model.ABBPlanMasterViewModel.PlanMasterId > 0 && Model.ABBPlanMasterViewModel.ProductTypeId > 0)
+                                        {
+                                            <input id="ddlType" asp-for="ABBPlanMasterViewModel.ProductTypeName" class="form-control" />
+                                        }
+
+                                        else
+                                        {
+                                            <input id="ddlType" asp-for="ABBPlanMasterViewModel.ProductTypeName" class="form-control" />
+                                        }
+                                        <span asp-validation-for="ABBPlanMasterViewModel.ProductTypeName" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">Plan Period In Month <span style="color:red;">*</span></label>
+                                        <input asp-for="ABBPlanMasterViewModel.PlanPeriodInMonth" class="form-control" />
+                                        <span asp-validation-for="ABBPlanMasterViewModel.PlanPeriodInMonth" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">No Claim Period <span style="color:red;">*</span></label>
+                                        <input asp-for="ABBPlanMasterViewModel.NoClaimPeriod" class="form-control" />
+                                        <span asp-validation-for="ABBPlanMasterViewModel.NoClaimPeriod" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">From Month <span style="color:red;">*</span></label>
+                                        <input asp-for="ABBPlanMasterViewModel.FromMonth" class="form-control" />
+                                        <span asp-validation-for="ABBPlanMasterViewModel.FromMonth" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">To Month <span style="color:red;">*</span></label>
+                                        <input asp-for="ABBPlanMasterViewModel.ToMonth" class="form-control" />
+                                        <span asp-validation-for="ABBPlanMasterViewModel.ToMonth" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">Assured Buy Back Percentage<span style="color:red;">*</span></label>
+                                        <input asp-for="ABBPlanMasterViewModel.AssuredBuyBackPercentage" class="form-control" />
+                                        <span asp-validation-for="ABBPlanMasterViewModel.AssuredBuyBackPercentage" class="text-danger"></span>
+                                    </div>
+
+                                    
+
+
+                                    @if (Model.Plans.Count > 0)
+                                    {
+                                        <div class="col-12">
+                                            <h5 class="text-center">All Plans</h5>
+
+                                        </div>
+                                        for (int i = 1; i < Model.Plans.Count(); i++)
+                                        {
+
+                                            <hr/>
+
+                                           
+                                                @* <label class="" for="">From Month </label> *@
+                                                <input type="hidden"  asp-for="Plans[i].PlanMasterId" />
+                
+                                            <div class="col-md-4 mb-4">
+                                                <label class="" for="">From Month </label>
+                                                <input asp-for="Plans[i].fromMonth" class="form-control" />
+                                                <span asp-validation-for="ABBPlanMasterViewModel.FromMonth" class="text-danger"></span>
+                                            </div>
+
+                                            <div class="col-md-4 mb-4">
+                                                <label class="" for="">To Month </label>
+                                                <input asp-for="Plans[i].toMonth" class="form-control" />
+                                                <span asp-validation-for="ABBPlanMasterViewModel.ToMonth" class="text-danger"></span>
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label class="" for="">Assured Buy Back Percentage</label>
+                                                <input asp-for="Plans[i].percentage" class="form-control" />
+                                                <span asp-validation-for="ABBPlanMasterViewModel.AssuredBuyBackPercentage" class="text-danger"></span>
+                                            </div>
+
+                                            
+
+                                        }
+                                           
+                                        
+                                    }
+                                </div>
+                            </div>
+
+                           
+
+                            <!-- New entry template (hidden by default) -->
+
+                            <div id="plansContainer" >
+
+                                <div id="newEntries">
+
+                                </div>
+                            
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        @if (accessRule != null && accessRule.CanView)
+                                        {
+                                            <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                        }
+                                    </div>
+                                    <div class="col-6 text-end">                                  
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <input type="submit" id="submitbtn" value="Save" class="btn btn-primary mainshadow" />
+                                        }
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/js/compressor.js"></script>
+<script type="text/javascript">
+    var BUId = null;
+    var ProductCatId = null;
+    var ProductTypeId = null;
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        // Autocomplete for Business Unit dropdown
+        $("#ddlBU").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/ABBPlanMaster/Manage?handler=SearchBUName", {
+                    term: extractLast(request.term)
+                }, response);
+            },
+
+            select: function (event, ui) {
+                this.value = ui.item.value; // Set the selected value
+
+                BUId = ui.item.text;
+                $('#hdnbuid').val(BUId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $(this).val(""); // Clear the input field
+                    BUId = null; // Clear BUId
+                    $('#hdnbuid').val(""); // Clear associated hidden field
+                }
+            }
+        });
+    });
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        // Autocomplete for Product Category dropdown
+        $("#ddlCategory").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/ABBPlanMaster/Manage?handler=AutoProductCatName", {
+                    term: extractLast(request.term)
+                }, response);
+            },
+
+            select: function (event, ui) {
+                this.value = ui.item.value; // Set the selected value
+
+                ProductCatId = ui.item.text;
+                $("#hdncatid").val(ProductCatId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $(this).val(""); // Clear the input field
+                    ProductCatId = null; // Clear ProductCatId
+                    $("#hdncatid").val(""); // Clear associated hidden field
+                }
+            }
+        });
+    });
+
+     if (ProductCatId === null) {
+         ProductCatId = $('#hdncatid').val();
+     }
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        // Autocomplete for Product Type dropdown
+        $("#ddlType").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/ABBPlanMaster/Manage", {
+                    handler: "AutoProductTypeName",
+                    term: extractLast(request.term),
+                    term2: ProductCatId
+                }, response);
+            },
+
+            select: function (event, ui) {
+                this.value = ui.item.value; // Set the selected value
+
+                ProductTypeId = ui.item.text;
+                $("#hdntypeid").val(ProductTypeId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $(this).val(""); // Clear the input field
+                    ProductTypeId = null; // Clear ProductTypeId
+                    $("#hdntypeid").val(""); // Clear associated hidden field
+                }
+            }
+        });
+    });
+
+    $(function () {
+
+        $('#newEntryTemplate').hide();
+
+        $('.IsDealerChk').each(function () {
+            var Ischecked = $(this).val();
+
+            if (Ischecked == "true") {
+
+                $(this).attr('checked', 'checked');
+            }
+        });
+    });
+
+
+    // function addNewEntry() {
+    //     // Clone the new entry template
+    //     var newEntry = $('#newEntryTemplate').clone();
+
+    //     // Set a unique ID for the new entry
+    //     var newIndex = $('.entry').length;
+    //     newEntry.attr('id', 'newEntry' + newIndex);
+
+    //     // Show the new entry
+    //     newEntry.show();
+
+    //     // Update the input names with the new index
+    //     newEntry.find('[name^="NewEntries[0]"]').each(function () {
+    //         var newName = $(this).attr('name').replace('[0]', '[' + newIndex + ']');
+    //         $(this).attr('name', newName);
+    //     });
+
+    //     // Append the new entry to the form
+    //     $('#clonedEntry').append(newEntry);
+    // }
+        var planCount = 0;
+        $('#addPlanBtn').click(function () {
+            var planFields = `
+                    <div class="plan">
+                        <div class="row mt-3">
+
+                               <div class="col-12 my-2 ">
+                                    <hr />
+                                </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="" for="">From Month<span style="color:red;">*</span></label>
+                                    <input asp-for="ABBPlanMasterViewModel.PlanList[${planCount}].fromMonth" class="form-control" required/>
+                                    <span asp-validation-for="ABBPlanMasterViewModel.PlanList[${planCount}].fromMonth" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="" for="">To Month<span style="color:red;">*</span></label>
+                                        <input  asp-for="ABBPlanMasterViewModel.PlanList[${planCount}].toMonth" class="form-control" required/>
+                                <span asp-validation-for="ABBPlanMasterViewModel.PlanList[${planCount}].toMonth" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="" for="">Assured Buy Back Percentage<span style="color:red;">*</span></label>
+                                        <input class="form-control" asp-for="ABBPlanMasterViewModel.PlanList[${planCount}].percentage" required/>
+                                <span asp-validation-for="ABBPlanMasterViewModel.PlanList[${planCount}].percentage" class="text-danger"></span>
+                            </div>
+
+                         <div class="col-md-1 text-center  mb-3">
+                         <label class="d-block">&nbsp;</label>
+                                    <button type="button" class="btn btn-danger RemovePlanBtn"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+
+                        </div>
+                    </div>
+
+                    
+                `;
+        $('#newEntries').append(planFields);
+            planCount++;
+        });
+
+    $('#form').submit(function (event) {
+        var isValid = true;
+
+        // Check validity for each input with the "required" attribute
+        $('#newEntries input[required]').each(function () {
+            if (!$(this).val()) {
+                isValid = false;
+                // Optionally, you can display a message or highlight the field here
+                $(this).next('.text-danger').text('This  is required.');
+            }
+        });
+
+        if (!isValid) {
+            // Prevent form submission if not valid
+            event.preventDefault();
+        }
+    });
+       
+
+    $('#submitbtn').click(function () {
+        var planList = [];
+        for (var i = 0; i < planCount; i++) {
+            var fromMonth = $('input[asp-for="ABBPlanMasterViewModel.PlanList[' + i + '].fromMonth"]').val();
+            var toMonth = $('input[asp-for="ABBPlanMasterViewModel.PlanList[' + i + '].toMonth"]').val();
+            var percentage = $('input[asp-for="ABBPlanMasterViewModel.PlanList[' + i + '].percentage"]').val();
+
+            // Create an object with fromMonth and toMonth values
+            var planData = {
+                fromMonth: fromMonth,
+                toMonth: toMonth,
+                percentage: percentage
+            };
+
+            // Push the object to the planList array
+            planList.push(planData);
+        }
+
+        console.log(planList); 
+        var serializedPlanList = JSON.stringify(planList);
+        $('#hiddenPlanList').val(serializedPlanList);
+        $('#form').submit();
+    });
+
+       $(document).ready(function(){
+
+           $('body').on('click', '.RemovePlanBtn', function() { 
+           console.log('test'); 
+            $(this).closest('.plan').remove();
+           });
+
+           
+        })
+
+
+</script>

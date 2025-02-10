@@ -1,0 +1,1101 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ABBRedemption.ManageModel
+@Html.AntiForgeryToken()
+@{
+    ViewData["Title"] = "ABB Redemption Order";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+    alert("@ViewData["UserAuth"]");
+    </script>
+}
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-3">
+            <div class="card-header"><h3 class="fs-5 fw-bold mb-0">ABB Redemption Order</h3></div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row align-items-center">
+            <div class="col">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link shadow active" id="nav-tab-1" data-bs-toggle="tab"
+                           href="#ExchangeTab" role="tab" aria-controls="nav-home"
+                           aria-selected="true">
+                            Sponsor & Customer Details
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-tab-2" data-bs-toggle="tab"
+                           href="#OldExchangeProduct" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">Product Details</a>
+                        <a class="nav-item nav-link shadow" id="nav-tab-3" data-bs-toggle="tab"
+                           href="#QCInformation" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">QC Information</a>
+                        <a class="nav-item nav-link shadow" id="nav-tab-4" data-bs-toggle="tab"
+                           href="#LGCInformation" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">LGC Information</a>
+                        <a class="nav-item nav-link shadow" id="nav-tab-5" data-bs-toggle="tab"
+                           href="#VoucherInformation" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">Voucher Information</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow noborderradius">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+
+                                <input type="hidden" asp-for="aBBRedemptionViewModel.StatusId" id="hdnstatusid" />
+                                <input type="hidden" asp-for="qcCommentViewModel.IsUPINo" id="hdnisupi" />
+                                <input type="hidden" id="hdnloginid" asp-for="UserId" />
+                                <!-- Tab -->
+                                <div class="tab-content" id="nav-tabContent">
+                                    <!--Start Order & Customer Details Section-->
+                                    <div class="tab-pane fade active show" id="ExchangeTab" role="tabpanel"
+                                         aria-labelledby="nav-tab-1">
+                                        <div class="row">
+                                            <div class="col-md-4 mb-4">
+                                                <label class="" for="">RegdNo.</label>
+                                                <input asp-for="aBBRedemptionViewModel.RegdNo" id="txtregdno"
+                                                       class="form-control" readonly />
+                                            </div>
+
+                                            <div class="col-md-4 mb-4">
+                                                <label class="" for="">Sponsor Name</label>
+                                                <input asp-for="aBBRedemptionViewModel.CompanyName" id="txtcompanyname"
+                                                       class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label class="" for="">Store Code</label>
+                                                <input asp-for="aBBRedemptionViewModel.StoreCode"
+                                                       id="txtsponsororderno" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Store Phone Number</label>
+                                                <input asp-for="aBBRedemptionViewModel.StorePhoneNumber"
+                                                       id="txtstorephone" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Associate Name</label>
+                                                <input asp-for="aBBRedemptionViewModel.StoreName"
+                                                       id="txtassociatename" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Associate Code</label>
+                                                <input asp-for="aBBRedemptionViewModel.StoreAssociateCode"
+                                                       id="txtassociatecode" class="form-control" readonly />
+                                            </div>
+
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Associate Email</label>
+                                                <input asp-for="aBBRedemptionViewModel.StoreEmail"
+                                                       id="txtassociateemail" class="form-control" readonly />
+                                            </div>
+
+                                            <div class="col-12 my-4">
+                                                <h5 class="fs-5 fw-bold mb-0">Customer Details</h5>
+                                                <hr />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Customer First Name</label>
+                                                <input asp-for="aBBRedemptionViewModel.CustFirstName"
+                                                       id="txtcustname" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Customer Last Name</label>
+                                                <input asp-for="aBBRedemptionViewModel.CustLastName"
+                                                       id="txtcustname" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Phone Number</label>
+                                                <input asp-for="aBBRedemptionViewModel.CustMobile"
+                                                       id="txtphone" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Email</label>
+                                                <input asp-for="aBBRedemptionViewModel.CustEmail"
+                                                       id="txtemail" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Address1</label>
+                                                <textarea asp-for="aBBRedemptionViewModel.CustAddress1" 
+                                                id="txtaddress1" class="form-control" readonly></textarea>
+                                               @*  <input asp-for="aBBRedemptionViewModel.CustAddress1"
+                                                       id="txtaddress1" class="form-control" readonly /> *@
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Address2</label>
+                                                <textarea asp-for="aBBRedemptionViewModel.CustAddress2" 
+                                                id="txtaddress2" class="form-control" readonly></textarea>
+                                                @* <input asp-for="aBBRedemptionViewModel.CustAddress2"
+                                                       id="txtaddress2" class="form-control" readonly /> *@
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Pin code</label>
+                                                <input asp-for="aBBRedemptionViewModel.CustPinCode"
+                                                       id="txtpincode" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">City</label>
+                                                <input asp-for="aBBRedemptionViewModel.CustCity"
+                                                       id="txtcity" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">State</label>
+                                                <input asp-for="aBBRedemptionViewModel.CustState"
+                                                       id="txtstate" class="form-control" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Order & Customer Details Section-->
+                                    <!--Start Product Details Section-->
+                                    <div class="tab-pane fade" id="OldExchangeProduct" role="tabpanel"
+                                         aria-labelledby="nav-tab-2">
+                                        <div class="row">
+                                            <div class="col-md-4 mb-4">
+                                                <label class="" for="">Product Category</label>
+                                                <input asp-for="aBBRedemptionViewModel.NewProductCategoryName" id="txtProdCat" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label class="" for="">Product Type</label>
+                                                <input asp-for="aBBRedemptionViewModel.NewProductCategoryType" id="txtProdType" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label class="" for="">Product Serial No.</label>
+                                                <input asp-for="aBBRedemptionViewModel.ProductSrNo" id="txtProdSerialNo" class="form-control" readonly />
+                                            </div>
+
+                                            <div class="col-md-4 mb-4">
+                                                <label class="" for="">Plan Name</label>
+                                                <input asp-for="aBBRedemptionViewModel.AbbplanName" id="txtPlanName" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label class="" for="">Product Brand</label>
+                                                <input asp-for="aBBRedemptionViewModel.BrandName" id="ddlprodcat" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Product Value<sup>*After Redemption</sup></label>
+                                                <input asp-for="aBBRedemptionViewModel.RedemptionValue" id="txtProdValue"
+                                                       class="form-control" readonly />
+                                            </div>
+                                           
+                                            <div class="col-md-4 mb-4">
+                                                <label class="" for="">Invoice Price</label>
+                                                <input asp-for="aBBRedemptionViewModel.ProductNetPrice" id="txtInvoicePrice"
+                                                       class="form-control" readonly />
+                                            </div>
+
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Invoice Number</label>
+                                                <input asp-for="aBBRedemptionViewModel.InvoiceNo" id="txtInvoiceNumber"
+                                                       class="form-control" readonly />
+                                            </div>
+
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Invoice Date</label>
+                                                <input asp-for="aBBRedemptionViewModel.InvoiceDateOnly" id="txtInvoiceDate"
+                                                       class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Model Number</label>
+                                                <input asp-for="aBBRedemptionViewModel.ModelNumber" id="txtModelName"
+                                                       class="form-control" readonly />
+                                            </div>
+
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Is Deferred</label>
+                                                <input asp-for="aBBRedemptionViewModel.IsDefferedSettlement"
+                                                       id="txtisdeferred" class="form-control" readonly />
+                                            </div>
+
+                                            <div class="col-md-4 mb-4">
+                                                
+                                                    @if (!string.IsNullOrEmpty(Model.aBBRedemptionViewModel.InvoiceImageUrlMVC))
+                                                    {
+                                                            <label for="">Invoice Image</label>
+                                                            <img class="img-responsive" src='@Model.aBBRedemptionViewModel.InvoiceImageUrlMVC' style='width: 200px;' />
+                                                    }
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                    @if (!string.IsNullOrEmpty(Model.aBBRedemptionViewModel.InvoiceImageUrlERP))
+                                                    {
+                                                        <label for="">Invoice Image Uploded By UTC</label>
+                                                        <img class="img-responsive" src='@Model.aBBRedemptionViewModel.InvoiceImageUrlERP' style='width: 200px;' />
+                                                    }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Product Details Section-->
+                                    <!--Start QC Details Section-->
+
+                                    <div class="tab-pane fade" id="QCInformation" role="tabpanel"
+                                         aria-labelledby="nav-tab-3">
+                                        <div class="row">
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">SVC's Call No</label>
+                                                <input asp-for="qcCommentViewModel.OrderQCId" type="text" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">QC Comment</label>
+                                                <textarea asp-for="qcCommentViewModel.Qccomments" id="txtqccomment"
+                                                          class="form-control" readonly></textarea>
+                                                @* <input asp-for="qcCommentViewModel.Qccomments" class="form-control" readonly /> *@
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Preferred Time For QC</label>
+                                                <input asp-for="qcCommentViewModel.ProposedQcdate" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Final Amount As Per QC</label>
+                                                <input asp-for="qcCommentViewModel.PriceAfterQC" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Collected Amount</label>
+                                                    <input asp-for="qcCommentViewModel.CollectedAmount" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Actual EVC Amount As Per QC</label>
+                                                <input asp-for="qcCommentViewModel.PriceasperEVC" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">QC Flag</label>
+                                                <input asp-for="qcCommentViewModel.StatusCode" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Qc Date</label>
+                                                <input asp-for="qcCommentViewModel.QCDate" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Rescheduled Qc Date</label>
+                                                <input asp-for="qcCommentViewModel.RescheduleDate" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-12 my-4">
+                                                <h5 class="fs-5 fw-bold mb-0">Self QC Images</h5>
+                                                <hr />
+                                            </div>
+                                            @if (Model.SelfQCVMList != null && Model.SelfQCVMList.Count > 0)
+                                            {
+                                                @foreach (var item in Model.SelfQCVMList)
+                                                {
+                                                 <div class="col-md-3 mb-3">
+                                                <div class="showimgwrap">
+                                                @{
+                                                    var extn = item.ImageName.Split(".").Last();
+                                                }
+                                                @if (extn == "jpg")
+                                                {
+                                                    <img class="img-responsive" src="@item.ImageWithPath" />
+                                                }
+                                                else
+                                                {
+                                                                <iframe src="@item.ImageWithPath" width="240" height="210" sandbox="" allowfullscreen="true"></iframe>
+                                                }
+                                                </div>
+                                           
+                                        </div>
+
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="showimgwrap">
+                                                        <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="showimgwrap">
+                                                        <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="showimgwrap">
+                                                        <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="showimgwrap">
+                                                        <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                    </div>
+                                                </div>
+                                            }
+
+                                            <div class="col-12 my-4">
+                                                <h5 class="fs-5 fw-bold mb-0">Video QC Images</h5>
+                                                <hr />
+                                            </div>
+                                            @if (Model.OrderImageUploadList != null && Model.OrderImageUploadList.Count > 0)
+                                            {
+                                                @foreach (var item in Model.OrderImageUploadList)
+                                                {
+                                                    <div class="col-md-3 mb-3">
+                                                        <div class="showimgwrap">
+                                                            @{
+                                                                var extn = item.ImageName.Split(".").Last();
+                                                            }
+                                                            @if (extn == "jpg")
+                                                {
+                                                    <img class="img-responsive" src="@item.ImageWithPath" />
+                                                }
+                                                else
+                                                {
+                                                                <iframe src="@item.ImageWithPath" width="240" height="210" sandbox="" allowfullscreen="true"></iframe>
+                                                }
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="showimgwrap">
+                                                        <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="showimgwrap">
+                                                        <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="showimgwrap">
+                                                        <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="showimgwrap">
+                                                        <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <!--End QC Details Section-->
+                                    <!--Start Logistic Details Section-->
+
+                                    <div class="tab-pane fade" id="LGCInformation" role="tabpanel"
+                                         aria-labelledby="nav-tab-4">
+                                        <div class="row">
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">LGC Ticket No.</label>
+                                                <input asp-for="QCCommentViewModel.LogisticViewModel.TicketNumber"
+                                                       id="txtLGCtktno" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Logistic By</label>
+                                                <input asp-for="QCCommentViewModel.ServicePartnerName " id="txtservicepartner" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">LGC Ticket Created Date</label>
+                                                <input asp-for="QCCommentViewModel.LogisticViewModel.CreatedDate" type="date" id="txttktdate" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Amount Payable Through LGC</label>
+                                                <input asp-for="QCCommentViewModel.LogisticViewModel.AmtPaybleThroughLGC" id="txtamtpaybylgc" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Actual Pickup Date</label>
+                                                <input asp-for="QCCommentViewModel.OrderLGCViewModel.ActualPickupDate"
+                                                       id="txtactualpickupdate" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Actual Drop Date</label>
+                                                <input asp-for="QCCommentViewModel.OrderLGCViewModel.ActualDropDate" id="txtactualdropdate"
+                                                       class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">LGC Latest Flag</label>
+                                                <input asp-for="QCCommentViewModel.OrderLGCViewModel.StatusCode" id="txtLGCpickupflag"
+                                                       class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Proof Of Delivery</label>
+                                                <input asp-for="QCCommentViewModel.OrderLGCViewModel.Evcpodid"
+                                                       id="txtoridsrno" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">LGC Comments</label>
+                                                <textarea asp-for="QCCommentViewModel.OrderLGCViewModel.Lgccomments" id="txtLGCcomment"
+                                                          class="form-control" readonly></textarea>
+                                                @* <textarea asp-for="QCCommentViewModel.OrderLGCViewModel.Lgccomments" id="txtLGCcomment" class="form-control" readonly></textarea> *@
+                                            </div>
+                                            <div class="col-12 my-4">
+                                                <h5 class="fs-5 fw-bold mb-0">EVC POD Details</h5>
+                                                <hr />
+                                            </div>
+                                            @if (@Model.QCCommentViewModel != null && @Model.QCCommentViewModel.LogisticViewModel != null)
+                                            {
+                                                @if (@Model.QCCommentViewModel.LogisticViewModel.CustomerDeclarationPdf != null)
+                                                {
+                                                    <div class="col-md-3 mb-3">
+                                                        <p><span class="mb-2">Customer Declaration</span></p>
+                                                        <a href="@Model.QCCommentViewModel.LogisticViewModel.CustomerDeclarationPdf" download="" class="btn btn-sm btn-primary mr-1"><i class="fa-solid fa-download"></i> </a>&nbsp;<a href="@Model.QCCommentViewModel.LogisticViewModel.CustomerDeclarationPdf" target="_blank"><i class="btn btn-sm btn-primary fa-solid fa-eye"></i></a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-md-3 mb-3">
+                                                            <img class="img-responsive" src="~/Images/CustomerDeclarationPlaceHolder.png" />
+                                                    </div>
+                                                }
+                                                @if (@Model.QCCommentViewModel.LogisticViewModel.PoDPdf != null)
+                                                {
+                                                    <div class="col-md-3 mb-3">
+                                                        <p><span class="mb-2">PoD</span></p>
+                                                        <a href="@Model.QCCommentViewModel.LogisticViewModel.PoDPdf" download="" class="btn btn-sm btn-primary mr-1"><i class="fa-solid fa-download"></i> </a>&nbsp;<a href="@Model.QCCommentViewModel.LogisticViewModel.PoDPdf" target="_blank"><i class="btn btn-sm btn-primary fa-solid fa-eye"></i></a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-md-3 mb-3">
+                                                            <img class="img-responsive" src="~/Images/PodPlaceHolder.png" />
+                                                    </div>
+                                                }
+                                                @if (@Model.QCCommentViewModel.LogisticViewModel.DebitNotePdf != null)
+                                                {
+                                                    <div class="col-md-3 mb-3">
+                                                        <p><span class="mb-2">Debit Note</span></p>
+                                                        <a href="@Model.QCCommentViewModel.LogisticViewModel.DebitNotePdf" download="" class="btn btn-sm btn-primary mr-1"><i class="fa-solid fa-download"></i> </a>&nbsp;<a href="@Model.QCCommentViewModel.LogisticViewModel.DebitNotePdf" target="_blank"><i class="btn btn-sm btn-primary fa-solid fa-eye"></i></a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-md-3 mb-3">
+                                                            <img class="img-responsive" src="~/Images/DebitNotePlaceHolder.png" />
+                                                    </div>
+                                                }
+                                                @if (@Model.QCCommentViewModel.LogisticViewModel.InvoieImagePdf != null)
+                                                {
+                                                    <div class="col-md-3 mb-3">
+                                                        <p><span class="mb-2">Invoice</span></p>
+                                                        <a href="@Model.QCCommentViewModel.LogisticViewModel.InvoieImagePdf" download="" class="btn btn-sm btn-primary mr-1"><i class="fa-solid fa-download"></i> </a>&nbsp;<a href="@Model.QCCommentViewModel.LogisticViewModel.InvoieImagePdf" target="_blank"><i class="btn btn-sm btn-primary fa-solid fa-eye"></i></a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-md-3 mb-3">
+                                                            <img class="img-responsive" src="~/Images/InvoicePlaceHolder.png" />
+                                                    </div>
+                                                }
+                                            }
+                                            <div class="col-12 my-4">
+                                                <h5 class="fs-5 fw-bold mb-0">LGC Images</h5>
+                                                <hr />
+                                            </div>
+                                            @if (Model.LGCOrderImageUploadList != null && Model.LGCOrderImageUploadList.Count > 0)
+                                            {
+                                                @foreach (var item in Model.LGCOrderImageUploadList)
+                                                {
+                                                    <div class="col-md-3 mb-3">
+                                                        <div class="showimgwrap">
+                                                            <img class="img-responsive" src="@item.ImageWithPath" />
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="showimgwrap">
+                                                        <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="showimgwrap">
+                                                        <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="showimgwrap">
+                                                        <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <div class="showimgwrap">
+                                                        <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    <!--Start Logistic Details Section-->
+                                    <!--Start Voucher Information Section-->
+                                     <div class="tab-pane fade" id="VoucherInformation" role="tabpanel"
+                                         aria-labelledby="nav-tab-5">
+                                        <div class="row">
+
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Voucher Code</label>
+                                                <input asp-for="voucherDetailsViewModel.VoucherCode" id="txtvouchercode" class="form-control" readonly />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Voucher Status</label>
+                                                <input asp-for="voucherDetailsViewModel.VoucherStatusName" type="text" id="txtvoucherstatus" class="form-control" readonly />
+                                            </div>
+
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Voucher Redeemed By</label>
+                                                <input asp-for="voucherDetailsViewModel.VoucherRedemptionby" id="txtredeemedby" class="form-control" readonly />
+                                            </div>
+                                            @* @if (Model.voucherDetailsViewModel != null && Model.voucherDetailsViewModel.BusinessPartnerId != null)
+                                            {
+                                                @if (Model.voucherDetailsViewModel.NewProductCategoryId != null && Model.voucherDetailsViewModel.NewProductTypeId != null)
+                                                {
+                                                    <div class="col-md-4 mb-4">
+                                                        <label for="">New Product Name</label>
+                                                        <input asp-for="voucherDetailsViewModel.NewProductcategory" id="ddlnewprodcat"
+                                                               class="form-control" readonly />
+                                                    </div>
+                                                    <div class="col-md-4 mb-4">
+                                                        <label for="">New Product Type</label>
+                                                        <input asp-for="voucherDetailsViewModel.NewProductType" id="ddlnewprodcattype"
+                                                               class="form-control" readonly />
+                                                    </div>
+                                                    <div class="col-md-4 mb-4">
+                                                        <label for="">New Product Size</label>
+                                                        <input asp-for="ExchangeOrderViewModel.NewProductTypeSize" id="txtproductsize"
+                                                               class="form-control" readonly />
+                                                    </div>
+                                                    <div class="col-md-4 mb-4">
+                                                        <label for="">Model Number</label>
+                                                        <input asp-for="ExchangeOrderViewModel.ModelNumber" id="txtmodelno"
+                                                               class="form-control" readonly />
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-md-4 mb-4">
+                                                        <label for="">New Product Name</label>
+                                                        <input asp-for="voucherDetailsViewModel.NewProductCategoryName" id="ddlnewprodcat"
+                                                               class="form-control" readonly />
+                                                    </div>
+                                                    <div class="col-md-4 mb-4">
+                                                        <label for="">New Product Type</label>
+                                                        <input asp-for="voucherDetailsViewModel.NewProductTypeName" id="ddlnewprodcattype"
+                                                               class="form-control" readonly />
+                                                    </div>
+                                                    <div class="col-md-4 mb-4">
+                                                        <label for="">New Product Size</label>
+                                                        <input asp-for="voucherDetailsViewModel.NewProductSize" id="txtproductsize" class="form-control" readonly />
+                                                    </div>
+                                                    <div class="col-md-4 mb-4">
+                                                        <label for="">Model Number</label>
+                                                        <input asp-for="voucherDetailsViewModel.ModelNumber" id="txtmodelno" class="form-control" readonly />
+                                                    </div>
+                                                }
+                                            } *@
+
+                                            @if (Model.voucherDetailsViewModel.VoucherCode != null)
+                                            {
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Voucher Amount</label>
+                                                    <input asp-for="voucherDetailsViewModel.RedemptionPrice" id="txtvoucheramount" class="form-control" readonly />
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Voucher Amount</label>
+                                                    <input asp-for="voucherDetailsViewModel.RedemptionPrice" id="txtvoucheramount" class="form-control" readonly />
+                                                </div>
+                                            }
+
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Voucher Expire Date</label>
+                                                <input asp-for="voucherDetailsViewModel.VoucherCodeExpDate" id="txtexpiredate" class="form-control" placeholder="dd/mm/yyyy" readonly />
+                                            </div>
+
+                                           
+                                        </div>
+                                    </div> 
+                                    <!--End Voucher Information Section-->
+                                    <!-- End of tab -->
+                                    <div class="row">
+                                        <div class="col-md-4 mb-4">
+                                            <label class="" for="">Latest Status Code</label>
+                                            <input asp-for="aBBRedemptionViewModel.StatusCode" id="txtlatestdate"
+                                                   class="form-control" disabled="disabled" />
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <label class="" for="">Latest Status Description</label>
+                                            <input asp-for="aBBRedemptionViewModel.StatusDescription" id="txtlatestdate"
+                                                   class="form-control" disabled="disabled" />
+                                        </div>
+                                        @if (Model.aBBRedemptionViewModel != null && Model.aBBRedemptionViewModel.StatusCode == "0")
+                                        {
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Latest Date & Time</label>
+                                                <input asp-for="aBBRedemptionViewModel.AbbCreatedDate" id="txtlatestdate"
+                                                       class="form-control" disabled="disabled" />
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Latest Date & Time</label>
+                                                <input asp-for="aBBRedemptionViewModel.AbbModifiedDate" id="txtlatestdate"
+                                                       class="form-control" disabled="disabled" />
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (Model.qcCommentViewModel.UserCompany == Model.qcCommentViewModel.CompanyUTC || Model.qcCommentViewModel.UserCompany == null)
+                        {
+                            <div class="row" id="Isbtnvisible">
+
+                                @if (accessRule != null && accessRule.CanView)
+                                {
+                                <div class="col-md-4 text-start my-4" id="btnprocessqc">
+                                    @if (Model.aBBRedemptionViewModel != null && (Model.aBBRedemptionViewModel.StatusId < 15 || Model.aBBRedemptionViewModel.StatusId == 33 || Model.aBBRedemptionViewModel.StatusId == 17 || Model.aBBRedemptionViewModel.StatusId == 41 || Model.aBBRedemptionViewModel.StatusId == 43 || Model.aBBRedemptionViewModel.StatusId == 58))
+                                    {
+                                        <a asp-page="/QCIndex/AbbQC" asp-route-id="@Model.aBBRedemptionViewModel.OrderTransId" id="ProcessQCbtn" class="btn btn-primary mainshadow my-2">Process QC</a>
+                                        <a href="#rescheduleBox" class="btn btn-primary mainshadow my-2" type="submit" id="btnreschedule">Reschedule</a>
+                                    }
+                                    <input type="button" value="Add Beneficiary" class="btn btn-primary my-2" target="_blank" id="beneficiarybtn" />
+
+                                </div>
+                                }
+                                <div class="col-md-8 text-md-end  my-4" id="divSelfqc">
+                                    @if ((Model.aBBRedemptionViewModel != null || @Model.aBBRedemptionViewModel.StatusId < 15) && (@Model.SelfQCVMList == null || @Model.SelfQCVMList.Count <= 0) && (@Model.aBBRedemptionViewModel.StatusId != 33))
+                                    {
+                                            @if (accessRule != null && accessRule.CanView)
+                                            {
+                                                <input type="button" value="Do Self QC" class="btn btn-primary my-2" id="btndoselfQc" />
+                                            }
+                                            <input type="button" value="Send SelfQC Url" class="btn btn-primary my-2" id="btnSend" />
+                                    }
+                                    @if (Model.aBBRedemptionViewModel != null)
+                                    {
+                                        <a href='@URLPrefixforProd/Index1?OrderTransId=@Model.aBBRedemptionViewModel.OrderTransId' class="btn btn-primary my-2">Time Line</a>
+                                    }
+                                    <a href="#CancelcommentBox" class="btn btn-danger my-2" id="btncancelqc">Cancel Order</a>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            @if (Model.aBBRedemptionViewModel != null)
+                            {
+                                <a href='@URLPrefixforProd/Index1?OrderTransId=@Model.aBBRedemptionViewModel.OrderTransId' class="btn btn-primary my-2">Time Line</a>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="rescheduleBox">
+            <div class="col-12">
+                <div class="card shadow border-0">
+                    <div class="card-body">
+                        <div class="row my-4">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <label for="">Rescheduled Date</label>
+                                        <input type="text" asp-for="QCCommentViewModel.RescheduleDate" id="txtrecheduleddate" placeholder="DD/MM/YYYY" class="form-control" required readonly />
+                                        @* <input type="date" asp-for="QCCommentViewModel.RescheduleDate" id="txtrecheduleddate" class="form-control" required /> *@
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <label for="">Rescheduled Time</label>
+                                        <input type="time" asp-for="QCCommentViewModel.RescheduleTime" id="txtrecheduledtime" class="form-control" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="hidecommentdiv">
+                                <label for="">Reschedule Note</label>
+                                <textarea asp-for="QCCommentViewModel.Qccomments" id="txtcomment" class="form-control" rows="1" maxlength="200" required></textarea>
+                                <span asp-validation-for="QCCommentViewModel.Qccomments" class="text-danger"></span>
+                            </div>
+                            @if (Model.qcCommentViewModel.Reschedulecount <= 4)
+                            {
+                                <div class="col-md-12 mt-1" id="divupdate">
+                                    <input type="submit" value="Update" id="btnUpdate" class="btn btn-primary mainshadow" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="CancelcommentBox">
+            <div class="col-12">
+                <div class="card shadow border-0">
+                    <div class="card-body">
+                        <div class="row my-4">
+                            <div class="col-12" id="hidecancelcommentdiv">
+                                <label for="">Cancel Comment</label>
+                                <textarea asp-for="qcCommentViewModel.Qccomments" id="txtcancelcomment" class="form-control"></textarea>
+                                <span asp-validation-for="qcCommentViewModel.Qccomments" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 text-center mt-4" id="divupdate">
+                                <input type="submit" value="Save" id="savecomment" class="btn btn-primary mainshadow" />
+                                <input type="submit" value="Cancel" id="cancelcomment" class="btn btn-secondary mainshadow" />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+
+<script type="text/javascript">
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+    $('#txtrecheduleddate').attr('min', today);
+
+    $("#txtrecheduleddate").datepicker({
+        dateFormat: "dd-mm-yy",
+        minDate: 0,
+        maxDate: "+1Y"
+    });
+
+
+    $('#btnSend').click(function () {
+        $('#btnSend').prop('disabled', true);
+        var regdno = $('#txtregdno').val();
+        var mobnumber = $('#txtphone').val();
+        var loginid = $('#hdnloginid').val();
+        $.ajax({
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            url: "@ViewData["URLPrefixforProd"]/ABBRedemption/Manage?handler=SendSelfQCUrlToCustomer",
+            data: { regdno: regdno, mobnumber: mobnumber, loginid: loginid },
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    Swal.fire({
+                        title: "Successfully",
+                        text: "SelfQC Link sent successfully to customer's contact number",
+                        icon: 'success',
+                        timer: 5000,
+                        showConfirmButton: false,
+                        timerProgressBar: true,
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                    //alert("WhatsApp message sent successfully to customer contact number");
+                }
+                else {
+                    Swal.fire({
+                        title: "Failed!",
+                        text: "SelfQC Link Not sent to customer's contact number",
+                        icon: 'error',
+                        confirmButtonText: 'Ok',
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                    //alert("Error Occured please try again later.");
+                }
+            }
+        });
+    });
+
+    $("#btnreschedule").click(function () {
+        $('#rescheduleBox').show();
+        $('#txtrecheduledtime').val('');
+        $('#txtcomment').val('');
+        $('#CancelcommentBox').hide();
+    });
+
+    // $('#txtrecheduledtime').change(function () {
+    //     var checktimeformate = $('#txtrecheduledtime').val();
+    //     if (isValidTimeFormat(checktimeformate)) {
+    //         // The entered time is in the correct format.
+    //         // You can proceed with your logic here.
+    //     } else {
+    //         alert("Invalid time format. Please use hh:mm AM/PM");
+    //     }
+    // });
+
+    // function isValidTimeFormat(checktimeformate) {
+    //     var timeRegex = /^(0?[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$/i;
+    //     return timeRegex.test(checktimeformate);
+    // }
+
+    $("#btnUpdate").click(function () {
+        var RegdNo = $('#txtregdno').val();
+        var RecheduledDate = $('#txtrecheduleddate').val();
+        var RecheduledTime = $('#txtrecheduledtime').val();
+            
+        var timeParts = RecheduledTime.split(':');
+        var hours = parseInt(timeParts[0]);
+        var minutes = timeParts[1];
+        var period = 'AM';
+
+        if (hours >= 12) {
+            period = 'PM';
+            if (hours > 12) {
+                hours -= 12;
+            }
+        }
+
+        RecheduledTime = hours + ':' + minutes + ' ' + period;
+       
+        var QCComment = $('#txtcomment').val();
+        var MobileNumber = $('#txtphone').val();
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/ABBRedemption/Manage?handler=Rescheduleddata",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "RegdNo": RegdNo, "RecheduledTime": RecheduledTime, "RecheduledDate": RecheduledDate, "QCComment": QCComment, "MobileNumber": MobileNumber },
+            success: function (response) {
+                if (response == "Please Fill Reschedule Comment") {
+                    Swal.fire({
+                        title: "Failed!",
+                        text: "Please Fill Reschedule Comment",
+                        icon: 'error',
+                        confirmButtonText: 'Ok',
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                    //alert(response);
+                }
+                else if (response == "Please Provide valid Time format (hh:mm AM/PM)") {
+                    Swal.fire({
+                        title: "Failed!",
+                        text: "Please Provide valid Time format (hh:mm AM/PM)",
+                        icon: 'error',
+                        confirmButtonText: 'Ok',
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                }
+                else if (response == "Please Fill Reschedule Date & Time") {
+                    Swal.fire({
+                        title: "Failed!",
+                        text: "Please Fill Reschedule Date & Time",
+                        icon: 'error',
+                        confirmButtonText: 'Ok',
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                    //alert(response);
+                }
+                else if (response.isrescheduled == true || response.isrescheduled == "True" || response.isrescheduled == "true") {
+                    //alert("Reschedule Time & Comment Updated Successfully");
+                    //$("#rescheduleBox").hide();
+                    Swal.fire({
+                        title: "Successfully",
+                        text: "Reschedule Date, Time & Comment Updated Successfully",
+                        icon: 'success',
+                        confirmButtonText: 'Ok',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload(true);
+                        }
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                    $("#rescheduleBox").hide();
+                    //location.reload(true);
+                }
+                else {
+                    Swal.fire({
+                        title: "Failed!",
+                        text: "Reschedule Date, Time & Comment Not Updated",
+                        icon: 'error',
+                        confirmButtonText: 'Ok',
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                   // alert("Reschedule Date, Time & Comment Not Updated");
+                }
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $('#rescheduleBox').hide();
+        $('#CancelcommentBox').hide();
+        $('#btncancelqc').hide();
+        $("#btnSend").hide();
+        $("#btndoselfQc").hide();
+        $('#beneficiarybtn').hide();
+        var statusid = parseInt($('#hdnstatusid').val());
+        
+        if (statusid == 6 || statusid == 16 || statusid == 15 || statusid == 42 || statusid == 48) {
+            $("#btnreschedule").hide();
+            $("#ProcessQCbtn").hide()
+            $("#btncancelqc").hide()
+            $("#btnSend").hide()
+            $("#btndoselfQc").hide()
+        }
+        else if (statusid < 15 || statusid == 33 || statusid == 17 || statusid == 41 || statusid == 43 || statusid == 58) {
+            $("#ProcessQCbtn").show();
+            $("#btncancelqc").show();
+            $('#btnSend').show();
+            $('#btndoselfQc').show();
+            if (@Model.qcCommentViewModel.Reschedulecount >= 4) {
+                $("#btnreschedule").hide();
+            }
+            else {
+                $("#btnreschedule").show();
+            }
+        }
+
+        if (statusid == 18 || statusid == 17 || statusid == 21 || statusid == 22 || statusid == 34 || statusid == 44 || statusid == 26) {
+            var upiid = $('#hdnisupi').val();
+            if (upiid == true || upiid == "True" || upiid == "true") {
+
+                $('#beneficiarybtn').hide();
+            }
+        } else {
+            $('#beneficiarybtn').hide();
+        }
+    });
+
+    $('#btncancelqc').click(function () {
+        $('#CancelcommentBox').show();
+        $('#txtcancelcomment').val('');
+        $('#rescheduleBox').hide();
+    });
+
+    $('#cancelcomment').click(function () {
+        location.reload(true);
+    });
+
+    $('#savecomment').click(function () {
+
+        if ($('#txtcancelcomment').val().length === 0) {
+            //alert('Please fill comment!');
+            Swal.fire({
+                title: "Failed!",
+                text: "Please Fill Cancel Comment!",
+                icon: 'error',
+                confirmButtonText: 'Ok',
+                customClass: {
+                    confirmButton: 'btn btn-dark'
+                }
+            });
+            return false;
+        }
+            RecordCancel();
+    });
+
+    function RecordCancel() {
+        var RegdNo = $('#txtregdno').val();
+        var CancelComment = $('#txtcancelcomment').val();
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/ABBRedemption/Manage?handler=CancelQc",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "RegdNo": RegdNo, "CancelComment": CancelComment },
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    Swal.fire({
+                        title: "Successfully",
+                        text: "ABB order Cancelled Successfully",
+                        icon: 'success',
+                        confirmButtonText: 'Ok',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location = "@ViewData["URLPrefixforProd"]/ABBRedemption/RedemptionRecord";
+                        }
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                    // alert("Order cancelled successfully");
+                    // window.location = "@ViewData["URLPrefixforProd"]/ABBRedemption/RedemptionRecord";
+                }
+                else {
+                    Swal.fire({
+                        title: "Failed!",
+                        text: "Error Occurred! Please try again",
+                        icon: 'error',
+                        confirmButtonText: 'Ok',
+                        
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location = "@ViewData["URLPrefixforProd"]/ABBRedemption/RedemptionRecord";
+                        }
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                    //alert("Error Occurred! Please try again");
+                    //window.location = "@ViewData["URLPrefixforProd"]/ABBRedemption/RedemptionRecord";
+                }
+            }
+        });
+    }
+
+        $("#beneficiarybtn").click(function () {
+        var RegdNo = $('#txtregdno').val();
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/ABBRedemption/Manage?handler=CheckBeneficiary",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "RegdNo": RegdNo },
+            success: function (response) {
+                if (response == 0) {
+                    var link = "@URLPrefixforProd/PaymentDetails/ConfirmPaymentDetails?regdNo=@Model.aBBRedemptionViewModel.RegdNo&userid=@Model.UserId";
+                    window.open(link, "_blank");
+                } else {
+                    Swal.fire({
+                        title: "Response",
+                        text: response,
+                        icon: 'success',
+                        timer: 5000,
+                        showConfirmButton: false,
+                        timerProgressBar: true,
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                    //alert(response);
+                    location.reload(true);
+                }
+            }
+        });
+    });
+
+    $('#btndoselfQc').click(function () {
+        $('#btndoselfQc').prop('disabled', true);
+        //window.location = "@URLPrefixforProd/QCPortal/SelfQCPortal?regdno=@Model.aBBRedemptionViewModel.RegdNo";
+        window.open("@URLPrefixforProd/QCPortal/SelfQCPortal?regdno=@Model.aBBRedemptionViewModel.RegdNo", "_blank");
+    });
+
+</script>

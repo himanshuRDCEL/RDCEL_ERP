@@ -1,0 +1,380 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.PriceMasterMapping.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int i = 0;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    }
+
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+
+<link href="~/NewLayout/css/jquery.dataTables.min.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">Price Master Mapping List</h2>
+                            </div>
+
+                            <div class="col text-end">
+                                @if (accessRule != null && accessRule.CanAdd)
+                                {
+                                    <a asp-page="Manage"
+                                       class="btn btn-primary">
+                                        Add New
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="MappingDatatable"
+                                   class="table align-items-center" border="1">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="all notexport">PriceMasterMappingId</th>
+                                        <th class="all notexport">Actions</th>
+                                        <th class="all">Company</th>
+                                        <th class="all">Business Partner</th>
+                                        <th class="all">Brand</th>
+                                        <th class="all">Price Master Name</th>
+                                        <th class="all">Start Date</th>
+                                        <th class="all">End Date</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="filters">
+                        <div class="p-4">
+
+                            <h4 class="">Filters</h4>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkDateRange">Date Range</p>
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline mb-2" id="startdate" readonly placeholder="Start Date" autocomplete="off">
+                                <input type="text" class="form-control d-inline mb-2" id="enddate" readonly placeholder="End Date" autocomplete="off">
+                            </div>
+
+
+                            <div class="filter-seprator"></div>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkCompany">Company</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="company" placeholder="Search Company">
+                            </div>
+
+                            <div class="filter-seprator"></div>
+
+                            <p class="filterheading"><input type="checkbox" name="" id="chkBP">Business Partner</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="businessPartner" placeholder="Search Business Partner">
+                            </div>
+
+                            <div class="filter-seprator"></div>
+                             <p class="filterheading"><input type="checkbox" name="" id="chkBrand">Brand</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="brand" placeholder="Search Brand">
+                            </div>
+
+                            <div class="filter-seprator"></div>
+                             <p class="filterheading"><input type="checkbox" name="" id="chkPMN">Price Master Name</p>
+
+                            <div class="filterbox">
+                                <input type="text" class="form-control d-inline" id="priceMasterName" placeholder="Search Price Master Name">
+                            </div>
+
+                            <div class="filterbtnwrap">
+                                <a id="btnFilter" class="btn btn-primary">Filter</a>
+                                <a id="btnCloseFilter" class="btn btn-sm btn-secondary py-2">Clear</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delete-conformation" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="delete-conformation">
+                    Delete Confirmation
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="TblPriceMasterMappingObj.PriceMasterMappingId" id="hdnId" />
+                            <div class="col-sm-12">
+                                <span>
+                                    Are you sure you want to delete?
+                                </span>
+                                @*<strong class="deletedValueName">
+                                </strong>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="Delete" class="btn btn-danger" value="Delete" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+
+<script>
+   
+     var table = null;
+    $(document).ready(function () {
+        $("#chkBU").val(0);
+        var url = "@ViewData["URLPrefixforProd"]/api/MasterList/PriceMasterMappingList";
+        var startDate = $('#startdate').val();
+        var endDate = $('#enddate').val();
+        DataTable(url, startDate, endDate);
+
+        //Hide Filters Dive
+        $('.filters').hide();
+
+        $("#startdate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                $("#enddate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#enddate").datepicker({
+            defaultDate: null,
+
+        });
+
+
+    });
+
+    //this is only display bootstrap modal pop up dialog
+    function deleteConfirm(_Id) {
+        //alert(_dealId);
+        $('#hdnId').val(_Id);
+        $('#delete-conformation').modal('show');
+    }
+
+        function DataTable(url, startDate, endDate) {
+        table = $('#MappingDatatable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "searching": false,
+            "filter": true,
+            "data": { startDate: startDate, endDate: endDate },
+            "dom": 'Bfrtlp',
+                "buttons": [
+                    {
+                        text: '<button class="btn btn-primary" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                        action: function (e, dt, node, config) {
+                            $('.filters').toggle();
+                           
+                        }
+                    },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'PriceMasterName',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Data found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+             "responsive": true,
+            "columns": [
+                { "data": "priceMasterMappingId", "name": "PriceMasterMappingId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "businessUnitName", "name": "BusinessUnitName", "autoWidth": true, "orderable": true },
+                { "data": "businessPartnerName", "name": "BusinessPartnerName", "autoWidth": true, "orderable": true },
+                { "data": "brandName", "name": "BrandName", "autoWidth": true, "orderable": true },
+                { "data": "priceMasterName", "name": "PriceMasterName", "autoWidth": true, "orderable": true },
+                { "data": "createdDate", "name": "createdDate", "autoWidth": true, "orderable": true },
+               
+            ]
+        });
+    }
+
+       //Filter Clsoe Button Click Event
+    $('#btnCloseFilter').click(function () {
+        $('#startdate').val("");
+        $('#enddate').val("");
+        $('#chkBU').val("");
+        $('#chkBP').val("");
+        $('#chkBrand').val("");
+        $('#chkPMN').val("");
+        // Unchecks it
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        CommonFilter();
+    });
+
+    //Check Box Date Range change Event
+    $("#chkDateRange").click(function () {
+        if (!this.checked) {
+            $('#startdate').val("");
+            $('#enddate').val("");
+        }
+    });
+
+    //Check Box Regd Number change Event
+    $("#chkBU").click(function () {
+        if (!this.checked) {
+            $('#company').val("");
+        }
+    });
+
+    //Check Box Brand Name change Event
+    $("#chkBP").click(function () {
+        if (!this.checked) {
+            $('#businessPartner').val("");
+        }
+    });
+
+    //Check Box Brand Name change Event
+    $("#chkBrand").click(function () {
+        if (!this.checked) {
+            $('#brand').val("");
+        }
+    });
+
+
+     //Check Box Brand Name change Event
+    $("#chkPMN").click(function () {
+        if (!this.checked) {
+            $('#priceMasterName').val("");
+        }
+    });
+
+
+
+
+      // LGC Pickup multi Search Filter
+    $('#btnFilter').click(function () {
+        CommonFilter();
+    });
+
+    //Filter Function
+    function CommonFilter() {
+        var startDate = $('#startdate').val();
+        startDate = $('#startdate').val() == "" ? null : $('#startdate').val();
+        var endDate = $('#enddate').val();
+        endDate = $('#enddate').val() == "" ? null : $('#enddate').val();
+      
+        var company = $('#company').val();
+        company = $('#company').val() == "" ? null : $('#company').val();
+        var businessPartner = $('#businessPartner').val();
+        businessPartner = $('#businessPartner').val() == "" ? null : $('#businessPartner').val();
+        var brand = $('#brand').val();
+        brand = $('#brand').val() == "" ? null : $('#brand').val();
+        var priceMasterName = $('#priceMasterName').val();
+        priceMasterName = $('#priceMasterName').val() == "" ? null : $('#priceMasterName').val();
+        var url = null;
+        if (startDate == null || endDate == null) {
+            url = "@ViewData["URLPrefixforProd"]/api/MasterList/PriceMasterMappingList?" + '&Company=' + company +
+            '&BusinessPartner=' + businessPartner + '&Brand=' + brand + '&PriceMasterName=' + priceMasterName ;
+            
+            alert(url);
+        }
+        else {
+            url = "@ViewData["URLPrefixforProd"]/api/MasterList/PriceMasterMappingList?" + '&Company=' + company +
+            '&BusinessPartner=' + businessPartner + '&Brand=' + brand + '&PriceMasterName=' + priceMasterName + '&startDate=' + startDate + ' &endDate=' + endDate;
+        }
+
+
+        // Destroy the existing DataTable
+        table = $('#MappingDatatable').DataTable();
+        // Destroy the existing DataTable
+        table.destroy();
+
+        DataTable(url, startDate, endDate);
+        $('.filters').hide();
+    }
+
+
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+    //For Export Buttons available inside jquery-datatable "server side processing" - End
+
+    
+</script>
+

@@ -1,0 +1,402 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ABBPriceMaster.ManageModel
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    var BaseUrl = ViewData["BaseUrl"];
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>ABB Price Master
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                <input type="hidden" asp-for="ABBPriceMasterViewModel.PriceMasterId" id="hdnId" />
+                                <input type="hidden" asp-for="ABBPriceMasterViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="ABBPriceMasterViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="ABBPriceMasterViewModel.IsActive" />
+                                <input type="hidden" asp-for="ABBPriceMasterViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="ABBPriceMasterViewModel.ModifiedDate" />
+                                <input type="hidden" asp-for="ABBPriceMasterViewModel.BusinessUnitId" id="hdnbuid" />
+                                <input type="hidden" asp-for="ABBPriceMasterViewModel.ProductCategoryId" id="hdnCatid" />
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Company Name<span style="color:red;">*</span></label>
+                                    @if (Model.ABBPriceMasterViewModel.PriceMasterId > 0 && Model.ABBPriceMasterViewModel.BusinessUnitId > 0)
+                                    {
+
+                                        <input id="ddlBU" asp-for="ABBPriceMasterViewModel.BusinessUnitName" class="form-control" />
+                                    }
+
+                                    else
+                                    {
+                                        <input id="ddlBU" asp-for="ABBPriceMasterViewModel.BusinessUnitName" class="form-control" />
+                                    }
+                                    <span asp-validation-for="ABBPriceMasterViewModel.BusinessUnitName" class="text-danger"></span>
+
+                                </div>
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Product Category<span style="color:red;">*</span></label>
+                                    <input id="ddlCategory" asp-for="ABBPriceMasterViewModel.ProductCategory" class="form-control" />
+                                    <span asp-validation-for="ABBPriceMasterViewModel.ProductCategory" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Product Type <span style="color:red;">*</span></label>
+                                    <input id="ddlType" asp-for="ABBPriceMasterViewModel.ProductSabcategory" class="form-control"  />
+                                    <span asp-validation-for="ABBPriceMasterViewModel.ProductSabcategory" class="text-danger"></span>
+                                     <span class="text-danger" id="message"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Price Start Range <span style="color:red;">*</span></label>
+                                    <input asp-for="ABBPriceMasterViewModel.PriceStartRange" class="form-control" />
+                                    <span asp-validation-for="ABBPriceMasterViewModel.PriceStartRange" class="text-danger"></span>
+                                    <label class="" for=""><span class="text-danger">@ViewData["Msg"]</span></label>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Price End Range <span style="color:red;">*</span></label>
+                                    <input asp-for="ABBPriceMasterViewModel.PriceEndRange" class="form-control" />
+                                    <span asp-validation-for="ABBPriceMasterViewModel.PriceEndRange" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Fee Type <span style="color:red;">*</span></label>
+                                    <select asp-for="ABBPriceMasterViewModel.FeeType" class="form-control">
+                                        <option value="">Select</option>
+                                        <option value="Amount">Amount</option>
+                                        <option value="Percentage">Percentage</option>
+                                    </select>
+                                    <span asp-validation-for="ABBPriceMasterViewModel.FeeType" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Fees Applicable Amount <span style="color:red;">*</span></label>
+                                    <input asp-for="ABBPriceMasterViewModel.FeesApplicableAmt" class="form-control" />
+                                    <span asp-validation-for="ABBPriceMasterViewModel.FeesApplicableAmt" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Fees Applicable Percentage<span style="color:red;">*</span></label>
+                                    <input asp-for="ABBPriceMasterViewModel.FeesApplicablePercentage" class="form-control" />
+                                    <span asp-validation-for="ABBPriceMasterViewModel.FeesApplicablePercentage" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Plan Period In Months<span style="color:red;">*</span></label>
+                                    <input asp-for="ABBPriceMasterViewModel.PlanPeriodInMonths" class="form-control" />
+                                    <span asp-validation-for="ABBPriceMasterViewModel.PlanPeriodInMonths" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Business Unit Margin Amount</label>
+                                    <input asp-for="ABBPriceMasterViewModel.BusinessUnitMarginAmount" class="form-control" />
+                                    <span asp-validation-for="ABBPriceMasterViewModel.BusinessUnitMarginAmount" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Business Unit Margin Percentage</label>
+                                    <input asp-for="ABBPriceMasterViewModel.BusinessUnitMarginPerc" class="form-control" />
+                                    <span asp-validation-for="ABBPriceMasterViewModel.BusinessUnitMarginPerc" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Business Partner Margin Amount</label>
+                                    <input asp-for="ABBPriceMasterViewModel.BusinessPartnerMarginAmount" class="form-control" />
+                                    <span asp-validation-for="ABBPriceMasterViewModel.BusinessPartnerMarginAmount" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Business Partner Margin Percentage</label>
+                                    <input asp-for="ABBPriceMasterViewModel.BusinessPartnerMarginPerc" class="form-control" />
+                                    <span asp-validation-for="ABBPriceMasterViewModel.BusinessPartnerMarginPerc" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Gst Exclusive</label>
+                                    <input  asp-for="ABBPriceMasterViewModel.Gstexclusive" class="form-control" />
+                                    <span asp-validation-for="ABBPriceMasterViewModel.Gstexclusive" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Gst Inclusive</label>
+                                    <input  asp-for="ABBPriceMasterViewModel.Gstinclusive" class="form-control" />
+                                    <span asp-validation-for="ABBPriceMasterViewModel.Gstinclusive" class="text-danger"></span>
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                    }
+                                </div>
+                                <div class="col-6 text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <input type="submit" value="Save" class="btn btn-primary mainshadow" />
+                                    }
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script>
+    var BUId = null;
+    var ProductCategoryId = null;
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        // Autocomplete for Business Unit dropdown
+        $("#ddlBU").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/ABBPriceMaster/Manage?handler=SearchBUName", {
+                    term: extractLast(request.term)
+                }, response);
+            },
+
+            select: function (event, ui) {
+                this.value = ui.item.value; // Set the selected value
+
+                BUId = ui.item.text;
+                $('#hdnbuid').val(BUId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $(this).val(""); // Clear the input field
+                    BUId = null; // Clear BUId
+                    $('#hdnbuid').val(""); // Clear associated hidden field
+                }
+            }
+        });
+    });
+
+     $(function () {
+    function split(val) {
+        return val.split(/,\s*/);
+    }
+    function extractLast(term) {
+        return split(term).pop();
+    }
+    $("#ddlCategory").on("keydown", function (event) {
+        if (event.keyCode === $.ui.keyCode.TAB &&
+            $(this).autocomplete("instance").menu.active) {
+            event.preventDefault();
+        }
+    })
+    .autocomplete({
+        minLength: 1,
+        source: function (request, response) {
+            $.get("@URLPrefixforProd/ABBPriceMaster/Manage?handler=AutoProductCatName", {
+                term: extractLast(request.term)
+            }, response);
+        },
+
+                select: function (event, ui) {
+                    $("#ddlCategory").val(ui.item.value); // Set the selected value
+                    ProductCategoryId = ui.item.text;
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlCategory").val(""); // Clear the input field
+                        ProductCategoryId = null;
+                    }
+        }
+    });
+});
+
+         if (ProductCategoryId === null) {
+                 ProductCategoryId = $('#hdnCatid').val();
+     }
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+
+
+        $("#ddlType").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/ABBPriceMaster/Manage", {
+                        handler: "AutoProductTypeName",
+                        term: extractLast(request.term),
+                        term2: ProductCategoryId // Pass the selected ProductCatId
+                    },
+                        response
+                    );
+                },
+
+                select: function (event, ui) {
+                    $("#ddlType").val(ui.item.value); // Set the selected value
+                    CheckAvailability();
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlType").val(""); // Clear the input field
+
+                    }
+                }
+            });
+    })
+    $(function () {
+
+        $('.IsDealerChk').each(function () {
+            var Ischecked = $(this).val();
+
+            if (Ischecked == "true") {
+
+                $(this).attr('checked', 'checked');
+            }
+        });
+
+        $('#ABBPriceMasterViewModel_BusinessUnitMarginAmount').keyup(function() {
+            $('#ABBPriceMasterViewModel_BusinessUnitMarginPerc').prop('disabled', true)
+            if ($('#ABBPriceMasterViewModel_BusinessUnitMarginAmount').val() === '') {
+                $('#ABBPriceMasterViewModel_BusinessUnitMarginPerc').prop('disabled', false)
+            }
+            else {
+                $('#ABBPriceMasterViewModel_BusinessUnitMarginPerc').prop('disabled', true)
+            }
+        });
+
+        $('#ABBPriceMasterViewModel_BusinessUnitMarginPerc').keyup(function () {
+            $('#ABBPriceMasterViewModel_BusinessUnitMarginAmount').prop('disabled', true)
+            if ($('#ABBPriceMasterViewModel_BusinessUnitMarginPerc').val() === '') {
+                $('#ABBPriceMasterViewModel_BusinessUnitMarginAmount').prop('disabled', false)
+            }
+            else {
+                $('#ABBPriceMasterViewModel_BusinessUnitMarginAmount').prop('disabled', true)
+            }
+        });
+
+
+        $('#ABBPriceMasterViewModel_BusinessPartnerMarginAmount').keyup(function () {
+            $('#ABBPriceMasterViewModel_BusinessPartnerMarginPerc').prop('disabled', true)
+            if ($('#ABBPriceMasterViewModel_BusinessPartnerMarginAmount').val() === '') {
+                $('#ABBPriceMasterViewModel_BusinessPartnerMarginPerc').prop('disabled', false)
+            }
+            else {
+                $('#ABBPriceMasterViewModel_BusinessPartnerMarginPerc').prop('disabled', true)
+            }
+        });
+
+        $('#ABBPriceMasterViewModel_BusinessPartnerMarginPerc').keyup(function () {
+            $('#ABBPriceMasterViewModel_BusinessPartnerMarginAmount').prop('disabled', true)
+            if ($('#ABBPriceMasterViewModel_BusinessPartnerMarginPerc').val() === '') {
+                $('#ABBPriceMasterViewModel_BusinessPartnerMarginAmount').prop('disabled', false)
+            }
+            else {
+                $('#ABBPriceMasterViewModel_BusinessPartnerMarginAmount').prop('disabled', true)
+            }
+        });
+
+
+        $('#ABBPriceMasterViewModel_Gstexclusive').keyup(function () {
+            $('#ABBPriceMasterViewModel_Gstinclusive').prop('disabled', true)
+            if ($('#ABBPriceMasterViewModel_Gstexclusive').val() === '') {
+                $('#ABBPriceMasterViewModel_Gstinclusive').prop('disabled', false)
+            }
+            else {
+                $('#ABBPriceMasterViewModel_Gstinclusive').prop('disabled', true)
+            }
+        });
+
+        $('#ABBPriceMasterViewModel_Gstinclusive').keyup(function () {
+            $('#ABBPriceMasterViewModel_Gstexclusive').prop('disabled', true)
+            if ($('#ABBPriceMasterViewModel_Gstinclusive').val() === '') {
+                $('#ABBPriceMasterViewModel_Gstexclusive').prop('disabled', false)
+            }
+            else {
+                $('#ABBPriceMasterViewModel_Gstexclusive').prop('disabled', true)
+            }
+        });
+
+    });
+
+
+    
+    function CheckAvailability() {
+
+        $('#ddlType').text('');
+        var name = $("#ddlType").val();
+        var category = $("#ddlCategory").val();
+        var BuId = $("#ddlBU").val();
+        
+        var id = $("#hdnId").val();
+        if (name === '') {
+            $("#message").html(" ");
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["URLPrefixforProd"]/ABBPriceMaster/Manage?handler=CheckDuplicate",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "type": name, "Category": category, "Id": id, "BUId":BuId },
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    $("#message").html(" ");
+                } else {
+                    $("#message").css("color", "red");
+                    $("#message").html("This Abb price master is already exist for this category, product type and company.");
+                    $('#Savebtn').prop('disabled', true);
+                }
+            },
+        });
+    }
+
+
+</script>

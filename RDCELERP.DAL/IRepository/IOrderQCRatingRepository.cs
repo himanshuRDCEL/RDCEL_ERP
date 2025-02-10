@@ -1,0 +1,9 @@
+﻿using RDCELERP.DAL.AbstractRepository;
+using RDCELERP.DAL.Entities;
+
+namespace RDCELERP.DAL.IRepository
+{
+    public interface IOrderQCRatingRepository : IAbstractRepository<TblOrderQcrating>
+    {
+    }
+}

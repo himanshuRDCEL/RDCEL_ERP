@@ -1,0 +1,719 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.LGC.LGCPickupModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    int imageLabelViewModelsCount = Model.imageLabelViewModels.Count();
+    int count = 1;
+}
+
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header card-header-wrapper">
+                        <div class="row align-items-center card-title">
+                            <div class="col-md-6">
+                                <h2 class="fs-5 mb-0">
+                                    LGC Details
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row detailed-reporting">
+                            <div class="pt-4"></div>
+                            <div class="col-md-12 mb-3">
+                                <p><h4>Order Details</h4> </p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Order Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.RegdNo)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Ticket Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.TicketNumber)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Product Category </span>@Html.DisplayFor(model => model.lGCOrderViewModel.ProductCategory)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Product Type </span>@Html.DisplayFor(model => model.lGCOrderViewModel.ProductType)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Amount Payble Through LGC </span>@Html.DisplayFor(model => model.lGCOrderViewModel.AmountPayableThroughLGC)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Pickup Schedule Date </span>@Html.DisplayFor(model => model.lGCOrderViewModel.PickupScheduleDate)</p>
+                            </div>
+                            <div>
+                                <hr />
+                            </div>
+                            @if (Model.lGCOrderViewModel.IsDefaultPickupAddress == true)
+                            {
+                                <div class="col-md-12 mb-3">
+                                    <p><h4>BusinessPartner Details</h4> </p>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <p><span>Name </span>@Html.DisplayFor(model => model.lGCOrderViewModel.tblBusinessPartner.Name)</p>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <p><span>Email </span>@Html.DisplayFor(model => model.lGCOrderViewModel.tblBusinessPartner.Email)</p>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <p><span>Phone Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.tblBusinessPartner.PhoneNumber)</p>
+                                    <input type="hidden" asp-for="lGCOrderViewModel.TblCustomerDetail.PhoneNumber" id="hdnPhoneNumber" />
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <p><span>Address1 </span>@Html.DisplayFor(model => model.lGCOrderViewModel.tblBusinessPartner.AddressLine1)</p>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <p><span>Address2 </span>@Html.DisplayFor(model => model.lGCOrderViewModel.tblBusinessPartner.AddressLine2)</p>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <p><span>City </span>@Html.DisplayFor(model => model.lGCOrderViewModel.tblBusinessPartner.City)</p>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <p><span>State </span>@Html.DisplayFor(model => model.lGCOrderViewModel.tblBusinessPartner.State)</p>
+                                </div>
+                                @* <div class="col-md-3 mb-3">
+                                    <p><span>Area Locality </span>@Html.DisplayFor(model => model.lGCOrderViewModel.tblBusinessPartner.ARE)</p>
+                                </div> *@
+                                <div class="col-md-3 mb-3">
+                                    <p><span>Pincode </span>@Html.DisplayFor(model => model.lGCOrderViewModel.tblBusinessPartner.Pincode)</p>
+                                </div>
+                                <div>
+                                    <hr />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-12 mb-3">
+                                    <p><h4>Customer Details</h4> </p>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <p><span>Name </span>@Html.DisplayFor(model => model.lGCOrderViewModel.CustomerName)</p>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <p><span>Email </span>@Html.DisplayFor(model => model.lGCOrderViewModel.TblCustomerDetail.Email)</p>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <p><span>Phone Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.TblCustomerDetail.PhoneNumber)</p>
+                                    <input type="hidden" asp-for="lGCOrderViewModel.TblCustomerDetail.PhoneNumber" id="hdnPhoneNumber" />
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <p><span>Address1 </span>@Html.DisplayFor(model => model.lGCOrderViewModel.TblCustomerDetail.Address1)</p>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <p><span>Address2 </span>@Html.DisplayFor(model => model.lGCOrderViewModel.TblCustomerDetail.Address2)</p>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <p><span>City </span>@Html.DisplayFor(model => model.lGCOrderViewModel.TblCustomerDetail.City)</p>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <p><span>State </span>@Html.DisplayFor(model => model.lGCOrderViewModel.TblCustomerDetail.State)</p>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <p><span>Area Locality </span>@Html.DisplayFor(model => model.lGCOrderViewModel.TblCustomerDetail.AreaLocality)</p>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <p><span>Pincode </span>@Html.DisplayFor(model => model.lGCOrderViewModel.TblCustomerDetail.ZipCode)</p>
+                                </div>
+                                <div>
+                                    <hr />
+                                </div>
+                            }
+
+                            @* <div class="col-md-12 mb-3">
+                                <p><h4>EVC Details</h4> </p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Bussiness Name </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.BussinessName)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Contact Person </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.ContactPerson)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Phone Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.EvcmobileNumber)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Alt Phone Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.AlternateMobileNumber)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Email </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.EmailId)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Address1 </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.RegdAddressLine1)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Address2 </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.RegdAddressLine2)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>City </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.City.Name)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>State </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.State.Name)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Pincode </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.PinCode)</p>
+                            </div> *@
+
+                            <div class="col-md-12 mb-3">
+                                <p><h4>EVC Details</h4> </p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Bussiness Name </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.BussinessName)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Contact Person </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.ContactPerson)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Store Code </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.EvcStoreCode)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Phone Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.ContactNumber)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Alt Phone Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.EvcmobileNumber)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Email </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.EmailId)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Address1 </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.Address1)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Address2 </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.Address2)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>City </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.CityName)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>State </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.StateName)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Pincode </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.PinCode)</p>
+                            </div>
+
+                            <div class="pt-4"></div>
+                            <div>
+                                <hr />
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <p><h4>QC Images</h4> </p>
+                            </div>
+                            @if(Model.OrderImageUploadViewModel != null && Model.OrderImageUploadViewModel.Count > 0)
+                            {
+                                @foreach (var item in Model.OrderImageUploadViewModel)
+                                {
+                                    <div class="col-md-3 mb-3">
+                                        <div class="showimgwrap">
+                                            @{
+                                                var extn = item.ImageName.Split(".").Last();
+                                            }
+                                            @if (extn == "jpg")
+                                            {
+                                                <img class="img-responsive" src="@item.ImageWithPath" />
+                                            }
+                                            else
+                                            {
+                                                <iframe src="@item.ImageWithPath" width="240" height="210" sandbox="" allowfullscreen="true"></iframe>
+                                            }
+                                        </div>
+                                    </div>
+
+                                }
+                            }
+                            else
+                            {
+                                <div class="col-md-3 mb-3">
+                                    <div class="showimgwrap">
+                                        <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="showimgwrap">
+                                        <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="showimgwrap">
+                                        <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="showimgwrap">
+                                        <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                    </div>
+                                </div>
+                            }
+                            <div>
+                                <hr />
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 mb-4 text-center">
+                                    <input class="btn btn-primary" type="button" value="Pickup Accept" id="btnAccept">
+                                </div>
+                                <div class="col-md-4 mb-4 text-center">
+                                    <input class="btn btn-primary" type="button" value="Pickup Reschedule" id="btnReschedule">
+                                </div>
+                                <div class="col-md-4 mb-4 text-center">
+                                    <input class="btn btn-danger" Onclick="Pickupdecline()" type="button" value="Pickup Decline" id="btnDecline">
+                                </div>
+                            </div>
+                            <div id="formDiv">
+                                <form method="post" enctype="multipart/form-data" id="lgcPickupForm">
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <p><h4>Please upload required photos below </h4> </p>
+                                        </div>
+
+                                        <input type="hidden" asp-for="imageLabelViewModels.Count" id="hdnCount" />
+                                        <input type="hidden" asp-for="lGCOrderViewModel.RegdNo" value="@Model.lGCOrderViewModel.RegdNo" id="hdnRegdNo" />
+                                        <input type="hidden" asp-for="lGCOrderViewModel.CustomerName" value="@Model.lGCOrderViewModel.CustomerName" />
+                                        <input type="hidden" asp-for="lGCOrderViewModel.tblCustomerDetail.Address1" value="@Model.lGCOrderViewModel.TblCustomerDetail.Address1" />
+                                        <input type="hidden" asp-for="lGCOrderViewModel.tblCustomerDetail.City" value="@Model.lGCOrderViewModel.TblCustomerDetail.City" />
+                                        <input type="hidden" asp-for="lGCOrderViewModel.tblCustomerDetail.PhoneNumber" value="@Model.lGCOrderViewModel.TblCustomerDetail.PhoneNumber" />
+                                        <input type="hidden" asp-for="lGCOrderViewModel.tblCustomerDetail.ZipCode" value="@Model.lGCOrderViewModel.TblCustomerDetail.ZipCode" />
+                                        <input type="hidden" asp-for="lGCOrderViewModel.ProductCategory" value="@Model.lGCOrderViewModel.ProductCategory" />
+                                        <input type="hidden" asp-for="lGCOrderViewModel.ProductType" value="@Model.lGCOrderViewModel.ProductType" />
+                                        <input type="hidden" asp-for="lGCOrderViewModel.SponsorName" value="@Model.lGCOrderViewModel.SponsorName" />
+                                        <input type="hidden" asp-for="lGCOrderViewModel.BrandName" value="@Model.lGCOrderViewModel.BrandName" />
+                                        <input type="hidden" asp-for="lGCOrderViewModel.EVCBusinessName" value="@Model.lGCOrderViewModel.Tblevcregistration.BussinessName" />
+                                        <input type="hidden" asp-for="lGCOrderViewModel.EVCRegistrationId" value="@Model.lGCOrderViewModel.Tblevcregistration.EvcregistrationId" />
+                                        <input type="hidden" asp-for="lGCOrderViewModel.EvcpartnerId" value="@Model.lGCOrderViewModel.evcPartnerDetailsVM.EvcPartnerId" />
+                                        <input type="hidden" asp-for="lGCOrderViewModel.IsDefaultPickupAddress" value="@Model.lGCOrderViewModel.IsDefaultPickupAddress" />
+
+                                        @for (int i = 0; i < imageLabelViewModelsCount; i++)
+                                        {
+                                            <div class="col-md-4 mb-3">
+
+                                                <input type="hidden" asp-for="imageLabelViewModels[i].RegdNo" value="@Model.lGCOrderViewModel.RegdNo" />
+
+                                                <label for="formFile" class="form-label"><p>@Html.DisplayFor(model => model.imageLabelViewModels[i].ProductImageLabel)</p></label>
+
+                                                <div class="showimgbox" id="showimgbox_@count">
+                                                    <label id="lblFileErr_@count" style="color:red;"></label>
+                                                    <img id="showImg_@count" />
+                                                </div>
+
+                                                <input class="form-control" type="file" id="Image_Upload_@count" @*id = "validatedCustomFile"*@ accept="image/*" asp-for="imageLabelViewModels[i].Image" />
+
+                                                <input type="hidden" asp-for="imageLabelViewModels[i].Base64StringValue" id="hdnBase64StringValue_@count" />
+                                                <p class="mt-2"><span>@Html.DisplayFor(model => model.imageLabelViewModels[i].ProductImageDescription)</span></p>
+
+                                            </div>
+                                            count += 1;
+                                        }
+
+                                        <div class="col-md-12">
+                                            <p class="mb-3">Comment : </p><span>@Html.TextAreaFor(model => model.lGCOrderViewModel.Lgccomments, new { @class = "form-control",@maxlength ="200" })</span>
+                                        </div>
+
+                                    </div>
+                                    <div>
+
+                                    </div>
+                                    @if (Model.lGCOrderViewModel.IsDefaultPickupAddress == true)
+                                    {
+                                        <div class="row my-4">
+                                            <div class="col-12 text-start  my-4">
+                                                <input type="button" value="Complete PickUp" class="btn btn-primary" id="btnCompletePickUp">
+                                                <input type="button" value="Back" id="btnAccseptBack" class="btn btn-primary mainshadow" />
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="row my-4">
+                                            <div class="col-12 text-start  my-4">
+                                                <input type="button" value="Send OTP" class="btn btn-primary" id="btnSubmit">
+                                                <input type="button" value="Back" id="btnAccseptBack" class="btn btn-primary mainshadow" />
+                                            </div>
+                                        </div>
+                                    }
+                                </form>
+                            </div>
+
+                            <div class="form-group otpwrapper" id="divShowOTP" style="display:none">
+                                <div class="otpbox text-center">
+                                    <p>OTP has been sent to <strong id="txtmobileOTP"></strong></p>
+                                    <input type="number" id="digit-1" name="digit-1" data-next="digit-2" placeholder="please enter OTP" maxlength="4" />
+                                    <input type="button" id="btnOTPVerification" value="Verify OTP" class="btn btn-secondary" style="margin-top:2px;">
+                                    <input type="button" id="btnOTPResend" value="Re-Send OTP" class="btn btn-secondary" style="margin-top:2px;">
+
+                                </div>
+                            </div>
+                            <div class="form-group otpwrapper" id="divpaynow" style="display:none">
+                                <div class="otpbox text-center">
+                                    <input type="button" id="btnPayNow" value="PayNow" class="btn btn-secondary" style="margin-top:2px;">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                </div>
+                            </div>
+
+                        </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Add-conformation" tabindex="-1" role="dialog" aria-labelledby="modal-default"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form method="post">
+                <div class="modal-header bg-primary">
+                    <h2 class="h6 modal-title">Add Decline Comment</h2>
+                    <button type="button" id="btnCansel" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row my-3">
+                        <div class="col-12">
+                            <label>Comment</label>
+                            <input type="hidden" asp-for="lGCOrderViewModel.RegdNo" id="hdnOrdertrans" />
+                            <textarea asp-for="lGCOrderViewModel.Commant" maxlength="200" id="txtcomment" cols="30" rows="5" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnclose" class="btn btn-secondary ms-auto" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" asp-page-handler="UpdateStatusIdOnReject" id="btnsave" class="btn btn-primary" value="Save" disabled="disabled" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row" id="rescheduleBox">
+    <form method="post">
+        <div class="col-12">
+            <div class="card shadow border-0">
+                <div class="card-body">
+                    <div class="row my-4">
+                        <div class="col-md-6 datefilter-right">
+                            <label for="">Reschedule Date Time</label>
+                            <input  type="datetime-local" asp-for="lGCOrderViewModel.RescheduleDate" id="ResTime" class="form-control mb-2" />                         
+                        </div>
+                        <div class="col-md-6" id="hidecommentdiv">
+                            <input type="hidden" asp-for="lGCOrderViewModel.RegdNo" id="hdnOrdertrans" />
+                            <label for="">Reschedule Comment</label>
+
+                            <textarea asp-for="lGCOrderViewModel.RescheduleComment" maxlength="200" id="txtcommentRes" class="form-control" rows="1"></textarea>
+                            <span asp-validation-for="lGCOrderViewModel.RescheduleComment" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 text-center mt-4" id="divupdate">
+                            <input type="submit" asp-page-handler="UpdateRescheduleDate" id="btnUpdateres" class="btn btn-primary" value="Update" disabled="disabled" />
+                            @*<input type="submit" value="Update" id="btnUpdate" class="btn btn-primary mainshadow" />*@
+                            <input type="button" value="Back" id="btnBack" class="btn btn-primary mainshadow" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+<script src="~/js/compressor.js"></script>
+<script type="text/javascript">
+    function validateImages() {
+
+        var flag = true;
+        //var a = $('#hdnCount').val();
+        //for (let i = 1; i <= a; i++) {
+        //    var imgBase = $("#hdnBase64StringValue").val();
+
+        //    if ($("#hdnBase64StringValue_" + i).val() == '' || $("#hdnBase64StringValue_" + i).val() == null) {
+        //        $("#Image_Upload_" + i).css("border", "2px solid red");
+        //        $("#Image_Upload_" + i).focus();
+        //        $("#showimgbox_" + i).css("display", "flex");
+        //        $("#showImg_" + i).attr('src', "");
+        //        $("#lblFileErr_"+i).text("Please Upload Correct Image.");
+        //        flag = false;
+        //    }
+        //    else {
+        //        $("#Image_Upload_" + i).css("border", ""); $("#lblFileErr_" + i).text("");
+        //    }
+        //}
+        return flag;
+    }
+
+    $(document).ready(function () {        
+        $('#formDiv').hide();
+        $('#rescheduleBox').hide();
+
+        
+        var a = $('#hdnCount').val();
+        for (let i = 1; i <= a; i++) {
+            $("#Image_Upload_" + i).bind('change', function () {
+                $("#lblFileErr_" + i).text("");
+                $("#hdnBase64StringValue_" + i).val("");
+                $("#showImg_" + i).attr('src', "");
+                $("#Image_Upload_" + i).css("border", "");
+                $("#lbInvoicelFileName_" + i).append(this.files[0].name);
+
+            });
+
+            $("#Image_Upload_" + i).resizeImg(function () {
+                var value = parseInt("350");
+                var Weight = parseInt("2");
+                let type, quality;
+                {
+                    type = "image/jpeg";
+                    quality = 0.8;
+                }
+                return {
+                    use_reader: false,
+                    mode: Weight,
+                    val: value,
+                    type: type,
+                    quality: quality,
+                    callback: function (result) {
+                        $("#showimgbox_" + i).css("display", "flex");
+                        $("#showImg_" + i).attr('src', result);
+                        $("#hdnBase64StringValue_" + i).val(result.substr(result.indexOf(',') + 1)).css("height", 100);
+                        $("#Image_Upload_" + i).val(null);
+                    }
+                };
+            });
+        }
+    });
+    
+
+    $(document).ready(function () {
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = (now.getMonth() + 1).toString().padStart(2, '0');
+        var day = now.getDate().toString().padStart(2, '0');
+        var hour = now.getHours().toString().padStart(2, '0');
+        var minute = now.getMinutes().toString().padStart(2, '0');
+       
+        var datetime = `${year}-${month}-${day}T${hour}:${minute}`;
+        $("#ResTime").attr("min", datetime);
+    });
+    //Accept condition
+    $('#btnAccept').click(function () {
+        $('#btnDecline').hide();
+        $('#btnAccept').hide();
+        $('#btnReschedule').hide();
+        $('#rescheduleBox').hide();
+        $('#formDiv').show();
+    });
+    $('#btnAccseptBack').click(function () {
+        $('#rescheduleBox').hide();
+        $('#btnReschedule').show();
+        $('#btnDecline').show();
+        $('#btnAccept').show();
+        $('#formDiv').hide();
+    });
+    //Use For Pickup decline
+    $('#btnCansel').click(function () {
+        $('#rescheduleBox').hide();
+        $('#btnReschedule').show();
+        $('#btnDecline').show();
+        $('#btnAccept').show();
+
+    });
+    $('#btnclose').click(function () {
+        $('#rescheduleBox').hide();
+        $('#btnReschedule').show();
+        $('#btnDecline').show();
+        $('#btnAccept').show();
+    });
+    $('#btnBack').click(function () {
+        $('#rescheduleBox').hide();
+        $('#formDiv').hide();
+        $('#btnDecline').show();
+        $('#btnAccept').show();
+        $('#btnReschedule').show();
+    });
+    $('#btnsave').click(function () {
+        $('#rescheduleBox').hide();
+        $('#loader').show();
+    });
+
+    $('#btnReschedule').click(function () {
+        $('#btnReschedule').hide();
+        $('#btnDecline').hide();
+        $('#btnAccept').hide();
+        $('#rescheduleBox').show();
+        $('#formDiv').hide();
+    });
+    //for 
+    function Pickupdecline() {
+        $('#btnAccept').hide();
+        $('#btnDecline').hide();
+        $('#btnReschedule').hide();
+        $('#Add-conformation').modal('show');
+    }
+    $('#txtcomment').keyup(function () {
+        if ($('#txtcomment').val().trim() !== '') {
+            $('#btnsave').prop('disabled', false);
+        }
+        else {
+            $('#btnsave').prop('disabled', true);
+        }
+    });
+
+    //For Resedule
+
+    $('#txtcommentRes').keyup(function () {
+        var comment = $('#txtcommentRes').val().trim();
+        var datetime = $('#ResTime').val().trim();
+        var now = new Date();
+        var selectedDate = new Date(datetime);
+        
+        if (comment !== '' && datetime !== '' && selectedDate > now) {
+           
+            $('#btnUpdateres').prop('disabled', false);
+        } else {
+            
+            $('#btnUpdateres').prop('disabled', true);
+        }
+    });
+    $('#ResTime').change(function () {       
+        var comment = $('#txtcommentRes').val().trim();
+        var datetime = $('#ResTime').val().trim();
+        var now = new Date();
+        var selectedDate = new Date(datetime);
+       
+        if (comment !== '' && datetime !== '' && selectedDate > now) {           
+            $('#btnUpdateres').prop('disabled', false);
+        } else {          
+            $('#btnUpdateres').prop('disabled', true);
+        }
+    });  
+
+    $('#btnSubmit').click(function () {
+        if (validateImages()) {
+            SendOTP();
+            $('#btnSubmit').hide();
+        }
+    });
+
+    $('#btnOTPResend').click(function () {
+        if (validateImages()) {
+            SendOTP();
+            $($("#btnOTPVerification")).prop('disabled', false);
+            $($("#btnPayNow")).prop('disabled', false);
+        }
+    })
+
+    function SendOTP() {
+
+        var mobnumber = $('#hdnPhoneNumber').val();
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["URLPrefixforProd"]/LGC/LGCPickup?handler=SendOTP",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { mobnumber: mobnumber, tempaltename: "SMS_LGCPickup_OTP" },
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    $("#txtmobileOTP").text(mobnumber);
+                    alert("OTP has been sent to mobile number: " + mobnumber);
+                    $("#divShowOTP").show();
+                }
+                else {
+                    alert("Unable to send OTP. Please check your Mobile Number");
+                }
+            },
+        });
+    }
+
+</script>
+<script>
+     $("#btnOTPVerification").click(function () {
+         
+        if (validateImages()) {
+            
+            var mobnumber = $('#hdnPhoneNumber').val();
+            var OTP = $('#digit-1').val();
+            var RegdNo = $('#hdnRegdNo').val();
+            $.ajax({
+                type: "POST",
+                url: "@ViewData["URLPrefixforProd"]/LGC/LGCPickup?handler=VerifyOTP",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: { mobnumber: mobnumber, OTP: OTP },
+                success: function (response) {
+                    
+                    if (response == true || response == "True" || response == "true") {
+                        
+                        $($("#btnOTPVerification")).prop('disabled', true);
+                        $.ajax({
+                            type: "POST",
+                            url: "@ViewData["URLPrefixforProd"]/LGC/LGCPickup?handler=PayNow",
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader("XSRF-TOKEN",
+                                    $('input:hidden[name="__RequestVerificationToken"]').val());
+                            },
+                            data: { RegdNo: RegdNo },
+                            success: function (response) {
+                                
+                                if (response == true || response == "True" || response == "true") {
+                                  
+                                    $('#btnAccept').hide();
+                                    $('#btnDecline').hide();
+                                    $('#btnReschedule').hide();
+                                    $("#divShowOTP").hide();
+                                    $('#formDiv').hide();
+                                    $("#divpaynow").show();                                   
+                                   
+                                }
+
+                                else {
+                                  
+                                    $("#lgcPickupForm").submit();
+                                }
+                            }
+                        });
+                      
+                    }
+
+
+                    else {
+                        document.getElementById("digit-1").value = "";
+                        alert("OTP is not correct. Please enter correct OTP");
+                    }
+                }
+            });
+        }
+
+     });
+
+    $("#btnPayNow").click(function () {
+
+        $("#lgcPickupForm").submit();
+
+    });
+
+    $("#btnCompletePickUp").click(function () {
+
+        $("#lgcPickupForm").submit();
+
+    });
+
+</script>

@@ -1,0 +1,750 @@
+﻿@page
+@using RDCELERP.Model.DealerDashBoard;
+@model RDCELERP.Core.App.Pages.CompanyDashBoard.ABBDashBoardModel
+@{
+    ViewData["Title"] = "Manager";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+    //<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css"
+}
+
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h2 class="fs-5 mb-0 card-title">
+                        Assured Buyback Data
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row align-items-center">
+            <div class="col">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link shadow" id="nav-tab-1" data-bs-toggle="tab" tab-id="1"
+                           href="#ABBRegistrationTab" role="tab" aria-controls="nav-home"
+                           aria-selected="true">
+                            ABB Registration Data
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-tab-2" data-bs-toggle="tab" tab-id="2"
+                           href="#ABBRedemptionTab" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">
+                            ABB Redemption Data
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade" id="ABBRegistrationTab" role="tabpanel" tab-id="1"
+         aria-labelledby="nav-tab-1">
+        <div class="row">
+            <div class="col-12 col-sm-6 col-xl-4 mb-4">
+                <div class="card border-0 shadow">
+
+                    <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                    <i class="fa-solid fa-box"></i>
+                                </div>
+                            </div>
+                            <div class="col-xl-7 px-xl-0">
+
+                                <h2 class="h6 text-gray-400 mb-0">Total Orders</h2>
+                                <h3 class="fw-extrabold mb-2">@Html.DisplayFor(model => model.ABBDetailsDC.TotalABBOrdersRecieved)</h3>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-xl-4 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                    <i class="fa-solid fa-ticket"></i>
+                                </div>
+                            </div>
+                            <div class="col-xl-7 px-xl-0">
+                                <h2 class="h6 text-gray-400 mb-0">Approved Orders</h2>
+                                <h3 class="fw-extrabold mb-2">@Html.DisplayFor(model => model.ABBDetailsDC.OrdersApproved)</h3>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-xl-4 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                    <i class="fa-solid fa-check-to-slot"></i>
+                                </div>
+                            </div>
+                            <div class="col-xl-7 px-xl-0">
+                                <h2 class="h6 text-gray-400 mb-0">Not Approved Orders</h2>
+                                <h3 class="fw-extrabold mb-2">@Html.DisplayFor(model => model.ABBDetailsDC.OrdersNotApproved)</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mr-2">
+
+        </div>
+
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow border-0">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h2 class="fs-5 mb-0">
+                                    Get Details
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form method="post" enctype="multipart/form-data" id="lgcPickupForm">
+                        <div class="row">
+                            <input type="hidden" asp-for="ABBDetailsDC.BusinessUnitId" id="hdnBusinessUnitId" />
+                            <input type="hidden" asp-for="ABBDetailsDC.BusinessUnitName" id="hdnBusinessUnitName" />
+                            <input type="hidden" asp-for="ABBDetailsDC.UserCompanyId" id="hdnUserCompanyId" />
+                            <input type="hidden" asp-for="ABBDetailsDC.UserCompanyName" id="hdnUserCompanyName" />
+                        </div>
+                    </form>
+
+
+                    <div class="card-body">
+                        <div class="row mt-4 detailed-reporting">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table align-items-center table-flush" id="CompanyDataTable">
+                                        <thead class="thead-light">
+                                            <tr>
+
+                                                <th class="border-bottom" scope="col">Id</th>
+                                                <th class="border-bottom" scope="col">Action</th>
+                                                <th class="border-bottom" scope="col">Company Name</th>
+                                                <th class="border-bottom" scope="col">RegdNo</th>
+                                                <th class="border-bottom" scope="col">Sponsor Order Number</th>
+                                                <th class="border-bottom" scope="col">First Name</th>
+                                                <th class="border-bottom" scope="col">Last Name</th>
+                                                <th class="border-bottom" scope="col">Mobile Number</th>
+                                                <th class="border-bottom" scope="col">Email</th>
+                                                <th class="border-bottom" scope="col">City</th>
+                                                <th class="border-bottom" scope="col">State</th>
+                                                <th class="border-bottom" scope="col">EmployeeId</th>
+                                                <th class="border-bottom" scope="col">Approved</th>
+                                                <th class="border-bottom" scope="col">Store Code</th>
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="filters">
+                                <div class="p-4">
+
+                                    @* ABBRegistration data *@
+                                    <h4 class="">Filters</h4>
+
+                                    <p class="filterheading"><input type="checkbox" name="" id="chkregdNo">Regd No</p>
+
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">
+                                    </div>
+
+                                    <div class="filter-seprator"></div>
+
+                                    <p class="filterheading"><input type="checkbox" name="" id="chkSponsorOrderNumber">Sponsor Order Number</p>
+
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="SponsorOrderNumber" placeholder="Search Sponsor Order Number">
+                                    </div>
+
+                                    <div class="filter-seprator"></div>
+
+                                    <p class="filterheading"><input type="checkbox" name="" id="chkEmployeeId">Employee Id</p>
+
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="EmployeeId" placeholder="Search Customer Name">
+                                    </div>
+
+                                    <div class="filter-seprator"></div>
+
+                                    <p class="filterheading"><input type="checkbox" name="" id="chkcustomerPhone">Phone Number</p>
+
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="customerPhone" placeholder="Search Customer Phone Number">
+                                    </div>
+                                    <div class="filter-seprator"></div>
+
+                                    <p class="filterheading"><input type="checkbox" name="" id="chkabbstorecode">Store Code</p>
+
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="abbstorecode" placeholder="Search Store Code">
+                                    </div>
+                                    <div class="filterbtnwrap">
+                                        <a id="btnFilter" class="btn btn-primary">Filter</a>
+                                        <a id="btnCloseFilter" class="btn btn-sm btn-secondary py-2">Clear</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="ABBRedemptionTab" role="tabpanel" tab-id="2"
+         aria-labelledby="nav-tab-2">
+        <div class="row">
+            <div class="col-12 col-sm-6 col-xl-4 mb-4">
+                <div class="card border-0 shadow">
+
+                    <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                    <i class="fa-solid fa-box"></i>
+                                </div>
+                            </div>
+                            <div class="col-xl-7 px-xl-0">
+
+                                <h2 class="h6 text-gray-400 mb-0">Total Orders</h2>
+                                <h3 class="fw-extrabold mb-2">@Html.DisplayFor(model => model.ABBDetailsDC.TotalABBOrdersRecieved)</h3>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-xl-4 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                    <i class="fa-solid fa-ticket"></i>
+                                </div>
+                            </div>
+                            <div class="col-xl-7 px-xl-0">
+                                <h2 class="h6 text-gray-400 mb-0">Approved Orders</h2>
+                                <h3 class="fw-extrabold mb-2">@Html.DisplayFor(model => model.ABBDetailsDC.OrdersApproved)</h3>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-xl-4 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                    <i class="fa-solid fa-check-to-slot"></i>
+                                </div>
+                            </div>
+                            <div class="col-xl-7 px-xl-0">
+                                <h2 class="h6 text-gray-400 mb-0">Not Approved Orders</h2>
+                                <h3 class="fw-extrabold mb-2">@Html.DisplayFor(model => model.ABBDetailsDC.OrdersNotApproved)</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow border-0">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h2 class="fs-5 mb-0">
+                                    Get Details
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form method="post" enctype="multipart/form-data" id="ABBredemptionForm">
+                        <div class="row">
+                            <input type="hidden" asp-for="ABBDetailsDC.BusinessUnitId" id="hdnBusinessUnitId" />
+                            <input type="hidden" asp-for="ABBDetailsDC.BusinessUnitName" id="hdnBusinessUnitName" />
+                            <input type="hidden" asp-for="ABBDetailsDC.UserCompanyId" id="hdnUserCompanyId" />
+                            <input type="hidden" asp-for="ABBDetailsDC.UserCompanyName" id="hdnUserCompanyName" />
+                        </div>
+                    </form>
+
+
+                    <div class="card-body">
+                        <div class="row mt-4 detailed-reporting">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table align-items-center table-flush" id="RedemptionDataTable">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="border-bottom" scope="col">Id</th>
+                                                <th class="border-bottom" scope="col">Action</th>
+                                                <th class="border-bottom" scope="col">Company Name</th>
+                                                <th class="border-bottom" scope="col">RegdNo</th>
+                                                <th class="border-bottom" scope="col">Sponsor Order Number</th>
+                                                <th class="border-bottom" scope="col">Abbregistration Id</th>
+                                                <th class="border-bottom" scope="col">Customer Name</th>
+                                                <th class="border-bottom" scope="col">Mobile Number</th>
+                                                <th class="border-bottom" scope="col">Redemption Date</th>
+                                                <th class="border-bottom" scope="col">Redemption %</th>
+                                                <th class="border-bottom" scope="col">Redemption Period</th>
+                                                <th class="border-bottom" scope="col">Redemption Value</th>
+                                                <th class="border-bottom" scope="col">Reference Id</th>
+                                                <th class="border-bottom" scope="col">Store Code</th>
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+                                </div>
+                            </div>
+                            @* ABBRedemption data *@
+                            <div class="filters">
+                                <div class="p-4">
+
+                                    <h4 class="">Filters</h4>
+
+                                    <p class="filterheading"><input type="checkbox" name="" id="chkregdNor">Regd No</p>
+
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="regdNor" placeholder="Search RegdNo">
+                                    </div>
+
+                                    <div class="filter-seprator"></div>
+
+                                    <p class="filterheading"><input type="checkbox" name="" id="chkSponsorOrderNumberr">Sponsor Order Number</p>
+
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="SponsorOrderNumberr" placeholder="Search Sponsor Order Number">
+                                    </div>
+
+                                    <div class="filter-seprator"></div>
+
+                                    <p class="filterheading"><input type="checkbox" name="" id="chkcustomerPhoner">Phone Number</p>
+
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="customerPhoner" placeholder="Search Customer Phone Number">
+                                    </div>
+                                    <div class="filter-seprator"></div>
+
+                                    <p class="filterheading"><input type="checkbox" name="" id="chkreferenceId">Reference Id</p>
+
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="referenceid" placeholder="Search Reference Id">
+                                    </div>
+                                    <div class="filter-seprator"></div>
+
+                                    <p class="filterheading"><input type="checkbox" name="" id="chkstorecode">Store Code</p>
+
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="storecode" placeholder="Search Store Code">
+                                    </div>
+                                    <div class="filterbtnwrap">
+                                        <a id="btnFilterRedemption" class="btn btn-primary">Filter</a>
+                                        <a id="btnCloseFilterRedemption" class="btn btn-sm btn-secondary py-2">Clear</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="formDiv">
+
+</div>
+
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/newlayout/assets/js/exporttable.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var BusinessUnitId = $("#hdnBusinessUnitId").val();
+        var url = "@URLPrefixforProd/api/ABBList/ABBRegistrationList?BusinessUnitId=" + BusinessUnitId;
+        GetOrderDataByBusinessUnit(url);
+        
+//COde for filter
+        $('.filters').hide();
+      });
+
+    $('#nav-tab-2').click(function(){
+        var BusinessUnitId = $("#hdnBusinessUnitId").val();
+        var RedemptioUrl = "@URLPrefixforProd/api/ABBList/ABBRedemptionDataList?BusinessUnitId=" + BusinessUnitId;
+        table = $('#RedemptionDataTable').DataTable();
+        // Destroy the existing DataTable
+        table.destroy();
+        GetABBRedemptionData(RedemptioUrl);
+    })
+
+    $('#nav-tab-1').click(function () {
+        var BusinessUnitId = $("#hdnBusinessUnitId").val();
+        var url = "@URLPrefixforProd/api/ABBList/ABBRegistrationList?BusinessUnitId=" + BusinessUnitId;
+        table = $('#CompanyDataTable').DataTable();
+        // Destroy the existing DataTable
+        table.destroy();
+        GetOrderDataByBusinessUnit(url);
+    })
+
+    function GetOrderDataByBusinessUnit(url) {
+        $("#CompanyDataTable").DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "dom": 'Bfrtlp',
+            "buttons": [
+
+                  {
+                    text: '<button class="btn btn-primary" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters').toggle();
+                    }
+                  },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Order Details',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "searching": false,
+            "info": true,
+            "paging": true,
+            "oLanguage": {
+                "sEmptyTable": "No data found"
+            },
+            "ajax": {
+
+                "url": url,
+                "type": "POST",
+                "datatype": "json",
+   },
+    "columnDefs": [{
+        "targets": [0],
+        "visible": false,
+        "searchable": false
+    }],
+        "responsive": true,
+
+            "columns": [
+                { "data": "abbregistrationId", "name": "AbbregistrationId", "autoWidth": true, "orderable": false },
+                { "data": "actionUrl", "name": "ActionUrl", "autoWidth": true, "orderable": false },
+                { "data": "businessUnitName", "name": "BusinessUnitName", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                { "data": "sponsorOrderNo", "name": "SponsorOrderNo", "autoWidth": true, "orderable": false },
+                { "data": "custFirstName", "name": "CustFirstName", "autoWidth": true, "orderable": false },
+                { "data": "custLastName", "name": "CustLastName", "autoWidth": true, "orderable": false },
+                { "data": "custMobile", "name": "CustMobile", "autoWidth": true, "orderable": false },
+                { "data": "custEmail", "name": "CustEmail", "autoWidth": true, "orderable": false },
+                { "data": "custCity", "name": "CustCity", "autoWidth": true, "orderable": false },
+                { "data": "custState", "name": "CustState", "autoWidth": true, "orderable": false },
+                { "data": "employeeId", "name": "EmployeeId", "autoWidth": true, "orderable": false },
+                { "data": "abbAproved", "name": "AbbAproved", "autoWidth": true, "orderable": false },
+                { "data": "abbStoreCode", "name": "AbbStoreCode", "autoWidth": true, "orderable": false },
+            ]
+        });
+    }
+
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+    //For Export Buttons available inside jquery-datatable "server side processing" - End
+    $('#btnFilter').click(function () {
+        CommonFilter();
+    });
+
+    $("#chkregdNo").click(function () {
+        if (!this.checked) {
+           var regdNo = $('#regdNo').val("");
+        } else {
+           regdNo = $('#regdNo').val();
+        }
+    });
+    $("#chkSponsorOrderNumber").click(function () {
+        if (!this.checked) {
+            var sponsorOrderNumber = $('#SponsorOrderNumber').val("");
+        } else {
+            sponsorOrderNumber = $('#SponsorOrderNumber').val();
+        }
+    });
+    $("#chkEmployeeId").click(function () {
+        if (!this.checked) {
+            var EmployeeId = $('#EmployeeId').val("");
+        } else {
+            EmployeeId = $('#EmployeeId').val();
+        }
+    });    
+    $("#chkcustomerPhone").click(function () {
+        if (!this.checked) {
+            var phoneNumber = $('#customerPhone').val("");
+        } else {
+            phoneNumber = $('#customerPhone').val();
+        }
+    });
+    $("#chkabbstorecode").click(function () {
+        if (!this.checked) {
+            var Abbstorecode = $('#abbstorecode').val("");
+        } else {
+            Abbstorecode = $('#abbstorecode').val();
+        }
+    });
+
+
+     function CommonFilter() {
+         //var regdNo = $('#regdNo').val();
+         regdNo = $('#regdNo').val() == "" ? null : $('#regdNo').val();
+         //var sponsorOrderNumber = $('#SponsorOrderNumber').val();
+         sponsorOrderNumber = $('#SponsorOrderNumber').val() == "" ? null : $('#SponsorOrderNumber').val();
+         //var EmployeeId = $('#EmployeeId').val();
+         EmployeeId = $('#EmployeeId').val() == "" ? null : $('#EmployeeId').val();         
+        // var phoneNumber = $('#customerPhone').val();
+         phoneNumber = $('#customerPhone').val() == "" ? null : $('#customerPhone').val(); 
+         //var Abbstorecode = $('#abbstorecode').val();
+         Abbstorecode = $('#abbstorecode').val() == "" ? null : $('#abbstorecode').val();
+        var BusinessUnitId = $("#hdnBusinessUnitId").val();
+         var url = null;
+         url = "@URLPrefixforProd/api/ABBList/ABBRegistrationList?BusinessUnitId=" + BusinessUnitId + '&regdNo=' + regdNo + ' &sponsorOrderNumber=' + sponsorOrderNumber + "&EmployeeId=" +
+             EmployeeId + "&phoneNumber=" + phoneNumber + "&Abbstorecode=" + Abbstorecode;
+
+        // Destroy the existing DataTable
+        table = $('#CompanyDataTable').DataTable();
+        // Destroy the existing DataTable
+        table.destroy();
+        GetOrderDataByBusinessUnit(url);
+        $('.filters').hide();
+    }
+
+
+    //Filter Clsoe Button Click Event
+    $('#btnCloseFilter').click(function () {
+        $('#regdNo').val("");
+        $('#SponsorOrderNumber').val("");
+        $('#EmployeeId').val("");
+        $('#customerPhone').val("");
+        $('#abbstorecode').val("");
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        CommonFilter();
+    });
+
+    //Data Table function for ABB RedemptionData
+    function GetABBRedemptionData(url) {
+        $("#RedemptionDataTable").DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "dom": 'Bfrtlp',
+            "buttons": [
+
+                {
+                    text: '<button class="btn btn-primary" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters').toggle();
+                    }
+                },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Order Details',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "searching": false,
+            "info": true,
+            "paging": true,
+            "oLanguage": {
+                "sEmptyTable": "No data found"
+            },
+            "ajax": {
+
+                "url": url,
+                "type": "POST",
+                "datatype": "json",
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "responsive": true,
+
+            "columns": [
+                { "data": "redemptionId", "name": "RedemptionId", "autoWidth": true, "orderable": false },
+                { "data": "actionUrl", "name": "ActionUrl", "autoWidth": true, "orderable": false },
+                { "data": "businessUnitname", "name": "BusinessUnitname", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                { "data": "sponsorOrderNumber", "name": "sponsorOrderNumber", "autoWidth": true, "orderable": false },
+                { "data": "abbregistrationId", "name": "AbbregistrationId", "autoWidth": true, "orderable": false },
+                { "data": "customerName", "name": "customerName", "autoWidth": true, "orderable": false },
+                { "data": "customerPhoneNumber", "name": "customerPhoneNumber", "autoWidth": true, "orderable": false },
+                { "data": "redemptionDate", "name": "RedemptionDate", "autoWidth": true, "orderable": false },
+                { "data": "redemptionPercentage", "name": "RedemptionPercentage", "autoWidth": true, "orderable": false },
+                { "data": "redemptionPeriod", "name": "RedemptionPeriod", "autoWidth": true, "orderable": false },
+                { "data": "redemptionValue", "name": "RedemptionValue", "autoWidth": true, "orderable": false },
+                { "data": "referenceId", "name": "ReferenceId", "autoWidth": true, "orderable": false },
+                { "data": "storeCode", "name": "StoreCode", "autoWidth": true, "orderable": false },
+
+            ]
+        });
+    }
+
+
+    // common filter for abb redemption dashboard  chkreferenceId referenceid
+    $('#btnFilterRedemption').click(function () {
+        CommonFilterABBredemption();
+    });
+
+    $("#chkregdNor").click(function () {
+        if (!this.checked) {
+            var regdNoRedemp = $('#regdNor').val("");
+        } else {
+            regdNoRedemp = $('#regdNor').val();
+        }
+    });
+    $("#chkSponsorOrderNumberr").click(function () {
+        if (!this.checked) {
+            var sponsorOrderNumber = $('#SponsorOrderNumberr').val("");
+        } else {
+            sponsorOrderNumber = $('#SponsorOrderNumberr').val();
+        }
+    });
+    $("#chkcustomerPhoner").click(function () {
+        if (!this.checked) {
+            var phoneNumber = $('#customerPhone').val("");
+        } else {
+            phoneNumber = $('#customerPhone').val();
+        }
+    });
+    $("#chkreferenceId").click(function () {
+        if (!this.checked) {
+            var referenceId = $('#referenceid').val("");
+        } else {
+            referenceId = $('#referenceid').val();
+        }
+    });
+    $("#chkstorecode").click(function () {
+        if (!this.checked) {
+            var storeCode = $('#storecode').val("");
+        } else {
+            storeCode = $('#storecode').val();
+        }
+    });
+
+    function CommonFilterABBredemption() {
+          //var regdNoRedemp = $('#regdNor').val();
+          regdNoRedemp = $('#regdNor').val() == "" ? null : $('#regdNor').val();
+          //var sponsorOrderNumber = $('#SponsorOrderNumberr').val();
+          sponsorOrderNumber = $('#SponsorOrderNumberr').val() == "" ? null : $('#SponsorOrderNumberr').val();
+          //var phoneNumber = $('#customerPhoner').val();
+          phoneNumber = $('#customerPhoner').val() == "" ? null : $('#customerPhoner').val();
+          //var referenceId = $('#referenceid').val();
+          referenceId = $('#referenceid').val() == "" ? null : $('#referenceid').val();
+          //var storeCode = $('#storecode').val();
+          storeCode = $('#storecode').val() == "" ? null : $('#storecode').val();
+          var BusinessUnitId = $("#hdnBusinessUnitId").val();
+        var url = null;
+        url = "@URLPrefixforProd/api/ABBList/ABBRedemptionDataList?BusinessUnitId=" + BusinessUnitId + '&regdNoRedemp=' + regdNoRedemp + ' &sponsorOrderNumber=' + sponsorOrderNumber + "&phoneNumber=" + phoneNumber + "&referenceId=" + referenceId + "&storeCode=" + storeCode;
+        // Destroy the existing DataTable
+          table = $('#RedemptionDataTable').DataTable();
+        // Destroy the existing DataTable
+        table.destroy();
+          GetABBRedemptionData(url);
+        $('.filters').hide();
+    }
+
+    //Filter Clsoe Button Click Event for Abb redemption dashboard
+    $('#btnCloseFilterRedemption').click(function () {
+        $('#regdNor').val("");
+        $('#SponsorOrderNumberr').val("");
+        $('#customerPhoner').val("");
+        $('#referenceid').val("");
+        $('#storecode').val("");
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        CommonFilterABBredemption();
+    });
+</script>

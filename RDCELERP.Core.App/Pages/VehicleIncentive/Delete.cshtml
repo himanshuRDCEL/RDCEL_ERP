@@ -1,0 +1,112 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.VehicleIncentive.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>TblVehicleIncentive</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblVehicleIncentive.BasePrice)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblVehicleIncentive.BasePrice)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblVehicleIncentive.PickupTatinHr)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblVehicleIncentive.PickupTatinHr)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblVehicleIncentive.PickupIncAmount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblVehicleIncentive.PickupIncAmount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblVehicleIncentive.DropTatinHr)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblVehicleIncentive.DropTatinHr)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblVehicleIncentive.DropIncAmount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblVehicleIncentive.DropIncAmount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblVehicleIncentive.PackagingIncentive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblVehicleIncentive.PackagingIncentive)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblVehicleIncentive.DropImageIncentive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblVehicleIncentive.DropImageIncentive)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblVehicleIncentive.IsActive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblVehicleIncentive.IsActive)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblVehicleIncentive.CreatedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblVehicleIncentive.CreatedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblVehicleIncentive.ModifiedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblVehicleIncentive.ModifiedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblVehicleIncentive.BusinessUnit)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblVehicleIncentive.BusinessUnit.BusinessUnitId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblVehicleIncentive.CreatedByNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblVehicleIncentive.CreatedByNavigation.UserId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblVehicleIncentive.ModifiedByNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblVehicleIncentive.ModifiedByNavigation.UserId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblVehicleIncentive.ProductCategory)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblVehicleIncentive.ProductCategory.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblVehicleIncentive.ProductType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblVehicleIncentive.ProductType.Id)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="TblVehicleIncentive.IncentiveId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

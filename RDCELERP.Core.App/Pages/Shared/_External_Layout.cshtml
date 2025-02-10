@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="~/NewLayout/vendor/jquery-ui/jquery-ui.css">
+
+    <link type="text/css" href="~/NewLayout/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+    <link type="text/css" href="~/NewLayout/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link type="text/css" href="~/NewLayout/css/style.css" rel="stylesheet">
+
+    <script src="~/NewLayout/vendor/jquery/jquery-3.6.1.min.js"></script>
+    <script src="~/NewLayout/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/NewLayout/vendor/@@popperjs/core/dist/umd/popper.min.js"></script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    @* <script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>*@
+
+</head>
+
+<body>
+    <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
+        <a class="navbar-brand me-lg-5" href="dashboard.php">
+            <span class="navbar-brand-dark sidebar-icon logotext"><i class="fa-solid fa-cubes logoicon"></i>@ViewBag.Title</span>
+        </a>
+        <div class="d-flex align-items-center">
+            <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="content" style="margin: 0 !important;">
+        <div class="py-3">
+        </div>
+        @RenderBody()
+
+        <script type="text/javascript">
+            $('#logoutbtnwrap').on('click', function () {
+                Swal.fire({
+                    icon: 'question',
+                    title: "Are you sure?",
+                    text: "You are about to logout!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: '#0D004C',
+                    confirmButtonText: 'Confirm',
+                    closeOnConfirm: false,
+                    //closeOnCancel: false
+                },
+                );
+            });
+        </script>
+
+    </main>
+
+
+    <script src="~/NewLayout/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="~/NewLayout/assets/js/custom.js"></script>
+  
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>
+
+
+

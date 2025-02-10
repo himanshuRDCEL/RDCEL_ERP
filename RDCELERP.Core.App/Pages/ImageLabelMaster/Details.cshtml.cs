@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using RDCELERP.DAL.Entities;
+
+namespace RDCELERP.Core.App.Pages.ImageLabelMaster
+{
+    public class DetailsModel : PageModel
+    {
+        private readonly RDCELERP.DAL.Entities.Digi2l_DevContext _context;
+
+        public DetailsModel(RDCELERP.DAL.Entities.Digi2l_DevContext context)
+        {
+            _context = context;
+        }
+
+        public TblImageLabelMaster TblImageLabelMaster { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            TblImageLabelMaster = await _context.TblImageLabelMasters
+                .Include(t => t.ProductCat)
+                .Include(t => t.ProductType).FirstOrDefaultAsync(m => m.ImageLabelid == id);
+
+            if (TblImageLabelMaster == null)
+            {
+                return NotFound();
+            }
+            return Page();
+        }
+    }
+}

@@ -1,0 +1,320 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC_Dispute.ShowDisputeListModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row align-items-center">
+            <div class="col">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active shadow" id="nav-home-tab1" data-bs-toggle="tab"
+                           href="#OpenDatatable" role="tab" aria-controls="nav-home1" aria-selected="true">
+                            Open Dispute
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab" data-bs-toggle="tab"
+                           href="#IsPregressDatatable" role="tab" aria-controls="nav-home" aria-selected="true">
+                            In Progress Dispute
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-profile-tab" data-bs-toggle="tab"
+                           href="#HoldDatatable" role="tab" aria-controls="nav-profile"
+                           aria-selected="false"> 
+                        Hold Dispute
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-contact-tab" data-bs-toggle="tab"
+                           href="#CloseDatatable" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">
+                        Close Record
+                        </a>
+                    </div>
+                </nav>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow noborderradius">
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- Tab -->
+                                <div class="tab-content" id="nav-tabContent">
+
+                                    <div class="tab-pane fade show active" id="OpenDatatable" role="tabpanel"
+                                         aria-labelledby="nav-home-tab1">
+                                        <div class="table-responsive">
+                                            <table id="EVC_DisputeOpenDatatable"
+                                                   class="table table-striped dt-responsive mainshadow" width="100%"
+                                                   border="0">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th class="all">Dispute Id</th>
+                                                        <th class="all">Dispute Reg No</th>
+                                                        <th class="all">Order Reg No</th>
+                                                        <th class="all">Product category </th>
+                                                        <th class="all">Product Type</th>
+                                                        <th class="all">Status</th>
+                                                        <th class="all">Amount</th>
+                                                        <th class="all">Date</th>
+                                                        @*<th class="all">Actions</th>*@
+
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade show" id="IsPregressDatatable" role="tabpanel"
+                                         aria-labelledby="nav-home-tab">
+                                        <div class="table-responsive">
+                                            <table id="EVC_DisputeIsProgressDatatable"
+                                                   class="table table-striped dt-responsive mainshadow" width="100%"
+                                                   border="0">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th class="all">Dispute Id</th>
+                                                        <th class="all">Dispute Reg No</th>
+                                                        <th class="all">Order Reg No</th>
+                                                        <th class="all">Product category </th>
+                                                        <th class="all">Product Type</th>
+                                                        <th class="all">Status</th>
+                                                        <th class="all">Amount</th>
+                                                        <th class="all">Date</th>
+                                                        @*<th class="all">Actions</th>*@
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="tab-pane fade" id="HoldDatatable" role="tabpanel"
+                                         aria-labelledby="nav-profile-tab">
+                                        <div class="table-responsive">
+                                            <table id="EVC_DisputeholdDatatable"
+                                                   class="table table-striped dt-responsive mainshadow" width="100%"
+                                                   border="0">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th class="all">Dispute Id</th>
+                                                        <th class="all">Dispute Reg No</th>
+                                                        <th class="all">Order Reg No</th>
+                                                        <th class="all">Product category </th>
+                                                        <th class="all">Product Type</th>
+                                                        <th class="all">Status</th>
+                                                        <th class="all">Amount</th>
+                                                        <th class="all">Date</th>
+                                                        @*<th class="all">Actions</th>*@
+
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="CloseDatatable" role="tabpanel"
+                                         aria-labelledby="nav-contact-tab">
+                                        <div class="table-responsive">
+                                            <table id="EVC_DisputecloseDatatable"
+                                                   class="table table-striped dt-responsive mainshadow" width="100%"
+                                                   border="0">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th class="all">Dispute Id</th>
+                                                        <th class="all">Dispute Reg No</th>
+                                                        <th class="all">Order Reg No</th>
+                                                        <th class="all">Product category </th>
+                                                        <th class="all">Product Type</th>
+                                                        <th class="all">Status</th>
+                                                        <th class="all">Amount</th>
+                                                        <th class="all">Date</th>
+                                                        @*<th class="all">Actions</th>*@
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End of tab -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script>
+        $(document).ready(function () {
+         //  var url ="@URLPrefixforProd/api/EVCList/GetDisputeOrderList?LoggingId="+@Model.loginUserid+"TableNo=1";
+            //
+            $('#EVC_DisputeOpenDatatable').dataTable({
+
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,            
+                "paging": true,
+                "filter": true,
+                "oLanguage": {
+                    "sEmptyTable": "No EVC Avalible found"
+                },
+                "ajax": {
+                    "url": "@URLPrefixforProd/api/EVCList/GetDisputeOrderList?LoggingId="+@Model.loginUserid+"&TableNo=1",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+
+                "responsive": true,
+
+                "columns": [
+
+                    { "data": "evcdisputeId", "name": "EvcdisputeId", "autoWidth": true, "orderable": false },
+                    { "data": "disputeRegno", "name": "DisputeRegno", "autoWidth": true, "orderable": false },
+                    { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                    { "data": "productCatName", "name": "ProductCatName", "autoWidth": true, "orderable": false },
+                    { "data": "productTypeName", "name": "ProductTypeName", "autoWidth": true, "orderable": false },
+                    { "data": "status", "name": "Status", "autoWidth": true, "orderable": false },
+                    { "data": "amount", "name": "Amount", "autoWidth": true, "orderable": false },
+                    { "data": "date", "name": "Date", "autoWidth": true, "orderable": false },
+                   /* { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },*/
+                ]
+            });
+
+           $('#EVC_DisputeIsProgressDatatable').dataTable({
+
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "paging": true,
+                "filter": true,
+                "oLanguage": {
+                    "sEmptyTable": "No EVC Avalible found"
+                },
+                "ajax": {
+                    "url": "@URLPrefixforProd/api/EVCList/GetDisputeOrderList?LoggingId="+@Model.loginUserid+"&TableNo=2",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+
+                "responsive": true,
+
+                "columns": [
+
+                    { "data": "evcdisputeId", "name": "EvcdisputeId", "autoWidth": true, "orderable": false },
+                    { "data": "disputeRegno", "name": "DisputeRegno", "autoWidth": true, "orderable": false },
+                    { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                    { "data": "productCatName", "name": "ProductCatName", "autoWidth": true, "orderable": false },
+                    { "data": "productTypeName", "name": "ProductTypeName", "autoWidth": true, "orderable": false },
+                    { "data": "status", "name": "Status", "autoWidth": true, "orderable": false },
+                    { "data": "amount", "name": "Amount", "autoWidth": true, "orderable": false },
+                    { "data": "date", "name": "Date", "autoWidth": true, "orderable": false },
+                    /*{ "data": "action", "name": "Action", "autoWidth": true, "orderable": false },*/
+                ]
+            });
+
+            $('#EVC_DisputeholdDatatable').dataTable({
+
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "paging": true,
+                "filter": true,
+                "oLanguage": {
+                    "sEmptyTable": "No EVC Avalible found"
+                },
+                "ajax": {
+                    "url": "@URLPrefixforProd/api/EVCList/GetDisputeOrderList?LoggingId="+@Model.loginUserid+"&TableNo=3",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+
+                "responsive": true,
+
+                "columns": [
+
+                    { "data": "evcdisputeId", "name": "EvcdisputeId", "autoWidth": true, "orderable": false },
+                    { "data": "disputeRegno", "name": "DisputeRegno", "autoWidth": true, "orderable": false },
+                    { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                    { "data": "productCatName", "name": "ProductCatName", "autoWidth": true, "orderable": false },
+                    { "data": "productTypeName", "name": "ProductTypeName", "autoWidth": true, "orderable": false },
+                    { "data": "status", "name": "Status", "autoWidth": true, "orderable": false },
+                    { "data": "amount", "name": "Amount", "autoWidth": true, "orderable": false },
+                    { "data": "date", "name": "Date", "autoWidth": true, "orderable": false },
+                   /* { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },*/
+                ]
+            });
+
+            $('#EVC_DisputecloseDatatable').dataTable({
+
+                "order": [[0, 'desc']],
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "paging": true,
+                "filter": true,
+                "oLanguage": {
+                    "sEmptyTable": "No EVC Avalible found"
+                },
+                "ajax": {
+                    "url": "@URLPrefixforProd/api/EVCList/GetDisputeOrderList?LoggingId="+@Model.loginUserid+"&TableNo=4",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }],
+
+                "responsive": true,
+
+                "columns": [
+
+                    { "data": "evcdisputeId", "name": "EvcdisputeId", "autoWidth": true, "orderable": false },
+                    { "data": "disputeRegno", "name": "DisputeRegno", "autoWidth": true, "orderable": false },
+                    { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                    { "data": "productCatName", "name": "ProductCatName", "autoWidth": true, "orderable": false },
+                    { "data": "productTypeName", "name": "ProductTypeName", "autoWidth": true, "orderable": false },
+                    { "data": "status", "name": "Status", "autoWidth": true, "orderable": false },
+                    { "data": "amount", "name": "Amount", "autoWidth": true, "orderable": false },
+                    { "data": "date", "name": "Date", "autoWidth": true, "orderable": false },
+                   /* { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },*/
+                ]
+            });
+
+        });
+</script>

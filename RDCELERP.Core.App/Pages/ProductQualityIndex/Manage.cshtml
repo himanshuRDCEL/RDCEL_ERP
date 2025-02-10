@@ -1,0 +1,226 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ProductQualityIndex.ManageModel
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>Product Quality Index
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                <input type="hidden" asp-for="ProductQualityIndexViewModel.ProductQualityIndexId" id="hdnId" />
+                                <input type="hidden" asp-for="ProductQualityIndexViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="ProductQualityIndexViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="ProductQualityIndexViewModel.IsActive" />
+                                <input type="hidden" asp-for="ProductQualityIndexViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="ProductQualityIndexViewModel.ModifiedDate" />
+                                <input type="hidden" asp-for="ProductQualityIndexViewModel.ProductCategoryId" id="hdncatid" />
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for=""> Name <span style="color:red;">*</span></label>
+                                    <input type="text" asp-for="ProductQualityIndexViewModel.Name" class="form-control" id="txtName" onkeyup="CheckAvailability();" />
+                                    <span asp-validation-for="ProductQualityIndexViewModel.Name" class="text-danger"></span>
+                                    <span class="text-danger" id="message"></span>
+                                </div>
+
+                                @if (Model.ProductQualityIndexViewModel != null && Model.ProductQualityIndexViewModel.ProductQualityIndexId > 0 && Model.ProductQualityIndexViewModel.ProductCategoryId > 0)
+                                {
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">Select Product Category <span style="color:red;">*</span></label>
+                                        <input id="ddlCategory" asp-for="ProductQualityIndexViewModel.ProductCategoryName" class="form-control" readonly />
+
+                                        <span asp-validation-for="ProductQualityIndexViewModel.ProductCategoryName" class="text-danger"></span>
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">Select Product Category <span style="color:red;">*</span></label>
+                                        <input id="ddlCategory" asp-for="ProductQualityIndexViewModel.ProductCategoryName" class="form-control" />
+
+                                        <span asp-validation-for="ProductQualityIndexViewModel.ProductCategoryName" class="text-danger"></span>
+                                    </div>
+                                }
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Excellent Description<span style="color:red;">*</span></label>
+                                    <input asp-for="ProductQualityIndexViewModel.ExcellentDesc" class="form-control" />
+                                    <span asp-validation-for="ProductQualityIndexViewModel.ExcellentDesc" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Good Description<span style="color:red;">*</span></label>
+                                    <input asp-for="ProductQualityIndexViewModel.GoodDesc" class="form-control" />
+                                    <span asp-validation-for="ProductQualityIndexViewModel.GoodDesc" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Average Description<span style="color:red;">*</span></label>
+                                    <input asp-for="ProductQualityIndexViewModel.AverageDesc" class="form-control" />
+                                    <span asp-validation-for="ProductQualityIndexViewModel.AverageDesc" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Non Working Description<span style="color:red;">*</span></label>
+                                    <input asp-for="ProductQualityIndexViewModel.NonWorkingDesc" class="form-control" />
+                                    <span asp-validation-for="ProductQualityIndexViewModel.NonWorkingDesc" class="text-danger"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                    }
+                                </div>
+                                <div class="col-6 text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <input type="submit" id="btnManage" value="Save" class="btn btn-primary mainshadow" />
+                                    }
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+
+<script src="~/js/compressor.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+    // Bind to the input event of the input field to clear the message whenever the input changes
+    $("#txtName").on('input', function () {
+        $("#message").html(" ");
+        $('#btnManage').prop('disabled', false);
+    });
+});
+
+function CheckAvailability() {
+    var name = $("#txtName").val();
+    var id = $("#hdnId").val();
+    if (name === '') {
+        $("#message").html(" ");
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "@ViewData["URLPrefixforProd"]/ProductQualityIndex/Manage?handler=CheckName",
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("XSRF-TOKEN",
+                $('input:hidden[name="__RequestVerificationToken"]').val());
+        },
+        data: { "name": name, "Id": id },
+        success: function (response) {
+            if (response == true || response == "True" || response == "true") {
+                $("#message").html(" ");
+            } else {
+                $("#message").css("color", "red");
+                $("#message").html("This name is already exist.");
+                $('#btnManage').prop('disabled', true);
+            }
+        },
+    });
+}
+
+ 
+var ProductCatId = null;
+
+$(function () {
+    $("#ddlCategory").autocomplete({
+        minLength: 1,
+        source: function (request, response) {
+            $.get("@URLPrefixforProd/ProductQualityIndex/Manage?handler=SearchCategoryName", {
+                term: request.term
+            }, response);
+        },
+        focus: function () {
+            // prevent value inserted on focus
+            return false;
+        },
+        select: function (event, ui) {
+            this.value = ui.item.value; // Set the selected value
+            // Get the ID of the selected state hdntypeid hdncatid
+            ProductCatId = ui.item.text;
+            $("#hdncatid").val(ProductCatId);
+            return false;
+        },
+        change: function (event, ui) {
+            if (!ui.item) {
+                // If the selected item is not in the list, clear the input
+                $(this).val("");
+                $("#hdncatid").val(""); // Also clear the hidden field
+            }
+        }
+    }).on("blur", function () {
+        // Handle the case when the input loses focus
+        var inputValue = $(this).val();
+        if (!inputValue) {
+            // If the input is empty, reset the hidden field
+            $("#hdncatid").val("");
+        }
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

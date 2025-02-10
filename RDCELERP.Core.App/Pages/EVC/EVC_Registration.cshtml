@@ -1,0 +1,730 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC.EVC_Registration
+
+@{
+    ViewData["Title"] = "EVC";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    var BaseUrl = ViewData["BaseUrl"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a> EVC Registration Form
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" autocomplete="off" enctype="multipart/form-data">
+                            <div class="row">
+
+                                @*<div class="col-12">
+                                <h3 class="sectitle">EVC Info</h3>
+                                </div>*@
+
+                                <input type="hidden" asp-for="evc_RegistrationModel.EvcregistrationId" id="hdnUserId" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.CreatedBy" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.CreatedDate" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.IsActive" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.ModifiedBy" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.ModifiedDate" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.UploadGSTRegistration" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.EWasteCertificate" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.CopyofCancelledCheque" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.AadharfrontImage" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.AadharBackImage" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.ProfilePic" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.EvcapprovalStatusId" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.Isevcapprovrd" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.UserId" id="hdnevcuserId" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.EvcregdNo" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.EvcwalletAmount" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.EvczohoBookName" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.EmployeeId" id="AutoEmployeeId" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.StateId" id="AutoStateId" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.cityId" id="AutocityId" />
+                                <input type="hidden" asp-for="evc_RegistrationModel.IsInHouse" />
+
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Select Employee Id</label>
+                                    @*<select asp-for="evc_RegistrationModel.EmployeeId" class="form-control form-select" id="ddlempid" asp-items="ViewBag.EmployeeList">
+                                    <option value=''>--None--</option>
+                                    </select>*@
+                                    <input id="ddlempid" asp-for="evc_RegistrationModel.EmployeeIdName" class="form-control" />
+                                    <span asp-validation-for="evc_RegistrationModel.EmployeeIdName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Employee Name </label>
+                                    <input asp-for="evc_RegistrationModel.EmployeeName" id="txtEmployeeName" class="form-control" readonly />
+                                    <span asp-validation-for="evc_RegistrationModel.EmployeeName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Employee Email </label>
+                                    <input asp-for="evc_RegistrationModel.EmployeeEMail" id="txtEmployeeEMail" class="form-control" readonly />
+                                    <span asp-validation-for="evc_RegistrationModel.EmployeeEMail" class="text-danger"></span>
+                                </div>
+                                <div class="col-12">
+                                    <hr class="my-4">
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Bussiness Name <span style="color:red;">*</span> </label>
+                                    <input asp-for="evc_RegistrationModel.BussinessName" class="form-control" />
+                                    <span asp-validation-for="evc_RegistrationModel.BussinessName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Type of Entity </label>
+                                    <select asp-for="evc_RegistrationModel.EntityTypeId" class="custom-select my-1 mr-sm-2 form-select" asp-items="ViewBag.EntityList">
+                                        <option value=''>--None--</option>
+                                    </select>
+                                    <span asp-validation-for="evc_RegistrationModel.EntityTypeId" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Contact Person Name <span style="color:red;">*</span></label>
+                                    <input asp-for="evc_RegistrationModel.ContactPerson" class="form-control" />
+                                    <span asp-validation-for="evc_RegistrationModel.ContactPerson" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Contact Person Address <span style="color:red;">*</span></label>
+                                    <input asp-for="evc_RegistrationModel.ContactPersonAddress" class="form-control" />
+                                    <span asp-validation-for="evc_RegistrationModel.ContactPersonAddress" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">E-mail ID<span style="color:red;">*</span></label>
+                                    <input type="text" asp-for="evc_RegistrationModel.EmailId" class="form-control" id="txtEmail" onkeyup="CheckAvailability();" />
+                                    <span asp-validation-for="evc_RegistrationModel.EmailId" class="text-danger" id="validEmail"></span>
+                                    <span class="text-danger" id="message"></span>
+                                </div>
+
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">EVC Mobile Number <span style="color:red;">*</span></label>
+                                    <input asp-for="evc_RegistrationModel.EVCMobileNumber" maxlength="10" accept="0-9" class="form-control" />
+                                    <span asp-validation-for="evc_RegistrationModel.EVCMobileNumber" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Alternate Mobile Number </label>
+                                    <input asp-for="evc_RegistrationModel.AlternateMobileNumber" maxlength="10" accept="0-9" class="form-control" />
+                                    <span asp-validation-for="evc_RegistrationModel.AlternateMobileNumber" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Address Line 1 <span style="color:red;">*</span></label>
+                                    <input asp-for="evc_RegistrationModel.RegdAddressLine1" class="form-control" />
+                                    <span asp-validation-for="evc_RegistrationModel.RegdAddressLine1" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Address Line 2 <span style="color:red;">*</span></label>
+                                    <input asp-for="evc_RegistrationModel.RegdAddressLine2" class="form-control" />
+                                    <span asp-validation-for="evc_RegistrationModel.RegdAddressLine2" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">State <span style="color:red;">*</span></label>
+                                    @*<select asp-for="evc_RegistrationModel.StateId" class="custom-select my-1 mr-sm-2 form-select" asp-items="ViewBag.Statelist" id="ddlState">
+                                    <option value=''>--None--</option>
+                                    </select>*@
+                                    <input id="ddlState" asp-for="evc_RegistrationModel.StateIdName" class="form-control" autocomplete="off" />
+                                    <span asp-validation-for="evc_RegistrationModel.StateIdName" id="ddlState" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">City <span style="color:red;">*</span></label>
+                                    @*<select asp-for="evc_RegistrationModel.cityId" class="custom-select my-1 mr-sm-2 form-select" asp-items="ViewBag.cityListS" id="ddlCity">
+                                    <option value=''>--None--</option>
+                                    </select>*@
+                                    <input id="ddlCity" asp-for="evc_RegistrationModel.CityIdName" class="form-control" autocomplete="off" />
+                                    <span asp-validation-for="evc_RegistrationModel.CityIdName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Pin Code <span style="color:red;">*</span></label>
+                                    <input id="ddlPinCode" asp-for="evc_RegistrationModel.PinCode" class="form-control" autocomplete="off" />
+                                    <span asp-validation-for="evc_RegistrationModel.PinCode" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="col-12">
+                                    <hr class="my-4">
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Bank Name <span style="color:red;">*</span></label>
+                                    <input asp-for="evc_RegistrationModel.BankName" class="form-control" />
+                                    <span asp-validation-for="evc_RegistrationModel.BankName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">IFSC CODE<span style="color:red;">*</span></label>
+                                    <input asp-for="evc_RegistrationModel.IFSCCODE" class="form-control" />
+                                    <span asp-validation-for="evc_RegistrationModel.IFSCCODE" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Bank Account Number<span style="color:red;">*</span> </label>
+                                    <input asp-for="evc_RegistrationModel.BankAccountNo" class="form-control" />
+                                    <span asp-validation-for="evc_RegistrationModel.BankAccountNo" class="text-danger"></span>
+                                </div>
+                                <div class="col-12">
+                                    <hr class="my-4">
+                                </div>
+                                <div class="col-md-6 mb-6">
+                                    <label for="">E-Waste Registration Number </label>
+                                    <input asp-for="evc_RegistrationModel.EwasteRegistrationNumber" class="form-control" />
+                                    <span asp-validation-for="evc_RegistrationModel.EwasteRegistrationNumber" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="col-md-6 mb-6">
+                                    <label for="">GST Number </label>
+                                    <input asp-for="evc_RegistrationModel.GSTNo" type="text" class="form-control" />
+                                    <span asp-validation-for="evc_RegistrationModel.GSTNo" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mt-2 mb-3">
+                                    <div class="border rounded p-4 imgboxwrap">
+                                        <label for="formFile" class="form-label">Copy of Cancelled Cheque</label>
+                                        @if (@Model.evc_RegistrationModel.CopyofCancelledChequeLinkURL != null)
+                                        {
+
+
+                                            <input type="hidden" id="hdnBase64StringValue_1" asp-for="evc_RegistrationModel.CopyofCancelledChequeLinkURLBase64string">
+
+                                            <img src="@Model.evc_RegistrationModel.CopyofCancelledChequeLinkURL" id="imgprev_1" class="ct-square img-responsive" />
+                                            <div class="my-2">
+                                                <a href="@Model.evc_RegistrationModel.CopyofCancelledChequeLinkURL" class="btn btn-light border w-100" download>Download</a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+
+                                            <img src="~/Images/placeholder-01.png" id="imgprev_1_1" class="ct-square" />
+                                            <input type="hidden" id="hdnBase64StringValue_1_1" asp-for="evc_RegistrationModel.CopyofCancelledChequeLinkURLBase64string">
+                                        }
+                                        <div class="my-2">
+                                            <small class="mb-2 mt-3 text-muted d-block">Replace</small>
+                                            @*<img id="showImg_1" />*@
+                                            <input name="CopyofCancelledChequeImage" class="form-control" id="Image_Upload_1" type="file" accept="image/jpeg,image/png,jpg|png" />
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 mt-2 mb-3">
+                                    <div class="border rounded p-4 imgboxwrap">
+                                        <label for="formFile" class="form-label">Upload GST Registration</label>
+                                        @if (@Model.evc_RegistrationModel.UploadGSTRegistrationLinkURL != null)
+                                        {
+                                            <input type="hidden" id="hdnBase64StringValue_2" asp-for="evc_RegistrationModel.UploadGSTRegistrationLinkURLBase64string">
+                                            <img src="@Model.evc_RegistrationModel.UploadGSTRegistrationLinkURL" id="imgprev_2" class="ct-square img-responsive" />
+                                            <div class="my-2">
+                                                <a href="@Model.evc_RegistrationModel.UploadGSTRegistrationLinkURL" class="btn btn-light border w-100" download>Download</a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+
+                                            <img src="~/Images/placeholder-01.png" id="imgprev_2_2" class="ct-square" />
+                                            <input type="hidden" id="hdnBase64StringValue_2_2" asp-for="evc_RegistrationModel.UploadGSTRegistrationLinkURLBase64string">
+
+                                        }
+                                        <div class="my-2">
+                                            <small class="mb-2 mt-3 text-muted d-block">Replace</small>
+                                            @*<img id="showImg_@count" />*@
+                                            <input name="UploadGSTRegistrationImage" class="form-control" id="Image_Upload_2" type="file" accept="image/jpeg,image/png,jpg|png" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mt-2 mb-3">
+                                    <div class="border rounded p-4 imgboxwrap">
+                                        <label for="formFile" class="form-label">EWaste Certificate</label>
+                                        @if (@Model.evc_RegistrationModel.EWasteCertificateLinkURL != null)
+                                        {
+                                            <input type="hidden" id="hdnBase64StringValue_3" asp-for="evc_RegistrationModel.EWasteCertificateLinkURLBase64string">
+                                            <img src="@Model.evc_RegistrationModel.EWasteCertificateLinkURL" id="imgprev_3" class="ct-square img-responsive" />
+                                            <div class="my-2">
+                                                <a href="@Model.evc_RegistrationModel.EWasteCertificateLinkURL" class="btn btn-light border w-100" download>Download</a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+
+                                            <img src="~/Images/placeholder-01.png" id="imgprev_3_3" class="ct-square" />
+                                            <input type="hidden" id="hdnBase64StringValue_3_3" asp-for="evc_RegistrationModel.EWasteCertificateLinkURLBase64string">
+
+                                        }
+                                        <div class="my-2">
+                                            <small class="mb-2 mt-3 text-muted d-block">Replace</small>
+                                            <input name="EWasteCertificateImage" class="form-control" id="Image_Upload_3" type="file" accept="image/jpeg,image/png,jpg|png" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mt-2 mb-3 imgboxwrap">
+                                    <div class="border rounded p-4">
+                                        <label for="formFile" class="form-label">Uplode Aadhar front Image</label>
+                                        @if (@Model.evc_RegistrationModel.AadharfrontImageLinkURL != null)
+                                        {
+                                            <input type="hidden" id="hdnBase64StringValue_4" asp-for="evc_RegistrationModel.AadharfrontImageLinkURLBase64string">
+                                            <img src="@Model.evc_RegistrationModel.AadharfrontImageLinkURL" id="imgprev_4" class="ct-square img-responsive" />
+                                            <div class="my-2">
+                                                <a href="@Model.evc_RegistrationModel.AadharfrontImageLinkURL" class="btn btn-light border w-100" download>Download</a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+
+                                            <img src="~/Images/placeholder-01.png" id="imgprev_4_4" class="ct-square" />
+                                            <input type="hidden" id="hdnBase64StringValue_4_4" asp-for="evc_RegistrationModel.AadharfrontImageLinkURLBase64string">
+
+                                        }
+                                        <div class="my-2">
+                                            <small class="mb-2 mt-3 text-muted d-block">Replace</small>
+                                            <input name="EWasteCertificateImage" class="form-control" id="Image_Upload_4" type="file" accept="image/jpeg,image/png,jpg|png" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mt-2 mb-3">
+                                    <div class="border rounded p-4 imgboxwrap">
+                                        <label for="formFile" class="form-label">Uplode Aadhar Back Image</label>
+                                        @if (@Model.evc_RegistrationModel.AadharBackImageLinkURL != null)
+                                        {
+                                            <input type="hidden" id="hdnBase64StringValue_5" asp-for="evc_RegistrationModel.AadharBackImageLinkURLBase64string">
+                                            <img src="@Model.evc_RegistrationModel.AadharBackImageLinkURL" id="imgprev_5" class="ct-square img-responsive" />
+                                            <div class="my-2">
+                                                <a href="@Model.evc_RegistrationModel.AadharBackImageLinkURL" class="btn btn-light border w-100" download>Download</a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+
+                                            <img src="~/Images/placeholder-01.png" id="imgprev_5_5" class="ct-square" />
+                                            <input type="hidden" id="hdnBase64StringValue_5_5" asp-for="evc_RegistrationModel.AadharBackImageLinkURLBase64string">
+
+                                        }
+                                        <div class="my-2">
+                                            <small class="mb-2 mt-3 text-muted d-block">Replace</small>
+                                            <input name="EWasteCertificateImage" class="form-control" id="Image_Upload_5" type="file" accept="image/jpeg,image/png,jpg|png" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mt-2 mb-3">
+                                    <div class="border rounded p-4 imgboxwrap">
+                                        <label for="formFile" class="form-label">Uplode Profile Image</label>
+                                        @if (@Model.evc_RegistrationModel.ProfilePicLinkURL != null)
+                                        {
+                                            <input type="hidden" id="hdnBase64StringValue_6" asp-for="evc_RegistrationModel.ProfilePicLinkURLBase64string">
+                                            <img src="@Model.evc_RegistrationModel.ProfilePicLinkURL" id="imgprev_6" class="ct-square img-responsive" />
+                                            <div class="my-2">
+                                                <a href="@Model.evc_RegistrationModel.ProfilePicLinkURL" class="btn btn-light border w-100" download>Download</a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+
+                                            <img src="~/Images/placeholder-01.png" id="imgprev_6_6" class="ct-square" />
+                                            <input type="hidden" id="hdnBase64StringValue_6_6" asp-for="evc_RegistrationModel.ProfilePicLinkURLBase64string">
+
+                                        }
+                                        <div class="my-2">
+                                            <small class="mb-2 mt-3 text-muted d-block">Replace</small>
+                                            <input name="EWasteCertificateImage" class="form-control" id="Image_Upload_6" type="file" accept="image/jpeg,image/png,jpg|png" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12">
+                                    <hr class="my-4">
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <label for="">POC Name </label>
+                                    <input asp-for="evc_RegistrationModel.POCName" class="form-control" />
+                                    <span asp-validation-for="evc_RegistrationModel.POCName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <label for="">POC Place </label>
+                                    <input asp-for="evc_RegistrationModel.POCPlace" class="form-control" />
+                                    <span asp-validation-for="evc_RegistrationModel.POCPlace" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                        @*<a asp-page="./Dashboard" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">
+                                    Back to List
+                                    </a>*@
+                                    }
+                                </div>
+                                <div class="col-6 text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <input type="submit" value="Save" id="btnsave" class="btn btn-primary mainshadow" />
+                                    }
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>*@
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+
+<script src="~/js/compressor.js"></script>
+<script type="text/javascript">
+    $('#btnsave').prop('disabled', false);
+    var StateId = null;
+    var EmployeeId = null;
+    var CityId = null;
+    //change state by city
+    @*$("#ddlState").change(function () {
+        // $.get("@URLPrefixforProd/EVC/EVC_Registration?handler=CityByStateId&EVC_RegistrationModel.StateId=" + $(this).val()).done(function (data) {
+        $.get("@URLPrefixforProd/EVC/EVC_Registration?handler=CityByStateId&EVC_RegistrationModel.StateId=" + StateId).done(function (data) {
+        $("#ddlCity").empty(); // Clear the plese wait
+        $("#ddlCity").append($("<option></option>").val('').html('Select City'));
+        $.each(data, function (i, cities) {
+        $("#ddlCity").append($("<option></option>").val(cities.cityId).html(cities.name));
+        });
+        });
+        });*@
+        //Get Employee Id and so automaticly Fill Employee Name and Email
+        //$("#ddlempid").change(function () {
+        function GetEmpDetails() {
+            //$.get("@URLPrefixforProd/EVC/EVC_Registration?handler=EmpDetailsByEmpId&EVC_RegistrationModel.EmployeeId=" + $(this).val()).done(function (data) {
+            $.get("@URLPrefixforProd/EVC/EVC_Registration?handler=EmpDetailsByEmpId&EVC_RegistrationModel.EmployeeId=" + EmployeeId).done(function (data) {
+                $("#txtEmployeeEMail").val(data.email);
+                $("#txtEmployeeName").val(data.firstName);
+            });
+        }
+    //});
+
+    //this code use for Compress Image
+    $(document).ready(function () {
+        $('#formDiv').hide();
+
+        for (let i = 1; i <= 6; i++) {
+            $("#Image_Upload_" + i).bind('change', function () {
+                //$("#lbInvoicelFileName_" + i).text("");
+                //$("#lbInvoicelFileName_" + i).append(this.files[0].name);
+
+            });
+
+            $("#Image_Upload_" + i).resizeImg(function () {
+                var value = parseInt("350");
+                var Weight = parseInt("2");
+                let type, quality;
+                {
+                    type = "image/jpeg";
+                    quality = 0.8;
+                }
+                return {
+                    use_reader: false,
+                    mode: Weight,
+                    val: value,
+                    type: type,
+                    quality: quality,
+                    callback: function (result) {
+                        //$("#showimgbox_" + i).css("display", "flex");
+                        $("#imgprev_" + i).attr('src', result);
+                        $("#imgprev_" + i + "_" + i).attr('src', result);
+                        $("#hdnBase64StringValue_" + i).val(result.substr(result.indexOf(',') + 1)).css("height", 100);
+                        $("#hdnBase64StringValue_" + i + "_" + i).val(result.substr(result.indexOf(',') + 1)).css("height", 100);
+                        $("#Image_Upload_" + i).val(null);
+                    }
+                };
+            });
+        }
+    });
+
+    //use for Email Chake
+
+    function CheckAvailability() {
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["URLPrefixforProd"]/EVC/EVC_Registration?handler=CheckEmail",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "email": $("#txtEmail").val(), "evcId": $("#hdnUserId").val(), "evcUserId": $("#hdnevcuserId").val() },
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    $('#btnsave').prop('disabled', false);
+                    $("#message").html(" ");
+                }
+                else {
+                    $("#message").css("color", "red");
+                    var value = $("#validEmail").val();
+                    if (value == "") {
+                        $('#btnsave').prop('disabled', true);
+                        $("#message").html("This Email is Already Exists ");
+
+                    }
+                    else {
+                        $('#btnsave').prop('disabled', false);
+                        $("#message").html(" ");
+                    }
+                }
+            },
+        });
+    }
+
+
+    $('.imgboxwrap input[type="file"]').change(function () {
+        $(this).closest('.imgboxwrap').find('.uploadimgbox').css('display', 'none');
+        $(this).closest('.imgboxwrap').find('.ct-square').show();
+    });
+
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        $("#ddlempid").on("click", function () {
+            $(this).autocomplete("search", "#");
+        }).autocomplete({
+            minLength: 0,
+            scroll: true,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/EVC/EVC_Registration?handler=Searchevcemployee", {
+                    term: extractLast(request.term)
+                }, function (data) {
+                    response(data.slice(0, 20));
+                });
+            },
+            focus: function (event, ui) {
+            },
+            open: function (event, ui) {
+                var menu = $(this).autocomplete("widget");
+                menu.css({ "max-height": "200px", "overflow": "hidden", "overflow-y": "scroll" });
+            },
+            select: function (event, ui) {
+                var terms = split(this.value);
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                this.value = terms;
+
+                // Get the ID of the selected Employeeid
+                //var Employeeid = ui.item.text;
+                var splitArray = this.value.split("-");
+
+                // Extract the first element from the split array
+                var Employeeid = splitArray[0];
+
+                $('#AutoEmployeeId').val(Employeeid);
+                EmployeeId = Employeeid;
+                GetEmpDetails()
+                return false;
+
+            }
+        });
+    })
+
+
+
+    $("#ddlCity").change(function () {
+        var cityname = $('#ddlCity').val();
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/EVC/EVC_Registration?handler=CheckCityisValid",
+
+            data: { "cityname": cityname, "StateId": StateId },
+            success: function (response) {
+
+                if (response == null) {
+                    $("#ddlCity").val("");
+                }
+            }
+        });
+    });
+
+    $("#ddlState").change(function () {
+
+        var Statename = $('#ddlState').val();
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/EVC/EVC_Registration?handler=CheckStateisValid",
+
+            data: { "Statename": Statename },
+            success: function (response) {
+
+                if (response == null) {
+                    $("#ddlState").val("");
+                }
+            }
+        });
+    });
+
+    $("#ddlempid").change(function () {
+
+        var Empname = $('#ddlempid').val();
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/EVC/EVC_Registration?handler=CheckEmpNameValid",
+
+            data: { "Empname": Empname },
+            success: function (response) {
+
+                if (response == null) {
+                    $("#ddlempid").val("");
+                    //location.reload(true);
+                }
+            }
+        });
+    });
+
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        $("#ddlState").on("keydown", function (event) {
+            $("#ddlCity").val('');
+            $("#ddlPinCode").val('');
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@ViewData["URLPrefixforProd"]/EVC/EVC_Registration?handler=SearchEVCState", {
+                    term: extractLast(request.term)
+                }, response);
+            },
+            select: function (event, ui) {
+                this.value = ui.item.value; // Set the selected value
+
+                StateId = ui.item.text;
+                $('#AutoStateId').val(StateId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    // If the selected item is not in the list, clear the input
+                    $(this).val("");
+                    $("#AutoStateId").val(""); // Also clear the hidden field
+                }
+            }
+        });
+
+        $("#ddlCity").on("keydown", function (event) {
+            $("#ddlPinCode").val('');
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@ViewData["URLPrefixforProd"]/EVC/EVC_Registration", {
+                    handler: "SearchEVCCity",
+                    term: extractLast(request.term),
+                    term2: StateId
+                }, response);
+            },
+            select: function (event, ui) {
+                this.value = ui.item.value; // Set the selected value
+
+                CityId = ui.item.text;
+                $('#AutocityId').val(CityId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    // If the selected item is not in the list, clear the input
+                    $(this).val("");
+                    $("#AutocityId").val(""); // Also clear the hidden field
+                }
+            }
+        });
+
+        $("#ddlPinCode").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@ViewData["URLPrefixforProd"]/EVC/EVC_Registration", {
+                    handler: "AutoPinCode",
+                    term: extractLast(request.term),
+                    term2: CityId,
+                }, response);
+            },
+            select: function (event, ui) {
+                $("#ddlPinCode").val(ui.item.value); // Set the selected value
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $("#ddlPinCode").val(""); // Clear the input field
+                }
+            }
+        });
+    });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

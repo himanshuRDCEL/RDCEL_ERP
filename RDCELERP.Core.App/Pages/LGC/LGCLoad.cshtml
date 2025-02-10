@@ -1,0 +1,748 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.LGC.LGCLoadModel
+@{
+    ViewData["Title"] = "LGC";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div id="mainLoadDiv">
+                    <div class="card border-0 shadow">
+                        <div class="card-header card-header-wrapper">
+                            <div class="row align-items-center card-title">
+                                <div class="col">
+                                    <h2 class="fs-5 fw-bold mb-0"><a id="backLoad"><i class="fa-solid fa-circle-arrow-left"></i></a>LGC Load</h2>
+                                </div>
+                                <div class="col text-end">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <h4 style="text-align: center;"></h4>
+                            <form method="post" enctype="multipart/form-data" id="lgcLoadForm">
+
+                                <div class="row" >
+
+                                    <div class="col-md-4 mb-3">
+                                        <p>Driver Name <input class="form-control" type="text" asp-for="driverDetailsViewModel.DriverName" /></p>
+                                        @Html.ValidationMessageFor(m => m.driverDetailsViewModel.DriverName,"", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <p><span>Driver Phone Number </span><input class="form-control" type="text" asp-for="driverDetailsViewModel.DriverPhoneNumber" /></p>
+                                        @Html.ValidationMessageFor(m => m.driverDetailsViewModel.DriverPhoneNumber,"", new { @class = "text-danger" })
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <p><span>Vehicle Number </span><input class="form-control" type="text" asp-for="driverDetailsViewModel.VehicleNumber" /></p>
+                                        @Html.ValidationMessageFor(m => m.driverDetailsViewModel.VehicleNumber,"", new { @class = "text-danger" })
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <p>
+                                            City
+
+                                            @Html.DropDownListFor(model => model.driverDetailsViewModel.City, Model.driverDetailsViewModel.CityList, "---Select City---", new { @class = "form-select CityEVCOnchange", @id = "ddlCity" })
+                                            @Html.ValidationMessageFor(m => m.driverDetailsViewModel.City,"", new { @class = "text-danger" })
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <p>
+                                            EVC Partner
+                                            @Html.DropDownListFor(model => model.driverDetailsViewModel.EVCBusinessName, Model.driverDetailsViewModel.EvcList, "---Select EVC Name---", new { @class = "form-select CityEVCOnchange", @id = "ddlEVC" })
+                                            @Html.ValidationMessageFor(m => m.driverDetailsViewModel.EVCBusinessName,"", new { @class = "text-danger" })
+                                        </p>
+                                    </div>
+                                </div>
+                                <input type="hidden" asp-for="driverDetailsViewModel.OrderTransId" id="hdnOrderTransId" />
+                                <div class="row">
+                                    <div class="col-12 mb-4">
+                                        <input type="button" value="Check Order" class="btn btn-primary" id="showList">
+                                    </div>
+                                </div>
+                            </form>
+                            <br />
+                            <div id="LGCLoad_Div">
+                                <div class="table-responsive" id="divTable">
+                                    <table class="table align-items-center table-flush" id="LGC_LoadDataTable">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="border-bottom all notexport" scope="col">Id</th>
+                                                <th class="border-bottom all notexport">
+                                                    <input type='checkbox' id='select_all' />
+                                                </th>
+                                                <th class="border-bottom all" scope="col">Order Number</th>
+                                                <th class="border-bottom all" scope="col">Ticket Number</th>
+                                                <th class="border-bottom all" scope="col">Product Category</th>
+                                                <th class="border-bottom all" scope="col">Product Type</th>
+                                                <th class="border-bottom all" scope="col">Created Date</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 mb-4 mt-0">
+                                        <input type="button" value="Submit" class="btn btn-primary" id="btnAdd">
+                                    </div>
+                                </div>
+                            </div>
+                            @*List Page Common Filters Code VK 15-Nov*@
+                            <div class="filters">
+                                <div class="p-4">
+                                    <h4 class="">Filters</h4>
+                                    @* Order Date Range Filter *@
+                                    <p class="filterheading">
+                                        <input type="checkbox" name="" id="chkOrderDateRange">
+                                        <label for="chkOrderDateRange">Order Date Range</label>
+                                    </p>
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline mb-2" id="orderStartDate" readonly placeholder="Start Date" autocomplete="off">
+                                        <input type="text" class="form-control d-inline mb-2" id="orderEndDate" readonly placeholder="End Date" autocomplete="off">
+                                    </div>
+                                    <div class="filter-seprator"></div>
+
+                                    @* Regd No Filter *@
+                                    <p class="filterheading">
+                                        <input type="checkbox" name="" id="chkregdNo">
+                                        <label for="chkregdNo">Regd No</label>
+                                    </p>
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">
+                                    </div>
+                                    <div class="filter-seprator"></div>
+
+                                    @* Product Group Filter *@
+                                    <p class="filterheading">
+                                        <input type="checkbox" name="" id="chkProductCategory">
+                                        <label for="chkProductCategory">Product Group</label>
+                                    </p>
+                                    <div class="filterbox">
+                                        <select name="ProductCatId" id="ddlprodcatid" class="form-control d-inline" asp-items="ViewBag.ProductGroup">
+                                            <option value='0'>--Product Cat--</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-seprator"></div>
+
+                                    <p class="filterheading">
+                                        <input type="checkbox" name="" id="chkProductType">
+                                        <label for="chkProductType">Product Type</label>
+                                    </p>
+                                    <div class="filterbox">
+                                        <select name="ProductTypeId" id="ddlprodcattypeid" class="form-control d-inline" asp-items="ViewBag.productTypeList">
+                                            <option value='0'>--Product Type--</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-seprator"></div>
+
+                                    @* Ticket Number Filter *@
+                                    <p class="filterheading">
+                                        <input type="checkbox" name="" id="chkticketnumber">
+                                        <label for="chkticketnumber">Ticket Number</label>
+                                    </p>
+                                    <div class="filterbox">
+                                        <input type="text" class="form-control d-inline" id="ticketnumber" placeholder="Search Ticket Number">
+                                    </div>
+                                    <div class="filter-seprator"></div>
+
+                                    @* Submit Filter *@
+                                    <div class="filterbtnwrap">
+                                        <a id="btnFilter" class="btn btn-primary">Filter</a>
+                                        <a id="btnCloseFilter" class="btn btn-sm btn-secondary py-2">Clear</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+<script type="text/javascript">
+
+    // $(document).ready(function () {
+    //     $("#divTable").hide();
+    //     $('#btnAdd').hide();
+    //     $('#showList').hide();
+    //     $('#daterangefilter').hide();
+    //     //code for add date picker
+    //     $("#startdate").datepicker({
+    //         defaultdate: null
+    //     });
+    //     $("#enddate").datepicker({
+    //         defaultdate: null
+    //     });
+    // });
+
+    // LGC Pickup //date range Filter
+    // $('#filter-dates').click(function () {
+    //     var userId = "@Model.tblServicePartner.UserId";
+    //     var evcRegId = $('#ddlEVC').val();
+    //     var startDate = $('#startdate').val();
+    //     var endDate = $('#enddate').val();
+    //     var url = "@URLPrefixforProd/api/ListPage/GetRegdnoListByEvc?userId=" + userId + "&evcRegId=" + evcRegId + "&startDate=" + startDate + "&endDate=" + endDate;
+
+    //     table = $('#LGC_LoadDataTable').DataTable();
+    //     // Destroy the existing DataTable
+    //     table.clear();
+    //     table.destroy();
+    //     DataTable(url);
+    // });
+
+    // $('#showList').click(function () {
+    //     $("#divTable").show();
+    //     $('#showList').hide();
+    //     $("#LGCLoad_Div").show();
+    //     $('#btnAdd').show();
+        
+    //     table = $('#LGC_LoadDataTable').DataTable();
+    //     // Destroy the existing DataTable
+    //     table.clear();
+    //     table.destroy();
+
+    //     var userId = "@Model.tblServicePartner.UserId";
+    //     var evcRegId = $('#ddlEVC').val();
+    //     $('#dateRangeFilter').show();
+    //     var startDate = $('#startdate').val();
+    //     var endDate = $('#enddate').val();
+    //     var url = "@URLPrefixforProd/api/ListPage/GetRegdnoListByEvc?userId=" + userId + "&evcRegId=" + evcRegId + "&startDate=" + startDate + "&endDate=" + endDate;
+    //     DataTable(url);
+    // });
+
+    // $("#btnAdd").click(function () {
+    //     var arr = []; $('#hdnOrderTransId').val("");
+    //     $('.checkboxinput:checked').each(function () {
+    //         arr.push($(this).val());
+    //     });
+    //     if (arr != null && arr.length > 0) {
+    //         $('#hdnOrderTransId').val(arr);
+    //         $("#lgcLoadForm").submit();
+    //     }
+    // });
+
+    // $("#ddlCity").change(function () {
+    //     var cityId = $("#ddlCity").val();
+    //     $('#ddlEVC').val("");
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "@ViewData["URLPrefixforProd"]/LGC/LGCLoad?handler=EVCByCityId",
+    //         beforeSend: function (xhr) {
+    //             xhr.setRequestHeader("XSRF-TOKEN",
+    //                 $('input:hidden[name="__RequestVerificationToken"]').val());
+    //         },
+    //         data: { "cityId": cityId },
+    //         success: function (response) {
+    //             if (response) {
+    //                 $('#ddlEVC').empty();
+    //                 $("#ddlEVC").append('<option value="">--Select EVC Name--</option>');
+    //                 $.each(response, function (i, item) {
+    //                     $("#ddlEVC").append('<option value="' + item.value + '">' + item.text + '</option>');
+    //                 });
+    //             }
+    //         }
+    //     });
+    // });
+
+    // $('#backLoad').click(function () {
+    //     window.location.href = "@ViewData["URLPrefixforProd"]/LGC/LogiPickDrop";
+    // });
+
+    // $(".CityEVCOnchange").change(function () {
+    //     var city = $("#ddlCity").val();
+    //     var evc = $("#ddlEVC").val();
+
+    //     $("#LGCLoad_Div").hide();
+    //     if (evc != "" && parseInt(evc) > 0) {
+    //         $("#showList").show();
+    //     }
+    //     else {
+    //         $("#showList").hide();
+    //     }
+    // });
+
+    // /// LGC PickUp DataTable
+    // function DataTable(url) {
+    //     $('#LGC_LoadDataTable').dataTable({
+    //         "order": [[0, 'desc']],
+    //         "processing": true,
+    //         "serverSide": true,
+    //         "scrollX": true,
+    //         "filter": true,
+    //         "dom": 'Bfrtlp',
+    //         "buttons": [
+    //             {
+    //                 text: '<button class="btn btn-primary" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+    //                 action: function (e, dt, node, config) {
+    //                     $('.filters').toggle();
+    //                 }
+    //             },
+    //             {
+    //                 extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+    //                 title: 'LGC Load Details',
+    //                 action: newexportaction,
+    //                 exportOptions: {
+    //                     modifier: {
+    //                         // DataTables core
+    //                         order: 'index',  // 'current', 'applied', 'index',  'original'
+    //                         page: 'all',      // 'all',     'current' for export all pages data
+    //                         search: 'none'     // 'none',    'applied', 'removed'
+    //                     },
+    //                     columns: ':not(.notexport)'
+    //                 }
+    //             }
+    //         ],
+    //         "searching": true,
+    //         "info": true,
+    //         "paging": true,
+    //         "oLanguage": {
+    //             "sEmptyTable": "No data found"
+    //         },
+    //         "ajax": {
+    //             "url": url,
+    //             "type": "POST",
+    //             "datatype": "json"
+    //         },
+    //         "columnDefs": [{
+    //             "targets": [0],
+    //             "visible": false,
+    //             "searchable": false
+    //         }],
+    //         "responsive": true,
+
+    //         "columns": [
+    //             { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+    //             { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+    //             { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+    //             { "data": "ticketNumber", "name": "TicketNumber", "autoWidth": true, "orderable": false },
+    //             { "data": "productCategory", "name": "ProductCategory", "autoWidth": true, "orderable": true },
+    //             { "data": "productType", "name": "ProductType", "autoWidth": true, "orderable": true },
+    //             { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+    //         ]
+    //     });
+    // }
+    // //All Data Export--
+
+    // //Select All Functionality
+    // $('#select_all').on('click', function () {
+    //     var counter = 0;
+    //     $('.checkboxinput').each(function () {
+    //         if (this.checked) {
+    //             this.checked = false;
+    //         }
+    //     });
+    //     var parentTable = $(this).parents().find('.dataTables_wrapper').attr('id');
+    //     if (this.checked) {
+    //         $('#' + parentTable + ' .checkboxinput').each(function () {
+    //             this.checked = true;
+    //             counter++;
+    //         });
+    //     } else {
+    //         $('#' + parentTable + ' .checkboxinput').each(function () {
+    //             this.checked = false;
+    //             counter - 1;
+    //         });
+    //     }
+    //     OnCheckBoxCheck();
+    // });
+
+    // // On Checkbox Check
+    // function OnCheckBoxCheck() {
+    //     counter = 0;
+    //     $('.checkboxinput').each(function () {
+    //         if (this.checked) {
+    //             counter++;
+    //         }
+    //         else {
+    //             counter - 1;
+    //         }
+    //     });
+    // }
+
+    // function newexportaction(e, dt, button, config) {
+    //     var self = this;
+    //     var oldStart = dt.settings()[0]._iDisplayStart;
+    //     dt.one('preXhr', function (e, s, data) {
+    //         // Just this once, load all data from the server...
+    //         data.start = 0;
+    //         data.length = 2147483647;
+    //         dt.one('preDraw', function (e, settings) {
+    //             // Call the original action function
+    //             if (button[0].className.indexOf('buttons-copy') >= 0) {
+    //                 $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+    //             } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+    //                 $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+    //                     $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+    //                     $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+    //             }
+    //             dt.one('preXhr', function (e, s, data) {
+    //                 // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+    //                 // Set the property to what it was before exporting.
+    //                 settings._iDisplayStart = oldStart;
+    //                 data.start = oldStart;
+    //             });
+    //             // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+    //             setTimeout(dt.ajax.reload, 0);
+    //             // Prevent rendering of the full data to the DOM
+    //             return false;
+    //         });
+    //     });
+    //     // Requery the server with the new one-time export settings
+    //     dt.ajax.reload();
+    // };
+        //For Export Buttons available inside jquery-datatable "server side processing" - End
+</script>
+@* Advanced Filters *@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#divTable").hide();
+        $('#btnAdd').hide();
+        $('#showList').hide();
+        //Date Picker
+        $("#orderStartDate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                $("#orderEndDate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#orderEndDate").datepicker({
+            defaultDate: null,
+        });
+        //Hide Filters Dive
+        $('.filters').hide();
+    });
+
+    $('#showList').click(function () {
+        $("#divTable").show();
+        $('#showList').hide();
+        $("#LGCLoad_Div").show();
+        $('#btnAdd').show();
+        CommonFilter();
+    });
+
+    $("#btnAdd").click(function () {
+        var arr = []; $('#hdnOrderTransId').val("");
+        $('.checkboxinput:checked').each(function () {
+            arr.push($(this).val());
+        });
+        if (arr != null && arr.length > 0) {
+            $('#hdnOrderTransId').val(arr);
+            $("#lgcLoadForm").submit();
+        }
+    });
+
+    $("#ddlCity").change(function () {
+        var cityId = $("#ddlCity").val();
+        $('#ddlEVC').val("");
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/LGC/LGCLoad?handler=EVCByCityId",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "cityId": cityId },
+            success: function (response) {
+                if (response) {
+                    $('#ddlEVC').empty();
+                    $("#ddlEVC").append('<option value="">--Select EVC Name--</option>');
+                    $.each(response, function (i, item) {
+                        $("#ddlEVC").append('<option value="' + item.value + '">' + item.text + '</option>');
+                    });
+                }
+            }
+        });
+    });
+
+    $('#backLoad').click(function () {
+        window.location.href = "@ViewData["URLPrefixforProd"]/LGC/LogiPickDrop";
+    });
+
+    $(".CityEVCOnchange").change(function () {
+        var city = $("#ddlCity").val();
+        var evc = $("#ddlEVC").val();
+
+        $("#LGCLoad_Div").hide();
+        if (evc != "" && parseInt(evc) > 0) {
+            $("#showList").show();
+        }
+        else {
+            $("#showList").hide();
+        }
+        CleanFilerValues();
+    });
+
+    //Select All Functionality
+    $('#select_all').on('click', function () {
+        var counter = 0;
+        $('.checkboxinput').each(function () {
+            if (this.checked) {
+                this.checked = false;
+            }
+        });
+        var parentTable = $(this).parents().find('.dataTables_wrapper').attr('id');
+        if (this.checked) {
+            $('#' + parentTable + ' .checkboxinput').each(function () {
+                this.checked = true;
+                counter++;
+            });
+        } else {
+            $('#' + parentTable + ' .checkboxinput').each(function () {
+                this.checked = false;
+                counter - 1;
+            });
+        }
+        OnCheckBoxCheck();
+    });
+
+    // On Checkbox Check
+    function OnCheckBoxCheck() {
+        counter = 0;
+        $('.checkboxinput').each(function () {
+            if (this.checked) {
+                counter++;
+            }
+            else {
+                counter - 1;
+            }
+        });
+    }
+
+   
+
+
+    // Advanced Filters
+
+    //Check Box Regd Number change Event
+    $("#chkregdNo").click(function () {
+        if (!this.checked) {
+            $('#regdNo').val("");
+        }
+    });
+
+    //Check Box Product Category change Event
+    $("#chkProductCategory").click(function () {
+        if (!this.checked) {
+            $('#ddlprodcatid').val(0);
+        }
+    });
+
+    //On Change Event for Get Product type by Product Category
+    $("#ddlprodcatid").change(function () {
+        $.get("@URLPrefixforProd/api/Dropdown/OnGetProductCategoryTypeAsync?productCatId=" + $(this).val()).done(function (data) {
+
+            $("#ddlprodcattypeid").empty();
+            $("#ddlprodcattypeid").append($("<option></option>").val('0').html('Select ProductType'));
+            $.each(data, function (i, producttype) {
+                $("#ddlprodcattypeid").append($("<option></option>").val(producttype.text).html(producttype.value));
+            });
+        });
+    });
+
+    //Check Box Product Type change Event
+    $("#chkProductType").click(function () {
+        if (!this.checked) {
+            $('#ddlprodcattypeid').val(0);
+        }
+    });
+
+    //Check Box Ticket Number change Event
+    $("#chkticketnumber").click(function () {
+        if (!this.checked) {
+            $('#ticketnumber').val("");
+        }
+    });
+
+    //Check Box Customer City change Event
+    $("#chkCustCity").click(function () {
+        if (!this.checked) {
+            $('#custCity').val("");
+        }
+    });
+
+    // Follow-up list multi Search Filter
+    $('#btnFilter').click(function () {
+        $('.filters').hide();
+        CommonFilter();
+    });
+
+    function CleanFilerValues(){
+        $('#orderStartDate').val("");
+        $('#orderEndDate').val("");
+        $('#regdNo').val("");
+        $('#ddlprodcatid').val(0);
+        $('#ddlprodcattypeid').empty();
+        $('#ddlprodcattypeid').append("<option value='0'>--Product Type--</option>");
+        $('#ticketnumber').val("");
+        $('#custCity').val("");
+        // Unchecks it
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        $('.filters').hide();
+    }
+
+    //Pickup Filter Close Button Click Event
+    $('#btnCloseFilter').click(function () {
+        CleanFilerValues();
+        CommonFilter();
+    });
+
+    function CommonFilter() {
+        debugger;
+        var _urlData = GetURLData();
+        var userId = "@Model.tblServicePartner.UserId";
+        var evcRegId = $('#ddlEVC').val();
+        var url = "@URLPrefixforProd/api/ListPage/GetRegdnoListByEvc?userId=" + userId + "&evcRegId=" + evcRegId + _urlData;
+
+        table = $('#LGC_LoadDataTable').DataTable();
+        // Destroy the existing DataTable
+        table.clear().destroy();
+        //Re-Initialize Datatable
+        DataTable(url);
+        $('.filters').hide();
+    }
+
+    function SetURLData(orderStartDate = null, orderEndDate = null, regdNo = null, productCatId = null, productTypeId = null, ticketnumber = null, custCity = null) {
+        var urlData = "";
+        if (orderStartDate != null && orderEndDate != null) {
+            urlData += '&orderStartDate=' + orderStartDate + '&orderEndDate=' + orderEndDate;
+        }
+        if (regdNo != null) {
+            urlData += '&regdNo=' + regdNo;
+        }
+        if (productCatId != null && productCatId > 0) {
+            urlData += '&productCatId=' + productCatId;
+        }
+        if (productTypeId != null && productTypeId > 0) {
+            urlData += '&productTypeId=' + productTypeId;
+        }
+        if (ticketnumber != null) {
+            urlData += '&ticketNo=' + ticketnumber;
+        }
+        if (custCity != null) {
+            urlData += '&custCity=' + custCity;
+        }
+        return urlData;
+    }
+    //Filter Function
+    function GetURLData() {
+        var orderStartDate = $('#orderStartDate').val() == "" ? null : $('#orderStartDate').val();
+        var orderEndDate = $('#orderEndDate').val() == "" ? null : $('#orderEndDate').val();
+        var regdNo = $('#regdNo').val() == "" ? null : $('#regdNo').val();
+        var productCatId = $('#ddlprodcatid').val() == "" ? 0 : $('#ddlprodcatid').val();
+        var productTypeId = $('#ddlprodcattypeid').val() == "" ? 0 : $('#ddlprodcattypeid').val();
+        var ticketnumber = $('#ticketnumber').val() == "" ? null : $('#ticketnumber').val();
+        var custCity = $('#custCity').val() == "" ? null : $('#custCity').val();
+        
+        var urlData = SetURLData(orderStartDate, orderEndDate, regdNo, productCatId, productTypeId, ticketnumber, custCity);
+
+        return urlData;
+    }
+    /// LGC PickUp DataTable
+    function DataTable(url) {
+        $('#LGC_LoadDataTable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    text: '<button class="btn btn-primary" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    action: function (e, dt, node, config) {
+                        $('.filters').toggle();
+                    }
+                },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'LGC Load Details',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "searching": false,
+            "info": true,
+            "paging": true,
+            "oLanguage": {
+                "sEmptyTable": "No data found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "responsive": true,
+
+            "columns": [
+                { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                { "data": "ticketNumber", "name": "TicketNumber", "autoWidth": true, "orderable": false },
+                { "data": "productCategory", "name": "ProductCategory", "autoWidth": true, "orderable": true },
+                { "data": "productType", "name": "ProductType", "autoWidth": true, "orderable": true },
+                { "data": "createdDate", "name": "CreatedDate", "autoWidth": true, "orderable": true },
+            ]
+        });
+    }
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+        //For Export Buttons available inside jquery-datatable "server side processing" - End
+</script>

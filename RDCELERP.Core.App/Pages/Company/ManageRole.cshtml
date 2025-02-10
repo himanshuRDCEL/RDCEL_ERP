@@ -1,0 +1,320 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.Company.ManageRoleModel
+
+@{
+    ViewData["Title"] = "ManageRole";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var roleName = "";
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>Add Role
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    <div class="form-group">
+                                        <input type="hidden" asp-for="RoleViewModel.RoleId" />
+                                        @*<input type="hidden" asp-for="RoleViewModel.CompanyId" class="form-control" />*@
+                                        <input type="hidden" asp-for="RoleViewModel.CreatedBy" />
+                                        <input type="hidden" asp-for="RoleViewModel.CreatedDate" />
+                                        <input type="hidden" asp-for="RoleViewModel.IsActive" />
+                                        <input type="hidden" asp-for="RoleViewModel.ModifiedBy" />
+                                        <input type="hidden" asp-for="RoleViewModel.ModifiedDate" />
+                                        @*<input type="hidden" asp-for="RoleViewModel.CompanyId" />*@
+
+                                        <label class="" for="">Role Name <span style="color:red;">*</span></label>
+                                        @if (Model.RoleViewModel.RoleId > 0)
+                                        {
+                                            <input asp-for="RoleViewModel.RoleName" onchange="getRoleName(this.value);" class="form-control" readonly />
+                                        }
+                                        else
+                                        {
+                                            <input asp-for="RoleViewModel.RoleName" onchange="getRoleName(this.value);" class="form-control" />
+                                        }
+                                        @*<input asp-for="RoleViewModel.RoleName" onchange="getRoleName(this.value);" class="form-control" />*@
+                                        <span asp-validation-for="RoleViewModel.RoleName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <div class="form-group">
+                                        <label class="" for="">Select Company <span style="color:red;">*</span></label>
+                                        @if (Model.RoleViewModel.RoleId > 0 && Model.RoleViewModel.CompanyId > 0)
+                                        {
+
+                                            <input value="@Model.RoleViewModel.CompanyName" class="form-control" readonly />
+
+                                        }
+                                        else
+                                        {
+                                            <select asp-for="RoleViewModel.CompanyId" class="form-control" asp-items="ViewBag.CompanyList">
+                                                <option value=''>--None--</option>
+                                            </select>
+                                        }
+                                        <span asp-validation-for="RoleViewModel.CompanyId" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <h6 class="sectitle">Access List</h6>
+                                    <div class="assignrolebox assignwithaccesslist rolebox">
+
+                                        <ul id="tree3" class="tree">
+                                            @for (int i = 0; i < Model.RoleViewModel.RoleAccessViewModelList.Count; i++)
+                                            {
+                                                @if (Model.RoleViewModel.RoleAccessViewModelList[i].ParentAccessListId == null)
+                                                {
+                                                    <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].RoleAccessId" />
+                                                    <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].AccessListId" />
+                                                    <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].RoleId" />
+                                                    <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].Name" />
+                                                    <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ActionUrl" />
+                                                    <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ParentAccessListId" />
+                                                    <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ActionName" />
+                                                    <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].Description" />
+                                                    <b><label class="control-label">@Model.RoleViewModel.RoleAccessViewModelList[i].Name</label></b>
+                                                    @if (Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList != null && Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList.Count > 0)
+                                                    {
+                                                        <li class="branch">
+                                                            @for (int j = 0; j < Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList.Count; j++)
+                                                            {
+                                                                <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].RoleAccessId" />
+                                                                <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].AccessListId" />
+                                                                <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].RoleId" />
+                                                                <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].Name" />
+                                                                <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ActionUrl" />
+                                                                <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ParentAccessListId" />
+                                                                <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ActionName" />
+                                                                <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].Description" />
+                                                                //id="parentid"
+                                                                <input type="checkbox" class="clsHowistheinformationcollected_parent" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].Selected" />
+                                                                <label class="control-label">@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].Name</label>
+                                                                <br />
+                                                                @if (Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList != null && Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList.Count > 0)
+                                                                {
+                                                                    <ul>
+                                                                        @for (int k = 0; k < Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList.Count; k++)
+                                                                        {
+
+                                                                            <li>
+                                                                                <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList[k].RoleAccessId" />
+                                                                                <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList[k].AccessListId" />
+                                                                                <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList[k].RoleId" />
+                                                                                <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList[k].Name" />
+                                                                                <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList[k].ActionUrl" />
+                                                                                <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList[k].ParentAccessListId" />
+                                                                                <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList[k].ActionName" />
+                                                                                <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList[k].Description" />
+                                                                                @* id="parentid" *@
+                                                                                <input type="checkbox" class="clsHowistheinformationcollected_parent" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList[k].Selected" />
+                                                                                <label class="control-label">@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList[k].Name</label>
+                                                                                <div class="rolepermissionbox">
+                                                                                    @* id="one" *@
+                                                                                    <input type="checkbox" class="clsHowistheinformationcollected" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList[k].CanView" />
+                                                                                    <label asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList[k].CanView" class="control-label"></label>
+                                                                                    @*  id="two"  *@
+                                                                                    <input type="checkbox" class="clsHowistheinformationcollected" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList[k].CanAdd" />
+                                                                                    <label asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList[k].CanAdd" class="control-label"></label>
+                                                                                    @*  id="xyz" *@
+                                                                                    <input type="checkbox" class="clsHowistheinformationcollected_delete" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList[k].CanDelete" />
+                                                                                    <label asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].ChildRoleAccessViewModelList[k].CanDelete" class="control-label"></label>
+                                                                                </div>
+                                                                            </li>
+                                                                        }
+                                                                    </ul>
+                                                                }
+                                                            }
+                                                        </li>
+                                                    }
+                                                }
+                                            }
+                                        </ul>
+
+                                        @*<ul id="tree3" class="tree">
+                        @for (int i = 0; i < Model.RoleViewModel.RoleAccessViewModelList.Count; i++)
+                        {
+                            <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].RoleAccessId" />
+                            <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].AccessListId" />
+                            <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].RoleId" />
+                            <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].Name" />
+                            <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ActionUrl" />
+                            <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ParentAccessListId" />
+                            <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ActionName" />
+                            <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].Description" />
+
+                            @if (Model.RoleViewModel.RoleAccessViewModelList[i].ParentAccessListId == null)
+                            {
+                                <b><label class="control-label">@Model.RoleViewModel.RoleAccessViewModelList[i].Name</label></b>
+                                <li class="branch">
+                                    @foreach (var item in Model.RoleViewModel.RoleAccessViewModelList)
+                                    {
+                                        @if (Model.RoleViewModel.RoleAccessViewModelList[i].AccessListId == item.ParentAccessListId)
+                                        {
+                                            @if (item.ParentAccessListId != null)
+                                            {
+                                                <input type="checkbox" id="parentid" class="clsHowistheinformationcollected_parent" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].Selected" />
+                                                <label class="control-label">@item.Name</label>
+                                                <div class="rolepermissionbox">
+                                                    <input type="checkbox" id="one" class="clsHowistheinformationcollected" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].CanView" />
+                                                    <label asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].CanView" class="control-label"></label>
+
+                                                    <input type="checkbox" id="two" class="clsHowistheinformationcollected" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].CanAdd" />
+                                                    <label asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].CanAdd" class="control-label"></label>
+
+                                                    <input type="checkbox" id="xyz" class="clsHowistheinformationcollected_delete" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].CanDelete" />
+                                                    <label asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].CanDelete" class="control-label"></label>
+                                                </div>
+                                                <br />
+                                            }
+                                            <ul>
+                                                @foreach (var item1 in Model.RoleViewModel.RoleAccessViewModelList)
+                                                {
+                                                    @if (item.AccessListId == item1.ParentAccessListId)
+                                                    {
+                                                        @if (item1.ParentAccessListId > 0)
+                                                        {
+                                                            <li>
+                                                                <input type="checkbox" id="parentid" class="clsHowistheinformationcollected_parent" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].Selected" />
+                                                                    <label class="control-label">@item1.Name</label>
+                                                                    <div class="rolepermissionbox">
+                                                                        <input type="checkbox" id="one" class="clsHowistheinformationcollected" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].CanView" />
+                                                                        <label asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].CanView" class="control-label"></label>
+
+                                                                        <input type="checkbox" id="two" class="clsHowistheinformationcollected" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].CanAdd" />
+                                                                        <label asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].CanAdd" class="control-label"></label>
+
+                                                                        <input type="checkbox" id="xyz" class="clsHowistheinformationcollected_delete" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].CanDelete" />
+                                                                        <label asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].CanDelete" class="control-label"></label>
+                                                                    </div>
+                                                            </li>
+
+                                                        }
+
+                                                    }
+                                                }
+
+                                            </ul>
+                                        }
+                                    }
+
+
+                                </li>
+
+                            }
+
+
+                        }
+                    </ul>*@
+                                    </div>
+                                </div>
+                            </div>
+                            @*@foreach (var item in Model.RoleVMList)
+        {
+            if(Model.RoleViewModel.RoleName != null)
+            if(item.RoleName.ToLower().Equals(Model.RoleViewModel.RoleName.ToLower()))
+            {
+                roleName = Model.RoleViewModel.RoleName;
+            }
+        }*@
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="float-right">
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <input type="submit" id="btnManageRole" value="Save" class="btn btn-primary mainshadow" />
+                                        }
+                                        @if (accessRule != null && accessRule.CanView)
+                                        {
+                                            <a asp-page="./RoleList" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">Back to List</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+        <!-- activity -->
+    </div>
+</div>
+<script>
+
+    $(function () {
+     //   alert("chek1");
+        $("input[type='checkbox']").change(function () {
+          //  alert("check2");
+            $(this).siblings('div')
+                .find("input[type='checkbox']")
+                .prop('checked', this.checked).find("input[]").prop("checked", false);
+        });
+    });
+
+    function getRoleName(_RoleName)
+    {
+       // alert("hi");
+       // alert(_RoleName);
+
+       // var r = @ViewBag.RoleNameList;
+        //alert(r);
+        @*if (@ViewBag.RoleList.find(_RoleName)) {
+
+            }
+            else {
+                alert("The" + @roleName + "is already exist");*@
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            
+
+                                          
+
+                                          

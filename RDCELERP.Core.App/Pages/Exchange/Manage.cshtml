@@ -1,0 +1,2285 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.Exchange.ManageModel
+@{
+}
+@Html.AntiForgeryToken()
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int i = 0;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    var InvoiceImageURL = ViewData["InvoiceImageURL"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+
+<style>
+    textarea.form-control {
+        max-height: 130px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-3">
+            <div class="card-header"><h3 class="fs-5 fw-bold mb-0">Exchange</h3></div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row align-items-center">
+            <div class="col">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link shadow active" id="nav-tab-1" data-bs-toggle="tab"
+                           href="#ExchangeTab" role="tab" aria-controls="nav-home"
+                           aria-selected="true">
+                            Sponsor & Customer Details
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-tab-2" data-bs-toggle="tab"
+                           href="#OldExchangeProduct" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">Old Exchange Product Details</a>
+                        <a class="nav-item nav-link shadow" id="nav-tab-3" data-bs-toggle="tab"
+                           href="#QCInformation" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">QC Information</a>
+                        <a class="nav-item nav-link shadow" id="nav-tab-4" data-bs-toggle="tab"
+                           href="#LGCInformation" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">LGC Information</a>
+                        <a class="nav-item nav-link shadow" id="nav-tab-5" data-bs-toggle="tab"
+                           href="#VoucherInformation" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">Voucher Information</a>
+                    </div>
+                </nav>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow noborderradius">
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <!-- Tab -->
+                                    <div class="tab-content" id="nav-tabContent">
+                                        <div class="tab-pane fade active show" id="ExchangeTab" role="tabpanel"
+                                             aria-labelledby="nav-tab-1">
+                                            <div class="row">
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.Id" id="hdnExchangeOrderId" />
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.CreatedBy" />
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.CreatedDate" />
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.IsActive" />
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.ModifiedBy" />
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.StatusId" id="hdnstatusid" />
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.BusinessPartnerViewModel.IsORC" id="hdnisorc" />
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.ModifiedDate" />
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.InvoiceImageName" />
+                                                <input type="hidden" asp-for="QCCommentViewModel.Reschedulecount" id="hdnreschedulecount" />
+                                                <input type="hidden" asp-for="QCCommentViewModel.IsVisible" id="hdnisvisible" />
+                                                <input type="hidden" asp-for="QCCommentViewModel.IsUPINo" id="hdnisupi" />
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.IsDefferedSettlement" id="Exchisdeff" />
+                                                <input type="hidden" asp-for="UserId" id="hdnloginid" />
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.BusinessUnitId" id="hdnbuid" />
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.IsPageEditable" id="hdnispageeditable" />
+
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.CustomerDetailsId" />
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.ProductCategoryId" id="hdnprodcat" />
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.ProductTypeId" id="hdnprodtype" />
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.BrandId" id="hdnbrand" />
+                                                @* <input type="hidden" asp-for="ExchangeOrderViewModel.ProductCondition" id="hdnproductcondition" /> *@
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.ProductConditionId" id="hdnproductcondition" />
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.BusinessPartnerId" id="hdnbpid" />
+
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.CustomerDetailViewModel.State" id="hdnstate" />
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.CustomerDetailViewModel.City" id="hdncity" />
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.CustomerDetailViewModel.ZipCode" id="hdnpincode" />
+                                                <input type="hidden" asp-for="ExchangeOrderViewModel.CustomerDetailViewModel.AreaLocalityId" id="hdnarealocality" />
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Regd No.</label>
+                                                    <input asp-for="ExchangeOrderViewModel.RegdNo" id="txtregdno"
+                                                           class="form-control" readonly />
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Sponsor Name</label>
+                                                    <input asp-for="ExchangeOrderViewModel.CompanyName" id="txtcompanyname"
+                                                           class="form-control" readonly />
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Sponsor Order No. </label>
+                                                    <input asp-for="ExchangeOrderViewModel.SponsorOrderNumber"
+                                                           id="txtsponsororderno" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Store Code</label>
+                                                    <input asp-for="ExchangeOrderViewModel.StoreCode"
+                                                           id="txtStorecode" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Store Phone Number</label>
+                                                    <input asp-for="ExchangeOrderViewModel.SalesAssociatePhone"
+                                                           id="txtstorephone" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Associate Name</label>
+                                                    <input asp-for="ExchangeOrderViewModel.SaleAssociateName"
+                                                           id="txtassociatename" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Associate Code</label>
+                                                    <input asp-for="ExchangeOrderViewModel.SaleAssociateCode"
+                                                           id="txtassociatecode" class="form-control" readonly />
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Associate Email</label>
+                                                    <input asp-for="ExchangeOrderViewModel.SalesAssociateEmail"
+                                                           id="txtassociateemail" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-12 my-4">
+                                                    <h5 class="fs-5 fw-bold mb-0">Customer Details</h5>
+                                                    <hr />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Customer Name<span class="EditStarmark" style="color:red;">*</span></label>
+                                                    <input asp-for="ExchangeOrderViewModel.CustomerDetailViewModel.CustomerName"
+                                                           id="txtcustname" class="form-control editable" />
+                                                    <span class="text-danger" id="messageCustName"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Phone Number<span class="EditStarmark" style="color:red;">*</span></label>
+                                                    <input asp-for="ExchangeOrderViewModel.CustomerDetailViewModel.PhoneNumber"
+                                                           id="txtphone" class="form-control editable" maxlength="10" />
+                                                    <span class="text-danger" id="messagephoneno"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Email<span class="EditStarmark" style="color:red;">*</span></label>
+                                                    <input asp-for="ExchangeOrderViewModel.CustomerDetailViewModel.Email"
+                                                           id="txtemail" class="form-control editable" maxlength="50" />
+                                                    <span class="text-danger" id="messageEmail"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Address 1<span class="EditStarmark" style="color:red;">*</span></label>
+                                                    <textarea asp-for="ExchangeOrderViewModel.CustomerDetailViewModel.Address1"
+                                                              id="txtaddress1" class="form-control editable" oninput="fieldEdited()"></textarea>
+                                                    <span class="text-danger" id="messageAddress1"></span>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Address 2</label>
+                                                    <textarea asp-for="ExchangeOrderViewModel.CustomerDetailViewModel.Address2"
+                                                              id="txtaddress2" class="form-control editable" oninput="fieldEdited()"></textarea>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">State<span class="EditStarmark" style="color:red;">*</span></label>
+                                                    @if (Model.ExchangeOrderViewModel != null && Model.ExchangeOrderViewModel.IsPageEditable == true)
+                                                    {
+                                                        <input asp-for="ExchangeOrderViewModel.CustomerDetailViewModel.State"
+                                                               id="txtstate" class="form-control editable" />
+                                                        <span class="text-danger" id="messagestatename"></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input asp-for="ExchangeOrderViewModel.CustomerDetailViewModel.State"
+                                                               id="txtstatereadonly" class="form-control" readonly />
+                                                    }
+
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">City<span class="EditStarmark" style="color:red;">*</span></label>
+                                                    @if (Model.ExchangeOrderViewModel != null && Model.ExchangeOrderViewModel.IsPageEditable == true)
+                                                    {
+                                                        <input asp-for="ExchangeOrderViewModel.CustomerDetailViewModel.City"
+                                                               id="txtcity" class="form-control editable" />
+                                                        <span class="text-danger" id="messagecityname"></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input asp-for="ExchangeOrderViewModel.CustomerDetailViewModel.City"
+                                                               id="txtcityreadonly" class="form-control" readonly />
+                                                    }
+
+                                                </div>
+                                                @if (Model.ExchangeOrderViewModel != null && Model.ExchangeOrderViewModel.BusinessUnitId == 10)
+                                                {
+                                                    <div class="col-md-4 mb-4">
+                                                        <label for="">Area Locality<span class="EditStarmark" style="color:red;">*</span></label>
+                                                        <input asp-for="ExchangeOrderViewModel.CustomerDetailViewModel.AreaLocality"
+                                                               id="txtAreaLocality" class="form-control editable" />
+                                                        <span class="text-danger" id="messagearealocality"></span>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-md-4 mb-4">
+                                                        <label for="">Area Locality</label>
+                                                        <input asp-for="ExchangeOrderViewModel.CustomerDetailViewModel.AreaLocality"
+                                                               id="txtcustArealocality" class="form-control" readonly />
+                                                    </div>
+                                                }
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Pin code<span class="EditStarmark" style="color:red;">*</span></label>
+                                                    @if (Model.ExchangeOrderViewModel != null && Model.ExchangeOrderViewModel.IsPageEditable == true)
+                                                    {
+                                                        <input asp-for="ExchangeOrderViewModel.CustomerDetailViewModel.ZipCode"
+                                                               id="txtpincode" class="form-control editable" required />
+                                                        <span class="text-danger" id="messagepincode"></span>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <input asp-for="ExchangeOrderViewModel.CustomerDetailViewModel.ZipCode"
+                                                               id="txtpincodereadonly" class="form-control" readonly />
+                                                    }
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Customer UPI Id</label>
+                                                    <div class="input-group">
+                                                        <input asp-for="QCCommentViewModel.UPIId" id="txtupiid" class="form-control" readonly />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="OldExchangeProduct" role="tabpanel"
+                                             aria-labelledby="nav-tab-2">
+                                            <div class="row">
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Exch. Product Category</label>
+                                                    @if (Model.ExchangeOrderViewModel != null && Model.ExchangeOrderViewModel.IsPageEditable == true)
+                                                    {
+                                                        <input asp-for="ExchangeOrderViewModel.ProductType" id="ddlprodcat"
+                                                               class="form-control editable" />
+                                                        <span class="text-danger" id="messageprodcat"></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input asp-for="ExchangeOrderViewModel.ProductType" id="ddlprodcatreadonly"
+                                                               class="form-control" readonly />
+                                                    }
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Exch. Product Type</label>
+                                                    @if (Model.ExchangeOrderViewModel != null && Model.ExchangeOrderViewModel.IsPageEditable == true)
+                                                    {
+                                                        <input asp-for="ExchangeOrderViewModel.ProductTypeName" id="ddlprodcattype"
+                                                               class="form-control editable" />
+                                                        <span class="text-danger" id="messageprodtype"></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input asp-for="ExchangeOrderViewModel.ProductTypeName" id="ddlprodtype"
+                                                               class="form-control" readonly />
+                                                    }
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Brand</label>
+                                                    @if (Model.ExchangeOrderViewModel != null && Model.ExchangeOrderViewModel.IsPageEditable == true)
+                                                    {
+                                                        <input asp-for="ExchangeOrderViewModel.BrandName" id="ddlbrandid"
+                                                               class="form-control editable" />
+                                                        <span class="text-danger" id="messagebrand"></span>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <input asp-for="ExchangeOrderViewModel.BrandName" id="ddlbrand"
+                                                               class="form-control" readonly />
+                                                    }
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Customer Declare Quality</label>
+                                                    @if (Model.ExchangeOrderViewModel != null && Model.ExchangeOrderViewModel.IsPageEditable == true)
+                                                    {
+                                                        <input asp-for="ExchangeOrderViewModel.ProductCondition" id="ddlproductcondition"
+                                                               class="form-control editable" onchange="fieldEdited()" />
+                                                        <span class="text-danger" id="messagequality"></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input asp-for="ExchangeOrderViewModel.ProductCondition" id="ddlprodcondition"
+                                                               class="form-control" readonly />
+                                                    }
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Exchange Price</label>
+                                                    <input asp-for="ExchangeOrderViewModel.ExchangePrice" id="txtexchangeprice"
+                                                           class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Total Sweetener</label>
+                                                    <input asp-for="ExchangeOrderViewModel.Sweetener" id="txtSweetener"
+                                                           class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Business Unit Sweetener</label>
+                                                    <input asp-for="ExchangeOrderViewModel.SweetenerBU" id="txtBUSweetener"
+                                                           class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Business Partner Sweetener</label>
+                                                    <input asp-for="ExchangeOrderViewModel.SweetenerBP" id="txtBPSweetener"
+                                                           class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Digi2L Sweetener</label>
+                                                    <input asp-for="ExchangeOrderViewModel.SweetenerDigi2l" id="txtDigi2lSweetener"
+                                                           class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Is D to C</label>
+                                                    <input asp-for="ExchangeOrderViewModel.IsDtoC" id="txtisdtoc"
+                                                           class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Is Deferred</label>
+                                                    <input asp-for="ExchangeOrderViewModel.IsDefferedSettlement"
+                                                           id="txtisdeferred" class="form-control" readonly />
+                                                </div>
+                                                @if (Model.ExchangeOrderViewModel != null)
+                                                {
+                                                    @if (!string.IsNullOrEmpty(Model.ExchangeOrderViewModel.InvoiceImageName))
+                                                    {
+                                                        <div class="col-md-4 mb-4">
+                                                            <label for="">Invoice Image</label>
+                                                            <img class="img-responsive" src='@Model.ExchangeOrderViewModel.InvoiceImageName' style='width: 200px;' />
+                                                        </div>
+                                                    }
+                                                }
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="tab-pane fade" id="QCInformation" role="tabpanel"
+                                             aria-labelledby="nav-tab-3">
+                                            <div class="row">
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">SVC's Call No</label>
+                                                    <input asp-for="QCCommentViewModel.OrderQCId" type="text" id="txtqcid"
+                                                           class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Prod Sr. No.</label>
+                                                    <input asp-for="ExchangeOrderViewModel.SerialNumber"
+                                                           id="txtprodsrno" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">QC Comment</label>
+                                                    <textarea asp-for="QCCommentViewModel.Qccomments"
+                                                              id="txtqccomment" class="form-control" readonly></textarea>
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Preferred QC Date & Time</label>
+                                                    <input asp-for="ExchangeOrderViewModel.Qcdate"
+                                                           id="txtpreferredtimeqc" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Collected Amount</label>
+                                                    <input asp-for="QCCommentViewModel.CollectedAmount"
+                                                           id="ddlproductquality" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Actual (Total) Amount as per QC</label>
+                                                    <input asp-for="QCCommentViewModel.PriceAfterQC"
+                                                           id="txtamtasperqc" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Actual EVC Amount As Per QC</label>
+                                                    <input asp-for="QCCommentViewModel.PriceasperEVC"
+                                                           id="txtamtasperevc" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Actual Prod Quality (at time of QC)</label>
+                                                    <input asp-for="QCCommentViewModel.QualityAfterQC"
+                                                           id="ddlproductquality" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">QC Flag</label>
+                                                    <input asp-for="QCCommentViewModel.StatusCode"
+                                                           id="txtQCflag" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">QC Date</label>
+                                                    <input asp-for="QCCommentViewModel.QCDate"
+                                                           id="txtQCdate" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Rescheduled QC Date</label>
+                                                    <input asp-for="QCCommentViewModel.ProposedQcdate" type="date"
+                                                           id="txtQCdate" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Total Sweetener</label>
+                                                    <input asp-for="QCCommentViewModel.Sweetener" id="txtQCSweetener"
+                                                           class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Business Unit Sweetener</label>
+                                                    <input asp-for="QCCommentViewModel.SweetenerBu" id="txtQCBUSweetener"
+                                                           class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Business Partner Sweetener</label>
+                                                    <input asp-for="QCCommentViewModel.SweetenerBP" id="txtQCBPSweetener"
+                                                           class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Digi2L Sweetener</label>
+                                                    <input asp-for="QCCommentViewModel.SweetenerDigi2L" id="txtQCdigitalSweetener"
+                                                           class="form-control" readonly />
+                                                </div>
+                                                <div class="col-12 my-4">
+                                                    <h5 class="fs-5 fw-bold mb-0">Self QC Images</h5>
+                                                    <hr />
+                                                </div>
+                                                @if (Model.SelfQCVMList != null && Model.SelfQCVMList.Count > 0)
+                                                {
+                                                    @foreach (var item in Model.SelfQCVMList)
+                                                    {
+                                                        <div class="col-md-3 mb-3">
+                                                            <div class="showimgwrap">
+                                                                @{
+                                                                    var extn = item.ImageName.Split(".").Last();
+                                                                }
+                                                                @if (extn == "jpg")
+                                                                {
+                                                                    <img class="img-responsive" src="@item.ImageWithPath" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <iframe src="@item.ImageWithPath" width="240" height="210" sandbox="" allowfullscreen="true"></iframe>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-md-3 mb-3">
+                                                        <div class="showimgwrap">
+                                                            <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 mb-3">
+                                                        <div class="showimgwrap">
+                                                            <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 mb-3">
+                                                        <div class="showimgwrap">
+                                                            <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 mb-3">
+                                                        <div class="showimgwrap">
+                                                            <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                        </div>
+                                                    </div>
+                                                }
+                                                <div class="col-12 my-4">
+                                                    <h5 class="fs-5 fw-bold mb-0">Video QC Images</h5>
+                                                    <hr />
+                                                </div>
+                                                @if (Model.OrderImageUpload != null && Model.OrderImageUpload.Count > 0)
+                                                {
+                                                    @foreach (var item in Model.OrderImageUpload)
+                                                    {
+                                                        <div class="col-md-3 mb-3">
+                                                            <div class="showimgwrap">
+                                                                @{
+                                                                    var extn = item.ImageName.Split(".").Last();
+                                                                }
+                                                                @if (extn == "jpg")
+                                                                {
+                                                                    <img class="img-responsive" src="@item.ImageWithPath" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <iframe src="@item.ImageWithPath" width="240" height="210" sandbox="" allowfullscreen="true"></iframe>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-md-3 mb-3">
+                                                        <div class="showimgwrap">
+                                                            <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 mb-3">
+                                                        <div class="showimgwrap">
+                                                            <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 mb-3">
+                                                        <div class="showimgwrap">
+                                                            <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 mb-3">
+                                                        <div class="showimgwrap">
+                                                            <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                        </div>
+                                                    </div>
+                                                }
+
+
+                                                @if (Model.ExchangeOrderViewModel != null && Model.ExchangeOrderViewModel.bUViewModel != null && Model.ExchangeOrderViewModel.bUViewModel.IsBud2c == true)
+                                                {
+                                                    <div class="col-12 my-4">
+                                                        <h5 class="fs-5 fw-bold mb-0"> Diagnostic Report</h5>
+                                                        <hr />
+                                                    </div>
+                                                    @if (@Model.QCCommentViewModel.QuestionerPdfName != null)
+                                                    {
+                                                        <div class="col-md-4 mb-3">
+                                                            <p><span class="mb-2"> Diagnostic Report   </span><a href="@Model.QCCommentViewModel.QuestionerPdfName" download="" class="btn btn-sm btn-primary mr-1" target="_blank"><i class="fa-solid fa-download"></i> </a>&nbsp;<a href="@Model.QCCommentViewModel.QuestionerPdfName" target="_blank"><i class="btn btn-sm btn-primary fa-solid fa-eye"></i></a></p>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="col-md-12 mb-3">
+                                                            <br />
+                                                            <br />
+                                                            <br />
+                                                            <br />
+                                                            <hr />
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="LGCInformation" role="tabpanel"
+                                             aria-labelledby="nav-tab-4">
+                                            <div class="row">
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">LGC Ticket No.</label>
+                                                    <input asp-for="commentViewModel.LogisticViewModel.TicketNumber"
+                                                           id="txtLGCtktno" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Logistic By</label>
+                                                    <input asp-for="commentViewModel.ServicePartnerName "
+                                                           id="txtservicepartner" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">LGC Ticket Created Date</label>
+                                                    <input asp-for="commentViewModel.LogisticViewModel.CreatedDate"
+                                                           id="txttktdate" class="form-control" readonly />
+                                                    @* <input asp-for="commentViewModel.LogisticViewModel.CreatedDate" type="date" id="txttktdate" class="form-control" readonly /> *@
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Amount Payable Through LGC</label>
+                                                    <input asp-for="commentViewModel.LogisticViewModel.AmtPaybleThroughLGC"
+                                                           id="txtamtpaybylgc" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Actual Pickup Date</label>
+                                                    <input asp-for="commentViewModel.OrderLGCViewModel.ActualPickupDate"
+                                                           id="txtactualpickupdate" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Actual Drop Date</label>
+                                                    <input asp-for="commentViewModel.OrderLGCViewModel.ActualDropDate"
+                                                           id="txtactualdropdate" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Preferred Pick-Up Date & Time</label>
+                                                    <input asp-for="QCCommentViewModel.PickupDateTime"
+                                                           id="txtoridsrno" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">LGC Latest Flag</label>
+                                                    <input asp-for="commentViewModel.OrderLGCViewModel.StatusCode" id="txtLGCpickupflag"
+                                                           class="form-control" readonly />
+                                                </div>
+
+                                                @*LGC Reschedule Date added on 25 May*@
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">LGC Reschedule Date</label>
+                                                    <input asp-for="commentViewModel.LogisticViewModel.LGCRescheduleDate"
+                                                           id="txtoridsrno" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">LGC Comment</label>
+
+                                                    <textarea asp-for="commentViewModel.OrderLGCViewModel.Lgccomments" id="txtLGCcomment"
+                                                              class="form-control" readonly></textarea>
+                                                </div>
+                                                <div class="col-12 my-4">
+                                                    <h5 class="fs-5 fw-bold mb-0">EVC POD Details</h5>
+                                                    <hr />
+                                                </div>
+
+                                                @if (Model.QCCommentViewModel != null && Model.QCCommentViewModel.CompanyUTC == "UTC Digital")
+                                                {
+                                                    @if (@Model.commentViewModel != null && @Model.commentViewModel.LogisticViewModel != null)
+                                                    {
+                                                        @if (@Model.commentViewModel.LogisticViewModel.CustomerDeclarationPdf != null)
+                                                        {
+                                                            <div class="col-md-3 mb-3">
+
+                                                                <p><span class="mb-2">Customer Declaration</span></p><a href="@Model.commentViewModel.LogisticViewModel.CustomerDeclarationPdf" download="" class="btn btn-sm btn-primary mr-1" target="_blank"><i class="fa-solid fa-download"></i> </a>&nbsp;<a href="@Model.commentViewModel.LogisticViewModel.CustomerDeclarationPdf" target="_blank"><i class="btn btn-sm btn-primary fa-solid fa-eye"></i></a>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="col-md-3 mb-3">
+                                                                <img class="img-responsive" src="~/Images/CustomerDeclarationPlaceHolder.png" />
+                                                            </div>
+                                                        }
+                                                        @if (@Model.commentViewModel.LogisticViewModel.PoDPdf != null)
+                                                        {
+                                                            <div class="col-md-3 mb-3">
+                                                                <p><span class="mb-2">POD</span></p><a href="@Model.commentViewModel.LogisticViewModel.PoDPdf" download="" class="btn btn-sm btn-primary mr-1"><i class="fa-solid fa-download" target="_blank"></i> </a>&nbsp;<a href="@Model.commentViewModel.LogisticViewModel.PoDPdf" target="_blank"><i class="btn btn-sm btn-primary fa-solid fa-eye"></i></a>
+
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="col-md-3 mb-3">
+                                                                <img class="img-responsive" src="~/Images/PodPlaceHolder.png" />
+                                                            </div>
+                                                        }
+                                                        @if (@Model.commentViewModel.LogisticViewModel.DebitNotePdf != null)
+                                                        {
+                                                            <div class="col-md-3 mb-3">
+
+                                                                <p><span class="mb-2">Debit Note</span></p><a href="@Model.commentViewModel.LogisticViewModel.DebitNotePdf" download="" class="btn btn-sm btn-primary mr-1" target="_blank"><i class="fa-solid fa-download"></i> </a>&nbsp;<a href="@Model.commentViewModel.LogisticViewModel.DebitNotePdf" target="_blank"><i class="btn btn-sm btn-primary fa-solid fa-eye"></i></a>
+
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="col-md-3 mb-3">
+                                                                <img class="img-responsive" src="~/Images/DebitNotePlaceHolder.png" />
+                                                            </div>
+                                                        }
+                                                        @if (@Model.commentViewModel.LogisticViewModel.InvoieImagePdf != null)
+                                                        {
+                                                            <div class="col-md-3 mb-3">
+
+                                                                <p><span class="mb-2">Invoice</span></p><a href="@Model.commentViewModel.LogisticViewModel.InvoieImagePdf" download="" class="btn btn-sm btn-primary mr-1" target="_blank"><i class="fa-solid fa-download"></i> </a>&nbsp;<a href="@Model.commentViewModel.LogisticViewModel.InvoieImagePdf" target="_blank"><i class="btn btn-sm btn-primary fa-solid fa-eye"></i></a>
+
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="col-md-3 mb-3">
+                                                                <img class="img-responsive" src="~/Images/InvoicePlaceHolder.png" />
+                                                            </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="col-md-3 mb-3">
+                                                            <img class="img-responsive" src="~/Images/CustomerDeclarationPlaceHolder.png" />
+                                                        </div>
+
+                                                        <div class="col-md-3 mb-3">
+                                                            <img class="img-responsive" src="~/Images/PodPlaceHolder.png" />
+                                                        </div>
+
+                                                        <div class="col-md-3 mb-3">
+                                                            <img class="img-responsive" src="~/Images/DebitNotePlaceHolder.png" />
+                                                        </div>
+
+                                                        <div class="col-md-3 mb-3">
+                                                            <img class="img-responsive" src="~/Images/InvoicePlaceHolder.png" />
+                                                        </div>
+                                                    }
+                                                }
+
+                                                <div class="col-12 my-4">
+                                                    <h5 class="fs-5 fw-bold mb-0">LGC Images</h5>
+                                                    <hr />
+                                                </div>
+                                                @if (Model.OrderImageUploadVM != null && Model.OrderImageUploadVM.Count > 0)
+                                                {
+                                                    @foreach (var item in Model.OrderImageUploadVM)
+                                                    {
+                                                        <div class="col-md-3 mb-3">
+                                                            <div class="showimgwrap">
+                                                                @{
+                                                                    var extn = item.ImageName.Split(".").Last();
+                                                                }
+                                                                @if (extn == "jpg")
+                                                                {
+                                                                    <img class="img-responsive" src="@item.ImageWithPath" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <iframe src="@item.ImageWithPath" width="240" height="210" sandbox=""></iframe>
+                                                                }
+                                                            </div>
+
+                                                        </div>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-md-3 mb-3">
+                                                        <div class="showimgwrap">
+                                                            <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 mb-3">
+                                                        <div class="showimgwrap">
+                                                            <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 mb-3">
+                                                        <div class="showimgwrap">
+                                                            <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 mb-3">
+                                                        <div class="showimgwrap">
+                                                            <img class="img-responsive" src="~/Images/placeholder-01.png" />
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="VoucherInformation" role="tabpanel"
+                                             aria-labelledby="nav-tab-5">
+                                            <div class="row">
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Voucher Code</label>
+                                                    <input asp-for="ExchangeOrderViewModel.VoucherCode" id="txtvouchercode" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Voucher Status</label>
+                                                    <input asp-for="voucherDetailsViewModel.VoucherStatusName" type="text" id="txtvoucherstatus" class="form-control" readonly />
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Voucher Redeemed By</label>
+                                                    <input asp-for="voucherDetailsViewModel.BusinessPartnerViewModel.BPName" id="txtredeemedby" class="form-control" readonly />
+                                                </div>
+                                                @if (Model.ExchangeOrderViewModel != null && Model.ExchangeOrderViewModel.BusinessPartnerId != null)
+                                                {
+                                                    @if (Model.ExchangeOrderViewModel.NewProductCategoryId != null && Model.ExchangeOrderViewModel.NewProductTypeId != null)
+                                                    {
+                                                        <div class="col-md-4 mb-4">
+                                                            <label for="">New Product Name</label>
+                                                            <input asp-for="ExchangeOrderViewModel.NewProductcategory" id="ddlnewprodcat"
+                                                                   class="form-control" readonly />
+                                                        </div>
+                                                        <div class="col-md-4 mb-4">
+                                                            <label for="">New Product Type</label>
+                                                            <input asp-for="ExchangeOrderViewModel.NewProductType" id="ddlnewprodcattype"
+                                                                   class="form-control" readonly />
+                                                        </div>
+                                                        <div class="col-md-4 mb-4">
+                                                            <label for="">New Product Size</label>
+                                                            <input asp-for="ExchangeOrderViewModel.NewProductTypeSize" id="txtproductsize"
+                                                                   class="form-control" readonly />
+                                                        </div>
+                                                        <div class="col-md-4 mb-4">
+                                                            <label for="">Model Number</label>
+                                                            <input asp-for="ExchangeOrderViewModel.ModelNumber" id="txtmodelno"
+                                                                   class="form-control" readonly />
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="col-md-4 mb-4">
+                                                            <label for="">New Product Name</label>
+                                                            <input asp-for="voucherDetailsViewModel.NewProductCategoryName" id="ddlnewprodcat"
+                                                                   class="form-control" readonly />
+                                                        </div>
+                                                        <div class="col-md-4 mb-4">
+                                                            <label for="">New Product Type</label>
+                                                            <input asp-for="voucherDetailsViewModel.NewProductTypeName" id="ddlnewprodcattype"
+                                                                   class="form-control" readonly />
+                                                        </div>
+                                                        <div class="col-md-4 mb-4">
+                                                            <label for="">New Product Size</label>
+                                                            <input asp-for="voucherDetailsViewModel.NewProductSize" id="txtproductsize" class="form-control" readonly />
+                                                        </div>
+                                                        <div class="col-md-4 mb-4">
+                                                            <label for="">Model Number</label>
+                                                            <input asp-for="voucherDetailsViewModel.ModelNumber" id="txtmodelno" class="form-control" readonly />
+                                                        </div>
+                                                    }
+                                                }
+
+                                                @if (Model.ExchangeOrderViewModel.VoucherCode != null)
+                                                {
+                                                    <div class="col-md-4 mb-4">
+                                                        <label for="">Voucher Amount</label>
+                                                        <input asp-for="ExchangeOrderViewModel.ExchangePrice" id="txtvoucheramount" class="form-control" readonly />
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-md-4 mb-4">
+                                                        <label for="">Voucher Amount</label>
+                                                        <input asp-for="voucherDetailsViewModel.ExchangePrice" id="txtvoucheramount" class="form-control" readonly />
+                                                    </div>
+                                                }
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Voucher Expire Date</label>
+                                                    <input asp-for="ExchangeOrderViewModel.VoucherCodeExpDate" id="txtexpiredate" class="form-control" readonly />
+                                                </div>
+
+                                                @if (Model.voucherDetailsViewModel != null)
+                                                {
+                                                    @if (!string.IsNullOrEmpty(Model.voucherDetailsViewModel.InvoiceImageName))
+                                                    {
+                                                        <div class="col-md-4 mb-4">
+                                                            <img class="img-responsive" src='@Model.voucherDetailsViewModel.InvoiceImageName' style='width: 200px;' />
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <!-- End of tab -->
+                                        <div class="row">
+                                            <div class="col-md-4 mb-4">
+                                                <label class="" for="">Latest Status Code</label>
+                                                <input asp-for="ExchangeOrderViewModel.StatusCode" id="txtlatestdate"
+                                                       class="form-control" disabled="disabled" />
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label class="" for="">Latest Status Description</label>
+                                                <input asp-for="ExchangeOrderViewModel.StatusDiscription" id="txtlatestdate"
+                                                       class="form-control" disabled="disabled" />
+                                            </div>
+                                            @if (Model.ExchangeOrderViewModel != null && Model.ExchangeOrderViewModel.StatusId == 5)
+                                            {
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Latest Date & Time</label>
+                                                    <input asp-for="ExchangeOrderViewModel.CreatedDate" id="txtlatestdate"
+                                                           class="form-control" disabled="disabled" />
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="">Latest Date & Time</label>
+                                                    <input asp-for="ExchangeOrderViewModel.ModifiedDate" id="txtlatestdate"
+                                                           class="form-control" disabled="disabled" />
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            @if (Model.ExchangeOrderViewModel != null && Model.ExchangeOrderViewModel.IsPageEditable != null && Model.ExchangeOrderViewModel.IsPageEditable == true)
+                            {
+                                <div class="row">
+                                    <div class="col-4 text-start my-4">
+                                        <input type="submit" value="Update" id="btneditupdate" class="btn btn-primary mainshadow" />
+                                    </div>
+                                    <div class="col-8 text-end my-4">
+                                        <a href='@URLPrefixforProd/Index1?OrderTransId=@Model.ExchangeOrderViewModel.OrderTransId' class="btn btn-primary">Time Line</a>
+                                    </div>
+                                </div>
+                            }
+
+                            @if (Model.QCCommentViewModel != null && (Model.QCCommentViewModel.UserCompany == Model.QCCommentViewModel.CompanyUTC || Model.QCCommentViewModel.UserCompany == null))
+                            {
+                                <div class="row" id="Isbtnvisible">
+
+                                    @if (accessRule != null && accessRule.CanView && accessRule.CanAdd)
+                                    {
+                                        <div class="col-md-4 text-start my-4" id="btnprocessqc">
+                                            @if (Model.ExchangeOrderViewModel != null && (Model.ExchangeOrderViewModel.StatusId < 15 || Model.ExchangeOrderViewModel.StatusId == 33 || Model.ExchangeOrderViewModel.StatusId == 17 || Model.ExchangeOrderViewModel.StatusId == 41 || Model.ExchangeOrderViewModel.StatusId == 43 || Model.ExchangeOrderViewModel.StatusId == 58 || Model.ExchangeOrderViewModel.StatusId == 59))
+                                            {
+                                                @if (Model.ExchangeOrderViewModel.IsDiagnostic == true)
+                                                {
+                                                    @if (Model.ExchangeOrderViewModel.bUViewModel != null && Model.ExchangeOrderViewModel.bUViewModel.IsBud2c == true)
+                                                    {
+                                                        <a asp-page="/QCIndex/QCDetails" asp-route-id="@Model.ExchangeOrderViewModel.Id" id="ProcessQCbtn" class="btn btn-primary mainshadow my-2">Process QC</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-page="/QCIndex/QCUrl" asp-route-id="@Model.ExchangeOrderViewModel.Id" id="ProcessQCbtn" class="btn btn-primary mainshadow my-2">Process QC</a>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <a asp-page="/QCIndex/QCUrl" asp-route-id="@Model.ExchangeOrderViewModel.Id" id="ProcessQCbtn" class="btn btn-primary mainshadow my-2">Process QC</a>
+                                                }
+                                                <a href="#rescheduleBox" class="btn btn-primary mainshadow my-2" type="submit" id="btnreschedule">Reschedule</a>
+                                            }
+                                            <input type="button" value="Add Beneficiary" class="btn btn-primary my-2" target="_blank" id="beneficiarybtn" />
+                                        </div>
+                                    }
+
+                                    @if (accessRule != null && accessRule.CanView && accessRule.CanAdd)
+                                    {
+                                        <div class="col-md-8 text-md-end  my-4" id="divSelfqc">
+                                            @if ((Model.ExchangeOrderViewModel != null || @Model.ExchangeOrderViewModel.StatusId < 15 || Model.ExchangeOrderViewModel.StatusId == 59) && (@Model.SelfQCVMList == null || @Model.SelfQCVMList.Count <= 0) && (@Model.ExchangeOrderViewModel.StatusId != 33))
+                                            {
+                                                @if (accessRule != null && accessRule.CanView)
+                                                {
+                                                    <input type="button" value="Do Self QC" class="btn btn-primary my-2" id="btndoselfQc" />
+                                                }
+                                                <input type="button" value="Send SelfQC Url" class="btn btn-primary my-2" id="btnSend" />
+                                            }
+                                            @if (Model.ExchangeOrderViewModel != null)
+                                            {
+                                                <a href='@URLPrefixforProd/Index1?OrderTransId=@Model.ExchangeOrderViewModel.OrderTransId' class="btn btn-primary my-2">Time Line</a>
+                                            }
+                                            <a href="#CancelcommentBox" class="btn btn-danger my-2" id="btncancelqc">Cancel Order</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+
+                                        <div class="col-md-12 text-md-end  my-4">
+                                            @if (Model.ExchangeOrderViewModel != null)
+                                            {
+                                                <a href='@URLPrefixforProd/Index1?OrderTransId=@Model.ExchangeOrderViewModel.OrderTransId' class="btn btn-primary my-2">Time Line</a>
+                                            }
+                                        </div>
+                                    }
+
+                                </div>
+                            }
+                            else
+                            {
+                                @if (Model.ExchangeOrderViewModel != null)
+                                {
+                                    <a href='@URLPrefixforProd/Index1?OrderTransId=@Model.ExchangeOrderViewModel.OrderTransId' class="btn btn-primary my-2">Time Line</a>
+                                }
+                            }
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="rescheduleBox">
+            <div class="col-12">
+                <div class="card shadow border-0">
+                    <div class="card-body">
+                        <div class="row my-4">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+
+                                        <label for="">Rescheduled Date</label>
+                                        <input type="text" asp-for="QCCommentViewModel.RescheduleDate" id="txtrecheduleddate" placeholder="DD/MM/YYYY" class="form-control" required readonly />
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <label for="">Reschedule Time</label>
+                                        <input type="time" asp-for="QCCommentViewModel.RescheduleTime" id="txtrecheduledtime" class="form-control" checktime(); required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="hidecommentdiv">
+                                <label for="">Reschedule Comment</label>
+                                <textarea asp-for="QCCommentViewModel.Qccomments" id="txtcomment" maxlength="200" class="form-control" rows="1" required></textarea>
+                                <span asp-validation-for="QCCommentViewModel.Qccomments" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12 mt-1" id="divupdate">
+                                <input type="submit" value="Update" id="btnUpdate" class="btn btn-primary mainshadow" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="CancelcommentBox">
+            <div class="col-12">
+                <div class="card shadow border-0">
+                    <div class="card-body">
+                        <div class="row my-4">
+                            <div class="col-12" id="hidecancelcommentdiv">
+                                <label for="">Cancel Comment</label>
+                                <textarea asp-for="QCCommentViewModel.Qccomments" id="txtcancelcomment" maxlength="200" class="form-control"></textarea>
+                                <span asp-validation-for="QCCommentViewModel.Qccomments" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 text-center mt-4" id="divupdate">
+                                <input type="submit" value="Save" id="savecomment" class="btn btn-primary mainshadow" />
+                                <input type="submit" value="Cancel" id="cancelcomment" class="btn btn-secondary mainshadow" />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+
+<script type="text/javascript">
+
+
+    var StateId = null;
+    var prodcatid = null;
+    var BuId = $('#hdnbuid').val();
+    var editpcatid = null;
+    var editptypeid = null;
+    var editbrandid = null;
+    var bpid = $('#hdnbpid').val();
+    var productconditionId = null;
+    var Editstatename = null;
+    var Editcityname = null;
+    var Editpincode = null;
+
+    var exchregdno = $('#txtregdno').val();
+
+    var IspageEditable = $('#hdnispageeditable').val();
+    if (IspageEditable == "True" || IspageEditable == true || IspageEditable == "true") {
+        $('.editable').prop('readonly', false);
+        $('#Isbtnvisible').hide();
+        $('span.EditStarmark').show();
+    }
+    else {
+        $('.editable').prop('readonly', true);
+        $('span.EditStarmark').hide();
+    }
+
+    $('#btneditupdate').hide();
+    var isFieldEdited = false;
+
+    function fieldEdited() {
+        isFieldEdited = true;
+        var inputprodcat = $("#ddlprodcat").val();
+        var inputprodtype = $("#ddlprodcattype").val();
+        var inputprodcondition = $("#ddlproductcondition").val();
+        var inputbrandname = $("#ddlbrandid").val();
+        var inputexchangeprice = $("#txtexchangeprice").val();
+        if (inputprodcat != "" && inputprodtype != "" && inputprodcondition != "" && inputbrandname != "" && inputexchangeprice != "") {
+            $("#btneditupdate").prop('disabled', false);
+            $('#btneditupdate').show();
+        } else {
+            $("#btneditupdate").prop('disabled', true);
+            $('#btneditupdate').hide();
+        }
+
+    }
+
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+    $('#txtrecheduleddate').attr('min', today);
+
+    $("#txtrecheduleddate").datepicker({
+        dateFormat: "dd-mm-yy",
+        minDate: 0,
+        maxDate: "+1Y"
+    });
+
+    $('#btnSend').click(function () {
+        $('#btnSend').prop('disabled', true);
+        var regdno = $('#txtregdno').val();
+        var mobnumber = $('#txtphone').val();
+        var loginid = $('#hdnloginid').val();
+        $.ajax({
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+
+            url: "@URLPrefixforProd/Exchange/Manage?handler=SendSelfQCUrlToCustomer",
+
+            data: { regdno: regdno, mobnumber: mobnumber, loginid: loginid },
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    Swal.fire({
+                        title: "Successfully",
+                        text: "SelfQC Link sent successfully to customer's contact number",
+                        icon: 'success',
+                        timer: 5000,
+                        showConfirmButton: false,
+                        timerProgressBar: true,
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                }
+                else {
+                    Swal.fire({
+                        title: "Failed!",
+                        text: "SelfQC Link Not sent to customer's contact number",
+                        icon: 'error',
+                        confirmButtonText: 'Ok',
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+    $("#btnreschedule").click(function () {
+        $('#rescheduleBox').show();
+        $('#txtrecheduledtime').val('');
+        $('#txtcomment').val('');
+        $('#CancelcommentBox').hide();
+    });
+
+    $("#btnUpdate").click(function () {
+        var RegdNo = $('#txtregdno').val();
+        var RecheduledDate = $('#txtrecheduleddate').val();
+        var RecheduledTime = $('#txtrecheduledtime').val();
+        var timeParts = RecheduledTime.split(':');
+        var hours = parseInt(timeParts[0]);
+        var minutes = timeParts[1];
+        var period = 'AM';
+
+        if (hours >= 12) {
+            period = 'PM';
+            if (hours > 12) {
+                hours -= 12;
+            }
+        }
+
+        RecheduledTime = hours + ':' + minutes + ' ' + period;
+
+        var QCComment = $('#txtcomment').val();
+        //var PhoneNumber = $('#txtphone').val();
+        $.ajax({
+            type: "GET",
+            url: "@URLPrefixforProd/Exchange/Manage?handler=Rescheduleddata",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "RegdNo": RegdNo, "RecheduledTime": RecheduledTime, "RecheduledDate": RecheduledDate, "QCComment": QCComment },
+            success: function (response) {
+                if (response == "Please Fill Reschedule Comment") {
+                    Swal.fire({
+                        title: "Failed!",
+                        text: "Please Fill Reschedule Comment",
+                        icon: 'error',
+                        confirmButtonText: 'Ok',
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                    // alert(response)
+                }
+                else if (response == "Please Provide valid Time format (hh:mm AM/PM)") {
+                    Swal.fire({
+                        title: "Failed!",
+                        text: "Please Provide valid Time format (hh:mm AM/PM)",
+                        icon: 'error',
+                        confirmButtonText: 'Ok',
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                }
+                else if (response == "Please Fill Reschedule Date & Time") {
+                    Swal.fire({
+                        title: "Failed!",
+                        text: "Please Fill Reschedule Date & Time",
+                        icon: 'error',
+                        confirmButtonText: 'Ok',
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                }
+                else if (response.isrescheduled == true || response.isrescheduled == "True" || response.isrescheduled == "true") {
+                    Swal.fire({
+                        title: "Successfully",
+                        text: "Reschedule Date, Time & Comment Updated Successfully",
+                        icon: 'success',
+                        confirmButtonText: 'Ok',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload(true);
+                        }
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                    $("#rescheduleBox").hide();
+
+                    //location.reload(true);
+                }
+                else {
+                    Swal.fire({
+                        title: "Failed!",
+                        text: "Reschedule Date, Time & Comment Not Updated",
+                        icon: 'error',
+                        confirmButtonText: 'Ok',
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+    $(document).ready(function () {
+
+        //$('.editable').prop('readonly', true);
+        $('#rescheduleBox').hide();
+        $('#CancelcommentBox').hide();
+        $('#btncancelqc').hide();
+        $("#btnSend").hide()
+        $("#btndoselfQc").hide();
+        $('#beneficiarybtn').hide();
+
+        var statusid = parseInt($('#hdnstatusid').val());
+
+        if (statusid == 6 || statusid == 16 || statusid == 15 || statusid == 42 || statusid == 48) {
+            $("#btnreschedule").hide();
+            $("#ProcessQCbtn").hide()
+            $("#btncancelqc").hide()
+            $("#btnSend").hide()
+            $("#btndoselfQc").hide();
+        }
+        else if (statusid < 15 || statusid == 33 || statusid == 17 || statusid == 41 || statusid == 43 || statusid == 58 || statusid == 59) {
+            $("#ProcessQCbtn").show();
+            $("#btncancelqc").show();
+            $("#btnSend").show();
+            $("#btndoselfQc").show();
+            if (@Model.QCCommentViewModel.Reschedulecount >= 4) {
+                $("#btnreschedule").hide();
+            }
+            else {
+                $("#btnreschedule").show();
+            }
+        }
+        else {
+            $("#btnreschedule").hide();
+        }
+        // added for ADD Beneficiary button added on 25 May
+        if (statusid == 18 || statusid == 21 || statusid == 22 || statusid == 34 || statusid == 44 || statusid == 26) {
+            var upiid = $('#hdnisupi').val();
+            var isdef = $('#Exchisdeff').val();
+            if (isdef == "No") {
+                $('#beneficiarybtn').hide();
+            }
+            else {
+                if (upiid == true || upiid == "True" || upiid == "true") {
+                    $('#beneficiarybtn').show();
+                }
+            }
+        }
+        else {
+            $('#beneficiarybtn').hide();
+        }
+
+    });
+
+    $('#btncancelqc').click(function () {
+        $('#CancelcommentBox').show();
+        $('#txtcancelcomment').val('');
+        $('#rescheduleBox').hide();
+    });
+
+    $('#cancelcomment').click(function () {
+        location.reload(true);
+    });
+
+    $('#savecomment').click(function () {
+        if ($('#txtcancelcomment').val().length === 0) {
+            Swal.fire({
+                title: "Failed!",
+                text: "Please Fill Cancel Comment!",
+                icon: 'error',
+                confirmButtonText: 'Ok',
+                customClass: {
+                    confirmButton: 'btn btn-dark'
+                }
+            });
+            return false;
+        }
+        var cancelresult = RecordCancel();
+        Swal.fire({
+            title: "Successfully",
+            text: "Exchange order Cancelled Successfully",
+            icon: 'success',
+            confirmButtonText: 'Ok',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                //window.location = "@ViewData["URLPrefixforProd"]/QCIndex/OrdersForQC";
+                window.location = "@URLPrefixforProd/QCIndex/OrdersForQC";
+            }
+            customClass: {
+                confirmButton: 'btn btn-dark'
+            }
+        });
+    });
+
+    function RecordCancel() {
+        var RegdNo = $('#txtregdno').val();
+        var CancelComment = $('#txtcancelcomment').val();
+        $.ajax({
+            type: "GET",
+            //url: "@ViewData["URLPrefixforProd"]/Exchange/Manage?handler=CancelQc",
+            url: "@URLPrefixforProd/Exchange/Manage?handler=CancelQc",
+            data: { "RegdNo": RegdNo, "CancelComment": CancelComment },
+            success: function (response) {
+                if (response == true) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+    }
+
+    //Link for Redirection on Add UPI Id page added on 25 May
+    $("#beneficiarybtn").click(function () {
+        var RegdNo = $('#txtregdno').val();
+        $.ajax({
+            type: "GET",
+            //url: "@ViewData["URLPrefixforProd"]/Exchange/Manage?handler=CheckBeneficiary",
+            url: "@URLPrefixforProd/Exchange/Manage?handler=CheckBeneficiary",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "RegdNo": RegdNo },
+            success: function (response) {
+                //console.log(response);
+                if (response == 0) {
+                    var link = "@URLPrefixforProd/PaymentDetails/ConfirmPaymentDetails?regdNo=@Model.ExchangeOrderViewModel.RegdNo&userid=@Model.UserId";
+                    window.open(link, "_blank");
+                } else {
+                    Swal.fire({
+                        title: "response",
+                        text: response,
+                        icon: 'success',
+                        timer: 5000,
+                        showConfirmButton: false,
+                        timerProgressBar: true,
+                        customClass: {
+                            confirmButton: 'btn btn-dark'
+                        }
+                    });
+                    // alert(response);
+                    location.reload(true);
+                }
+            }
+        });
+    });
+    $('#btndoselfQc').click(function () {
+        $('#btndoselfQc').prop('disabled', true);
+        window.open("@URLPrefixforProd/QCPortal/SelfQCPortal?regdno=@Model.ExchangeOrderViewModel.RegdNo", "_blank");
+    });
+
+    //For editable Exchange manage page
+    $("#txtcustname").change(function () {
+        var fullName = $('#txtcustname').val();
+        if (fullName == "") {
+            fieldEdited();
+            $($("#btneditupdate")).prop('disabled', true);
+        } else {
+            fieldEdited();
+            // Check if there are at least two spaces in the full name
+            if (countSpaces(fullName) > 1) {
+                $("#messageCustName").html("Full name must contain only one space.");
+                $('#txtcustname').val("");
+                $($("#btneditupdate")).prop('disabled', true);
+                return false; // Prevent form submission
+            } else {
+                $("#messageCustName").html("");
+                $($("#btneditupdate")).prop('disabled', false);
+            }
+        }
+    });
+
+    function countSpaces(str) {
+        var spaceCount = 0;
+        for (var i = 0; i < str.length; i++) {
+            if (str[i] === ' ') {
+                spaceCount++;
+            }
+        }
+        return spaceCount;
+    }
+
+    $("#txtphone").change(function () {
+        var phoneNumber = $('#txtphone').val();
+        var numericPhoneNumber = phoneNumber.replace(/\D/g, '');
+        fieldEdited();
+
+        if (numericPhoneNumber.length === 10 && $.isNumeric(numericPhoneNumber)) {
+            var phoneRegex = /^[1-9][0-9]*$/;
+            if (phoneRegex.test(phoneNumber)) {
+                $("#messagephoneno").html("");
+                $($("#btneditupdate")).prop('disabled', false);
+            } else {
+                $("#messagephoneno").html("Please Enter Valid Phone Number.");
+                $("#txtphone").val("");
+                $($("#btneditupdate")).prop('disabled', true);
+            }
+        } else {
+            $("#messagephoneno").html("Please Enter 10 Digits Phone Number.");
+            $($("#btneditupdate")).prop('disabled', true);
+        }
+    });
+
+    $("#txtemail").change(function () {
+        var email = $('#txtemail').val();
+        fieldEdited();
+        var emailRegex = /^(([^<>()[\]\\.,;:\s@@"]+(\.[^<>()[\]\\.,;:\s@@"]+)*)|.(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (emailRegex.test(email)) {
+            $("#messageEmail").html("");
+            $($("#btneditupdate")).prop('disabled', false);
+        }
+        else {
+            $("#messageEmail").html("Please Enter Valid Email");
+            $($("#btneditupdate")).prop('disabled', true);
+            $('#txtemail').val('');
+        }
+
+    });
+
+    //State Autocomplete
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#txtstate").on("click", function () {
+            $(this).autocomplete("search", "#");
+        }).autocomplete({
+            minLength: 0,
+            scroll: true,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/Exchange/Manage?handler=SearchState", {
+                    term: extractLast(request.term)
+                }, function (data) {
+                    response(data.slice(0, 20));
+                });
+            },
+            focus: function (event, ui) {
+            },
+            focus: function () {
+                // prevent value inserted on focus
+                return false;
+            },
+            open: function (event, ui) {
+                var menu = $(this).autocomplete("widget");
+                menu.css({ "max-height": "200px", "overflow": "hidden", "overflow-y": "scroll" });
+            },
+            select: function (event, ui) {
+                var terms = split(this.value);
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                this.value = terms;
+
+                // Get the ID of the selected state
+
+                var selectedstateId = ui.item.text;
+                StateId = selectedstateId;
+                Editstatename = ui.item.value;
+                $('#hdnstate').val(Editstatename);
+                $('#txtcity').val("");
+                $('#txtpincode').val("");
+                $("#messagestatename").html("");
+                fieldEdited();
+
+                return false;
+            }
+        });
+    })
+
+    //city Autocomplete
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#txtcity").on("click", function () {
+            var statename = $('#txtstate').val();
+            $.ajax({
+                type: "GET",
+                url: "@ViewData["URLPrefixforProd"]/Exchange/Manage?handler=Checkstatename",
+
+                data: { "statename": statename },
+                success: function (response) {
+
+                    if (response == null) {
+                        $("#txtcity").val("");
+                    } else {
+                        StateId = response.stateId;
+                    }
+                    fieldEdited();
+                }
+            });
+            $(this).autocomplete("search", "#");
+        }).autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/Exchange/Manage", {
+                    handler: "SearchCity",
+                    term: extractLast(request.term),
+                    term2: StateId
+                }, function (data) {
+
+                    response(data.slice(0, 20));
+                });
+            },
+            focus: function (event, ui) {
+            },
+            focus: function () {
+                // prevent value inserted on focus
+                return false;
+            },
+            open: function (event, ui) {
+                var menu = $(this).autocomplete("widget");
+                menu.css({ "max-height": "200px", "overflow": "hidden", "overflow-y": "scroll" });
+            },
+            select: function (event, ui) {
+
+                var terms = split(this.value);
+                console.log(terms);
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                this.value = terms;
+
+                Editcityname = ui.item.value;
+                $('#hdncity').val(Editcityname);
+                var cityid = ui.item.text;
+                $('#txtpincode').val("");
+                $("#messagecityname").html("");
+                fieldEdited();
+
+                return false;
+            }
+        });
+    })
+
+    $("#txtstate").change(function () {
+
+        var Statename = $('#txtstate').val();
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/Exchange/Manage?handler=CheckState",
+
+            data: { "Statename": Statename },
+            success: function (response) {
+
+                if (response == null) {
+                    $("#txtstate").val("");
+                }
+                fieldEdited();
+            }
+        });
+    });
+
+    $("#txtcity").change(function () {
+        var cityname = $('#txtcity').val();
+        if (cityname == "") {
+            $("#txtpincode").val("");
+        } else {
+            $.ajax({
+                type: "GET",
+                url: "@ViewData["URLPrefixforProd"]/Exchange/Manage?handler=CheckCity",
+
+                data: { "cityname": cityname, "StateId": StateId },
+                success: function (response) {
+
+                    if (response == null) {
+                        $("#txtcity").val("");
+                    }
+                    fieldEdited();
+                }
+            });
+        }
+    });
+
+    //Pin code Autocomplete
+    $(function () {
+        Editcityname = $('#hdncity').val();
+        Editstatename = $('#hdnstate').val();
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#txtpincode").on("click", function () {
+            $(this).autocomplete("search", "#");
+        }).autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/Exchange/Manage", {
+                    handler: "SearchPincode",
+                    term: extractLast(request.term),
+                    term2: Editstatename,
+                    term3: Editcityname
+                }, function (data) {
+                    response(data.slice(0, 20));
+                });
+            },
+            focus: function (event, ui) {
+            },
+            focus: function () {
+                // prevent value inserted on focus
+                return false;
+            },
+            open: function (event, ui) {
+                var menu = $(this).autocomplete("widget");
+                menu.css({ "max-height": "200px", "overflow": "hidden", "overflow-y": "scroll" });
+            },
+            select: function (event, ui) {
+                debugger;
+                var terms = split(this.value);
+                console.log(terms);
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                this.value = terms;
+                Editpincode = ui.item.value;
+                $('#hdnpincode').val(Editpincode);
+                $("#messagepincode").html("");
+                fieldEdited();
+                return false;
+            }
+        });
+    })
+
+    $("#txtpincode").change(function () {
+        Editcityname = $('#hdncity').val();
+        Editstatename = $('#hdnstate').val();
+        var pincode = $('#txtpincode').val();
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/Exchange/Manage?handler=CheckPincode",
+
+            data: { "pincode": pincode, "Editcityname": Editcityname, "Editstatename": Editstatename },
+            success: function (response) {
+                debugger;
+                if (response == null) {
+                    $("#txtpincode").val("");
+                } else {
+                    $('#hdnpincode').val(response.zipCode);
+                    //$("#txtpincode").val(response.zipCode);
+                }
+                fieldEdited();
+            }
+        });
+    });
+
+    //Area Locality Autocomplete
+    $(function () {
+        Editpincode = $('#hdnpincode').val();
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#txtAreaLocality").on("click", function () {
+            $(this).autocomplete("search", "#");
+        }).autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/Exchange/Manage", {
+                    handler: "AreaLocality",
+                    term: extractLast(request.term),
+                    term2: Editpincode
+                }, function (data) {
+
+                    response(data.slice(0, 20));
+                });
+            },
+            focus: function (event, ui) {
+            },
+            focus: function () {
+                // prevent value inserted on focus
+                return false;
+            },
+            open: function (event, ui) {
+                var menu = $(this).autocomplete("widget");
+                menu.css({ "max-height": "200px", "overflow": "hidden", "overflow-y": "scroll" });
+            },
+            select: function (event, ui) {
+
+                var terms = split(this.value);
+                console.log(terms);
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                this.value = terms;
+
+                $('#hdnarealocality').val(ui.item.text);
+                fieldEdited();
+                return false;
+            }
+        });
+    })
+
+    $("#txtAreaLocality").change(function () {
+        debugger;
+        var Arealocality = $('#txtAreaLocality').val();
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/Exchange/Manage?handler=CheckAreaLocality",
+
+            data: { "Arealocality": Arealocality },
+            success: function (response) {
+
+                if (response == null) {
+                    $("#txtAreaLocality").val("");
+                }
+                fieldEdited();
+            }
+        });
+    });
+
+    //Product category Autocomplete
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlprodcat").on("click", function () {
+            $(this).autocomplete("search", "#");
+        }).autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/Exchange/Manage", {
+                    handler: "SearchProdcat",
+                    term: extractLast(request.term),
+                    //term2: BuId
+                }, function (data) {
+
+                    response(data.slice(0, 20));
+                });
+            },
+            focus: function (event, ui) {
+            },
+            focus: function () {
+                // prevent value inserted on focus
+                return false;
+            },
+            open: function (event, ui) {
+                var menu = $(this).autocomplete("widget");
+                menu.css({ "max-height": "200px", "overflow": "hidden", "overflow-y": "scroll" });
+            },
+            select: function (event, ui) {
+
+                var terms = split(this.value);
+                console.log(terms);
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                this.value = terms;
+
+                editpcatid = ui.item.text;
+                $('#hdnprodcat').val(editpcatid);
+                $('#ddlprodcattype').val("");
+                $('#ddlbrandid').val("");
+                $('#ddlproductcondition').val("");
+                $('#txtexchangeprice').val("");
+
+                fieldEdited();
+                // Get the ID of the selected state
+                return false;
+            }
+        });
+    })
+
+    $("#ddlprodcat").change(function () {
+
+        var Prodcat = $('#ddlprodcat').val();
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/Exchange/Manage?handler=CheckProdcat",
+
+            data: { "Prodcat": Prodcat },
+            success: function (response) {
+
+                if (response == null) {
+                    $("#ddlprodcat").val("");
+                    $("#hdnprodcat").val("");
+                }
+                fieldEdited();
+            }
+        });
+    });
+
+    //Product Type Autocomplete
+    $(function () {
+        editpcatid = $('#hdnprodcat').val();
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlprodcattype").on("click", function () {
+            $(this).autocomplete("search", "#");
+        }).autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/Exchange/Manage", {
+                    handler: "SearchProdType",
+                    term: extractLast(request.term),
+                    term2: editpcatid
+                }, function (data) {
+
+                    response(data.slice(0, 20));
+                });
+            },
+            focus: function (event, ui) {
+            },
+            focus: function () {
+                // prevent value inserted on focus
+                return false;
+            },
+            open: function (event, ui) {
+                var menu = $(this).autocomplete("widget");
+                menu.css({ "max-height": "200px", "overflow": "hidden", "overflow-y": "scroll" });
+            },
+            select: function (event, ui) {
+
+                var terms = split(this.value);
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                this.value = terms;
+
+                editptypeid = ui.item.text;
+                $('#hdnprodtype').val(editptypeid);
+                $('#ddlbrandid').val("");
+                $('#ddlproductcondition').val("");
+                $('#txtexchangeprice').val("");
+
+                fieldEdited();
+                // Get the ID of the selected state
+                return false;
+            }
+        });
+    })
+
+    $("#ddlprodcattype").change(function () {
+
+        var ProdType = $('#ddlprodcattype').val();
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/Exchange/Manage?handler=CheckProdType",
+
+            data: { "ProdType": ProdType },
+            success: function (response) {
+
+                if (response == null) {
+                    $("#ddlprodcattype").val("");
+                    $("#hdnprodtype").val("");
+                }
+                fieldEdited();
+            }
+        });
+    });
+
+    $(function () {  //Brand Autocomplete
+
+        editpcatid = $('#hdnprodcat').val();
+        editptypeid = $('#hdnprodtype').val();
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlbrandid").on("click", function () {
+            $(this).autocomplete("search", "#");
+        }).autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/Exchange/Manage", {
+                    handler: "SearchBrand",
+                    term: extractLast(request.term),
+                    term2: editpcatid,
+                    term3: editptypeid,
+                    term4: BuId,
+                    term5: bpid
+                }, function (data) {
+                    response(data.slice(0, 20));
+                });
+            },
+            focus: function (event, ui) {
+            },
+            focus: function () {
+                // prevent value inserted on focus
+                return false;
+            },
+            open: function (event, ui) {
+                var menu = $(this).autocomplete("widget");
+                menu.css({ "max-height": "200px", "overflow": "hidden", "overflow-y": "scroll" });
+            },
+            select: function (event, ui) {
+
+                var terms = split(this.value);
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                this.value = terms;
+
+                editbrandid = ui.item.text;
+                $('#hdnbrand').val(editbrandid);
+                $('#hdnbrandid').val(editbrandid);
+                $('#ddlproductcondition').val("");
+
+                fieldEdited();
+                // Get the ID of the selected state
+                return false;
+            }
+        });
+    })
+
+    $("#ddlbrandid").change(function () {
+
+        var Brand = $('#ddlbrandid').val();
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/Exchange/Manage?handler=CheckBrand",
+
+            data: { "Brand": Brand },
+            success: function (response) {
+
+                if (response == null) {
+                    $("#ddlbrandid").val("");
+                    $("#hdnbrand").val("");
+                }
+                fieldEdited();
+            }
+        });
+    });
+
+    var urlProdCat = "";
+    function CommonAutoComplete(_ddlId, _ddlId2 = null) {
+        var id = 0;
+        if (_ddlId2 != null) {
+            id = $("#hdn" + _ddlId2).val();
+        }
+        if (_ddlId == "prodcat") {
+            urlProdCat = "@URLPrefixforProd/Exchange/Manage?handler=SearchProdcat";
+        }
+        if (_ddlId == "prodcattype") {
+            urlProdCat = "@URLPrefixforProd/Exchange/Manage?handler=SearchProdType";
+        }
+        if (_ddlId == "newprodcat") {
+            urlProdCat = "@URLPrefixforProd/Exchange/Manage?handler=SearchProdcat";
+        }
+        if (_ddlId == "newprodcattype") {
+            urlProdCat = "@URLPrefixforProd/Exchange/Manage?handler=SearchProdType";
+        }
+        $(function () {
+            function split(val) {
+                return val.split(/,\s*/);
+            }
+            function extractLast(term) {
+                return split(term).pop();
+            }
+            $("#ddl" + _ddlId).on("click", function () {
+                $(this).autocomplete("search", "#");
+            }).autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    $.get(urlProdCat, {
+                        term: extractLast(request.term),
+                        term2: id
+                    }, function (data) {
+
+                        response(data.slice(0, 20));
+                    });
+                },
+                focus: function (event, ui) {
+                },
+                focus: function () {
+                    // prevent value inserted on focus
+                    return false;
+                },
+                open: function (event, ui) {
+                    var menu = $(this).autocomplete("widget");
+                    menu.css({ "max-height": "200px", "overflow": "hidden", "overflow-y": "scroll" });
+                },
+                select: function (event, ui) {
+                    var terms = split(this.value);
+                    console.log(terms);
+                    terms.pop();
+                    // add the selected item
+                    terms.push(ui.item.value);
+                    this.value = terms;
+
+                    $("#hdn" + _ddlId).val(ui.item.text);
+                    $('#ddlbrandid').val("");
+                    // prodcatid = ui.item.text;
+
+
+                    // Get the ID of the selected state
+                    return false;
+                }
+            });
+        })
+    }
+
+    //Product condition autocomplete
+    $(function () {
+        var BUId = $('#hdnbuid').val();
+        var BPId = $('#hdnbpid').val();
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlproductcondition").on("click", function () {
+            $(this).autocomplete("search", "#");
+        }).autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/Exchange/Manage", {
+                    handler: "ProductConditionDropdown",
+                    term: extractLast(request.term),
+                    term2: BPId,
+                    term3: BUId
+                }, function (data) {
+
+                    response(data.slice(0, 20));
+                });
+            },
+            focus: function (event, ui) {
+            },
+            focus: function () {
+                // prevent value inserted on focus
+                return false;
+            },
+            open: function (event, ui) {
+                var menu = $(this).autocomplete("widget");
+                menu.css({ "max-height": "200px", "overflow": "hidden", "overflow-y": "scroll" });
+            },
+            select: function (event, ui) {
+
+                var terms = split(this.value);
+                console.log(terms);
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                this.value = terms;
+
+
+                productconditionId = ui.item.text;
+                $('#hdnproductcondition').val(productconditionId);
+
+                GetProductPrice();
+                fieldEdited();
+                // Get the ID of the selected state
+                return false;
+            }
+        });
+    })
+
+    $("#ddlproductcondition").change(function () {
+
+        var Productcondition = $('#ddlproductcondition').val();
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/Exchange/Manage?handler=CheckProductcondition",
+
+            data: { "Productcondition": Productcondition },
+            success: function (response) {
+
+                if (response == null) {
+                    $("#ddlproductcondition").val("");
+                    $("#hdnproductcondition").val("");
+                }
+                fieldEdited();
+            }
+        });
+    });
+    function GetProductPrice() {
+        var RegdNo = $('#txtregdno').val();
+        var ProdCatId = $('#hdnprodcat').val();
+        var ProdTypeId = $('#hdnprodtype').val();
+        var BrandId = $('#ddlbrandid').val();
+        //var BrandId = parseInt($('#hdnbrand').val());
+        var ProdCondition = $('#hdnproductcondition').val();
+        var BUId = $('#hdnbuid').val();
+        var BPId = $('#hdnbpid').val();
+        var StatusId = parseInt($('#hdnstatusid').val());
+        var Sweetener = parseInt($('#txtSweetener').val());
+        $.ajax({
+            type: "GET",
+            url: "@ViewData["URLPrefixforProd"]/Exchange/Manage?handler=QCPrice",
+
+            data: { "RegdNo": RegdNo, "ProdCatId": ProdCatId, "ProdTypeId": ProdTypeId, "BrandId": BrandId, "productconditionId": productconditionId, "BUId": BUId, "BPId": BPId, "StatusId": StatusId, "Sweetener": Sweetener },
+            success: function (response) {
+
+                if (response.exchangePrice != null) {
+                    $('#txtexchangeprice').val(response.exchangePrice);
+                    $('#btneditupdate').show();
+                    $($("#btneditupdate")).prop('disabled', false);
+                }
+            }
+        });
+    }
+
+    $('#btneditupdate').click(function () {
+
+        var prodcat = $("#ddlprodcat").val();
+        var prodtype = $("#ddlprodcattype").val();
+        var prodcondition = $("#ddlproductcondition").val();
+        var brandname = $("#hdnbrand").val();
+        var exchangeprice = $("#txtexchangeprice").val();
+        var custstate = $("#txtstate").val();
+        var custcity = $("#txtcity").val();
+        var custpincode = $("#hdnpincode").val();
+
+        if (custpincode != "") {
+            if (custstate == "") {
+                Swal.fire({
+                    title: "Failed",
+                    text: "Please fill State detail",
+                    icon: 'error',
+                    confirmButtonText: 'Ok',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $("#txtstate").focus();
+                        $($("#btneditupdate")).prop('disabled', true);
+                    }
+                    customClass: {
+                        confirmButton: 'btn btn-dark'
+                    }
+                });
+
+            }
+            else if (custcity == "") {
+                Swal.fire({
+                    title: "Failed",
+                    text: "Please fill City detail",
+                    icon: 'error',
+                    confirmButtonText: 'Ok',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $("#txtcity").focus();
+                        $($("#btneditupdate")).prop('disabled', true);
+                    }
+                    customClass: {
+                        confirmButton: 'btn btn-dark'
+                    }
+                });
+
+            }
+            else {
+                $($("#btneditupdate")).prop('disabled', false);
+            }
+        }
+
+        if (prodcat == "") {
+            Swal.fire({
+                title: "Failed",
+                text: "Please fill Product Category",
+                icon: 'error',
+                confirmButtonText: 'Ok',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#ddlprodcat").focus();
+                    $($("#btneditupdate")).prop('disabled', true);
+                }
+                customClass: {
+                    confirmButton: 'btn btn-dark'
+                }
+            });
+        }
+        else if (prodtype == "") {
+            Swal.fire({
+                title: "Failed",
+                text: "Please fill Product Type",
+                icon: 'error',
+                confirmButtonText: 'Ok',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#ddlprodcattype").focus();
+                    $($("#btneditupdate")).prop('disabled', true);
+                }
+                customClass: {
+                    confirmButton: 'btn btn-dark'
+                }
+            });
+        }
+        else if (brandname == "") {
+            Swal.fire({
+                title: "Failed",
+                text: "Please fill Product Brand",
+                icon: 'error',
+                confirmButtonText: 'Ok',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#ddlbrandid").focus();
+                    $($("#btneditupdate")).prop('disabled', true);
+                }
+                customClass: {
+                    confirmButton: 'btn btn-dark'
+                }
+            });
+        }
+        else if (prodcondition == "") {
+            Swal.fire({
+                title: "Failed",
+                text: "Please fill Product Condition",
+                icon: 'error',
+                confirmButtonText: 'Ok',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#ddlproductcondition").focus();
+                    $($("#btneditupdate")).prop('disabled', true);
+                }
+                customClass: {
+                    confirmButton: 'btn btn-dark'
+                }
+            });
+        }
+        else if (exchangeprice == "") {
+            Swal.fire({
+                title: "Failed",
+                text: "Exchange Price can not be null",
+                icon: 'error',
+                confirmButtonText: 'Ok',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#txtexchangeprice").focus();
+                    $($("#btneditupdate")).prop('disabled', true);
+                }
+                customClass: {
+                    confirmButton: 'btn btn-dark'
+                }
+            });
+        }
+        else {
+            $($("#btneditupdate")).prop('disabled', false);
+        }
+
+    });
+
+</script>

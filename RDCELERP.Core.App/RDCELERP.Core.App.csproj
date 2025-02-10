@@ -1,0 +1,531 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <Nullable>enable</Nullable>
+	  <ImplicitUsings>enable</ImplicitUsings>   
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+	<PropertyGroup>
+		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <Optimize>False</Optimize>
+	</PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Compile Remove="wwwroot\DBFiles\ContactAttachments\**" />
+    <Compile Remove="wwwroot\DBFiles\ContactNotes\**" />
+    <Compile Remove="wwwroot\DBFiles\DealAttachments\**" />
+    <Compile Remove="wwwroot\DBFiles\DealNotes\**" />
+    <Compile Remove="wwwroot\DBFiles\Deals\**" />
+    <Compile Remove="wwwroot\DBFiles\ImportLead\**" />
+    <Compile Remove="wwwroot\DBFiles\LeadAttachments\**" />
+    <Compile Remove="wwwroot\DBFiles\LeadNotes\**" />
+    <Compile Remove="wwwroot\DBFiles\QuoteAttachments\**" />
+    <Compile Remove="wwwroot\DBFiles\QuoteNotes\**" />
+    <Compile Remove="wwwroot\DBFiles\Quotes\**" />
+    <Compile Remove="wwwroot\NewLayout\vendor\sass\node_modules\**" />
+    <Compile Remove="wwwroot\NewLayout\vendor\sass\types\**" />
+    <Content Remove="Data\**" />
+    <Content Remove="wwwroot\DBFiles\ContactAttachments\**" />
+    <Content Remove="wwwroot\DBFiles\ContactNotes\**" />
+    <Content Remove="wwwroot\DBFiles\DealAttachments\**" />
+    <Content Remove="wwwroot\DBFiles\DealNotes\**" />
+    <Content Remove="wwwroot\DBFiles\Deals\**" />
+    <Content Remove="wwwroot\DBFiles\ImportLead\**" />
+    <Content Remove="wwwroot\DBFiles\LeadAttachments\**" />
+    <Content Remove="wwwroot\DBFiles\LeadNotes\**" />
+    <Content Remove="wwwroot\DBFiles\QuoteAttachments\**" />
+    <Content Remove="wwwroot\DBFiles\QuoteNotes\**" />
+    <Content Remove="wwwroot\DBFiles\Quotes\**" />
+    <Content Remove="wwwroot\NewLayout\vendor\sass\node_modules\**" />
+    <Content Remove="wwwroot\NewLayout\vendor\sass\types\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="wwwroot\DBFiles\ContactAttachments\**" />
+    <EmbeddedResource Remove="wwwroot\DBFiles\ContactNotes\**" />
+    <EmbeddedResource Remove="wwwroot\DBFiles\DealAttachments\**" />
+    <EmbeddedResource Remove="wwwroot\DBFiles\DealNotes\**" />
+    <EmbeddedResource Remove="wwwroot\DBFiles\Deals\**" />
+    <EmbeddedResource Remove="wwwroot\DBFiles\ImportLead\**" />
+    <EmbeddedResource Remove="wwwroot\DBFiles\LeadAttachments\**" />
+    <EmbeddedResource Remove="wwwroot\DBFiles\LeadNotes\**" />
+    <EmbeddedResource Remove="wwwroot\DBFiles\QuoteAttachments\**" />
+    <EmbeddedResource Remove="wwwroot\DBFiles\QuoteNotes\**" />
+    <EmbeddedResource Remove="wwwroot\DBFiles\Quotes\**" />
+    <EmbeddedResource Remove="wwwroot\NewLayout\vendor\sass\node_modules\**" />
+    <EmbeddedResource Remove="wwwroot\NewLayout\vendor\sass\types\**" />
+    <None Remove="Data\**" />
+    <None Remove="wwwroot\DBFiles\ContactAttachments\**" />
+    <None Remove="wwwroot\DBFiles\ContactNotes\**" />
+    <None Remove="wwwroot\DBFiles\DealAttachments\**" />
+    <None Remove="wwwroot\DBFiles\DealNotes\**" />
+    <None Remove="wwwroot\DBFiles\Deals\**" />
+    <None Remove="wwwroot\DBFiles\ImportLead\**" />
+    <None Remove="wwwroot\DBFiles\LeadAttachments\**" />
+    <None Remove="wwwroot\DBFiles\LeadNotes\**" />
+    <None Remove="wwwroot\DBFiles\QuoteAttachments\**" />
+    <None Remove="wwwroot\DBFiles\QuoteNotes\**" />
+    <None Remove="wwwroot\DBFiles\Quotes\**" />
+    <None Remove="wwwroot\NewLayout\vendor\sass\node_modules\**" />
+    <None Remove="wwwroot\NewLayout\vendor\sass\types\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\ABB\ABBRegistrationD2C.cshtml" />
+    <Content Remove="Pages\PriceMasterMapping\Delete.cshtml" />
+    <Content Remove="Pages\PriceMasterMapping\Details.cshtml" />
+    <Content Remove="Pages\PriceMasterMapping\Edit.cshtml" />
+    <Content Remove="Pages\PriceMasterMapping\Index.cshtml" />
+    <Content Remove="Pages\PriceMasterMapping\Manage.cshtml" />
+    <Content Remove="Pages\PriceMasterName\Delete.cshtml" />
+    <Content Remove="Pages\PriceMasterName\Index.cshtml" />
+    <Content Remove="Pages\PriceMasterName\Manage.cshtml" />
+    <Content Remove="Pages\ProductConditionLabel\Index.cshtml" />
+    <Content Remove="Pages\ProductConditionLabel\Manage.cshtml" />
+    <Content Remove="Pages\Shared\_External_Layout.cshtml" />
+    <Content Remove="Pages\Shared\_SettingLayout.cshtml" />
+    <Content Remove="Pages\Shared\_ValidationScriptsPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="ClosedXML" Version="0.100.3" />
+    <PackageReference Include="Cuemon.Extensions.AspNetCore.Mvc.RazorPages" Version="6.1.0" />
+    <PackageReference Include="DotNetCore.NPOI" Version="1.2.3" />
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
+    <PackageReference Include="MediaToolkit" Version="1.1.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="NETCore.MailKit" Version="2.0.3" />
+    <PackageReference Include="QRCoder" Version="1.4.3" />
+    <PackageReference Include="RestSharp" Version="108.0.3" />
+    <PackageReference Include="System.Data.OleDb" Version="6.0.0" />
+    <PackageReference Include="ZXing.Net" Version="0.16.9" />
+    <PackageReference Include="ZXing.Net.Bindings.Windows.Compatibility" Version="0.16.12" />
+  </ItemGroup>
+
+	
+  <ItemGroup>
+    <Folder Include="Pages\asdfg\" />
+    <Folder Include="Pages\QuestionerLov\RefurbisherDetails\" />
+    <Folder Include="wwwroot\DBFiles\ABB\ABBApprovalCertificate\" />
+    <Folder Include="wwwroot\DBFiles\Brands\" />
+    <Folder Include="wwwroot\DBFiles\EVCInvoiceRecipetByUTC\InvoiceImage\" />
+    <Folder Include="wwwroot\DBFiles\EVC\CancelledCheque\" />
+    <Folder Include="wwwroot\DBFiles\EVC\EWasteCertificate\" />
+    <Folder Include="wwwroot\DBFiles\EVC\GSTRegistration\" />
+    <Folder Include="wwwroot\DBFiles\EVC\Invoice\" />
+    <Folder Include="wwwroot\DBFiles\EVC\DebitNote\" />
+    <Folder Include="wwwroot\DBFiles\EVC\EVCUser_Dispute\" />
+    <Folder Include="wwwroot\DBFiles\EVC\EVCBulkZip\" />
+    <Folder Include="wwwroot\DBFiles\EVC\POD\" />
+    <Folder Include="wwwroot\DBFiles\LGC\LGCDrop\" />
+    <Folder Include="wwwroot\DBFiles\GeneratedQRImages\" />
+    <Folder Include="wwwroot\DBFiles\LGC\CancelledCheque\" />
+    <Folder Include="wwwroot\DBFiles\LGC\Aadhar\" />
+    <Folder Include="wwwroot\DBFiles\LGC\ProfilePic\" />
+    <Folder Include="wwwroot\DBFiles\Masters\QuestionsImages\" />
+    <Folder Include="wwwroot\DBFiles\Masters\ProductTypeImages\" />
+    <Folder Include="wwwroot\DBFiles\ProductTypeImage\" />
+    <Folder Include="wwwroot\DBFiles\ProductCategoryImage\" />
+    <Folder Include="wwwroot\DBFiles\Sponsor\" />
+    <Folder Include="wwwroot\DBFiles\QC\DiagnosticReport\" />
+    <Folder Include="wwwroot\DBFiles\QC\VideoQC\" />
+    <Folder Include="wwwroot\DBFiles\ServicePartner\Driver\DriversLiscense\" />
+    <Folder Include="wwwroot\DBFiles\ServicePartner\Driver\DriversProfilePictures\" />
+    <Folder Include="wwwroot\DBFiles\ServicePartner\Driver\DriverInsuranceCerti\" />
+    <Folder Include="wwwroot\DBFiles\ServicePartner\Driver\DriverFitnessCerti\" />
+    <Folder Include="wwwroot\DBFiles\ServicePartner\Driver\VehicleRcCertificate\" />
+    <Folder Include="wwwroot\DBFiles\Users\" />
+    <Folder Include="wwwroot\SelfQC-assets\.vs\SelfQC\v16\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\ABBPlanMaster\Delete.cshtml" />
+    <None Include="Pages\ABBPlanMaster\Details.cshtml" />
+    <None Include="Pages\ABBPlanMaster\Edit.cshtml" />
+    <None Include="Pages\ABBPlanMaster\Index.cshtml" />
+    <None Include="Pages\ABBPlanMaster\Manage.cshtml" />
+    <None Include="Pages\ABBPriceMaster\Delete.cshtml" />
+    <None Include="Pages\ABBPriceMaster\Details.cshtml" />
+    <None Include="Pages\ABBPriceMaster\Edit.cshtml" />
+    <None Include="Pages\ABBPriceMaster\Index.cshtml" />
+    <None Include="Pages\ABBPriceMaster\Manage.cshtml" />
+    <None Include="Pages\ABBRedemption\ABBRedemption.cshtml" />
+    <None Include="Pages\ABB\ABBApproved.cshtml" />
+    <None Include="Pages\ABB\ABBRegistrationD2C.cshtml" />
+    <None Include="Pages\ABB\ABBRegistration.cshtml" />
+    <None Include="Pages\ABB\NotApproved.cshtml" />
+    <None Include="Pages\AccessList\Create.cshtml" />
+    <None Include="Pages\AccessList\Delete.cshtml" />
+    <None Include="Pages\AccessList\Details.cshtml" />
+    <None Include="Pages\AccessList\Edit.cshtml" />
+    <None Include="Pages\AccessList\Index.cshtml" />
+    <None Include="Pages\Bulk_Order\Acceptance.cshtml" />
+    <None Include="Pages\Bulk_Order\Bulk_Upload.cshtml" />
+    <None Include="Pages\BusinessPartner\Delete.cshtml" />
+    <None Include="Pages\BusinessPartner\Index.cshtml" />
+    <None Include="Pages\BusinessPartner\Manage.cshtml" />
+    <None Include="Pages\DealerDashboard\ExchangeDashboard.cshtml" />
+    <None Include="Pages\EVC_Allocation\Not_Allocated.cshtml" />
+    <None Include="Pages\EVC_Portal\EVC_Dashboard.cshtml" />
+    <None Include="Pages\EVC_Portal\EVC_UserProfile.cshtml" />
+    <None Include="Pages\ImageLabelMaster\Delete.cshtml" />
+    <None Include="Pages\ImageLabelMaster\Details.cshtml" />
+    <None Include="Pages\ImageLabelMaster\Edit.cshtml" />
+    <None Include="Pages\ImageLabelMaster\Index.cshtml" />
+    <None Include="Pages\ImageLabelMaster\Manage.cshtml" />
+    <None Include="Pages\LOVUtility\LOV_Utility.cshtml" />
+    <None Include="Pages\ModelNumber\Delete.cshtml" />
+    <None Include="Pages\ModelNumber\Details.cshtml" />
+    <None Include="Pages\ModelNumber\Index.cshtml" />
+    <None Include="Pages\ModelNumber\Manage.cshtml" />
+    <None Include="Pages\ModelNumber\Sweetner.cshtml" />
+    <None Include="Pages\PriceMasterMapping\Delete.cshtml" />
+    <None Include="Pages\PriceMasterMapping\Details.cshtml" />
+    <None Include="Pages\PriceMasterMapping\Edit.cshtml" />
+    <None Include="Pages\PriceMasterMapping\Index.cshtml" />
+    <None Include="Pages\PriceMasterMapping\Manage.cshtml" />
+    <None Include="Pages\PriceMaster\Delete.cshtml" />
+    <None Include="Pages\PriceMaster\Details.cshtml" />
+    <None Include="Pages\PriceMaster\Edit.cshtml" />
+    <None Include="Pages\PriceMaster\Index.cshtml" />
+    <None Include="Pages\PriceMaster\Manage.cshtml" />
+    <None Include="Pages\PriceMasterName\Delete.cshtml" />
+    <None Include="Pages\PriceMasterName\Index.cshtml" />
+    <None Include="Pages\PriceMasterName\Manage.cshtml" />
+    <None Include="Pages\ProductCategory\Delete.cshtml" />
+    <None Include="Pages\ProductCategory\Index.cshtml" />
+    <None Include="Pages\ProductCategory\Manage.cshtml" />
+    <None Include="Pages\ProductConditionLabel\Index.cshtml" />
+    <None Include="Pages\ProductConditionLabel\Manage.cshtml" />
+    <None Include="Pages\ProductQualityIndex\Delete.cshtml" />
+    <None Include="Pages\ProductQualityIndex\Index.cshtml" />
+    <None Include="Pages\ProductQualityIndex\Manage.cshtml" />
+    <None Include="Pages\Shared\Components\Header\Default.cshtml" />
+    <None Include="Pages\Shared\Components\Sidebar\Default.cshtml" />
+    <None Include="Pages\Shared\_External_Layout.cshtml" />
+    <None Include="Pages\Shared\_SettingLayout.cshtml" />
+    <None Include="Pages\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="Pages\UniversalPriceMaster\Index.cshtml" />
+    <None Include="Pages\Users\ChangePassword.cshtml" />
+    <None Include="Pages\Users\DeleteUserRole.cshtml" />
+    <None Include="Pages\Users\Details.cshtml" />
+    <None Include="Pages\Users\Index.cshtml" />
+    <None Include="Pages\Users\Manage.cshtml" />
+    <None Include="Pages\Users\ManageUserRole.cshtml" />
+    <None Include="Pages\Users\SendEmailtoUser.cshtml" />
+    <None Include="Pages\VehicleIncentive\Delete.cshtml" />
+    <None Include="Pages\VehicleIncentive\Details.cshtml" />
+    <None Include="Pages\VehicleIncentive\Index.cshtml" />
+    <None Include="Pages\VehicleIncentive\Manage.cshtml" />
+    <None Include="wwwroot\ExcelUploadFormat\AbbExcelFormat.xlsx" />
+    <None Include="wwwroot\ExcelUploadFormat\ABBPlanMasterExcelFormat.xlsx" />
+    <None Include="wwwroot\ExcelUploadFormat\ABBPriceMasterExcelFormat.xlsx" />
+    <None Include="wwwroot\ExcelUploadFormat\BrandExcelFormat.xlsx" />
+    <None Include="wwwroot\ExcelUploadFormat\BusinessPartnerExcelFormat.xlsx" />
+    <None Include="wwwroot\ExcelUploadFormat\BusinessPartnerUploadFormat_22-Mar-23.xlsx" />
+    <None Include="wwwroot\ExcelUploadFormat\CityExcelFormat.xlsx" />
+    <None Include="wwwroot\ExcelUploadFormat\ExchangeExcelFormat.xlsx" />
+    <None Include="wwwroot\ExcelUploadFormat\ExchPriceMasterFormat_27-Mar.xlsx" />
+    <None Include="wwwroot\ExcelUploadFormat\ExchPriceMasterFormat_27-MarOld.xlsx" />
+    <None Include="wwwroot\ExcelUploadFormat\ExchPriceMasterFormat_27-MarOld1.xlsx" />
+    <None Include="wwwroot\ExcelUploadFormat\ModelNumberExcelFormat.xlsx" />
+    <None Include="wwwroot\ExcelUploadFormat\PinCodeExcelFormat.xlsx" />
+    <None Include="wwwroot\ExcelUploadFormat\PriceMasterExcelFormat.xlsx" />
+    <None Include="wwwroot\ExcelUploadFormat\ProductCategoryExcelFormat.xlsx" />
+    <None Include="wwwroot\ExcelUploadFormat\ProductTypeExcelFormat.xlsx" />
+    <None Include="wwwroot\ExcelUploadFormat\ServicePartnerExcelFormat.xlsx" />
+    <None Include="wwwroot\ExcelUploadFormat\StateExcelFormat.xlsx" />
+    <None Include="wwwroot\NewLayout\assets\.DS_Store" />
+    <None Include="wwwroot\NewLayout\assets\img\caret-down-solid.svg" />
+    <None Include="wwwroot\NewLayout\assets\img\digi2l-logo-white.svg" />
+    <None Include="wwwroot\NewLayout\assets\img\logo.svg" />
+    <None Include="wwwroot\NewLayout\assets\img\marker.svg" />
+    <None Include="wwwroot\NewLayout\assets\js\custom.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\cjs\enums.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\cjs\enums.js.flow" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\cjs\popper-base.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\cjs\popper-base.js.flow" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\cjs\popper-lite.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\cjs\popper-lite.js.flow" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\cjs\popper.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\cjs\popper.js.flow" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\createPopper.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\contains.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\getBoundingClientRect.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\getClippingRect.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\getCompositeRect.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\getComputedStyle.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\getDocumentElement.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\getDocumentRect.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\getHTMLElementScroll.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\getLayoutRect.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\getNodeName.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\getNodeScroll.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\getOffsetParent.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\getParentNode.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\getScrollParent.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\getViewportRect.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\getWindow.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\getWindowScroll.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\getWindowScrollBarX.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\instanceOf.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\isScrollParent.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\isTableElement.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\dom-utils\listScrollParents.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\enums.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\index.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\modifiers\applyStyles.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\modifiers\arrow.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\modifiers\computeStyles.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\modifiers\eventListeners.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\modifiers\flip.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\modifiers\hide.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\modifiers\index.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\modifiers\offset.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\modifiers\popperOffsets.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\modifiers\preventOverflow.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\popper-base.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\popper-lite.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\popper.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\types.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\computeAutoPlacement.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\computeOffsets.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\debounce.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\detectOverflow.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\expandToHashMap.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\format.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\getAltAxis.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\getAltLen.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\getBasePlacement.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\getFreshSideObject.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\getMainAxisFromPlacement.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\getOppositePlacement.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\getOppositeVariationPlacement.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\getVariation.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\math.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\mergeByName.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\mergePaddingObject.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\orderModifiers.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\rectToClientRect.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\uniqueBy.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\validateModifiers.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\esm\utils\within.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\umd\enums.min.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\umd\enums.min.js.flow" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\umd\popper-base.min.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\umd\popper-base.min.js.flow" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\umd\popper-lite.min.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\umd\popper-lite.min.js.flow" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\umd\popper.min.js" />
+    <None Include="wwwroot\NewLayout\vendor\%40popperjs\core\dist\umd\popper.min.js.flow" />
+    <None Include="wwwroot\NewLayout\vendor\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\NewLayout\vendor\bootstrap\dist\js\bootstrap.esm.min.js" />
+    <None Include="wwwroot\NewLayout\vendor\bootstrap\dist\js\bootstrap.min.js" />
+    <None Include="wwwroot\NewLayout\vendor\jquery-ui\jquery-ui.js" />
+    <None Include="wwwroot\NewLayout\vendor\jquery\jquery-3.6.1.min.js" />
+    <None Include="wwwroot\NewLayout\vendor\notyf\notyf.es.js" />
+    <None Include="wwwroot\NewLayout\vendor\notyf\notyf.min.js" />
+    <None Include="wwwroot\NewLayout\vendor\notyf\notyf.umd.js" />
+    <None Include="wwwroot\NewLayout\vendor\sass\sass.dart.js" />
+    <None Include="wwwroot\NewLayout\vendor\sass\sass.default.dart.js" />
+    <None Include="wwwroot\NewLayout\vendor\sass\sass.js" />
+    <None Include="wwwroot\NewLayout\vendor\simplebar\dist\simplebar-core.esm.js" />
+    <None Include="wwwroot\NewLayout\vendor\simplebar\dist\simplebar.esm.js" />
+    <None Include="wwwroot\NewLayout\vendor\simplebar\dist\simplebar.min.js" />
+    <None Include="wwwroot\NewLayout\vendor\simplebar\dist\simplebar.umd.js" />
+    <None Include="wwwroot\NewLayout\vendor\smooth-scroll\dist\smooth-scroll.min.js" />
+    <None Include="wwwroot\NewLayout\vendor\smooth-scroll\dist\smooth-scroll.polyfills.min.js" />
+    <None Include="wwwroot\NewLayout\vendor\sweetalert2\dist\sweetalert2.all.min.js" />
+    <None Include="wwwroot\NewLayout\vendor\sweetalert2\dist\sweetalert2.min.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\datepicker-full.min.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\datepicker.min.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\ar-DZ.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\ar-tn.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\ar.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\az.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\bg.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\bm.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\bn.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\br.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\bs.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\ca.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\cs.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\cy.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\da.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\de.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\el.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\en-AU.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\en-CA.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\en-GB.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\en-IE.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\en-NZ.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\en-ZA.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\eo.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\es.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\et.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\eu.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\fa.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\fi.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\fo.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\fr-CH.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\fr.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\gl.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\he.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\hi.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\hr.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\hu.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\hy.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\id.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\is.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\it-CH.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\it.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\ja.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\ka.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\kk.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\km.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\ko.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\lt.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\lv.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\me.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\mk.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\mn.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\mr.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\ms.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\nl-BE.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\nl.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\no.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\oc.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\pl.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\pt-BR.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\pt.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\ro.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\ru.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\si.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\sk.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\sl.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\sq.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\sr-latn.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\sr.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\sv.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\sw.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\ta.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\tg.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\th.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\tk.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\tr.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\uk.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\uz-cyrl.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\uz-latn.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\vi.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\zh-CN.js" />
+    <None Include="wwwroot\NewLayout\vendor\vanillajs-datepicker\dist\js\locales\zh-TW.js" />
+    <None Include="wwwroot\PdfTemplates\certificate\css\style.css.map" />
+    <None Include="wwwroot\PdfTemplates\certificate\css\style.scss" />
+    <None Include="wwwroot\PdfTemplates\certificate\img\digi2l-logo.svg" />
+    <None Include="wwwroot\PdfTemplates\certificate\img\logo.svg" />
+    <None Include="wwwroot\ProductRating\css\style.css.map" />
+    <None Include="wwwroot\ProductRating\css\style.scss" />
+    <None Include="wwwroot\ProductRating\img\top-wave.svg" />
+    <None Include="wwwroot\ProductRating\js\compressor.js" />
+    <None Include="wwwroot\ProductRating\vendor\fonts\slick.svg" />
+    <None Include="wwwroot\ProductRating\vendor\owl\LICENSE" />
+    <None Include="wwwroot\ProductRating\vendor\owl\owl.carousel.js" />
+    <None Include="wwwroot\ProductRating\vendor\owl\owl.carousel.min.js" />
+    <None Include="wwwroot\ProductRating\vendor\owl\README.md" />
+    <None Include="wwwroot\ProductRating\vendor\slick\config.rb" />
+    <None Include="wwwroot\ProductRating\vendor\slick\fonts\slick.svg" />
+    <None Include="wwwroot\ProductRating\vendor\slick\slick-theme.css.map" />
+    <None Include="wwwroot\ProductRating\vendor\slick\slick-theme.less" />
+    <None Include="wwwroot\ProductRating\vendor\slick\slick-theme.scss" />
+    <None Include="wwwroot\ProductRating\vendor\slick\slick.css.map" />
+    <None Include="wwwroot\ProductRating\vendor\slick\slick.js" />
+    <None Include="wwwroot\ProductRating\vendor\slick\slick.less" />
+    <None Include="wwwroot\ProductRating\vendor\slick\slick.min.js" />
+    <None Include="wwwroot\ProductRating\vendor\slick\slick.scss" />
+    <None Include="wwwroot\SelfQC-assets\.vs\SelfQC\config\applicationhost.config" />
+    <None Include="wwwroot\SelfQC-assets\.vs\slnx.sqlite" />
+    <None Include="wwwroot\SelfQC-assets\css\style.css.map" />
+    <None Include="wwwroot\SelfQC-assets\css\style.scss" />
+    <None Include="wwwroot\SelfQC-assets\img\top-wave.svg" />
+    <None Include="wwwroot\SelfQC-assets\js\compressor.js" />
+    <None Include="wwwroot\SelfQC-assets\vendor\config.rb" />
+    <None Include="wwwroot\SelfQC-assets\vendor\fonts\slick.svg" />
+    <None Include="wwwroot\SelfQC-assets\vendor\slick-theme.css.map" />
+    <None Include="wwwroot\SelfQC-assets\vendor\slick-theme.less" />
+    <None Include="wwwroot\SelfQC-assets\vendor\slick-theme.scss" />
+    <None Include="wwwroot\SelfQC-assets\vendor\slick.css.map" />
+    <None Include="wwwroot\SelfQC-assets\vendor\slick.js" />
+    <None Include="wwwroot\SelfQC-assets\vendor\slick.less" />
+    <None Include="wwwroot\SelfQC-assets\vendor\slick.min.js" />
+    <None Include="wwwroot\SelfQC-assets\vendor\slick.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RDCELERP.BAL\RDCELERP.BAL.csproj" />
+    <ProjectReference Include="..\RDCELERP.Common\RDCELERP.Common.csproj" />
+    <ProjectReference Include="..\RDCELERP.DAL\RDCELERP.DAL.csproj" />
+    <ProjectReference Include="..\RDCELERP.Model\RDCELERP.Model.csproj" />
+    <ProjectReference Include="..\Web.API\RDCELERP.API.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\QCIndex\AdminBonus.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Pages\QCIndex\ProductRating.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Pages\QCIndex\QCDetails.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Pages\QCIndex\Questioners.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Pages\QCIndex\UpperBonusCap.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Pages\Shared\Components\Header\Default.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Pages\Shared\Components\Sidebar\Default.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Pages\Shared\_QuestionList.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Pages\Shared\_Layout.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="https://json.schemastore.org/avro-avsc.json" /></VisualStudio></ProjectExtensions>
+
+</Project>

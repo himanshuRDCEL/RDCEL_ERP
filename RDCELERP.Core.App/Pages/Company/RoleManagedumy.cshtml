@@ -1,0 +1,377 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.Company.RoleManageModel
+@{
+    ViewData["Title"] = "ManageRole";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var roleName = "";
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>Add Role
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    <div class="form-group">
+                                        <input type="hidden" asp-for="RoleViewModel.RoleId" id="hdnId" />
+                                        <input type="hidden" asp-for="RoleViewModel.CompanyId" id="hdncomId" />
+                                        <input type="hidden" asp-for="RoleViewModel.CreatedBy" />
+                                        <input type="hidden" asp-for="RoleViewModel.CreatedDate" />
+                                        <input type="hidden" asp-for="RoleViewModel.IsActive" />
+                                        <input type="hidden" asp-for="RoleViewModel.ModifiedBy" />
+                                        <input type="hidden" asp-for="RoleViewModel.ModifiedDate" />
+                                        @*<input type="hidden" asp-for="RoleViewModel.CompanyId" />*@
+                                        <input type="hidden" id="hdntabId" />
+                                        <label class="" for="">Role Name <span style="color:red;">*</span></label>
+                                        @if (Model.RoleViewModel.RoleId > 0)
+                                        {
+                                            <input id="RoleNameValue" asp-for="RoleViewModel.RoleName" onkeyup="CheckAvailability();" class="form-control" readonly />
+                                        }
+                                        else
+                                        {
+                                            <input id="RoleNameValue" asp-for="RoleViewModel.RoleName" onkeyup="CheckAvailability();" class="form-control" />
+                                        }
+                                        @*<input asp-for="RoleViewModel.RoleName" onchange="getRoleName(this.value);" class="form-control" />*@
+                                        <span class="text-danger" id="message"></span>
+                                        <span asp-validation-for="RoleViewModel.RoleName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <div class="form-group">
+                                        <label class="" for="">Select Company <span style="color:red;">*</span></label>
+                                        @if (Model.RoleViewModel.RoleId > 0 && Model.RoleViewModel.CompanyId > 0)
+                                        {
+
+                                            <input id="CompanyNameValue" value="@Model.RoleViewModel.CompanyName" class="form-control" readonly />
+
+                                        }
+                                        else
+                                        {
+                                            <select id="CompanyNameid" asp-for="RoleViewModel.CompanyId" class="form-control" asp-items="ViewBag.CompanyList">
+                                                <option value=''>--None--</option>
+                                            </select>
+                                        }
+                                        <span asp-validation-for="RoleViewModel.CompanyId" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="border-top my-3"></div>
+                                <div class="col-12 mb-3">
+                                    <h6 class="sectitle mb-4">Access List</h6>
+
+                                    <ul class="nav nav-tabs" id="accessListTabs">
+                                        @for (int i = 0; i < Model.RoleViewModel.RoleAccessViewModelList.Count; i++)
+                                        {
+
+                                            @if (Model.RoleViewModel.RoleAccessViewModelList[i].ParentAccessListId == 10)
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link tab-link" id="tab_@Model.RoleViewModel.RoleAccessViewModelList[i].AccessListId" data-tab-id="@Model.RoleViewModel.RoleAccessViewModelList[i].AccessListId" data-toggle="tab" href="#tabContent_@Model.RoleViewModel.RoleAccessViewModelList[i].AccessListId">@Model.RoleViewModel.RoleAccessViewModelList[i].Name</a>
+                                                </li>
+                                            }
+
+
+                                        }
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        @for (int i = 0; i < Model.RoleViewModel.RoleAccessViewModelList.Count; i++)
+                                        {
+                                            <div class="tab-pane fade rolebox" id="tabContent_@Model.RoleViewModel.RoleAccessViewModelList[i].AccessListId">
+                                                <div class="tab-content-placeholder tree mt-4" data-tab-id="@Model.RoleViewModel.RoleAccessViewModelList[i].AccessListId">
+                                                    <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].AccessListId" />
+                                                    <input type="hidden" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].RoleId" />
+
+                                                    <b><label class="control-label">@Model.RoleViewModel.RoleAccessViewModelList[i].Name</label></b>
+                                                    <ul id="accessListWrap">
+                                                        @* @for (int j = 0; j < @Model.RoleViewModel.RoleAccessViewModelList[i].Count; j++)
+                                                        {
+
+                                                            <input type="checkbox" class="clsHowistheinformationcollected_parent" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].Selected" />
+                                                            <label class="control-label">@Model.RoleViewModel.RoleAccessViewModelList[i].Name</label>
+                                                            <div class="rolepermissionbox">
+
+                                                                <input type="checkbox" class="clsHowistheinformationcollected" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].CanView" />
+                                                                <label asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].CanView" class="control-label"></label>
+
+                                                                <input type="checkbox" class="clsHowistheinformationcollected" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].CanAdd" />
+                                                                <label asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].CanAdd" class="control-label"></label>
+
+                                                                <input type="checkbox" class="clsHowistheinformationcollected_delete" asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].ChildRoleAccessViewModelList[j].CanDelete" />
+                                                                <label asp-for="@Model.RoleViewModel.RoleAccessViewModelList[i].CanDelete" class="control-label"></label>
+                                                            </div>
+                                                        }
+ *@
+
+                                                       
+                                                    </ul>
+
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div>
+                                        @if (accessRule != null && accessRule.CanAdd)
+                                        {
+                                            <a id="btnManageRole" class="btn mainshadow" style="background: #3d3d6e;color: #fff">
+                                                Save
+                                            </a>
+                                        }
+
+                                        @if (accessRule != null && accessRule.CanView)
+                                        {
+                                            <a asp-page="./RoleList" id="backtolist" class="btn m-3 mainshadow" style="background: #3d3d6e;color: #fff;">Back to List</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/js/compressor.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    
+    function getRoleName(_RoleName) {
+        // alert("hi");
+        // alert(_RoleName);
+
+        // var r = @ViewBag.RoleNameList;
+        // alert(r);
+        // if (r.indexOf(_RoleName) !== -1) {
+
+        //     }
+        //     else {
+        //     alert("The" + @roleName + "is already exist");
+        }
+       
+
+    //Hide all tab content initially
+
+    $(document).on("change", "input[type='checkbox']", function () {
+        if ($(this).is(":checked")) {
+            // If the upper checkbox is checked, check the three below
+            $(this).siblings('div').find("input[type='checkbox']").prop('checked', true);
+        } else {
+            // If the upper checkbox is unchecked, uncheck the three below
+            $(this).siblings('div').find("input[type='checkbox']").prop('checked', false);
+        }
+    });
+
+    $('.tab-link').click(function () {
+        var tabId = $(this).data('tab-id');
+        var tabhref = $(this).attr('href');
+        var Id = $("#hdnId").val();
+        $("#hdntabId").val(tabId);
+        var url = '@ViewData["URLPrefixforProd"]/Company/RoleManagedumy?handler=CheckAccess'; // Use single quotes for the URL string
+
+        // Make an AJAX request to load the checkboxes
+        $.ajax({
+            type: 'GET',
+            url: url,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('XSRF-TOKEN',
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "tabId": tabId, "Id": Id },
+            success: function (result) {
+                console.log('Result:', result);
+
+                // Clear any existing checkboxes before appending new ones
+                $(tabhref + ' #accessListWrap').empty();
+
+                for (var i = 0; i < result.length; i++) {
+                    var listItem = `
+            <li>
+                  <input type="checkbox" class='checkboxinput' ${result[i].canView ?  'checked' : ''}>
+                <label class="control-label">${result[i].name}</label>
+                <div class="rolepermissionbox">
+                     <input type="hidden" value="${result[i].accessListId}">
+                   
+                    <input type="checkbox" class='checkboxinputcanView' ${result[i].canView ? 'checked' : ''}>
+                    <label class="control-label">View Detail</label>
+                    <input type="checkbox" class='checkboxinputcanAdd' ${result[i].canAdd ? 'checked' : ''}>
+                    <label class="control-label">Add/Edit</label>
+                    <input type="checkbox" class='checkboxinputcanDelete' ${result[i].canDelete ? 'checked' : ''}>
+                    <label class="control-label">Delete</label>
+                </div>
+            </li>`;
+                   
+                    $(tabhref + ' #accessListWrap').append(listItem);
+                }
+
+                // Add a button to save the checkbox values
+                // var saveButton = `
+                //     <button id="saveButton">Save</button>
+                // `;
+
+         
+                 // $(tabhref + ' #accessListWrap').append(btnManageRole);
+                 // $(tabhref + ' #accessListWrap').append(backtolist);
+
+                
+
+            },
+            error: function () {
+                // Handle errors
+            }
+        });
+    });
+
+   
+    // Add an event handler to send the checkbox values to the server when the "Save" button is clicked
+    $('#btnManageRole').click(function () {
+
+        debugger;
+
+        var checkboxValues = [];
+        var RoleId = $("#hdnId").val();
+        var tabId = $("#hdntabId").val();
+        var ParentId = tabId;
+
+        console.log('#tabContent_' + tabId + ' .checkboxinput');
+
+        console.log(`#tabContent_${tabId} .checkboxinput`);
+
+        var i = 1;
+
+        $(`#tabContent_${tabId} .checkboxinput`).each(function () {
+
+            console.log(i++);
+            
+            var canView = false;
+            var canAdd = false;
+            var canDelete = false;
+            var roleName = $("#RoleNameValue").val();
+            var companyId = $("#CompanyNameid").val();
+
+            var companyName = $("#CompanyNameValue").val();
+            var roleId = $("#hdnId").val();
+            var parentView = false;
+            // Get the accessId from the hidden input within the current 'li'
+            var accessId = $(this).siblings('.rolepermissionbox').find('input[type=hidden]').val();
+
+            if (this.checked) {
+                parentView = true
+                if ($(this).siblings('.rolepermissionbox').find('.checkboxinputcanView').prop('checked')) {
+                    canView = true;
+
+                }
+                if ($(this).siblings('.rolepermissionbox').find('.checkboxinputcanAdd').prop('checked')) {
+                    canAdd = true;
+                }
+                if ($(this).siblings('.rolepermissionbox').find('.checkboxinputcanDelete').prop('checked')) {
+                    canDelete = true;
+                }
+
+            }
+
+            checkboxValues.push({ ParentAccessListId: ParentId, Selected: parentView, RoleName: roleName, RoleId: roleId, CompanyId: companyId, CompanyName: companyName, AccessListId: accessId, CanView: canView, CanAdd: canAdd, CanDelete: canDelete });
+
+        });
+
+        console.log("Checkboxvalues " + JSON.stringify(checkboxValues))
+
+        // Send the checkbox values to the server
+        var roleId = $("#hdnId").val(); // Get the roleId
+
+        $.ajax({
+            type: 'POST',
+            url: "@ViewData["URLPrefixforProd"]/Company/RoleManagedumy?handler=SaveAccess&id=" + roleId,
+
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('XSRF-TOKEN',
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+
+            data: JSON.stringify(checkboxValues),
+            contentType: 'application/json',
+            success: function (response) {
+
+                // Handle the response from the server, e.g., show a success message
+                // Construct the URL with the id parameter
+                var url = '@Url.Page("./RoleManagedumy")' + '?id=' + response;
+
+                // Redirect to the constructed URL
+                window.location.href = url;
+
+
+            },
+            error: function () {
+                // Handle errors
+            }
+        });
+        console.log(" ParentId " + ParentId)
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        // Bind to the input event of the input field to clear the message whenever the input changes
+        $("#RoleNameValue").on('input', function () {
+            $("#message").html(" ");
+            
+        });
+    });
+
+    function CheckAvailability() {
+        var name = $("#RoleNameValue").val();
+        var id = $("#hdnId").val();
+        if (name === '') {
+            $("#message").html(" ");
+           
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["URLPrefixforProd"]/Company/RoleManagedumy?handler=CheckName",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "Name": name, "Id": id },
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    $("#message").html(" ");
+                    
+                } else {
+                    $("#message").css("color", "red");
+                    $("#message").html("This role is already exists.");
+                    
+                }
+            },
+        });
+    }
+</script>

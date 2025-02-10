@@ -1,0 +1,969 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVCUser_AllOrderRecordListModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row align-items-center">
+            <div class="col">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <span class="nav-item filterNav nav-link shadow"
+                              href="#">
+                            <button class="btn btn-primary" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>
+                        </span>
+                        <a class="nav-item nav-link active shadow" id="nav-home-tab1" data-bs-toggle="tab"
+                           href="#UserAllocateDatatable1" role="tab" aria-controls="nav-home1" aria-selected="true">
+                            Assign Order
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab2" data-bs-toggle="tab"
+                           href="#UserAllocateDatatable" role="tab" aria-controls="nav-home" aria-selected="true">
+                            Allocated
+                            Order
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-profile-tab3" data-bs-toggle="tab"
+                           href="#UserDeliverdDatatable" role="tab" aria-controls="nav-profile"
+                           aria-selected="false">Deliverd Record</a>
+                        <a class="nav-item nav-link shadow" id="nav-contact-tab4" data-bs-toggle="tab"
+                           href="#UserCompleteDatatable" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">Complete Record</a>
+                        <a class="nav-item nav-link shadow" id="nav-contact-tab5" data-bs-toggle="tab"
+                           href="#UserPickupDeclineDatatable" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">Pickup Decline Record</a>
+                        <a class="nav-item nav-link shadow" id="nav-contact-tab6" data-bs-toggle="tab"
+                           href="#UserReopenOrderDatatable" role="tab" aria-controls="nav-contact"
+                           aria-selected="false">Reopen Record</a>
+                    </div>
+                </nav>
+            </div>
+
+
+        </div>
+
+
+        <div class="filters">
+            <div class="p-4">
+                <h4 class="">Filters</h4>
+                @* Order Date Range Filter *@
+                <p class="filterheading">
+                    <input type="checkbox" name="" id="chkOrderDateRange">
+                    <label for="chkOrderDateRange">Order Date Range</label>
+                </p>
+                <div class="filterbox">
+                    <input type="text" class="form-control d-inline mb-2" id="orderStartDate" readonly placeholder="Start Date" autocomplete="off">
+                    <input type="text" class="form-control d-inline mb-2" id="orderEndDate" readonly placeholder="End Date" autocomplete="off">
+                </div>
+                <div class="filter-seprator"></div>
+
+
+
+                @* Company Filter *@
+                <p class="filterheading">
+                    <input type="checkbox" name="" id="chkcompanyName">
+                    <label for="chkcompanyName">Company Name</label>
+                </p>
+                <div class="filterbox">
+                    <input type="text" class="form-control d-inline" id="companyName" placeholder="Search Company Name">
+                </div>
+                <div class="filter-seprator"></div>
+
+                @* Product Group Filter *@
+                <p class="filterheading">
+                    <input type="checkbox" name="" id="chkProductCategory">
+                    <label for="chkProductCategory">Product Group</label>
+                </p>
+                <div class="filterbox">
+                    <select asp-for="searchFilterVM.ProductCatId" id="ddlprodcatid" class="form-control d-inline" asp-items="ViewBag.ProductGroup">
+                        <option value='0'>--Product Cat--</option>
+                    </select>
+                    <span asp-validation-for="searchFilterVM.ProductCatId" class="text-danger"></span>
+                </div>
+                <div class="filter-seprator"></div>
+
+                <p class="filterheading">
+                    <input type="checkbox" name="" id="chkProductType">
+                    <label for="chkProductType">Product Type</label>
+                </p>
+                <div class="filterbox">
+                    <select asp-for="searchFilterVM.ProductTypeId" id="ddlprodcattypeid" class="form-control d-inline" asp-items="ViewBag.productTypeList">
+                        <option value='0'>--Product Type--</option>
+                    </select>
+                    <span asp-validation-for="searchFilterVM.ProductTypeId" class="text-danger"></span>
+                </div>
+                <div class="filter-seprator"></div>
+
+                @* Regd No Filter *@
+                <p class="filterheading">
+                    <input type="checkbox" name="" id="chkregdNo">
+                    <label for="chkregdNo">Regd No</label>
+                </p>
+                <div class="filterbox">
+                    @*<input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">*@
+                    <input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">
+                </div>
+                <div class="filter-seprator"></div>
+
+                @* EVCStoreCode No Filter *@
+                <p class="filterheading">
+                    <input type="checkbox" name="" id="chkevcstoreCode">
+                    <label for="chkevcstoreCode">EVC Partner Code</label>
+                </p>
+                <div class="filterbox">
+                    <input type="text" class="form-control d-inline" id="evcstoreCode" placeholder="Search EVC Partner Code">
+                </div>
+                <div class="filter-seprator"></div>
+
+                @* Phone Number Filter *@
+                <p class="filterheading">
+                    <input type="checkbox" name="" id="chkPhoneNo">
+                    <label for="chkPhoneNo">Phone Number</label>
+                </p>
+                <div class="filterbox">
+                    <input type="text" class="form-control d-inline" id="phoneNo" placeholder="Search Phone Number">
+                </div>
+                <div class="filter-seprator"></div>
+
+                @* Submit Filter *@
+                <div class="filterbtnwrap">
+                    <a id="btnFilter" class="btn btn-primary">Filter</a>
+                    <a id="btnCloseFilter" class="btn btn-sm btn-secondary py-2">Cancel</a>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow noborderradius">
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- Tab -->
+                                <div class="tab-content" id="nav-tabContent">
+
+                                    <div class="tab-pane fade show active" id="UserAllocateDatatable1" role="tabpanel"
+                                         aria-labelledby="nav-home-tab1">
+                                        <table id="EVC_UserAssignDatatable"
+                                               class="table table-striped dt-responsive mainshadow" width="100%"
+                                               border="0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="all">Registration Id</th>
+                                                    <th class="all">Action</th>
+                                                    <th class="all">Order Reg No</th>
+                                                    <th class="all">EVC Partner Code</th>
+                                                    <th class="all">OrderAmount</th>
+                                                    <th class="all">Product Type</th>
+                                                    <th class="all">Product Categry</th>
+                                                    <th class="all">Actual Prod Qlty</th>
+                                                    <th class="all">Assign Date</th>
+
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+
+                                    <div class="tab-pane fade show" id="UserAllocateDatatable" role="tabpanel"
+                                         aria-labelledby="nav-home-tab">
+                                        <table id="EVC_UserAllocateDatatable"
+                                               class="table table-striped dt-responsive mainshadow" width="100%"
+                                               border="0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="all">Registration Id</th>
+                                                    <th class="all">Action</th>
+                                                    <th class="all">Order Reg No</th>
+                                                    <th class="all">EVC Partner Code</th>
+                                                    <th class="all">Ticket Numbe</th>
+                                                    <th class="all">OrderAmount</th>
+                                                    <th class="all">Product Type</th>
+                                                    <th class="all">Product Categry</th>
+                                                    <th class="all">Actual Prod Qlty</th>
+                                                    <th class="all">Allocate Date</th>
+
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane fade" id="UserDeliverdDatatable" role="tabpanel"
+                                         aria-labelledby="nav-profile-tab">
+                                        <table id="EVC_UserDeliverdDatatable"
+                                               class="table table-striped dt-responsive mainshadow" width="100%"
+                                               border="0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="all">Registration Id</th>
+                                                    <th class="all">Action</th>
+                                                    <th class="all">Order Reg No</th>
+                                                    <th class="all">EVC Partner Code</th>
+                                                    <th class="all">Ticket Numbe</th>
+                                                    <th class="all">OrderAmount</th>
+                                                    <th class="all">Product Type</th>
+                                                    <th class="all">Product Categry</th>
+                                                    <th class="all">Actual Prod Qlty</th>
+                                                    <th class="all">Deliverd Date</th>
+
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane fade" id="UserCompleteDatatable" role="tabpanel"
+                                         aria-labelledby="nav-contact-tab">
+                                        <table id="EVC_UserCompleteDatatable"
+                                               class="table table-striped dt-responsive mainshadow" width="100%"
+                                               border="0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="all">Registration Id</th>
+                                                    <th class="all">Action</th>
+                                                    <th class="all">Order Reg No</th>
+                                                    <th class="all">EVC Partner Code</th>
+                                                    <th class="all">Ticket Numbe</th>
+                                                    <th class="all">OrderAmount</th>
+                                                    <th class="all">Product Type</th>
+                                                    <th class="all">Product Categry</th>
+                                                    <th class="all">Actual Prod Qlty</th>
+                                                    <th class="all">Complete Date</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane fade" id="UserPickupDeclineDatatable" role="tabpanel"
+                                         aria-labelledby="nav-contact-tab">
+                                        <table id="EVC_UserPickupDeclineDatatable"
+                                               class="table table-striped dt-responsive mainshadow" width="100%"
+                                               border="0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="all notexport">Order Trans Id</th>
+                                                    <th class="all">Action</th>
+                                                    <th class="all">Order Regd No</th>
+                                                    <th class="all">EVC Partner Code</th>
+                                                    <th class="all">Order Amount</th>
+                                                    <th class="all">Product Type</th>
+                                                    <th class="all">Product Categry</th>
+                                                    <th class="all">Pickup Decline Date</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="UserReopenOrderDatatable" role="tabpanel"
+                                         aria-labelledby="nav-contact-tab">
+                                        <table id="EVC_UserReOpenDatatable"
+                                               class="table table-striped dt-responsive mainshadow" width="100%"
+                                               border="0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="all notexport">Order Trans Id</th>
+                                                    <th class="all">Action</th>
+                                                    <th class="all">Order Regd No</th>
+                                                    <th class="all">EVC Partner Code</th>
+                                                    <th class="all">Order Amount</th>
+                                                    <th class="all">Product Type</th>
+                                                    <th class="all">Product Categry</th>
+                                                    <th class="all">Pickup Decline Date</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <a href='javascript:history.go(-1)' class="btn btn-primary">Back to List</a>
+
+                                </div>
+                                <!-- End of tab -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+<script type="text/javascript">
+    $(window).on('pageshow', function () {
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+    });
+    var table = null;
+    var Assigntable = null;
+    var Allocatetable = null;
+    var Deliverdtable = null;
+    var Completetable = null;
+    var PickupDeclinetable = null;
+    var Reopentable = null;
+
+
+    $(document).ready(function () {
+
+        $('.filterbox').hide();
+
+        //variable declaration
+        var table = null;
+
+        //Document (Page Load) ready Function Call
+
+        //Date Picker
+        $("#orderStartDate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                $("#orderEndDate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#orderEndDate").datepicker({
+            defaultDate: null,
+        });
+
+
+        //Hide Filters Dive
+        $('.filters').hide();
+        //Table Count 1 Start
+        var urlData = "";
+        DataTable(urlData);
+
+
+    });
+
+
+    //Filter Close Button Click Event
+    $('#btnCloseFilter').click(function () {
+        $('#orderStartDate').val("");
+        $('#orderEndDate').val("");
+        $('#ddlprodcatid').val(0);
+        $('#ddlprodcattypeid').empty();
+        $('#ddlprodcattypeid').append("<option value='0'>--Product Type--</option>");
+        $('#regdNo').val("");
+        $('#evcstoreCode').val("");
+        $('#phoneNo').val("");
+        $('#companyName').val("");
+        // Unchecks it
+        $('.filters input[type="checkbox"]').prop('checked', false);
+        $('.filterbox').hide();
+        CommonFilter();
+    });
+
+    //Check Box Date Range change Event
+    $("#chkOrderDateRange").click(function () {
+        if (!this.checked) {
+            $('#orderStartDate').val("");
+            $('#orderEndDate').val("");
+        }
+    });
+
+
+    //Check Box Product Category change Event
+    $("#chkProductCategory").click(function () {
+        if (!this.checked) {
+            $('#ddlprodcatid').val(0);
+        }
+    });
+
+    //On Change Event for Get Product type by Product Category
+    $("#ddlprodcatid").change(function () {
+        $.get("@URLPrefixforProd/api/Dropdown/OnGetProductCategoryTypeAsync?productCatId=" + $(this).val()).done(function (data) {
+
+            $("#ddlprodcattypeid").empty();
+            $("#ddlprodcattypeid").append($("<option></option>").val('0').html('Select ProductType'));
+            $.each(data, function (i, producttype) {
+                $("#ddlprodcattypeid").append($("<option></option>").val(producttype.text).html(producttype.value));
+            });
+        });
+    });
+
+    //Check Box Product Type change Event
+    $("#chkProductType").click(function () {
+        if (!this.checked) {
+            $('#ddlprodcattypeid').val(0);
+        }
+    });
+
+    //Check Box Regd Number change Event
+    $("#chkregdNo").click(function () {
+        if (!this.checked) {
+            $('#regdNo').val("");
+        }
+    });
+
+    //Check Box EVCStoreCode Number change Event
+    $("#chkevcstoreCode").click(function () {
+        if (!this.checked) {
+            $('#evcstoreCode').val("");
+        }
+    });
+
+    //Check Box Phone Number change Event
+    $("#chkPhoneNo").click(function () {
+        if (!this.checked) {
+            $('#phoneNo').val("");
+        }
+    });
+
+    //Check Box Brand Name change Event
+    $("#chkcompanyName").click(function () {
+        if (!this.checked) {
+            $('#companyName').val("");
+        }
+    });
+
+    // Follow-up list multi Search Filter
+    $('#btnFilter').click(function () {
+        CommonFilter();
+    });
+
+    $('#filterboxbtnright').click(function () {
+        $('.filters').toggle();
+    })
+
+    //data table
+    function DataTable(urlData) {
+
+        Assigntable = $('#EVC_UserAssignDatatable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper "><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Assign Order list',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Record found"
+            },
+            "ajax": {
+                "url": "@URLPrefixforProd/api/EVCList/EVCUser_GetAllAllocateRecords?userid=" + @Model.userId+"&TableNo=1 " + urlData,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+
+            "columns": [
+                { "data": "evcregistrationId", "name": "EvcregistrationId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                { "data": "evcStoreCode", "name": "EvcStoreCode", "autoWidth": true, "orderable": false },
+                { "data": "orderAmount", "name": "OrderAmount", "autoWidth": true, "orderable": false },
+                { "data": "productTypeName", "name": "ProductTypeName", "autoWidth": true, "orderable": false },
+                { "data": "productCatName", "name": "ProductCatName", "autoWidth": true, "orderable": false },
+                { "data": "actualProdQlty", "name": "ActualProdQlty", "autoWidth": true, "orderable": false },
+                { "data": "date", "name": "Date", "autoWidth": true, "orderable": false },
+
+            ]
+        });
+
+        Allocatetable = $('#EVC_UserAllocateDatatable').dataTable({
+
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper "><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Allocated Order list',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Record found"
+            },
+            "ajax": {
+                "url": "@URLPrefixforProd/api/EVCList/EVCUser_GetAllAllocateRecords?userid=" + @Model.userId+"&TableNo=2 " + urlData,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+
+            "columns": [
+                { "data": "evcregistrationId", "name": "EvcregistrationId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                { "data": "evcStoreCode", "name": "EvcStoreCode", "autoWidth": true, "orderable": false },
+                { "data": "ticketNumber", "name": "TicketNumber", "autoWidth": true, "orderable": false },
+                { "data": "orderAmount", "name": "OrderAmount", "autoWidth": true, "orderable": false },
+                { "data": "productTypeName", "name": "ProductTypeName", "autoWidth": true, "orderable": false },
+                { "data": "productCatName", "name": "ProductCatName", "autoWidth": true, "orderable": false },
+                { "data": "actualProdQlty", "name": "ActualProdQlty", "autoWidth": true, "orderable": false },
+                { "data": "date", "name": "Date", "autoWidth": true, "orderable": false },
+
+            ]
+        });
+
+        Deliverdtable = $('#EVC_UserDeliverdDatatable').dataTable({
+
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper "><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Deliverd Order list',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Record found"
+            },
+            "ajax": {
+                "url": "@URLPrefixforProd/api/EVCList/EVCUser_GetAllAllocateRecords?userid=" + @Model.userId+"&TableNo=3 " + urlData,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+
+            "columns": [
+                { "data": "evcregistrationId", "name": "EvcregistrationId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                { "data": "evcStoreCode", "name": "EvcStoreCode", "autoWidth": true, "orderable": false },
+                { "data": "ticketNumber", "name": "TicketNumber", "autoWidth": true, "orderable": false },
+                { "data": "orderAmount", "name": "OrderAmount", "autoWidth": true, "orderable": false },
+                { "data": "productTypeName", "name": "ProductTypeName", "autoWidth": true, "orderable": false },
+                { "data": "productCatName", "name": "ProductCatName", "autoWidth": true, "orderable": false },
+                { "data": "actualProdQlty", "name": "ActualProdQlty", "autoWidth": true, "orderable": false },
+                { "data": "date", "name": "Date", "autoWidth": true, "orderable": false },
+            ]
+        });
+
+        Completetable = $('#EVC_UserCompleteDatatable').dataTable({
+
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper "><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Complete Order list',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Record found"
+            },
+            "ajax": {
+                "url": "@URLPrefixforProd/api/EVCList/EVCUser_GetAllAllocateRecords?userid=" + @Model.userId+"&TableNo=4 " + urlData,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+
+            "columns": [
+                { "data": "evcregistrationId", "name": "EvcregistrationId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                { "data": "evcStoreCode", "name": "EvcStoreCode", "autoWidth": true, "orderable": false },
+                { "data": "ticketNumber", "name": "TicketNumber", "autoWidth": true, "orderable": false },
+                { "data": "orderAmount", "name": "OrderAmount", "autoWidth": true, "orderable": false },
+                { "data": "productTypeName", "name": "ProductTypeName", "autoWidth": true, "orderable": false },
+                { "data": "productCatName", "name": "ProductCatName", "autoWidth": true, "orderable": false },
+                { "data": "actualProdQlty", "name": "ActualProdQlty", "autoWidth": true, "orderable": false },
+                { "data": "date", "name": "Date", "autoWidth": true, "orderable": false },
+            ]
+        });
+
+        PickupDeclinetable = $('#EVC_UserPickupDeclineDatatable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper "><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Pickup Decline Order list',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Record found"
+            },
+            "ajax": {
+                "url": "@URLPrefixforProd/api/EVCList/EVCUser_GetAllAllocateRecords?userid=" + @Model.userId+"&TableNo=5" + urlData,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+
+            "columns": [
+                { "data": "orderTransId", "name": "OrderTransId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                { "data": "evcStoreCode", "name": "EvcStoreCode", "autoWidth": true, "orderable": false },
+                { "data": "orderAmount", "name": "OrderAmount", "autoWidth": true, "orderable": false },
+                { "data": "productTypeName", "name": "ProductTypeName", "autoWidth": true, "orderable": false },
+                { "data": "productCatName", "name": "ProductCatName ", "autoWidth": true, "orderable": false },
+                { "data": "date", "name": "Date", "autoWidth": true, "orderable": false },
+            ]
+        });
+
+        Reopentable = $('#EVC_UserReOpenDatatable').dataTable({
+
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper "><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Pickup Decline Order list',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Record found"
+            },
+            "ajax": {
+                "url": "@URLPrefixforProd/api/EVCList/EVCUser_GetAllAllocateRecords?userid=" + @Model.userId+"&TableNo=6" + urlData,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+
+            "columns": [
+                { "data": "orderTransId", "name": "OrderTransId", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                { "data": "evcStoreCode", "name": "EvcStoreCode", "autoWidth": true, "orderable": false },
+                { "data": "orderAmount", "name": "OrderAmount", "autoWidth": true, "orderable": false },
+                { "data": "productTypeName", "name": "ProductTypeName", "autoWidth": true, "orderable": false },
+                { "data": "productCatName", "name": "ProductCatName ", "autoWidth": true, "orderable": false },
+                { "data": "date", "name": "Date", "autoWidth": true, "orderable": false },
+            ]
+        });
+    }
+
+
+    function GetURLData(orderStartDate = null, orderEndDate = null, companyName = null, productCatId = null, productTypeId = null, regdNo = null, evcstoreCode = null, phoneNo = null, custCity = null) {
+        var urlData = "";
+        if (orderStartDate != null && orderEndDate != null) {
+            urlData += '&orderStartDate=' + orderStartDate + '&orderEndDate=' + orderEndDate;
+        }
+
+        if (companyName != null) {
+            urlData += '&companyName=' + companyName;
+        }
+        if (productCatId != null && productCatId > 0) {
+            urlData += '&productCatId=' + productCatId;
+        }
+        if (productTypeId != null && productTypeId > 0) {
+            urlData += '&productTypeId=' + productTypeId;
+        }
+        if (regdNo != null) {
+            urlData += '&regdNo=' + regdNo;
+        }
+        if (evcstoreCode != null) {
+            urlData += '&evcstoreCode=' + evcstoreCode;
+        }
+        if (phoneNo != null) {
+            urlData += '&phoneNo=' + phoneNo;
+        }
+
+        return urlData;
+    }
+
+    //Filter Function
+    function CommonFilter() {
+        var companyName = $('#companyName').val();
+        companyName = $('#companyName').val() == "" ? null : $('#companyName').val();
+
+        var productCatId = $('#ddlprodcatid').val();
+        productCatId = $('#ddlprodcatid').val() == "" ? 0 : $('#ddlprodcatid').val();
+        var productTypeId = $('#ddlprodcattypeid').val();
+        productTypeId = $('#ddlprodcattypeid').val() == "" ? 0 : $('#ddlprodcattypeid').val();
+
+        var orderStartDate = $('#orderStartDate').val();
+        orderStartDate = $('#orderStartDate').val() == "" ? null : $('#orderStartDate').val();
+        var orderEndDate = $('#orderEndDate').val();
+        orderEndDate = $('#orderEndDate').val() == "" ? null : $('#orderEndDate').val();
+
+        var regdNo = $('#regdNo').val();
+        regdNo = $('#regdNo').val() == "" ? null : $('#regdNo').val();
+
+        var evcstoreCode = $('#evcstoreCode').val();
+        evcstoreCode = $('#evcstoreCode').val() == "" ? null : $('#evcstoreCode').val();
+
+        var phoneNo = $('#phoneNo').val();
+        phoneNo = $('#phoneNo').val() == "" ? null : $('#phoneNo').val();
+
+
+        var urlData = GetURLData(orderStartDate, orderEndDate, companyName, productCatId, productTypeId, regdNo, evcstoreCode, phoneNo);
+
+    @*var url = null;
+            url = "@URLPrefixforProd/api/EVCList/GetPickupDeclineList?companyId=" + @ViewBag.CompanyId + urlData;*@
+
+
+       
+        Assigntable = $('#EVC_UserAssignDatatable').DataTable();
+        // Destroy the existing DataTable
+        Assigntable.destroy();
+        Allocatetable = $('#EVC_UserAllocateDatatable').DataTable();
+        // Destroy the existing DataTable
+        Allocatetable.destroy();
+        Deliverdtable = $('#EVC_UserDeliverdDatatable').DataTable();
+        // Destroy the existing DataTable
+        Deliverdtable.destroy();
+        Completetable = $('#EVC_UserCompleteDatatable').DataTable();
+        // Destroy the existing DataTable
+        Completetable.destroy();
+
+        PickupDeclinetable = $('#EVC_UserPickupDeclineDatatable').DataTable();
+        // Destroy the existing DataTable
+        PickupDeclinetable.destroy();
+
+        Reopentable = $('#EVC_UserReOpenDatatable').DataTable();
+        // Destroy the existing DataTable
+        Reopentable.destroy();
+        //Call Data Table
+        //Re-Initialize Datatable
+        DataTable(urlData);
+
+        $('.filters').hide();
+    }
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+
+</script>
+<script>
+    @*AutoPopulate Regd No search filter*@
+
+        $(function () {
+            function split(val) {
+                return val.split(/,\s*/);
+            }
+            function extractLast(term) {
+                return split(term).pop();
+            }
+
+            $("#regdNo").on("keydown", function (event) {
+                if (event.keyCode === $.ui.keyCode.TAB &&
+                    $(this).autocomplete("instance").menu.active) {
+                    event.preventDefault();
+                }
+            })
+                .autocomplete({
+                    minLength: 3,
+                    source: function (request, response) {
+                        $.get("@URLPrefixforProd/EVC_Portal/EVCUser_AllOrderRecordList?handler=SearchRegdNo", {
+                            term: extractLast(request.term)
+                        }, response);
+                    },
+                    focus: function () {
+                        // prevent value inserted on focus
+                        return false;
+                    },
+                    open: function (event, ui) {
+                        // Get the menu element
+                        var menu = $(this).autocomplete("widget");
+
+                        // Set max-height and overflow properties
+                        menu.css("max-height", "200px");
+                        menu.css("overflow-y", "auto");
+                    },
+                    select: function (event, ui) {
+                        var terms = split(this.value);
+                        console.log(terms);
+                        // remove the current input
+                        terms.pop();
+                        // add the selected item
+                        terms.push(ui.item.value);
+
+                        this.value = ui.item.value;
+                        return false;
+                    }
+                });
+        })
+
+    $('#nav-home-tab1').click(function () {     
+        let table = $('#EVC_UserAssignDatatable').DataTable();
+        table.ajax.reload();
+    })
+    $('#nav-home-tab2').click(function () {       
+        let table = $('#EVC_UserAllocateDatatable').DataTable();
+        table.ajax.reload();
+    })
+    $('#nav-profile-tab3').click(function () {     
+        let table = $('#EVC_UserDeliverdDatatable').DataTable();
+        table.ajax.reload();
+    })
+    $('#nav-contact-tab4').click(function () {     
+        let table = $('#EVC_UserCompleteDatatable').DataTable();
+        table.ajax.reload();
+    })
+    $('#nav-contact-tab5').click(function () {      
+        let table = $('#EVC_UserPickupDeclineDatatable').DataTable();
+        table.ajax.reload();
+    })
+    $('#nav-contact-tab6').click(function () {
+        let table = $('#EVC_UserReOpenDatatable').DataTable();
+        table.ajax.reload();
+    })
+</script>
+
+
+
+
+
+
+
+
+
+

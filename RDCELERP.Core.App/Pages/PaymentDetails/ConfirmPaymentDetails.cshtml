@@ -1,0 +1,693 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.PaymentDetails.ConfirmPaymentDetailsModel
+@{
+    ViewData["Title"] = "ConfirmPaymentDetails";
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    int? pickhrs = null;
+    if (Model.PicupExpectedInHrs != null && Model.PicupExpectedInHrs != 0)
+    {
+        pickhrs = Convert.ToInt32(Model.PicupExpectedInHrs);
+    }
+    else
+    {
+        //Default Set
+        pickhrs = 36;
+    }
+}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>ConfirmPaymentDetails</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="/ERP/Images/favicon.png" sizes="32x32" />
+    <link rel="icon" href="/ERP/Images/favicon.png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/ERP/Images/favicon.png" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link type="text/css" href="~/NewLayout/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('../Images/bg.png') no-repeat center center;
+            background-size: 160%;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            display: none;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+            line-height: 1.6;
+        }
+
+
+        #wrapper {
+            position: relative;
+            min-height: 100vh;
+            height: 100%;
+            padding-bottom: 80px;
+        }
+
+        .topnav {
+            border-bottom: 1px solid #e6e6e6;
+            background: #fff;
+            padding: 8px 0;
+        }
+
+            .topnav p {
+                margin: 18px 0 0;
+                font-size: 14px;
+                font-weight: 600;
+                color: #002554;
+            }
+
+        .logowrapper {
+            max-width: 150px;
+            margin: 0 auto;
+        }
+
+            .logowrapper .logo {
+                width: 100%;
+            }
+
+        .table th {
+            font-size: 14px;
+        }
+
+        .form-control,
+        .custom-select {
+            border-radius: 6px;
+            box-shadow: none;
+            border: 1px solid #e8e8e8 !important;
+            height: 38px;
+        }
+
+            .form-control:focus {
+                outline: none;
+                box-shadow: none;
+            }
+
+        .form-group {
+            padding: 0 20px;
+        }
+
+            .form-group label {
+                font-size: 13px;
+            }
+
+        .mainformarea {
+            background-color: #fff;
+            -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            padding-bottom: 20px;
+        }
+
+        .main {
+            padding: 40px 0;
+        }
+
+
+        .btn {
+            border-radius: 8px;
+            padding: 10px 30px;
+            /* box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px; */
+            margin: 3px;
+            border: none;
+            box-shadow: none;
+            font-size: 14px;
+        }
+
+            .btn:hover {
+                transition: 0.1s;
+            }
+
+        .btn-primary {
+            background: rgb(51, 37, 176);
+            background: -moz-linear-gradient(-45deg, rgba(51, 37, 176, 1) 0%, rgb(87, 29, 135) 100%);
+            background: -webkit-linear-gradient(-45deg, rgba(51, 37, 176, 1) 0%, rgba(40, 29, 135, 1) 100%);
+            background: linear-gradient(135deg, rgba(51, 37, 176, 1) 0%, rgba(40, 29, 135, 1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3325b0', endColorstr='#281d87', GradientType=1);
+        }
+
+            .btn-primary:hover {
+                opacity: 0.95;
+            }
+
+        .btn-secondary {
+            background-color: #fff;
+            color: #002554;
+            border: 1px solid #002554;
+        }
+
+            .btn-secondary:hover {
+                background-color: #f2f2f2;
+                color: #002554;
+            }
+
+        .footer {
+            padding: 30px 0;
+            background-color: #0d004c;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 80px;
+        }
+
+            .footer:after {
+                content: '';
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                height: 60px;
+                width: 100%;
+                background: url(../DBFiles/UPITemplate/footer-pattern-01.png) no-repeat right center;
+                background-size: contain;
+            }
+
+            .footer a {
+                color: #fff;
+            }
+
+            .footer img {
+                width: 100%;
+                max-width: 60px;
+            }
+
+            .footer p {
+                margin: 0;
+            }
+
+            .footer label {
+                margin: 0;
+            }
+
+            .footer a {
+                margin: 5px;
+                font-size: 14px;
+                color: #002554;
+                vertical-align: bottom;
+            }
+
+                .footer a:hover {
+                    text-decoration: none;
+                }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+
+            .input-group .form-control {
+                border-radius: 0 6px 6px 0;
+                font-size: 13px;
+            }
+
+
+
+            .input-group i {
+                border-right: 0;
+                padding: 10px 15px;
+                height: 38px;
+                border-radius: 6px 0 0 6px;
+                border: 1px solid #e8e8e8 !important
+            }
+
+        .card {
+            display: block;
+            padding: 24px;
+            border: 1px solid #e8e8e8;
+            border-radius: 6px;
+            margin: 12px;
+        }
+
+        .heading {
+            font-size: 20px;
+            margin-bottom: 26px;
+            border-bottom: 1px solid #f6f6f6;
+            padding-bottom: 15px;
+        }
+
+        ::placeholder {
+            font-size: 13px;
+        }
+
+        .form-control:hover {
+            border: 1px solid #ccc !important;
+        }
+
+        .text-muted {
+            font-size: 11px;
+            margin-top: 7px;
+        }
+
+        .astrik {
+            color: red;
+        }
+
+
+        .footer-social a {
+            margin: 20px 10px;
+        }
+
+            .footer-social a img {
+                width: 20px;
+                max-height: 20px;
+            }
+
+        strong {
+            color: #002554;
+            font-weight: 500;
+        }
+
+
+        .detailbox p {
+            font-size: 14px;
+        }
+
+            .detailbox p span {
+                display: block;
+                font-size: 16px;
+                margin-top: 8px;
+                padding: 6px 0;
+                border-top: 1px solid #eee;
+                font-weight: 500;
+            }
+
+            .detailbox p i {
+                margin-right: 6px;
+                opacity: 0.5;
+            }
+
+        .primary-color {
+            color: #002554;
+        }
+
+        .upitopbox {
+            display: flex;
+            justify-content: space-between;
+        }
+
+            .upitopbox span {
+                color: grey;
+                font-size: 13px;
+                margin-right: 10px;
+            }
+
+                .upitopbox span strong {
+                    color: #333;
+                }
+
+        .custom-file-label::after {
+            display: none !important;
+        }
+
+        @@media (max-width: 770px) {
+            #wrapper {
+                padding-bottom: 100px;
+            }
+
+            .footer {
+                text-align: center;
+                padding-bottom: 100px;
+            }
+        }
+
+        @@media screen and (max-width: 600px) {
+            .logowrapper {
+                max-width: 120px;
+            }
+
+            .topnav p {
+                font-size: 12px;
+            }
+
+            label {
+                font-size: 13px;
+            }
+
+            .heading {
+                font-size: 18px;
+                margin-bottom: 22px;
+            }
+
+            .upitopbox {
+                display: block;
+            }
+            .upitopbox span {
+                display: block;
+            }
+        }
+       
+
+    </style>
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <div class="topnav">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 py-3 text-center">
+                        <div class="logowrapper">
+                            <img src="https://digi2l.in/wp-content/uploads/2022/09/logo.svg" alt="">
+
+                        </div>
+                        <p>India's 1st Digital Platform To Sell Used Appliances</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="container">
+
+                <div class="card">
+
+                    <form method="post" enctype="multipart/form-data">
+
+                        <div class="row justify-content-center mb-4">
+                            <input type="hidden" id="hdnregdno" asp-for="UpiNoViewModel.Regdno" />
+                            <input type="hidden" id="hdnuserid" asp-for="UpiNoViewModel.Userid" />
+                            <input type="hidden" id="hdnvouchertype" asp-for="UpiNoViewModel.VoucherType" />
+                            <input type="hidden" id="hdninvalidname" asp-for="InvalidName" />
+                            <input type="hidden" id="hdncustomername" asp-for="UpiNoViewModel.CustomerName" />
+                            <input type="hidden" id="hdncustomername" asp-for="UpiNoViewModel.CustomerId" />
+                            <input type="hidden" id="hdnordertype" asp-for="OrderType" />
+                            <input type="hidden" asp-for="URLPrefixforProd" />
+
+                            @if (Model.UpiNoViewModel.VoucherType == "DiscountVoucher")
+                            {
+                                <div class="col-12">
+                                    <h3 class="heading text-center">Enter pickup details below</h3>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-12">
+                                    <h3 class="heading text-center">Enter pickup and UPI details below</h3>
+                                </div>
+                            }
+
+                            @if (Model.UpiNoViewModel.VoucherType != "DiscountVoucher")
+                            {
+                                <div class="col-md-5 mb-4" id="checkvouchertype">
+                                    <div>
+                                        <label for="" class="upitopbox">UPI ID <span>Customer Name: <strong>@Html.DisplayFor(model => model.UpiNoViewModel.CustomerName)</strong></span></label>
+                                        <div class="input-group">
+                                            <i class="fa-solid fa-at"></i>
+                                            <input type="text" asp-for="UpiNoViewModel.UPIId" id="txtupiId" placeholder="example@okhdfcbank" maxlength="50" class="form-control" required />
+                                        </div>
+                                        <p class="text-muted mt-2"><span class="astrik">*</span> UPI ID must be linked to your Bank Account</p>
+                                        <p class="text-danger" id="errormsg">@ViewData["Message"]</p>
+                                    </div>
+                                </div>
+
+                               
+
+                                @if (Model.IsUPIQrRequired == true)
+                                {
+                                    <div class="col-md-1 d-flex align-items-center justify-content-center">
+                                        <p class="text-center">OR</p>
+                                    </div>
+                                <div class="col-md-5 mb-4" id="checkvouchertype">
+                                   
+                                        <div>
+                                            <label> Upload QR Code Image </label>                                       
+                                            <div class="input-group">
+                                                <div id="reader" class="form-control" style="width:70%; height:auto;"></div>
+
+                                                <div class="input-group-append">
+                                                    <input type="button" value="Upload" class="btn btn-primary mainshadow" id="btnUpload">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p id="qr-result" class="text-danger"></p>
+                                </div>
+                                }
+
+                            }
+
+                            </div>
+
+                            <div class="row">
+                            <div class="col-md-5 mx-auto">
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <label for="">Pickup Date</label>
+                                        <input type="date" asp-for="UpiNoViewModel.PreferredPickupDate" id="pickupdate" placeholder="Pickup Date" class="form-control" required />
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <label for="">Pickup Time</label>
+                                        <select asp-for="UpiNoViewModel.PreferredPickupTime" id="pickuptime" class="form-control" asp-items="ViewBag.timeslot" required>
+                                            <option value=''>--None--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="row">       
+                                @if (Model.InvalidName != null)
+                            {
+                                <div class="col-md-6 p-0 mx-auto">
+                                    <div class="row justify-content-center mb-4 m-0" id="custname">
+                                        <div class="col-md-6 mb-2">
+                                            <label for="">First Name</label>
+                                            <input type="text" asp-for="UpiNoViewModel.CustomerFirstName" id="txtcustfirstname" maxlength="50" placeholder="Account Holder First Name" class="form-control fieldvalidate" />
+                                            <p class="text-danger" id="Firsterrormsg"></p>
+                                        </div>
+
+                                        <div class="col-md-6 mb-2">
+                                            <label for="">Last Name</label>
+                                            <input type="text" asp-for="UpiNoViewModel.CustomerLastName" id="txtcustlastname" maxlength="50" placeholder="Account Holder Last Name" class="form-control fieldvalidate" />
+                                            <p class="text-danger" id="Lasterrormsg"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="col-12 mb-4 text-center" id="savebtndiv">
+                                <input type="submit" value="Save" id="savebtn" class="btn btn-primary mainshadow" />
+                                <input type="button" value="Reset" id="resetbtn" class="btn btn-dark mainshadow" />
+                            </div>
+                            <div class="col-12 mb-4 text-center" id="updatebtndiv">
+                                <input type="submit" value="Update" id="updatebtn" class="btn btn-primary mainshadow" />
+                            </div>
+
+                        </div>
+                    <div class="col-12 mb-4 text-center">
+                            <h6>Note: Ideal pickup time is within @pickhrs hours after QC process is completed. </h6>
+                    </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="footer text-center">
+            <div class="container">
+                <p>
+                    <a href="https://digi2l.in" target="_blank">
+                        <label style="color:white">Powered by</label>
+
+                        <img src="https://digi2l.in/wp-content/uploads/2022/09/logo-Digi2L.png">
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        </div>
+
+        <script src="~/NewLayout/vendor/jquery/jquery-3.6.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/jquery-clockpicker.js"></script>
+        <script src="~/NewLayout/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+        <script src="https://unpkg.com/html5-qrcode"></script>
+
+        <script>
+        $(document).ready(function () {
+
+        $('body').show();
+
+        var isvoucherdiscount = $('#hdnvouchertype').val();
+        if (isvoucherdiscount == "DiscountVoucher") {
+            debugger;
+            $('#checkvouchertype').hide();
+        }
+
+        var todaysDate = new Date();
+        var pickhrs = parseInt(@pickhrs);
+        var startDate = new Date(todaysDate.getTime() + (pickhrs * 60 * 60 * 1000));
+        var dd = String(startDate.getDate()).padStart(2, '0');
+        var mm = String(startDate.getMonth() + 1).padStart(2, '0');
+        var yyyy = startDate.getFullYear();
+
+        startDate = yyyy + '-' + mm + '-' + dd;
+        $('#pickupdate').attr('min', startDate);
+
+        $('#reader__scan_region').hide();
+        $('#reader__dashboard_section_csr').hide();
+        $('#html5-qrcode-anchor-scan-type-change').click(function () {
+                $('#html5-qrcode-anchor-scan-type-change').hide();
+            })
+
+        });
+        if ("@Model.InvalidName" != "") 
+        {
+            $('#updatebtndiv').show();
+            $('#savebtndiv').hide();
+        }
+        else
+        {
+            $('#updatebtndiv').hide();
+            $('#savebtndiv').show();
+        }
+
+        $('#resetbtn').click(function () {
+            $('#txtupiId').val("");
+            $('#pickupdate').val("");
+            $('#pickuptime').val("");
+        })
+
+        if ($('#errormsg')[0].innerHTML != "") {
+            $('#resetbtn').click();
+        }
+
+        $('#txtcustfirstname').change(function (e) {
+            var regex = new RegExp("^[a-zA-Z]+$");
+            var custfirstname = $('#txtcustfirstname').val();
+            debugger;
+            if (custfirstname.match(regex)) {
+                $('#Firsterrormsg').text("");
+                return true;
+            }
+            else {
+                e.preventDefault();
+                $('#txtcustfirstname').val("");
+                $('#Firsterrormsg').text("Please Enter Alphabates Only");
+                return false;
+            }
+        });
+
+        $('#txtcustlastname').change(function (e) {            
+            var regex = new RegExp("^[a-zA-Z]+$");
+            var custlastname = $('#txtcustlastname').val();
+            if (custlastname.match(regex)) {
+                $('#Lasterrormsg').text("");
+                return true;
+            }
+            else {
+                e.preventDefault();
+                $('#Lasterrormsg').text("Please Enter Alphabates Only");
+                $('#txtcustlastname').val("");
+                return false;
+            }
+        });
+
+        $('#txtupiId').change(function (e) {            
+            if ($('#txtupiId').val().length > 0) {
+                var ValidUPIId = $('#txtupiId').val();
+                $.ajax({
+                    type: "GET",
+                    url: "@ViewData["URLPrefixforProd"]/PaymentDetails/ConfirmPaymentDetails?handler=CheckValidUPIId",
+                    beforeSend: function (xhr) {
+                    },
+                    data: { "ValidUPIId": ValidUPIId },
+                    success: function (response) {
+                        if (response == true) {
+                            $('#errormsg').text("");
+                        } else {
+
+                            $('#errormsg').text("Invalid UPI Id format");
+                            Swal.fire({
+                                title: "Failed!",
+                                text: "Invalid UPI Id format ",
+                                icon: 'warning',
+                                confirmButtonText: 'Ok',
+                                customClass: {
+                                    confirmButton: 'btn btn-dark'
+                                }
+                            });
+                            $('#txtupiId').val("");
+                        }
+                    }
+                });
+            }
+        });
+
+        function onScanSuccess(decodedText, decodedResult) {
+
+            // Handle on success condition with the decoded text or result.
+            //console.log(`Scan result: ${decodedText}`, decodedResult);
+            //document.getElementById("qr-result").innerHTML = decodedText;
+            $('#btnUpload').prop('disabled', false);
+            $('#btnUpload').click(function () {
+                $.ajax({
+                    url: '@ViewData["URLPrefixforProd"]/PaymentDetails/ConfirmPaymentDetails?handler=Image',
+                    type: 'POST',
+                    beforeSend: function (xhr) {
+                                xhr.setRequestHeader("XSRF-TOKEN",
+                                    $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    data: { baseData: decodedText },
+                    success: function (data) {
+                        if (data != null) {
+                            var upi = data.upiId;
+                            //var firstName = data.firstName;
+                            //var lastName = data.lastName;
+                            $('#txtupiId').val(upi);
+                            //$('#txtcustfirstname').val(firstName);
+                            //$('#txtcustlastname').val(lastName);
+                            $("#qr-result").empty();
+                        }
+                        else {
+                            $('#txtupiId').val("");
+                            $('#qr-result').html("The QR Code Image is Invalid");
+                        }
+                        decodedText = null;
+                        $('#btnUpload').prop('disabled', true);
+                    },
+                    error: function () {
+                        $('#result').text('failed');
+                    }
+                });
+            });
+        }
+
+        function onScanError(errorMessage) {
+                // handle on error condition, with error message
+                console.error(errorMessage);
+        }
+
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess, onScanError);
+
+        </script>
+
+
+    </body>
+
+</html>
+

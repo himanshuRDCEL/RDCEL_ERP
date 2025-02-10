@@ -1,0 +1,51 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.QCIndex.BulkWaMsgModel
+@{
+    ViewData["Title"] = "Bulk Send WhatsApp Msgs";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+@if (accessRule != null && accessRule.CanView)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="card border-0 shadow">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h2 class="fs-5 fw-bold mb-0">Bulk Send WhatsApp Msgs</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            @* <form method ="post">
+                                <input type="submit" class="btn btn-primary" value="Bulk Send Self QC Link" id="btnSubmit"/>
+                            </form> *@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+
+<script type="text/javascript">
+    // $("#btnSubmit").click(function () {
+    //     alert("Btn Clicked");
+    //     $("#btnSubmit").prop("disabled", true);
+    // });
+</script>

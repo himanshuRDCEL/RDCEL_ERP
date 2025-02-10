@@ -1,0 +1,277 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ImageLabelMaster.ManageModel
+
+
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>Image Label Master
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="ImageLabelNewViewModel.ImageLabelid" id="hdnId" />
+                                <input type="hidden" asp-for="ImageLabelNewViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="ImageLabelNewViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="ImageLabelNewViewModel.IsActive" />
+                                <input type="hidden" asp-for="ImageLabelNewViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="ImageLabelNewViewModel.ModifiedDate" />
+                                <input type="hidden" asp-for="ImageLabelNewViewModel.ImagePlaceHolder" />
+                                <input type="hidden" asp-for="ImageLabelNewViewModel.ProductCatId" id="hdncatid" />  
+                                <input type="hidden" asp-for="ImageLabelNewViewModel.ProductTypeId" id="hdntypeid" />
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Product Category <span style="color:red;">*</span></label>
+                                    <input id="ddlCategory" asp-for="ImageLabelNewViewModel.ProductCategoryName" class="form-control" />
+
+                                    <span asp-validation-for="ImageLabelNewViewModel.ProductCategoryName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Product Type </label>
+                                    <input id="ddlType" asp-for="ImageLabelNewViewModel.ProductTypeName" class="form-control" />
+
+                                    <span asp-validation-for="ImageLabelNewViewModel.ProductTypeName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Product Image Label <span style="color:red;">*</span></label>
+                                    <input asp-for="ImageLabelNewViewModel.ProductImageLabel" class="form-control" />
+                                    <span asp-validation-for="ImageLabelNewViewModel.ProductImageLabel" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Product Image Description<span style="color:red;">*</span></label>
+                                    <input asp-for="ImageLabelNewViewModel.ProductImageDescription" class="form-control" />
+                                    <span asp-validation-for="ImageLabelNewViewModel.ProductImageDescription" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Order Sequence(Pattern)<span style="color:red;">*</span></label>
+                                    <input asp-for="ImageLabelNewViewModel.Pattern" id="txtName" class="form-control" onkeyup="CheckAvailability();" />
+                                    <span asp-validation-for="ImageLabelNewViewModel.Pattern" class="text-danger"></span>
+                                    <span class="text-danger" id="message"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Select Media Type<span style="color:red;">*</span></label>
+                                    <select asp-for="ImageLabelNewViewModel.IsMediaTypeVideo" class="form-control">
+                                        <option value="false">Image</option>
+                                        <option value="true">Video</option>
+                                    </select>
+                                    <span asp-validation-for="ImageLabelNewViewModel.IsMediaTypeVideo" class="text-danger"></span>
+                                </div>
+                               
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Upload Image for Place Holder </label>
+                                    <input class="form-control" type="file" id="PlaceHolderImg_Upload" accept="image/*" asp-for="ImageLabelNewViewModel.ImagePlaceHolder" />
+                                    <input type="hidden" asp-for="ImageLabelNewViewModel.Base64StringValue" id="hdnBase64StringValue" />
+                                    <span asp-validation-for="ImageLabelNewViewModel.ImagePlaceHolder" class="text-danger"></span>
+                                </div>
+                                <div class="showimgbox" id="showimgbox" style="display:flex">
+                                    <label id="lblFileErr" style="color:red;"></label>
+                                    <img id="ImagePlaceHolder" src="@Model.ImageLabelNewViewModel.FullPlaceHolderImageUrl" />
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                    }
+                                </div>
+                                <div class="col-6 text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <input type="submit" value="Save" class="btn btn-primary mainshadow" />
+                                    }
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/js/compressor.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#PlaceHolderImg_Upload").bind('change', function () {
+            $("#lblFileErr").text("");
+            $("#hdnBase64StringValue").val("");
+            $("#showimgbox").css("display", "none");
+            $("#ImagePlaceHolder").attr('src', "");
+            $("#PlaceHolderImg_Upload").css("border", "");
+        });
+
+        $("#PlaceHolderImg_Upload").resizeImg(function () {
+            var value = parseInt("350");
+            var Weight = parseInt("2");
+            let type, quality;
+            {
+                type = "image/jpeg";
+                quality = 0.8;
+            }
+            return {
+                use_reader: false,
+                mode: Weight,
+                val: value,
+                type: type,
+                quality: quality,
+                callback: function (result) {
+                    $("#showimgbox").css("display", "flex");
+                    $("#ImagePlaceHolder").attr('src', result);
+                    $("#hdnBase64StringValue").val(result.substr(result.indexOf(',') + 1)).css("height", 100);
+                    $("#PlaceHolderImg_Upload").val(null);
+                }
+            };
+        });
+    });
+
+    var ProductCatId = null;
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        // Autocomplete for Product Category dropdown
+        $("#ddlCategory").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/ImageLabelMaster/Manage?handler=AutoProductCatName", {
+                    term: extractLast(request.term)
+                }, response);
+            },
+
+            select: function (event, ui) {
+                this.value = ui.item.value; // Set the selected value
+
+                ProductCatId = ui.item.text;
+                $("#hdncatid").val(ProductCatId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $(this).val(""); // Clear the input field
+                    ProductCatId = null; // Clear ProductCatId
+                    $("#hdncatid").val(""); // Clear associated hidden field
+                }
+            }
+        });
+    });
+
+    if (ProductCatId === null) {
+            ProductCatId = $('#hdncatid').val();
+        }
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        // Autocomplete for Product Type dropdown
+        $("#ddlType").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/ImageLabelMaster/Manage", {
+                    handler: "AutoProductTypeName",
+                    term: extractLast(request.term),
+                    term2: ProductCatId
+                }, response);
+            },
+
+            select: function (event, ui) {
+                this.value = ui.item.value; // Set the selected value
+
+                ProductTypeId = ui.item.text;
+                $("#hdntypeid").val(ProductTypeId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $(this).val(""); // Clear the input field
+                    ProductTypeId = null; // Clear ProductTypeId
+                    $("#hdntypeid").val(""); // Clear associated hidden field
+                }
+            }
+        });
+    });
+
+
+
+    function CheckAvailability() {
+
+        $('#txtName-error').text('');
+        var name = $("#txtName").val();
+        var categoryid = $("#hdncatid").val();
+        var id = $("#hdnId").val();
+        if (name === '') {
+            $("#message").html(" ");
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["URLPrefixforProd"]/ImageLabelMaster/Manage?handler=CheckName",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "pattern": name, "categoryId": categoryid, "Id": id },
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    $("#message").html(" ");
+                } else {
+                    $("#message").css("color", "red");
+                    $("#message").html("This pattern is already exist for this category.");
+                    $('#Savebtn').prop('disabled', true);
+                }
+            },
+        });
+    }
+
+</script>
+

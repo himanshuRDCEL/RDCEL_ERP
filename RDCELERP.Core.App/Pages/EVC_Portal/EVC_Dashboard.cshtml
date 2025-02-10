@@ -1,0 +1,245 @@
+﻿@page
+@using Newtonsoft.Json
+@model RDCELERP.Core.App.Pages.EVC_Portal.EVC_DashboardModel
+@{
+    // Layout = "~/Pages/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@{
+    int? userId = null; // or set to the actual null value you want to pass
+
+}
+
+<div class="row">
+    <div class="col-12 mb-3">
+        <div class="card border-0 shadow">
+
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <input type="hidden" asp-for="eVC_DashBoardViewModel.evcRegistrationId" id="hdnUserId" />
+                        <h2 class="fs-5 fw-bold mb-0 card-title">Current Wallet Summary</h2>
+                        <h3 class="fw-extrabold mt-3 mb-0">₹ @Model.eVC_DashBoardViewModel.walletAmount</h3>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-xl-6 mb-4">
+        <div class="card border-0 shadow">
+            <a href="#">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-indian-rupee-sign"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+                            <h2 class="h6 text-gray-400 mb-0">Current Clear Balance</h2>
+                            <h3 class="fw-extrabold mb-2">₹ @Model.eVC_DashBoardViewModel.clearBalance</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-6 mb-4">
+        <div class="card border-0 shadow">
+            <a href="#">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-truck-fast"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+                            <h2 class="h6 text-gray-400 mb-0">In Process Amount </h2>
+                            <h3 class="fw-extrabold mb-2">₹ @Model.eVC_DashBoardViewModel.Allocation</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+
+    <div class="col-12 mb-3">
+        <div class="card border-0 shadow">
+
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+
+                        <h2 class="fs-5 fw-bold mb-0 card-title">Total Orders</h2>
+                        <h3 class="fw-extrabold mt-2 mb-0">@Model.eVC_DashBoardViewModel.evcAllocation</h3>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-xl-6 mb-4">
+        <div class="card border-0 shadow">
+            <a href="#">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-truck-ramp-box"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+                            <h2 class="h6 text-gray-400 mb-0">Assign Order</h2>
+                            <h3 class="fw-extrabold mb-2">@Model.eVC_DashBoardViewModel.totalAssignOrder</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-xl-6 mb-4">
+        <div class="card border-0 shadow">
+            <a href="#">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-truck-ramp-box"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+                            <h2 class="h6 text-gray-400 mb-0">Allocate Order</h2>
+                            <h3 class="fw-extrabold mb-2">@Model.eVC_DashBoardViewModel.totalAllocateOrder</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-6 mb-4">
+        <div class="card border-0 shadow">
+            <a href="#">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-truck-ramp-box"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+                            <h2 class="h6 text-gray-400 mb-0">Delivered Order</h2>
+                            <h3 class="fw-extrabold mb-2">@Model.eVC_DashBoardViewModel.totalDeliveredOrder</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-6 mb-4">
+        <div class="card border-0 shadow">
+            <a href="#">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-truck-ramp-box"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+                            <h2 class="h6 text-gray-400 mb-0">Complete Order</h2>
+                            <h3 class="fw-extrabold mb-2">@Model.eVC_DashBoardViewModel.totalCompleteOrder</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">Latest Assign Order</h2>
+                            </div>
+                            <div class="col text-end">
+                                <a href="~/EVC_Portal/EVCUser_AllOrderRecordList?userId=@userId" class="btn btn-primary">See all</a>
+
+                                <input type="button" id="btnforpayment" value="Wallet Recharge" class="btn btn-secondary" />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th class="border-bottom" scope="col">Regd No</th>
+                                    <th class="border-bottom" scope="col">Store code</th>
+                                    <th class="border-bottom" scope="col">order Amount</th>
+                                    <th class="border-bottom" scope="col">product Type Name</th>
+                                    <th class="border-bottom" scope="col">product Category Name</th>
+                                    <th class="border-bottom" scope="col">Assign Order Date </th>
+                                    <th class="border-bottom" scope="col">Action </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var items in Model.LattestAllocationViewModel)
+                                {
+                                <tr>
+                                    <td class="text-gray-900">
+                                        @items.regdNo
+                                    </td>
+                                        <td class="text-gray-900">
+                                            @items.storecode
+                                        </td>
+                                    <td class="fw-bolder text-gray-500">
+                                        @items.orderAmount
+                                    </td>
+                                    <td class="fw-bolder text-gray-500">
+                                        @items.productTypeName
+                                    </td>
+                                    <td class="fw-bolder text-gray-500">
+                                        @items.productCategoryName
+                                    </td>
+                                    <td class="fw-bolder text-gray-500">
+                                        @items.FinalDate
+                                    </td>
+                                    <td>
+                                        <a href="~/EVC_Portal/OrderdetailsViewPageForEVC_PortAL?OrderTransId= @items.OrdertransId" class="btn btn-primary">View</a>
+                                        @*<a href=><button></button></a>
+                                        <a href='" + URL + "/EVC_Portal/OrderdetailsViewPageForEVC_PortAL?OrderTransId=" + (item.orderTransId) + "'><button onclick='View(" + item.orderTransId + ")' class='btn btn-primary btn'>View</button></a>*@
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#btnforpayment').click(function () {
+        var evcRegistration = $('#hdnUserId').val();        
+        window.location.href = '@ViewData["URLPrefixforProd"]/EVC_Portal/WalletRecharge?EVCRegistration=' + evcRegistration;       
+    });
+   
+
+</script>

@@ -1,0 +1,209 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.State.ManageModel
+
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>State
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                <input type="hidden" asp-for="StateViewModel.StateId" id="hdnId" />
+                                <input type="hidden" asp-for="StateViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="StateViewModel.CreatedDate" />
+                                 <input type="hidden" asp-for="StateViewModel.IsActive" />
+                                <input type="hidden" asp-for="StateViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="StateViewModel.ModifiedDate" />
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">State Name <span style="color:red;">*</span></label>
+                                    <input type="text" asp-for="StateViewModel.Name" class="form-control" id="txtName" onkeyup="CheckAvailability();" />
+                                    <span asp-validation-for="StateViewModel.Name" class="text-danger"></span>
+                                    <span class="text-danger" id="message"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">State Code <span style="color:red;">*</span></label>
+                                    <input type="text" asp-for="StateViewModel.Code" class="form-control" id="txtCode" onkeyup="CheckAvailabal();" />
+                                    <span asp-validation-for="StateViewModel.Code" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+
+                               @*  <div class="col-md-4 mb-4">
+                                    <label for="">Is Active </label>
+                                    <select asp-for="StateViewModel.IsActive" class="form-control">
+                                        <option>Select </option>
+                                        <option>true</option>
+                                        <option>false</option>
+                                    </select>
+                                </div> *@
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                    }
+                                </div>
+                                <div class="col-6 text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <input type="submit" id="Savebtn"  value="Save" class="btn btn-primary mainshadow" />
+                                    }
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/compressor.js"></script>
+
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+        // Bind to the input event of the input field to clear the message whenever the input changes
+        $("#txtName").on('input', function () {
+            $("#message").html(" ");
+            checkErrors();
+        });
+    });
+
+    function CheckAvailability() {
+        debugger;
+        var name = $("#txtName").val();
+        var stateId = $("#hdnId").val();
+        if (name === '') {
+            $("#message").html(" ");
+            checkErrors();
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["URLPrefixforProd"]/State/Manage?handler=CheckName",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            
+            data: { "name": name, "stateId": stateId },
+         
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    $("#message").html(" ");
+                    checkErrors();
+                } else {
+                    $("#message").css("color", "red");
+                    $("#message").html("This name is already exist.");
+                    checkErrors();
+                }
+            },
+        });
+    }
+
+    $(document).ready(function () {
+        // Bind to the input event of the input field to clear the message whenever the input changes
+        $("#txtCode").on('input', function () {
+            $("#messages").html(" ");
+            checkErrors();
+        });
+    });
+
+    function CheckAvailabal() {
+        var name = $("#txtCode").val();
+        var stateId = $("#hdnId").val();
+        if (name === '') {
+            $("#messages").html(" ");
+            checkErrors();
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["URLPrefixforProd"]/State/Manage?handler=CheckCode",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "code": $("#txtCode").val(), "stateId": $("#hdnId").val() },
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    $("#messages").html(" ");
+                    checkErrors();
+                }
+                else {
+                    $("#messages").css("color", "red");
+                    $("#messages").html("This code is already exists ");
+                    checkErrors();
+                }
+            },
+        });
+    }
+
+    function checkErrors() {
+        var nameError = $("#message").html().trim();
+        var codeError = $("#messages").html().trim();
+
+        if (nameError || codeError) {
+            $('#Savebtn').prop('disabled', true);
+        } else {
+            $('#Savebtn').prop('disabled', false);
+        }
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

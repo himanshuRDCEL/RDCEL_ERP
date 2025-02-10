@@ -1,0 +1,212 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.QCPortal.QCDashboard
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    ViewData["Title"] = "QC Dashboard";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int count = 1;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+
+@if (accessRule != null)
+{
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="@if (accessRule.CanView) { @Model.QCDashboardVM.OrderForQCUrl } else { @Model.javascriptVoidZero }">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+                            <h2 class="h6 text-gray-400 mb-0">Order For QC</h2>
+                            <h3 class="fw-extrabold mb-2">@Model.QCDashboardVM.CountOrderForQC</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="@if (accessRule.CanView) { @Model.QCDashboardVM.SelfQCOrdersUrl } else { @Model.javascriptVoidZero }">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+                            <h2 class="h6 text-gray-400 mb-0">Self QC Orders</h2>
+                            <h3 class="fw-extrabold mb-2">@Model.QCDashboardVM.CountSelfQCOrders</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="@if (accessRule.CanView) { @Model.QCDashboardVM.AllResheduledQCUrl } else { @Model.javascriptVoidZero }">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+                            <h2 class="h6 text-gray-400 mb-0">All Resheduled QC</h2>
+                            <h3 class="fw-extrabold mb-2">@Model.QCDashboardVM.CountAllResheduledQC</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="@if (accessRule.CanView) { @Model.QCDashboardVM.ResheduledQCAgingUrl } else { @Model.javascriptVoidZero }">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+                            <h2 class="h6 text-gray-400 mb-0">Resheduled Aging</h2>
+                            <h3 class="fw-extrabold mb-2">@Model.QCDashboardVM.CountResheduledQCAging</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="@if (accessRule.CanView) { @Model.QCDashboardVM.ResheduledQC1Url } else { @Model.javascriptVoidZero }">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+                            <h2 class="h6 text-gray-400 mb-0">Resheduled QC Count-1</h2>
+                            <h3 class="fw-extrabold mb-2">@Model.QCDashboardVM.CountResheduledQCCount1</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="@if (accessRule.CanView) { @Model.QCDashboardVM.ResheduledQC2Url } else { @Model.javascriptVoidZero }">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+                            <h2 class="h6 text-gray-400 mb-0">Resheduled QC Count-2</h2>
+                            <h3 class="fw-extrabold mb-2">@Model.QCDashboardVM.CountResheduledQCCount2</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="@if (accessRule.CanView) { @Model.QCDashboardVM.ResheduledQC3Url } else { @Model.javascriptVoidZero }">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+                            <h2 class="h6 text-gray-400 mb-0">Resheduled QC Count-3</h2>
+                            <h3 class="fw-extrabold mb-2">@Model.QCDashboardVM.CountResheduledQCCount3</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="@if (accessRule.CanView) { @Model.QCDashboardVM.PriceQuotedQCUrl } else { @Model.javascriptVoidZero }">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+                            <h2 class="h6 text-gray-400 mb-0">Price Quoted QC</h2>
+                            <h3 class="fw-extrabold mb-2">@Model.QCDashboardVM.CountPriceQuotedQC</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="@if (accessRule.CanView) { @Model.QCDashboardVM.CancelledOrdersUrl } else { @Model.javascriptVoidZero }">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+                            <h2 class="h6 text-gray-400 mb-0">Cancelled Orders</h2>
+                            <h3 class="fw-extrabold mb-2">@Model.QCDashboardVM.CountCancelledOrders</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow">
+            <a href="@if (accessRule.CanView) { @Model.QCDashboardVM.ReopenedQCUrl } else { @Model.javascriptVoidZero }">
+                <div class="card-body">
+                    <div class="row d-block d-xl-flex align-items-center">
+                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 px-xl-0">
+                            <h2 class="h6 text-gray-400 mb-0">Reopened QC</h2>
+                            <h3 class="fw-extrabold mb-2">@Model.QCDashboardVM.CountReopenedQC</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+} 
+    
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

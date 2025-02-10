@@ -1,0 +1,329 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC_Dispute.EVC_DisputeFormModel
+@{
+
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">Dispute Form</h2>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data" id="DisputFrom">
+                            <div class="row">
+                                <input type="hidden" asp-for="EVCDisputeViewModels.CreatedBy" />
+                                <input type="hidden" asp-for="EVCDisputeViewModels.CreatedDate" />
+                                <input type="hidden" asp-for="EVCDisputeViewModels.IsActive" />
+                                <input type="hidden" asp-for="EVCDisputeViewModels.ModifiedBy" />
+                                <input type="hidden" asp-for="EVCDisputeViewModels.ModifiedDate" />
+                                <input type="hidden" asp-for="EVCDisputeViewModels.ProductTypeId" />
+                                <input type="hidden" asp-for="EVCDisputeViewModels.ProductCatId" />
+                                <input type="hidden" asp-for="EVCDisputeViewModels.EvcdisputeId" />
+                                @*<input type="hidden" asp-for="EVCDisputeViewModels.EvcregistrationId" />*@
+
+                                @if (@Model.EVCDisputeViewModels.EvcdisputeId == 0 && accessRule.CanAdd)
+                                {
+                                    <input type="hidden" asp-for="EVCDisputeViewModels.EvcregistrationId" />
+                                    @*<input type="hidden" asp-for="EVCDisputeViewModels.orderTransId" />*@
+                                    <div class="col-md-6 my-2">
+                                        <label for="">EVCRegdNo</label>
+                                        <input type="text" class="form-control" maxlength="11" id="ddlevcid" name="RegdNo" placeholder="RegdNo"
+                                               value="@(ViewBag.EVCRegNoList)" readonly>
+                                        <span asp-validation-for="EVCDisputeViewModels.EvcregistrationId" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6 my-2">
+                                        <label for="">Order Reg No<span style="color:red;">*</span></label>
+                                        <select asp-for="EVCDisputeViewModels.orderTransId" class="form-select" id="ddlordid" asp-items="ViewBag.OrdersList">
+                                            <option value='0'>--None--</option>
+                                        </select>
+                                        <span asp-validation-for="EVCDisputeViewModels.orderTransId" id="txtOrdertransh" class="text-danger"></span>
+                                    </div>
+                                }
+                                <div class="col-md-6 my-2">
+                                    <label for="">Product Category</label>
+                                    <input asp-for="EVCDisputeViewModels.ProductCatName" id="txtProcatName" class="form-control" readonly />
+                                    <span asp-validation-for="EVCDisputeViewModels.ProductCatName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6 my-2">
+                                    <label for="">Product Type</label>
+                                    <input asp-for="EVCDisputeViewModels.ProductTypeName" id="txtProTypeName" class="form-control" readonly />
+                                    <span asp-validation-for="EVCDisputeViewModels.ProductTypeName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-12 my-2">
+                                    <label for="">Causes<span style="color:red;">*</span></label>
+                                    <textarea asp-for="EVCDisputeViewModels.Evcdisputedescription" id="TxtCauses" cols="30" rows="6" class="form-control"></textarea>
+                                </div>
+
+
+
+                                <h5>Upload current picture of Product</h5>
+
+                                <div class="col-md-4">
+                                    @*<label for="formFile" class="form-label">Image1</label>*@
+                                    <div class="showimgbox showimgbox1">
+
+
+                                        <img id="Image_1" class="ct-square" alt="Image Not found1" />
+                                        <div class="my-2">
+                                            <a href="@Model.EVCDisputeViewModels.Image1" class="btn btn-light border w-100"></a>
+                                        </div>
+                                    </div>
+                                    <div class="my-2">
+                                        <small class="mb-2 mt-3 text-muted d-block">Add Image1<span style="color:red;">*</span></small>
+                                        <input type="hidden" asp-for="@Model.EVCDisputeViewModels.Image1" id="BaseImageformFile1" />
+                                        <input name="Image1" class="form-control imginputbox1" id="ImageformFile1" type="file" accept="image/jpeg,image/png,jpg|png" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    @*<label for="formFile" class="form-label">Image2</label>*@
+                                    <div class="showimgbox showimgbox2">
+
+
+                                        <img id="Image_2" class="ct-square" alt="Image Not found1" />
+                                        <div class="my-2">
+                                            <a href="@Model.EVCDisputeViewModels.Image2" class="btn btn-light border w-100"></a>
+                                        </div>
+                                    </div>
+                                    <div class="my-2">
+                                        <small class="mb-2 mt-3 text-muted d-block">Add Image2<span style="color:red;">*</span></small>
+                                        <input type="hidden" asp-for="@Model.EVCDisputeViewModels.Image2" id="BaseImageformFile2" />
+                                        <input name="Image2" class="form-control imginputbox2" id="ImageformFile2" type="file" accept="image/jpeg,image/png,jpg|png" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    @*<label for="formFile" class="form-label">Image3</label>*@
+                                    <div class="showimgbox showimgbox3">
+                                        <img id="Image_3" class="ct-square" alt="Image Not found1" />
+                                        <div class="my-2">
+                                            <a href="@Model.EVCDisputeViewModels.Image3" class="btn btn-light border w-100"></a>
+                                        </div>
+                                    </div>
+                                    <div class="my-2">
+                                        <small class="mb-2 mt-3 text-muted d-block">Add Image3<span style="color:red;">*</span></small>
+                                        <input type="hidden" asp-for="@Model.EVCDisputeViewModels.Image3" id="BaseImageformFile3" />
+                                        <input name="Image3" class="form-control imginputbox3" id="ImageformFile3" type="file" accept="image/jpeg,image/png,jpg|png" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 my-2">
+                                    <input type="hidden" asp-for="EVCDisputeViewModels.Status" />
+                                    <label for="">Status</label>
+                                    <input asp-for="EVCDisputeViewModels.StatusName" type="text" class="form-control" asp-items="ViewBag.StatusList" readonly />
+                                </div>
+                                <div class="col-12 text-end mt-4">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <input type="button" value="Save" class="btn btn-primary mainshadow" id="btnSubmit" disabled />
+
+                                    }
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+
+                                        <a href='javascript:history.go(-1)' class="btn btn-primary">Back to List</a>
+                                    }
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="~/js/compressor.js"></script>
+<script type="text/javascript">
+    $("#ddlevcid").change(function () {
+        $.get("@URLPrefixforProd/EVC_Dispute/EVC_DisputeForm?handler=GetOrderByEVCID&EVCDisputeViewModels.EvcregistrationId=" + $(this).val()).done(function (data) {
+            $("#ddlordid").empty(); // Clear the plese wait
+            $("#ddlordid").append($("<option></option>").val('').html('Select OrderID'));
+            $.each(data, function (i, Orders) {
+                //alert(Orders.exchangeOrderId);
+                $("#ddlordid").append($("<option></option>").val(Orders.orderTransId).html(Orders.regdNo));
+            });
+        });
+    });
+   $("#ddlordid").change(function () {
+       if ($("#ddlordid").val == 0) {
+           $("#txtProTypeName").val(" ");
+           $("#txtProcatName").val(" ");
+            $("#txtOrdertransh").html("Select Order");
+        }
+        else {
+            $("#txtOrdertransh").val(" ");
+           $.get("@URLPrefixforProd/EVC_Dispute/EVC_DisputeForm?handler=ProductDetailsByTransId&EVCDisputeViewModels.orderTransId=" + $(this).val()).done(function (data) {
+                $("#txtProTypeName").val(data.productTypeName);
+                $("#txtProcatName").val(data.productCatName);
+            });
+        }
+    });
+
+
+
+    $('.imginputbox1').change(function () {
+        $('.showimgbox1').css('display', 'flex')
+    });
+    $('.imginputbox2').change(function () {
+        $('.showimgbox2').css('display', 'flex')
+    });
+    $('.imginputbox3').change(function () {
+        $('.showimgbox3').css('display', 'flex')
+    });
+
+
+    //image compressor
+    $(document).ready(function () {
+        $('#formDiv').hide();
+
+        for (let i = 1; i <= 3; i++) {
+            $("#ImageformFile" + i).bind('change', function () {
+            });
+
+            $("#ImageformFile" + i).resizeImg(function () {
+                var value = parseInt("350");
+                var Weight = parseInt("2");
+                let type, quality;
+                {
+                    type = "image/jpeg";
+                    quality = 0.8;
+                }
+                return {
+                    use_reader: false,
+                    mode: Weight,
+                    val: value,
+                    type: type,
+                    quality: quality,
+                    callback: function (result) {
+                        //$("#showimgbox_" + i).css("display", "flex");
+                        $("#Image_" + i).attr('src', result);
+                        $("#BaseImageformFile" + i).val(result.substr(result.indexOf(',') + 1)).css("height", 100);
+
+                        $("#Image_Upload_" + i).val(null);
+                    }
+                };
+            });
+        }
+    });
+    function validateImages() {
+        var flag = true;
+        for (let i = 1; i <= 3; i++) {
+            if (($("#hdnBase64StringValue_" + i + "_" + i).val() == '' || $("#hdnBase64StringValue_" + i + "_" + i).val() == null)) {
+
+                $("#Image_Upload_" + i).css("border", "2px solid red");
+                $("#Image_Upload_" + i).focus();
+                $("#imgprev_" + i).attr('src', "");
+                $("#lblFileErr_" + i).text("Please Upload Correct Image.");
+                $("#lblFileErr_" + i + "_" + i).text("");
+                flag = false;
+            }
+            @* else if (($("#hdnBase64StringValue_" + i).val() != '' && $("#hdnBase64StringValue_" + i).val() != null) && ($("#hdnBase64StringValue_" + i + "_" + i).val() == '' || $("#hdnBase64StringValue_" + i + "_" + i).val() == null)) {
+
+                $("#Image_Upload_" + i).css("border", "2px solid red");
+                $("#Image_Upload_" + i).focus();
+                $("#imgprev_" + i + "_" + i).attr('src', "");
+                $("#lblFileErr_" + i + "_" + i).text("Please Upload Correct Image.");
+                $("#lblFileErr_" + i).text("");
+                flag = false;
+            }*@
+               else {
+
+                $("#Image_Upload_" + i).css("border", ""); $("#lblFileErr_" + i).text("");
+                $("#Image_Upload_" + i + "_" + i).css("border", ""); $("#lblFileErr_" + i).text("");
+            }
+        }
+        return flag;
+    }
+    $("#TxtCauses").keyup(function () {
+        if (!$("#TxtCauses").val() || (!$("#ImageformFile1").val()) || (!$("#ImageformFile2").val()) ||
+            (!$("#ImageformFile3").val())) {
+            $('#btnSubmit').prop('disabled', true);
+        }
+        else {
+
+            $("#TxtCauses").focus();
+            $("#ImageformFile1").focus();
+            $("#ImageformFile2").focus();
+            $("#ImageformFile3").focus();
+
+            $('#btnSubmit').prop('disabled', false);
+        }
+    });
+    $("#ImageformFile3").change(function () {
+        if (!$("#TxtCauses").val() || (!$("#ImageformFile1").val()) || (!$("#ImageformFile2").val()) ||
+            (!$("#ImageformFile3").val())) {
+            $('#btnSubmit').prop('disabled', true);
+        }
+        else {
+
+            $("#TxtCauses").focus();
+            $("#ImageformFile1").focus();
+            $("#ImageformFile2").focus();
+            $("#ImageformFile3").focus();
+
+            $('#btnSubmit').prop('disabled', false);
+        }
+    });
+    $("#ImageformFile1").change(function () {
+        if (!$("#TxtCauses").val() || (!$("#ImageformFile1").val()) || (!$("#ImageformFile2").val()) ||
+            (!$("#ImageformFile3").val())) {
+            $('#btnSubmit').prop('disabled', true);
+        }
+        else {
+
+            $("#TxtCauses").focus();
+            $("#ImageformFile1").focus();
+            $("#ImageformFile2").focus();
+            $("#ImageformFile3").focus();
+
+            $('#btnSubmit').prop('disabled', false);
+        }
+    });
+    $("#ImageformFile2").change(function () {
+        if (!$("#TxtCauses").val() || (!$("#ImageformFile1").val()) || (!$("#ImageformFile2").val()) ||
+            (!$("#ImageformFile3").val())) {
+            $('#btnSubmit').prop('disabled', true);
+        }
+        else {
+
+
+            $("#TxtCauses").focus();
+            $("#ImageformFile1").focus();
+            $("#ImageformFile2").focus();
+            $("#ImageformFile3").focus();
+
+            $('#btnSubmit').prop('disabled', false);
+        }
+    });
+    $('#btnSubmit').click(function () {
+        $('#btnSubmit').prop('disabled', true);
+        $('#loader').show();
+        $('#DisputFrom').submit();
+    });
+</script>

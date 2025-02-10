@@ -1,0 +1,552 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.Voucher.VoucherDetails
+@{
+    ViewData["Title"] = "VoucherDetails";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var InvoiceImageURL = ViewData["InvoiceImageURL"];
+    var currentDate = DateTime.Now.Date;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+    //<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css"
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title"><b>Voucher Verification</b></h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data" id="formcontrol">
+                            <div class="row">
+                                <input type="hidden" asp-for="exchangeOrderDataContract.BusinessUnitId" id="hdnBusinessUnitId" />
+                                <input type="hidden" asp-for="exchangeOrderDataContract.BusinessPartnerId" id="hdnBusinessPartnerId" />
+                                <input type="hidden" asp-for="exchangeOrderDataContract.CreatedBy" />
+                                <input type="hidden" asp-for="exchangeOrderDataContract.CreatedDate" />
+                                <input type="hidden" asp-for="exchangeOrderDataContract.Id" id="hdnExchangeId" />
+
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0"><b>Voucher Details</b></h5>
+                                    <hr />
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Voucher Code </label>
+                                    <input asp-for="exchangeOrderDataContract.VoucherCode" id="txtVoucherCode" maxlength="50" class="form-control" readonly />
+                                    <span asp-validation-for="exchangeOrderDataContract.VoucherCode" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Mobile<span style="color:red;">*</span></label>
+                                    <input asp-for="exchangeOrderDataContract.PhoneNumber" type="number" pattern="^\+91(7\d|8\d|9\d)\d{9}$" accept="0-9" id="txtcustmob" class="form-control" readonly />
+                                    <span asp-validation-for="exchangeOrderDataContract.PhoneNumber" class="text-danger"></span>
+                                </div>
+
+                                @* customer details *@
+
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0"><b>Customer Details</b></h5>
+                                    <hr />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer First Name </label>
+                                    <input asp-for="exchangeOrderDataContract.FirstName" id="txtcustfirstname" class="form-control" readonly />
+                                    <span asp-validation-for="exchangeOrderDataContract.FirstName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer Last Name </label>
+                                    <input asp-for="exchangeOrderDataContract.LastName" id="txtcustlastname" class="form-control" readonly />
+                                    <span asp-validation-for="exchangeOrderDataContract.LastName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer Mobile<span style="color:red;">*</span></label>
+                                    <input asp-for="exchangeOrderDataContract.PhoneNumber" type="number" id="txtcustmob" class="form-control" readonly />
+                                    <span asp-validation-for="exchangeOrderDataContract.PhoneNumber" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer E-mail </label>
+                                    <input asp-for="exchangeOrderDataContract.Email" type="email" id="txtcustemail" class="form-control" asp-items="ViewBag.CustomerRecord" readonly />
+                                    <span asp-validation-for="exchangeOrderDataContract.Email" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer Address1 </label>
+                                    <input asp-for="exchangeOrderDataContract.Address1" id="txtcustaddress1" class="form-control" readonly />
+                                    <span asp-validation-for="exchangeOrderDataContract.Address1" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer Address2 </label>
+                                    <input asp-for="exchangeOrderDataContract.Address2" id="txtcustaddress2" class="form-control" readonly />
+                                    <span asp-validation-for="exchangeOrderDataContract.Address2" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer Pin Code</label>
+                                    <input asp-for="exchangeOrderDataContract.ZipCode" id="txtcustpincode" class="form-control" readonly />
+                                    <span asp-validation-for="exchangeOrderDataContract.ZipCode" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Customer City</label>
+                                    <input asp-for="exchangeOrderDataContract.City" id="ddlcustcity" class="form-control" readonly />
+                                    @*<select id="ddlcustcity" asp-for="AbbRegistrationModel.CustCity" class="custom-select my-1 mr-sm-2 form-select" asp-items="ViewBag.list">
+                                    <option value=''>--None--</option>
+                                    </select>*@
+                                    <span asp-validation-for="exchangeOrderDataContract.City" class="text-danger"></span>
+                                </div>
+
+                                @* Old Product Details *@
+
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0"><b>Exchange Product Details</b></></h5>
+                                    <hr />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Product Group</label>
+                                    <input asp-for="exchangeOrderDataContract.ProductCategory" class="form-control" readonly />
+
+                                    <span asp-validation-for="exchangeOrderDataContract.ProductCategory" id="ValidateProdCatId" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Product Type</label>
+                                    <input asp-for="exchangeOrderDataContract.ProductType" class="form-control" readonly />
+
+                                    <span asp-validation-for="exchangeOrderDataContract.ProductType" class="text-danger" id="ddlprodcattypeidValidation"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Brand</label>
+                                    <input asp-for="exchangeOrderDataContract.BrandName" class="form-control" readonly />
+
+                                    <span asp-validation-for="exchangeOrderDataContract.BrandName" class="text-danger" id="ddlbrandValidation"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Product Condition</label>
+
+                                    <input asp-for="exchangeOrderDataContract.ProductCondition" class="form-control" readonly />
+
+                                    <span asp-validation-for="exchangeOrderDataContract.ProductCondition" class="text-danger" id="ddlQualityCheckValueValidation"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Product Net Price(Incl Of GST)</label>
+                                    <input asp-for="exchangeOrderDataContract.ExchangePrice" id="ddlprodnetprice" class="form-control calculate" readonly />
+                                    <span asp-validation-for="exchangeOrderDataContract.ExchangePrice" id="vldMessageProductPrice" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0"><b>New Product Details</b></></h5>
+                                    <hr />
+                                </div>
+
+                                @* new product deatails *@
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">New Product Group<span style="color:red;">*</span></label>
+                                    <select asp-for="exchangeOrderDataContract.NewProductCategoryId" id="ddlprodcatid" class="form-select" asp-items="ViewBag.ProductGroup">
+                                        <option value=''>--None--</option>
+                                    </select>
+                                    <span asp-validation-for="exchangeOrderDataContract.NewProductCategoryId" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">New Product Type<span style="color:red;">*</span></label>
+                                    <select asp-for="exchangeOrderDataContract.NewProductCategoryTypeId" id="ddlprodcattypeid" class="form-select" asp-items="ViewBag.ProductType">
+                                        <option value=''>--None--</option>
+                                    </select>
+                                    <span asp-validation-for="exchangeOrderDataContract.NewProductCategoryTypeId" class="text-danger"></span>
+                                </div>
+                                @if (Model.exchangeOrderDataContract.IsBumultiBrand == true)
+                                {
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">New Brand<span style="color:red;">*</span></label>
+                                        <select asp-for="exchangeOrderDataContract.NewBrandId" id="ddlbrandid" class="form-select" asp-items="ViewBag.NewBrandId">
+                                            <option value=''>--None--</option>
+                                        </select>
+                                        <span asp-validation-for="exchangeOrderDataContract.NewBrandId" class="text-danger"></span>
+                                    </div>
+                                }
+                                @if (Model.exchangeOrderDataContract.IsBumultiBrand == false)
+                                {
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">New Brand<span style="color:red;">*</span></label>
+                                        <input asp-for="exchangeOrderDataContract.BrandName" class="form-control" readonly />
+                                        <span asp-validation-for="exchangeOrderDataContract.BrandName" class="text-danger"></span>
+                                    </div>
+                                }
+
+                                @if (Model.exchangeOrderDataContract.IsModelDetailRequired == true)
+                                {
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">Model Number<span style="color:red;">*</span></label>
+                                        <select asp-for="exchangeOrderDataContract.ModelNumberId" id="ddlmodelnumid" class="form-select" asp-items="ViewBag.ModelNumList">
+                                            <option value=''>--None--</option>
+                                        </select>
+                                        <span asp-validation-for="exchangeOrderDataContract.ModelNumberId" class="text-danger"></span>
+                                    </div>
+                                }
+                                @if (Model.exchangeOrderDataContract.IsProductSerialNumberRequired == true)
+                                {
+                                    <div class="col-md-4 mb-4">
+                                        <label class="" for="">Serial Number<span style="color:red;">*</span></label>
+                                        <input asp-for="exchangeOrderDataContract.SerialNumber" class="form-control" required />
+                                        <span asp-validation-for="exchangeOrderDataContract.SerialNumber" class="text-danger"></span>
+                                    </div>
+                                }
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0"><b>Invoice Details</b></></h5>
+                                    <hr />
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Invoice Number<span style="color:red;">*</span></label>
+                                    <input asp-for="exchangeOrderDataContract.InvoiceNumber" maxlength="100" class="form-control" />
+                                    <span asp-validation-for="exchangeOrderDataContract.InvoiceNumber" class="text-danger"></span>
+                                </div>
+
+                                @* <div class="col-md-4 mb-4">
+                                <label class="" for="">Invoice Image<span style="color:red;">*</span></label>
+                                <input asp-for="exchangeOrderDataContract.InvoiceImageName" class="form-control" readonly />
+                                <span asp-validation-for="exchangeOrderDataContract.InvoiceImageName" class="text-danger"></span>
+                                </div> *@
+
+
+                                <div class="col-md-4">
+                                    <div class="showimgbox showimgbox1">
+                                        <img id="Image_1" class="ct-square" alt="Image Not found1" />
+
+                                    </div>
+                                    <div class="my-2 mt-0">
+                                        <small class="mb-2 mt-0 text-muted d-block">Upload Invoice Image</small>
+                                        <input type="hidden" asp-for="exchangeOrderDataContract.Base64StringValue" id="BaseImageformFile1" />
+                                        <input name="Base64StringValue" class="form-control imginputbox1" id="ImageformFile1" type="file" accept="image/jpeg,image/png,jpg|png" />
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0"><b>Dealer Details</b></></h5>
+                                    <hr />
+                                </div>
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">State <span style="color:red;">*</span></label>
+                                    <select asp-for="exchangeOrderDataContract.StateName" id="ddlstateName" class="form-select" asp-items="ViewBag.stateList">
+                                        <option value=''>--None--</option>
+                                    </select>
+                                    @* <input id="ddlState" asp-for="exchangeOrderDataContract.StateName" class="form-control" /> *@
+                                    <span asp-validation-for="exchangeOrderDataContract.StateName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">City <span style="color:red;">*</span></label>
+                                    <select asp-for="exchangeOrderDataContract.CityName" id="ddlcityName" class="form-select" asp-items="ViewBag.cityList">
+                                        <option value=''>--None--</option>
+                                    </select>
+                                    @* <input id="ddlCity" asp-for="exchangeOrderDataContract.CityName" class="form-control" /> *@
+                                    <span asp-validation-for="exchangeOrderDataContract.CityName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Store Code<span style="color:red;">*</span></label>
+                                    <select asp-for="exchangeOrderDataContract.StoreCode" id="ddlstoreName" class="form-select" asp-items="ViewBag.storeList">
+                                        <option value=''>--None--</option>
+                                    </select>
+                                    @* <input id="ddlPinCode" asp-for="exchangeOrderDataContract.PinCode" class="form-control" /> *@
+                                    <span asp-validation-for="exchangeOrderDataContract.StoreCode" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-12 text-end">
+                                    @*<a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>*@
+                                    <div class="form-group text-right d-inline" id="divSubmit" style="display:none">
+                                        <input type="submit" value="Save" class="btn btn-primary mainshadow" id="btnSubmit" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/js/compressor.js"></script>
+<script type="text/javascript">
+
+
+
+    //on click submitbtn
+    $('#Submitbtn').click(function () {
+        $(this).hide();
+        $('#btnReset').hide();
+    });
+    //new product details change
+
+    $("#ddlstateName").change(function () {
+        var BuiD = $("#hdnBusinessUnitId").val();
+        var stateName = $("#ddlstateName").val();
+        $.get("@URLPrefixforProd/Voucher/VoucherDetails?handler=Citylist&exchangeOrderDataContract.StateName=" + $(this).val() + "&exchangeOrderDataContract.BusinessUnitId=" + BuiD).done(function (data) {
+            console.log(data);
+            $("#ddlcityName").empty();
+            $("#ddlstoreName").empty();
+            $("#ddlcityName").append($("<option></option>").val('').html('Select city'));
+            $.each(data, function (i, cityName) {
+                $("#ddlcityName").append($("<option></option>").val(cityName.text).html(cityName.text));
+            });
+        });
+        // $.get("@URLPrefixforProd/Voucher/VoucherDetails?handler=BrandListForNew&exchangeOrderDataContract.NewProductCategoryId=" + $(this).val() + "&exchangeOrderDataContract.BusinessUnitId=" + BuiD).done(function (data) {
+        //     console.log(data);
+        //     $("#ddlbrandid").empty();
+        //     $("#ddlmodelnumid").empty();
+        //     $("#ddlbrandid").append($("<option></option>").val('').html('Select Brand'));
+        //     $.each(data, function (i, brandList) {
+        //         $("#ddlbrandid").append($("<option></option>").val(brandList.id).html(brandList.name));
+        //     });
+        // });
+    });
+
+    $("#ddlcityName").change(function () {
+        debugger;
+        var BuiD = $("#hdnBusinessUnitId").val();
+        var stateName = $("#ddlstateName").val();
+        $.get("@URLPrefixforProd/Voucher/VoucherDetails?handler=Storelist&exchangeOrderDataContract.CityName=" + $(this).val() + "&exchangeOrderDataContract.BusinessUnitId=" + BuiD + "&exchangeOrderDataContract.StateName=" + stateName).done(function (data) {
+            console.log(data);
+            $("#ddlstoreName").empty();
+
+            $("#ddlstoreName").append($("<option></option>").val('').html('Select store'));
+            $.each(data, function (i, producttype) {
+                $("#ddlstoreName").append($("<option></option>").val(producttype.text).html(producttype.text));
+            });
+        });
+    });
+
+
+    $("#ddlprodcatid").change(function () {
+        var BuiD = $("#hdnBusinessUnitId").val();
+        var hdnExchangeId = $("#hdnExchangeId").val();
+        $.get("@URLPrefixforProd/Voucher/VoucherDetails?handler=CheckExistence&exchangeOrderDataContract.NewProductCategoryId=" + $(this).val() + "&exchangeOrderDataContract.BusinessUnitId=" + BuiD + "&exchangeOrderDataContract.Id=" + hdnExchangeId).done(function (data) {
+            console.log(data);
+            $("#ddlprodcattypeid").empty();
+            $("#ddlmodelnumid").empty();
+            $("#ddlprodcattypeid").append($("<option></option>").val('').html('Select ProductType'));
+            $.each(data, function (i, producttype) {
+                $("#ddlprodcattypeid").append($("<option></option>").val(producttype.id).html(producttype.description));
+            });
+        });
+    });
+
+
+    //
+    $('.imginputbox1').change(function () {
+        $('.showimgbox1').css('display', 'flex')
+    });
+    $(document).ready(function () {
+        $('#formDiv').hide();
+        $("#ImageformFile1").bind('change', function () {
+        });
+        $("#ImageformFile1").resizeImg(function () {
+            var value = parseInt("350");
+            var Weight = parseInt("2");
+            let type, quality;
+            {
+                type = "image/jpeg";
+                quality = 0.8;
+            }
+            return {
+                use_reader: false,
+                mode: Weight,
+                val: value,
+                type: type,
+                quality: quality,
+                callback: function (result) {
+
+                    $("#showimgbox").css("display", "flex");
+                    $("#Image_1").attr('src', result);
+                    $("#BaseImageformFile1").val(result.substr(result.indexOf(',') + 1)).css("height", 100);
+                    $("#Image_Upload_1").val(null);
+                }
+            };
+        });
+    });
+
+    // $("#ddlprodcatid").change(function () {
+    //         var BuiD = $("#hdnBusinessUnitId").val();
+    //         var productCatId = $('#ddlprodcatid').val();
+    //         var ExchangeId = $('#hdnExchangeId').val();
+    //         //var priceMasterNameId = $('#hdnPriceMasterNameId').val();
+    //         $.ajax({
+    //             url: "@URLPrefixforProd/Voucher/VoucherDetails?handler=CheckExistence",
+    //             type: "GET",
+    //             data: {
+    //                 productCatId: productCatId,
+    //                 BuiD: BuiD,
+    //                 ExchangeId= ExchangeId
+    //             },
+    //             success: function (response) {
+
+    //                 // Process the response and update the UI
+    //                 console.log(response);
+    //                 debugger;
+    //                 if (response != null) {
+    //                     // Check if the "count" property exists and is greater than 0
+    //                     // if (response.length > 0) {
+    //                     //     // There are results, and "response" is an array of objects
+    //                     //     console.log("Number of results: " + response.length);
+    //                     //     $("#ddlprodcattypeid").append($("<option></option>").val('').html('Select ProductType'));
+    //                     //     $.each(response, function (i, producttype) {
+    //                     //         $("#ddlprodcattypeid").append($("<option></option>").val(producttype.id).html(producttype.description));
+    //                     //     });
+    //                     //     // You can access individual items in the array using response[index]
+    //                     // } else {
+    //                     //     // No results
+    //                     //     $("#ddlprodcattypeidValidation").text("Not Available");
+    //                     // }
+    //                 } else {
+    //                     // Response is null or empty
+    //                     // $("#ValidateProdCatId").text("please select valid option");
+    //                 }
+
+    //             },
+    //             error: function (xhr, status, error) {
+    //                 // $("#ddlprodcattypeidValidation").text("Not Available");
+    //                 // $("#ddlbrandValidation").text("Not Available");
+    //             }
+    //         });
+
+
+    // });
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        $("#ddlState").on("keydown", function (event) {
+            var BuiD = $("#hdnBusinessUnitId").val();
+
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/Voucher/VoucherDetails?handler=AutoStateName", {
+                    term: extractLast(request.term),
+                    buid: BuiD
+                }, response);
+            },
+            select: function (event, ui) {
+                $("#ddlState").val(ui.item.value); // Set the selected value
+                StateId = ui.item.text;
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $("#ddlState").val(""); // Clear the input field
+                    StateId = null;
+                }
+            }
+        });
+
+        $("#ddlCity").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/Voucher/VoucherDetails", {
+                    handler: "AutoCityName",
+                    term: extractLast(request.term),
+                    term2: StateId
+                }, response);
+            },
+            select: function (event, ui) {
+                $("#ddlCity").val(ui.item.value); // Set the selected value
+                CityId = ui.item.text;
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $("#ddlCity").val(""); // Clear the input field
+                    CityId = null;
+                }
+            }
+        });
+
+        $("#ddlPinCode").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/Voucher/VoucherDetails", {
+                    handler: "AutoPinCode",
+                    term: extractLast(request.term),
+                    term2: CityId,
+                }, response);
+            },
+            select: function (event, ui) {
+                $("#ddlPinCode").val(ui.item.value); // Set the selected value
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $("#ddlPinCode").val(""); // Clear the input field
+                }
+            }
+        });
+
+        $("#ddlBU").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/ExchangeRegistration/ProductDetails", {
+                    handler: "AutoBusinessUnit",
+                    term: extractLast(request.term),
+                }, response);
+            },
+            select: function (event, ui) {
+                $("#ddlBU").val(ui.item.value); // Set the selected value
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $("#ddlBU").val(""); // Clear the input field
+                }
+            }
+        });
+    });
+
+
+</script>
+
+

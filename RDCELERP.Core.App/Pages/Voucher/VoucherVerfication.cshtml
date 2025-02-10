@@ -1,0 +1,97 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.Voucher.VoucherVerfication
+@{
+    ViewData["Title"] = "Voucher Verification";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var InvoiceImageURL = ViewData["InvoiceImageURL"];
+    var currentDate = DateTime.Now.Date;
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+    alert("@ViewData["UserAuth"]");
+    </script>
+    //<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css"
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">Voucher Verification</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data" id="formcontrol">
+                            <div class="row" >
+                                <input type="hidden" asp-for="voucherDataContract.BusinessUnitId" id="hdnBusinessUnitId" />
+                                @* <input type="hidden" asp-for="voucherDataContract.loginUserDetailsforVoucher.userId" id="hdnloginUserId" /> *@
+                                <input type="hidden" asp-for="LoginUserDetailsforVoucher.userId" id="hdnloginUserId" />
+                                <input type="hidden" asp-for="voucherDataContract.loginUserDetailsforVoucher.businessUnitId" id="hdnloginBusinessUnitId" />
+                                <input type="hidden" asp-for="voucherDataContract.loginUserDetailsforVoucher.businessPartnerId" id="hdnBusinessPartnerId" />
+                                <input type="hidden" asp-for="voucherDataContract.BusinessPartnerId" id="hdnBusinessPartnerId" />
+                                <input type="hidden" asp-for="voucherDataContract.CreatedBy" />
+                                <input type="hidden" asp-for="voucherDataContract.CreatedDate" />
+                                
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0">Voucher Details</h5>
+                                    <hr />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Voucher Code<span style="color:red;">*</span> </label>
+                                    <input asp-for="voucherDataContract.VoucherCode" id="txtVoucherCode" maxlength="50" class="form-control" />
+                                    <span asp-validation-for="voucherDataContract.VoucherCode" class="text-danger"></span>
+                                </div>
+                                
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Mobile<span style="color:red;">*</span></label>
+                                    <input asp-for="voucherDataContract.PhoneNumber" type="number" pattern="^\+91(7\d|8\d|9\d)\d{9}$" accept="0-9" id="txtcustmob" class="form-control" />
+                                    <span asp-validation-for="voucherDataContract.PhoneNumber" class="text-danger"></span>
+                                </div>
+                                
+
+                                <div class="col-12 text-end">
+                                    @*<a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>*@
+                                    <div class="form-group text-right d-inline" id="divSubmit" style="display:none">
+                                        <input type="submit" value="Verify" class="btn btn-primary mainshadow" id="btnSubmit" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script type="text/javascript">
+
+   
+
+//on click submitbtn
+    $('#Submitbtn').click(function () {
+        $(this).hide();
+        $('#btnReset').hide();
+    });
+   
+
+
+
+</script>
+
+

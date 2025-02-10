@@ -1,0 +1,234 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ProductConditionLabel.ManageModel
+
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int i = 0;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>Product Condition Label
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="ProductConditionLabelViewModel.Id" id="hdnId" />
+                                <input type="hidden" asp-for="ProductConditionLabelViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="ProductConditionLabelViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="ProductConditionLabelViewModel.IsActive" />
+                                <input type="hidden" asp-for="ProductConditionLabelViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="ProductConditionLabelViewModel.ModifiedDate" />
+                                <input type="hidden" asp-for="ProductConditionLabelViewModel.BusinessUnitId" id="hdnBUid" />
+                                <input type="hidden" asp-for="ProductConditionLabelViewModel.BusinessPartnerId" id="hdnBPid" />
+                                
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Company <span style="color:red;">*</span></label>
+                                    <input id="txtBusinessUnit" asp-for="ProductConditionLabelViewModel.BusinessUnitName" class="form-control" />
+                                    <span asp-validation-for="ProductConditionLabelViewModel.BusinessUnitName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for=""> Product Condition label Name <span style="color:red;">*</span></label>
+                                    <input asp-for="ProductConditionLabelViewModel.PclabelName" class="form-control"/>
+                                    <span asp-validation-for="ProductConditionLabelViewModel.PclabelName" class="text-danger"></span>
+                                    
+                                </div>
+                                
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Business Partner<span style="color:red;">*</span></label>
+                                    <input id="txtBusinessPartner" asp-for="ProductConditionLabelViewModel.BusinessPartnerName" class="form-control"/>
+                                    <span asp-validation-for="ProductConditionLabelViewModel.BusinessPartnerName" class="text-danger"></span>
+                                   
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Order Sequence <span style="color:red;">*</span></label>
+                                    <select asp-for="ProductConditionLabelViewModel.OrderSequence" class="form-control" asp-items="ViewBag.OrderSequenceList">
+                                        <option value=''>--None--</option>
+                                    </select>
+                                    <span asp-validation-for="ProductConditionLabelViewModel.OrderSequence" class="text-danger"></span>
+
+                                </div>
+
+                        
+                                
+                                <div class="col-md-4 mb-4">
+                                    @if (Model.ProductConditionLabelViewModel.IsSweetenerApplicable == true)
+                                    {
+                                        <label class="" for=""> Sweetener Applicable</label>
+                                        <input name="ProductConditionLabelViewModel.IsSweetenerApplicable" type="checkbox" id="Ischecked" value="true" class="form-check-input IsDealerChk" data-val-required="The IsChecked field is required.">
+                                        <input name="ProductConditionLabelViewModel.IsSweetenerApplicable" type="hidden" data-val="false" id="Ischecked" value="false" data-val-required="The IsChecked field is required.">
+
+                                    }
+                                    else
+                                    {
+                                        <label class="" for="">Sweetener Applicable</label>
+                                        <input name="ProductConditionLabelViewModel.IsSweetenerApplicable" type="checkbox" data-val="true" data-val-required="The IsChecked field is required." id="Ischecked" value="true" class="form-check-input">
+                                        <input name="ProductConditionLabelViewModel.IsSweetenerApplicable" type="hidden" data-val="false" data-val-required="The IsChecked field is required." id="Ischecked" value="false">
+
+                                    }
+                                </div>
+
+                               
+                            
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                    }
+                                </div>
+                                <div class="col-6 text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <input type="submit" id="Savebtn" value="Save" class="btn btn-primary mainshadow" />
+                                    }
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/js/compressor.js"></script>
+
+<script type="text/javascript">
+    var BUId = null;
+    $(function () {
+
+        $("#txtBusinessUnit").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+        .autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/ProductConditionLabel/Manage?handler=SearchBUName", {
+                    term: request.term
+                }, response);
+            },
+            focus: function () {
+                // Prevent value inserted on focus
+                return false;
+            },
+            open: function (event, ui) {
+                // Get the menu element
+                var menu = $(this).autocomplete("widget");
+
+                // Set max-height and overflow properties
+                menu.css("max-height", "200px");
+                menu.css("overflow-y", "auto");
+            },
+            select: function (event, ui) {
+                this.value = ui.item.value; // Set the selected value
+
+                BUId = ui.item.text;
+                $('#hdnBUid').val(BUId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    // If the selected item is not in the list, clear the input
+                    $(this).val("");
+                    $("#hdnBUid").val(""); // Also clear the hidden field
+                }
+            }
+        });
+    });
+
+
+    var BPId = null;
+    $(function () {
+
+        $("#txtBusinessPartner").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+        .autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/ProductConditionLabel/Manage?handler=SearchBPName", {
+                    term: request.term
+                }, response);
+            },
+            focus: function () {
+                // Prevent value inserted on focus
+                return false;
+            },
+            open: function (event, ui) {
+                // Get the menu element
+                var menu = $(this).autocomplete("widget");
+
+                // Set max-height and overflow properties
+                menu.css("max-height", "200px");
+                menu.css("overflow-y", "auto");
+            },
+            select: function (event, ui) {
+                this.value = ui.item.value; // Set the selected value
+
+                BPId = ui.item.text;
+                $('#hdnBPid').val(BPId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    // If the selected item is not in the list, clear the input
+                    $(this).val("");
+                    $("#hdnBPid").val(""); // Also clear the hidden field
+                }
+            }
+        });
+    });
+
+     $(function () {
+
+        $('.IsDealerChk').each(function () {
+            var Ischecked = $(this).val();
+
+            if (Ischecked == "true") {
+
+                $(this).attr('checked', 'checked');
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

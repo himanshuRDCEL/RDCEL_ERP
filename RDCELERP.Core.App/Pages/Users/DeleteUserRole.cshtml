@@ -1,0 +1,39 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.Users.DeleteUserRoleModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "_Layout";
+}
+
+<div class="row content-area">
+    <!--For Lead details-->
+    <div class="col-12">
+        <div class="box">
+            <hr />
+            <dl class="row">
+                <h5>
+                    Are you sure you want to delete <b>@Html.DisplayFor(model => model.TblUserRole.User.FirstName) @Html.DisplayFor(model => model.TblUserRole.User.LastName)</b> for Role
+                    <b> -> @Html.DisplayFor(model => model.TblUserRole.Role.RoleName)</b> from Company <b> -> @Html.DisplayFor(model => model.TblUserRole.Company.CompanyName)
+                </h5>
+            </dl>
+            <form method="post">
+                <input type="hidden" asp-for="TblUserRole.UserRoleId" />
+                <input type="hidden" asp-for="TblUserRole.RoleId" />
+                <input type="hidden" asp-for="TblUserRole.UserId" />
+                <input type="hidden" asp-for="TblUserRole.CompanyId" />
+                <input type="hidden" asp-for="TblUserRole.CreatedBy" />
+                <input type="hidden" asp-for="TblUserRole.CreatedDate" />
+                <input type="hidden" asp-for="TblUserRole.ModifiedBy" />
+                <input type="hidden" asp-for="TblUserRole.ModifiedDate" />
+                <input type="hidden" asp-for="TblUserRole.IsActive" />
+
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+                @*<a asp-page="./Index" class="btn btn-primary mainshadow">Back to List</a>*@
+                <a asp-page="./Details" asp-route-id="@Model.TblUserRole.UserId">
+                    Back to List
+                </a>
+            </form>
+        </div>
+    </div>
+</div>

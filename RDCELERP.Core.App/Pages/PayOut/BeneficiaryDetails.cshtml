@@ -1,0 +1,30 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.PayOut.AddBeneficiaryModel
+@{
+    ViewData["Title"] = "Add Beneficiary";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="container">
+        <div class="col-md-12">
+            <div class="form-control">
+                <form method="post">
+                    <div class="form-group">
+                        <label for="RegdNumber">Regd Number</label>
+                        <input type="text" class="form-control" id="RegdNumber" name="RegdNumber" placeholder="Please Enter RegdNumber">
+                    </div><br>
+                    <input type="submit" value="submit" class="btn btn-success" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

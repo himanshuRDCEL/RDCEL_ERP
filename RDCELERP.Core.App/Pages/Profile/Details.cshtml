@@ -1,0 +1,137 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.Profile.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0 card-title">User Info</h2>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="card-body no-padding">
+                                <div class="row detailbox detailed-reporting" style="padding: 20px;">
+                                    <div class="col-12">
+                                        <div class="mainshadow setting-right">
+                                            <div class="row mb-4">
+                                                <div class="col-md-4 my-auto text-center">
+
+                                                </div>
+                                                <div class="col-4 mb-4 text-center">
+                                                    <div class="editprofilepicbox mx-auto">
+                                                        @if (!string.IsNullOrEmpty(Model.UserViewModel.ImageName))
+                                                        {
+                                                            <img src="~/DBFiles/Users/@Model.UserViewModel.ImageName" class="rounded-circle" alt="User Image">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="~/ds/img/default-user-image.png" alt="User Image">
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 text-right">
+                                                    <div class="profile-status-container">
+
+                                                        @*<div class="block block6">
+                                                                <label class="cbox--label6">
+                                                                    <input class="cbox" type="checkbox" id="cbox6" />
+                                                                    <div class="text6" data-1="Active" data-2="Inactive"></div>
+                                                                    <div class="btn61"></div>
+                                                                </label>
+                                                            </div>*@
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="deleteuser" tabindex="-1"
+                                                 role="dialog" aria-labelledby="exampleModalLabel"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title mx-auto"
+                                                                id="exampleModalLabel">
+                                                                Are you sure to
+                                                                delete this user?
+                                                            </h5>
+                                                        </div>
+
+                                                        <div class="modal-footer"
+                                                             style="justify-content: center;">
+                                                            <button type="button"
+                                                                    class="btn btn-primary">
+                                                                Delete
+                                                            </button>
+                                                            <button type="button"
+                                                                    class="btn btn-secondary"
+                                                                    data-dismiss="modal">
+                                                                Cancel
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                <div class="row detailed-reporting">
+                                                <div class="col-md-4 mb-3">
+                                        <p>@Html.DisplayFor(model => model.UserViewModel.FirstName)<span>First Name</span></p>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                        <p>@Html.DisplayFor(model => model.UserViewModel.LastName)<span>Last Name</span></p>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                        <p>@Html.DisplayFor(model => model.UserViewModel.Email)<span>Email</span></p>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                        <p>@Html.DisplayFor(model => model.UserViewModel.Phone)<span>Phone Number</span></p>
+                                                </div>
+
+                                                <div class="col-md-4 mb-3">
+                                        <p>@Html.DisplayFor(model => model.UserViewModel.LastLogin)<span>Last Login</span></p>
+                                                </div>
+
+                                                <div class="row">
+
+                                                    <div class="col-12">
+
+
+                                                        <div>
+                                                            <a asp-page="/Profile/Manage"
+                                                               class=" btn btn-primary mainshadow">
+                                                                <i class="fa fa-pen"
+                                                                   aria-hidden="true"></i>
+                                                                &nbsp; Edit
+                                                            </a>
+                                                        </div>
+                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+                            <!-- activity -->
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+

@@ -1,0 +1,142 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.Profile.ManageModel
+
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+
+}
+
+<div class="py-3">
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">User Info</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row detailbox">
+                            <div class="col-12">
+                                <div class="mainshadow setting-right">
+
+                                    <form method="post" enctype="multipart/form-data">
+                                        <div class="row">
+                                            <div class="col-12 mb-4 text-center">
+                                                <div class="editprofilepicbox mx-auto">
+                                                    @if (Model.UserViewModel.ImageName != null)
+                                                    {
+                                                        <img src="~/DBFiles/Users/@Model.UserViewModel.ImageName" id="imgprev" accept="image/*" style="width:160px; height:160px;" class="rounded-circle" alt="">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/ds/img/default-user-image.png" id="imgprev" accept="image/*" style="width:160px; height:160px;" class="rounded-circle" alt="" />
+                                                    }
+
+                                                    @*<a href="#"><i class="fas fa-pen"></i></a>*@
+                                                </div>
+                                            </div>
+                                            
+                                            <input type="hidden" asp-for="UserViewModel.UserId" id="hdnUserId" />
+                                            <input type="hidden" asp-for="UserViewModel.CreatedBy" />
+                                            <input type="hidden" asp-for="UserViewModel.CreatedDate" />
+                                            <input type="hidden" asp-for="UserViewModel.IsActive" />
+                                            <input type="hidden" asp-for="UserViewModel.ModifiedBy" />
+                                            <input type="hidden" asp-for="UserViewModel.ModifiedDate" />
+                                            <input type="hidden" asp-for="UserViewModel.ZohoUserId" />
+                                            <input type="hidden" asp-for="UserViewModel.UserStatus" />
+                                           @*  <input type="hidden" asp-for="UserViewModel.Password" /> *@
+                                            <input type="hidden" asp-for="UserViewModel.LastLogin" />
+                                            <input type="hidden" asp-for="UserViewModel.ImageName" />
+
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">First Name</label>
+                                                <input asp-for="UserViewModel.FirstName" class="form-control" />
+                                                <span asp-validation-for="UserViewModel.FirstName" class="text-danger"></span>
+                                            </div>
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Last Name</label>
+                                                <input asp-for="UserViewModel.LastName" class="form-control" />
+                                                <span asp-validation-for="UserViewModel.LastName" class="text-danger"></span>
+                                            </div>
+
+                                            
+                                              <div class="col-md-4 mb-4">
+                                                <label for="">Email</label>
+                                                <input asp-for="UserViewModel.Email" class="form-control" readonly />
+                                                <span asp-validation-for="UserViewModel.Email" class="text-danger"></span>
+                                            </div>
+
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Phone Number</label>
+                                                <input asp-for="UserViewModel.Phone" class="form-control" readonly />
+                                                <span asp-validation-for="UserViewModel.Phone" class="text-danger"></span>
+                                            </div>
+                                
+
+
+                                            
+                                            @*<div class="col-md-4 mb-4">
+                                            <label for="">Gender</label>
+                                            @foreach (var genderObj in Model.UserViewModel.GenderList)
+                                            {
+                                            <input type="radio" class="clsGender" asp-for="UserViewModel.Gender" value="@genderObj" />@genderObj
+                                            }
+                                            <span asp-validation-for="UserViewModel.Gender" class="text-danger"></span>
+                                            </div>*@
+
+                                            <div class="col-md-4 mb-4">
+                                                <label for="">Upload Profile Picture</label>
+                                                <input name="UserProfile" type="file" class="form-control" onchange="ShowImagePreview(this)" />
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="float-right">
+                                                    <input type="submit" value="Save" class="btn btn-primary mainshadow" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+   
+
+    @*<div>
+            <a asp-page="Index">Back to List</a>
+        </div>
+
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }*@
+
+<script>
+    function ShowImagePreview(input) {
+        
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imgprev').prop('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

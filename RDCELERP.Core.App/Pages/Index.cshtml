@@ -1,0 +1,255 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.IndexModel
+@*@section scripts{
+            <partial name="_ValidationScriptsPartial" />
+    }*@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link type="text/css" href="~/NewLayout/css/style.css" rel="stylesheet">
+    <script type="text/javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>
+    @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Cookies.js/0.4.0/cookies.js"></script>
+    <script src="~/js/jquery.cookie.js"></script>
+    <script type="text/javascript">
+    $(function () {
+    $("#btnLogin").on("click", function () {
+
+    var rememberMe = $('#remember').prop('checked');
+    if (rememberMe) {
+
+    var email = $('#txtUserId').val();
+    var password = $('#txtPassword').val();
+    // Make Ajax call to controller and validate user inputs.
+    // If valid userid and password set cookies in Ajax Success function.
+    $.cookie('email', Email, { expires: 1 });
+    $.cookie('password', Password, { expires: 1 });
+    $.cookie('rememberMe', true, { expires: 1 });
+    }
+    else {
+
+    $.cookie('email', null);
+    $.cookie('password', null);
+    $.cookie('rememberMe', null);
+    }
+    });
+    var remember = $.cookie('rememberMe');
+    if (remember == 'true') {
+
+    var mail = $.cookie('email');
+    $('#txtUserId').attr("value", mail);
+    var Pass = $.cookie('password');
+    $('#txtPassword').attr("value", Pass);
+    }
+    $("#txtUserId").on("input", function () {
+    var remember = $.cookie('rememberMe');
+    if (remember == 'true') {
+
+    var email = $.cookie('email');
+    var uId = $("#txtUserId").val();
+    if (email == uId) {
+
+    var Password = $.cookie('password');
+    $('#txtPassword').val(Password);
+    } else {
+    $('#txtPassword').val('');
+    }
+    }
+    });
+    });
+    </script>*@
+
+    <link href="~/newlayout/css/v2.0.css" rel="stylesheet" />
+
+</head>
+<body>
+    <main>
+        <!-- Section -->
+        <section class="vh-lg-100 bg-soft">
+
+            <div class="row loginWrapper" style="">
+                <div class="col-md-12 vh-100 d-flex align-items-center justify-content-center loginWrapperBox">
+
+                    <div class="p-4 p-lg-5 w-100 fmxw-500 bg-white border rounded">
+
+                        <div class="text-center text-md-center mb-4 mt-md-0">
+                            <img src="~/NewLayout/assets/img/logo.svg" alt="" class="loginlogowrap">
+                        </div>
+                        <div>
+                            @Html.Partial("_MessagePartial")
+                        </div>
+                        <div id="divLogin">
+
+                            <form method="post">
+                                <!-- Form -->
+                                @*<div class="text-danger" asp-validation-summary="ModelOnly"></div>*@
+                                <div class="form-group mb-4">
+                                    <label for="email" class="floatingLabel">Your Email</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                                        </span>
+                                        <input type="text" asp-for="UserViewModel.Email" class="form-control"  required />
+                                        <span class="text-danger" asp-validation-for="UserViewModel.Email"></span>
+                                    </div>
+                                </div>
+
+                                <!-- End of Form -->
+                                <div class="form-group">
+                                    <!-- Form -->
+                                    <div class="form-group mb-4">
+                                        <label for="password" class="floatingLabel">Your Password</label>
+                                        <div class="input-group" id="PasswordInput">
+                                            <span class="input-group-text" id="basic-addon2">
+                                                <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+                                            </span>
+                                            <input type="password" asp-for="UserViewModel.Password" class="form-control" required />
+                                            <span class="text-danger" asp-validation-for="UserViewModel.Password"></span>
+                                            <i class="fa-solid fa-eye" id="PasswordViewToggle"></i>
+                                        </div>
+                                        @*<span class="d-block font-small mt-3 text-center" style="color:red;">@ViewData["Message"]</span>*@
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-top mb-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" />
+
+                                            <label class="form-check-label mb-0" for="remember">
+                                                Remember me
+                                            </label>
+
+                                        </div>
+                                        <div><a href="#" id="linkForgotPassword">Forgot password?</a></div>
+                                    </div>
+                                </div>
+
+                                <!-- End of Form -->
+
+                                <div class="d-grid">
+
+                                    <button type="submit" id="btnLogin" class="btn btn-primary py-3" style="background: var(--V2-gradient);">Sign in</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div id="divForgotPassword" style="display:none">
+
+                            <div class="text-center">
+                                <h1>Forgot Password?</h1>
+                            </div>
+                            <a href="Dashboard.Default.html">
+                                <span class="logo-single"></span>
+                            </a>
+
+                            <form method="post">
+
+                                <div class="form-group mb-4">
+                                    <label for="email">Email</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                                        </span>
+                                        <input type="text" asp-for="UserViewModel.Email" class="form-control" id="txtForgotPasswordEmail" required />
+
+                                    </div>
+                                </div>
+
+
+                                <span class="text-danger" asp-validation-for="UserViewModel.Email"></span>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-primary btn-shadow" type="button" id="btnForgotPassword">Send</button>
+                                    <button class="btn btn-secondary btn-shadow" type="button" id="btnBack">Back</button>
+                                </div>
+
+                            </form>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+               
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Core -->
+
+    <script src="~/NewLayout/vendor/jquery/jquery-3.6.1.min.js"></script>
+    <script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+    <script src="~/NewLayout/vendor/@@popperjs/core/dist/umd/popper.min.js"></script>
+    <script src="~/NewLayout/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/NewLayout/assets/js/custom.js"></script>
+
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/vendor/perfect-scrollbar.min.js"></script>
+    <script src="~/js/vendor/mousetrap.min.js"></script>
+    <script src="~/js/dore.script.js"></script>
+    <script src="~/js/scripts.single.theme.js"></script>*@
+
+    <script>
+        $(document).ready(function () {
+
+            $("#linkForgotPassword").click(function () {
+                $("#divLogin").hide();
+                $("#divForgotPassword").show();
+            });
+
+            $("#btnBack").click(function () {
+                $("#divForgotPassword").hide();
+                $("#divLogin").show();
+            });
+
+            $("#btnForgotPassword").click(function () {
+                _email = $("#txtForgotPasswordEmail").val();
+                $.getJSON('?handler=ForgotPassword&UserViewModel.Email=' + _email, (data) => {
+                    if (data.includes("sent")) {
+                        ShowAlert(data, window.AlertType.success);
+                    }
+                    else {
+                        ShowAlert(data, window.AlertType.error);
+                    }
+                    $("#txtForgotPasswordEmail").val('');
+                });
+            });
+        });
+
+
+        $('#PasswordViewToggle').click(function () {
+            $(this).toggleClass('fa-eye fa-eye-slash');
+            var x = document.getElementById("UserViewModel_Password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        });
+
+        $(document).ready(function () {
+            $('.floatingLabel + .input-group input').click(function () {
+                console.log('test');
+                $(this).closest('.form-group').find('.floatingLabel').addClass('fixedInputLabel');
+            });
+        });
+
+
+
+    </script>
+
+</body>
+</html>

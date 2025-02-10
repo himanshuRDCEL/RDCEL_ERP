@@ -1,0 +1,566 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.QCIndex.ProductRatingModel
+@{
+    ViewData["Title"] = "QCUrl";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+    alert("@ViewData["UserAuth"]");
+    </script>
+}
+<!--<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">QC URL</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <input type="hidden" id="hdnOrderqcid" asp-for="QCCommentViewModel.OrderQCId" />
+                                <input type="hidden" id="hdnisdeferred" asp-for="QCCommentViewModel.ExchangeOrderViewModel.IsDefferedSettlement" />
+                                <input type="hidden" id="hdnbpid" asp-for="QCCommentViewModel.ExchangeOrderViewModel.BusinessPartnerId" />-->
+                                @*<input type="hidden" id="hdnExchnageId" asp-for="QCCommentViewModel.ExchangeOrderViewModel.Id" />*@
+                                @*<input type="hidden" asp-for="QCCommentViewModel.CollectedAmount" id="hdncollectedamount" />*@
+
+                                <!--<div class="col-md-4 mb-4">
+                                    <label for="">Company Name</label>
+                                    <input asp-for="QCCommentViewModel.ExchangeOrderViewModel.CompanyName" class="form-control" disabled="disabled" />
+                                    <span asp-validation-for="QCCommentViewModel.ExchangeOrderViewModel.CompanyName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Regd No.</label>
+                                    <input asp-for="QCCommentViewModel.ExchangeOrderViewModel.RegdNo" id="ddlrno" class="form-control" readonly />
+                                    <span asp-validation-for="QCCommentViewModel.ExchangeOrderViewModel.RegdNo" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0">Customer Details</h5>
+                                    <hr />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer Name</label>
+                                    <input asp-for="QCCommentViewModel.CustomerDetailViewModel.CustName" id="txtname" class="form-control" readonly />
+                                    <span asp-validation-for="QCCommentViewModel.CustomerDetailViewModel.CustName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Email </label>
+                                    <input asp-for="QCCommentViewModel.CustomerDetailViewModel.Email" id="txtemail" class="form-control" readonly />
+                                    <span asp-validation-for="QCCommentViewModel.CustomerDetailViewModel.Email" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Phone </label>
+                                    <input asp-for="QCCommentViewModel.CustomerDetailViewModel.PhoneNumber" id="txtphnno" class="form-control" readonly />
+                                    <span asp-validation-for="QCCommentViewModel.CustomerDetailViewModel.PhoneNumber" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Address 1 </label>
+                                    <input asp-for="QCCommentViewModel.CustomerDetailViewModel.Address1" id="txtaddress1" class="form-control" readonly />
+                                    <span asp-validation-for="QCCommentViewModel.CustomerDetailViewModel.Address1" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Customer City</label>
+                                    <input asp-for="QCCommentViewModel.CustomerDetailViewModel.City" id="txtcity" class="form-control" readonly />
+                                    <span asp-validation-for="QCCommentViewModel.CustomerDetailViewModel.City" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Customer State</label>
+                                    <input asp-for="QCCommentViewModel.CustomerDetailViewModel.State" id="txtstate" class="form-control" readonly />
+                                    <span asp-validation-for="QCCommentViewModel.CustomerDetailViewModel.State" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer Pin Code</label>
+                                    <input asp-for="QCCommentViewModel.CustomerDetailViewModel.ZipCode" id="txtzipcode" type="number" class="form-control" readonly />
+                                    <span asp-validation-for="QCCommentViewModel.CustomerDetailViewModel.ZipCode" class="text-danger"></span>
+                                </div>
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0">Product Details</h5>
+                                    <hr />
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Category</label>
+                                    <input asp-for="QCCommentViewModel.ProductCategory" id="txtproduccat" class="form-control" readonly />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Product Type</label>
+                                    <input asp-for="QCCommentViewModel.ProductType" id="txtproducttype" class="form-control" readonly />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Brand</label>
+                                    <input asp-for="QCCommentViewModel.ProductBrand" id="txtbrand" class="form-control" readonly />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Customer Declare Quality</label>
+                                    <input asp-for="QCCommentViewModel.CustDeclaredQlty" id="txtdeclareqlty" class="form-control" readonly />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <input type="hidden" asp-for="QCCommentViewModel.Bonus" id="hdnSweetner" />
+                                    <input type="hidden" asp-for="QCCommentViewModel.ExchangeOrderViewModel.ExchangePrice" id="hdnExchangePrice" />
+                                </div>
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0">QC Comment</h5>
+                                    <hr />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">QC Flag</label>
+                                    <select asp-for="QCCommentViewModel.StatusId" id="txtstorecode" class="form-control" asp-items="ViewBag.statusflag">
+                                        <option value=''>--None--</option>
+                                    </select>
+                                    <span asp-validation-for="QCCommentViewModel.StatusId" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">QC Comment</label>
+                                    <textarea asp-for="QCCommentViewModel.QCComments" class="form-control"></textarea>-->
+                                    @*<input asp-for="QCCommentViewModel.QCComments" class="form-control" />*@
+                                    <!--<span asp-validation-for="QCCommentViewModel.QCComments" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">QC Date</label>
+                                    <input asp-for="QCCommentViewModel.QCDate" id="QcDate" type="date" class="form-control" />
+                                    <span asp-validation-for="QCCommentViewModel.QCDate" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Actual Prod Qlty (at time of QC)</label>
+                                    <select asp-for="QCCommentViewModel.QualityAfterQC" id="ddlqtyafterqc" class="form-control" asp-items="ViewBag.qualityafterqc">
+                                        <option value=''>--None--</option>
+                                    </select>
+                                    <span asp-validation-for="QCCommentViewModel.QualityAfterQC" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Price After QC</label>
+                                    <input asp-for="QCCommentViewModel.PriceAfterQC" id="txtPriceAfterQC" class="form-control" />
+                                    <span asp-validation-for="QCCommentViewModel.PriceAfterQC" class="text-danger"></span>
+                                </div>-->
+                                @*<div class="col-md-4 mb-3">
+
+                                        <input type="hidden" asp-for="imageLabelViewModels[i].RegdNo" value="@Model.lGCOrderViewModel.RegdNo" />
+
+                                        <label for="formFile" class="form-label"><p>@Html.DisplayFor(model => model.imageLabelViewModels[i].ProductImageLabel)</p></label>
+
+                                        <div class="showimgbox" id="showimgbox_@count">
+                                            <img id="showImg_@count" />
+                                        </div>
+
+                                        <input class="form-control" type="file" id="Image_Upload_@count" accept="image/*" asp-for="imageLabelViewModels[i].Image" />
+
+                                        <input type="hidden" asp-for="imageLabelViewModels[i].Base64StringValue" id="hdnBase64StringValue_@count" />
+                                        <p class="mt-2"><span>@Html.DisplayFor(model => model.imageLabelViewModels[i].ProductImageDescription)</span></p>
+
+                                    </div>*@
+
+                                <!--<div class="col-md-4 mb-4">
+                                    <label for="formFile" class="form-label">Front Image</label><br>
+                                    <input name="FrontViewImage" id="Image_Upload_1" type="file" accept="image/*" asp-for="QCCommentViewModel.Base64StringValueFront" class="form-control" />
+                                    <input type="hidden" asp-for="QCCommentViewModel.Base64StringValueFront" id="hdnBase64StringValue_1" />
+                                    <div class="showimgbox" id="showimgbox_1">
+                                        <img id="showImg_1" />
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="formFile" class="form-label">Side Image</label><br>
+                                    <input name="SideViewImage" id="Image_Upload_2" type="file" accept="image/*" asp-for="QCCommentViewModel.Base64StringValueSide" class="form-control" />
+                                    <input type="hidden" asp-for="QCCommentViewModel.Base64StringValueSide" id="hdnBase64StringValue_2" />
+                                    <div class="showimgbox" id="showimgbox_2">
+                                        <img id="showImg_2" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="formFile" class="form-label">Sr Number Image</label><br>
+                                    <input name="SrNumberImage" id="Image_Upload_3" type="file" accept="image/*" asp-for="QCCommentViewModel.Base64StringValueSrNumber" class="form-control" />
+                                    <input type="hidden" asp-for="QCCommentViewModel.Base64StringValueSrNumber" id="hdnBase64StringValue_3" />
+                                    <div class="showimgbox" id="showimgbox_3">
+                                        <img id="showImg_3" />
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="formFile" class="form-label">Inside View Image</label><br>
+                                    <input name="InsideViewImage" id="Image_Upload_4" type="file" accept="image/*" asp-for="QCCommentViewModel.Base64StringValueInside" class="form-control" />
+                                    <input type="hidden" asp-for="QCCommentViewModel.Base64StringValueInside" id="hdnBase64StringValue_4" />
+                                    <div class="showimgbox" id="showimgbox_4">
+                                        <img id="showImg_4" />
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="formFile" class="form-label">Payment Picture Image</label><br>
+                                    <input name="PaymentImage" id="Image_Upload_5" type="file" accept="image/*" asp-for="QCCommentViewModel.Base64StringValuePayment" class="form-control" />
+                                    <input type="hidden" asp-for="QCCommentViewModel.Base64StringValuePayment" id="hdnBase64StringValue_5" />
+                                    <div class="showimgbox" id="showimgbox_5">
+                                        <img id="showImg_5" />
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Is Payment Collected</label>
+                                    <input id="IsPaymentConnected" type="checkbox" name="paymentcollected" checked="@Model.QCCommentViewModel.IsPaymentConnected" />
+                                    <input type="hidden" asp-for="QCCommentViewModel.IsPaymentConnected" class="form-control" />
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="float-right">
+
+                                        <input type="submit" value="Save" class="btn btn-primary mainshadow" />
+
+                                        <a asp-page="./index" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">
+                                            Back
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>-->
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Product Description</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+          integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="~/ProductRating/vendor/owl/assets/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="~/ProductRating/vendor/owl/assets/owl.theme.default.min.css">
+
+    <link rel="stylesheet" href="~/ProductRating/css/style.css">
+
+</head>
+
+<body>
+
+
+    <div id="wrapper">
+
+        <div class="topwave">
+            <img src="~/ProductRating/img/top-wave.svg" class="img-fluid rounded-top" alt="">
+        </div>
+
+        <div class="container maindash">
+
+            <div class="row mb-4">
+                <div class="col-md-10 mx-auto">
+                    <div class="topsec">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <div class="topcontentsec">
+                                    <h2>Lorem ipsum dolor,</h2>
+                                    <p>
+                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vel cum repellendus
+                                        illo amet
+                                        aliquam officia neque at voluptate ipsa sit rerum quia possimus, atque itaque
+                                        porro
+                                        modi!
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 text-center logo-order">
+                                <div class="logowrap">
+                                    <img src="~/ProductRating/img/digi2l-arrow-01.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row my-4">
+
+                <div class="py-3">
+                </div>
+
+
+                <div class="col-md-8 text-center mx-auto">
+                    <div class="custom-dots">
+                    </div>
+                    <div class="progresswrap">
+                        <div class="progresstext">0%</div>
+                    </div>
+
+                    <div id="sliderwrap" class="owl-carousel owl-theme">
+
+                        <div class="qawrap" id="qa_1">
+                            <h4>1. Serial no. of ODU and IDU and Remote Availability</h4>
+                            <div class="rangewrap">
+                                <p class="rangeheading">Good</p>
+                                <h3 class="output">5</h3>
+                                <input type="range" name="" id="" min="0" max="10" value class="slider">
+                                <span class="dotted">
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                </span>
+                                <div class="d-flex justify-content-between rangefooter">
+                                    <span>Scrap</span>
+                                    <span>Excellent</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qawrap" id="qa_2">
+                            <h4>2. Serial no. of ODU and IDU and Remote Availability</h4>
+                            <div class="rangewrap">
+                                <p class="rangeheading">Good</p>
+                                <h3 class="output">5</h3>
+                                <input type="range" name="" id="" min="0" max="10" value class="slider">
+                                <span class="dotted">
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                </span>
+                                <div class="d-flex justify-content-between rangefooter">
+                                    <span>Scrap</span>
+                                    <span>Excellent</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qawrap" id="qa_3">
+                            <h4>3. Serial no. of ODU and IDU and Remote Availability</h4>
+                            <div class="rangewrap">
+                                <p class="rangeheading">Good</p>
+                                <h3 class="output">5</h3>
+                                <input type="range" name="" id="" min="0" max="10" value class="slider">
+                                <span class="dotted">
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                </span>
+                                <div class="d-flex justify-content-between rangefooter">
+                                    <span>Scrap</span>
+                                    <span>Excellent</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qawrap" id="qa_4">
+                            <h4>4. Serial no. of ODU and IDU and Remote Availability</h4>
+                            <div class="rangewrap">
+                                <p class="rangeheading">Good</p>
+                                <h3 class="output">5</h3>
+                                <input type="range" name="" id="" min="0" max="10" value class="slider">
+                                <span class="dotted">
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                </span>
+                                <div class="d-flex justify-content-between rangefooter">
+                                    <span>Scrap</span>
+                                    <span>Excellent</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qawrap" id="qa_5">
+                            <h4>4. Serial no. of ODU and IDU and Remote Availability</h4>
+                            <div class="rangewrap">
+                                <p class="rangeheading">Good</p>
+                                <h3 class="output">5</h3>
+                                <input type="range" name="" id="" min="0" max="10" value class="slider">
+                                <span class="dotted">
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                </span>
+                                <div class="d-flex justify-content-between rangefooter">
+                                    <span>Scrap</span>
+                                    <span>Excellent</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qawrap" id="qa_6">
+                            <div class="answerwrap bg-white p-4 rounded mt-3 text-start">
+                                <h5 class="m-0"><strong>Please Review Your Rating for perticular paramenters</strong></h5>
+                                <br>
+                                <p><strong>Q.1.</strong> Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+                                <p>Answer: <span><strong>2</strong></span></p>
+                                <p><strong>Q.2.</strong> Nesciunt aspernatur delectus quis itaque quos quidem repellat quo debitis?</p>
+                                <p>Answer: <span><strong>2</strong></span></p>
+                                <p><strong>Q.3.</strong> Nulla nam doloribus assumenda distinctio.</p>
+                                <p>Answer: <span><strong>2</strong></span></p>
+                                <p><strong>Q.4.</strong> Voluptates eum dicta, quo voluptas fuga posrnatur reiciendis?</p>
+                                <p>Answer: <span><strong>2</strong></span></p>
+                                <p><strong>Q.5.</strong> Delectus dolor sequi vitae?</p>
+                                <p>Answer: <span><strong>2</strong></span></p>
+                                <p><strong>Q.6.</strong> Et eum dolorem debitis ducimus! Dolor ratione ex daccusamus quia eveniet.</p>
+                                <p>Answer: <span><strong>2</strong></span></p>
+                                <p><strong>Q.7.</strong> Sapiente minus quasi et ad facilis repudiandae doloribus, accusamus est?</p>
+                                <p>Answer: <span><strong>2</strong></span></p>
+                                <p><strong>Q.8.</strong> Consequatur, labore cum quo modi hic, mo?</p>
+                                <p>Answer: <span><strong>2</strong></span></p>
+                                <p><strong>Q.9.</strong> Ullam dicta itaque possimus fugit aut mollitia deberiores! Dolor, repudiandae aliquam!</p>
+                                <p>Answer: <span><strong>2</strong></span></p>
+                                <p><strong>Q.10.</strong> Soluta qui exercitationem porro? eius dolores impedit facere debitis.</p>
+                                <p>Answer: <span><strong>2</strong></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    </div>
+
+
+    </div>
+
+
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    @*<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+    </script>*@
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+            integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+    </script>
+
+    <script src="~/ProductRating/js/compressor.js"></script>
+
+    <script src="~/ProductRating/vendor/owl/owl.carousel.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.slider').change(function () {
+
+                var RangeValue = $(this).val();
+                var RangParent = '#' + $(this).closest('.qawrap').attr('id');
+                var RangeOutput = RangParent + ' .output';
+                $(RangeOutput).text(RangeValue).toggleClass('.dissolveInBottom');
+
+                if (RangeValue <= 1) {
+                    $(RangParent + ' .rangeheading').text('Scrap');
+                } else if (RangeValue <= 3) {
+                    $(RangParent + ' .rangeheading').text('Poor');
+                } else if (RangeValue <= 5) {
+                    $(RangParent + ' .rangeheading').text('Average');
+                } else if (RangeValue <= 7) {
+                    $(RangParent + ' .rangeheading').text('Good');
+                } else if (RangeValue <= 9) {
+                    $(RangParent + ' .rangeheading').text('Very Good');
+                } else if (RangeValue <= 10) {
+                    $(RangParent + ' .rangeheading').text('Excellent');
+                }
+
+            });
+
+        });
+
+        $(document).ready(function () {
+            $('#sliderwrap').owlCarousel({
+                items: 1,
+                margin: 10,
+                dots: false,
+                nav: true,
+                autoHeight: true,
+                navText: ['Back', 'Next'],
+                mouseDrag: false,
+                touchDrag: false,
+                onInitialized: function () {
+                    var progressBar = $('<div class="owl-progress" style="width:5%;"></div>');
+                    $('.progresswrap').append(progressBar);
+                    var progressToggle = $('<div class="owl-progress-toggle"></div>');
+                    $('.owl-carousel').append(progressToggle);
+                },
+                onTranslate: function (event) {
+
+
+                    var slideCount = event.item.count;
+                    // Calculate the progress as a percentage
+                    var progress;
+                    if (event.item.index == slideCount - 1) {
+                        // If the last slide is active, set progress to 100%
+                        progress = 100;
+                    } else {
+                        // Otherwise, calculate progress based on the current slide index
+                        progress = Math.ceil(event.item.index / slideCount * 100);
+                    }
+                    $('.owl-progress').css('width', progress + '%');
+                    $('.progresstext').text(progress + '%');
+
+                }
+
+            });
+
+        })
+    </script>
+
+</body>
+
+</html>

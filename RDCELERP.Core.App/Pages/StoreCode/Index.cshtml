@@ -1,0 +1,119 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.StoreCode.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row content-area">
+
+    <div class="col-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3>
+                    <span class="m-0">Store Code List</span>
+                </h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+                <div class="row detailbox" style="padding: 20px;">
+                    <div class="col-20" id="maintbl">
+                        <div class="mainshadow setting-right">
+                            <div class="row">
+                                <div class="col-12">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <a asp-page="Manage"
+                                           class="btn btn-primary float-right ">
+                                            New Store Code
+                                        </a>
+                                    }
+
+                                </div>
+                                <div class="datatablebox">
+                                    <table id="StoreCodeDatatable"
+                                           class="table table-striped dt-responsive mainshadow"
+                                           style="width:200%" border="0">
+                                        <thead>
+                                            <tr>
+
+                                                <th>
+                                                    Sponsor Name
+                                                </th>
+
+                                                <th>Store Code</th>
+                                                <th>PinCode Code</th>
+                                                <th>City</th>
+                                                <th>Location</th>
+                                                <th>Store Manager Email</th>
+                                                <th>Associate Code</th>
+                                                <th>Payment To Customer</th>
+
+                                                <th>
+                                                    Actions
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        var url =  "/api/ListPage/GetStoreCodeList?roleId=" + @ViewBag.RoleId ;
+
+        $('#StoreCodeDatatable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "filter": true,
+            "oLanguage": {
+                "sEmptyTable": "No Store Code found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "dom": '<"filters"lfi><"separator">tp',
+            "responsive": true,
+            "columns": [
+                { "data": "storeCodeId", "name": "StoreCodeId", "autoWidth": true, "orderable": false },
+                { "data": "sponsorname", "name": "SponsorName", "autoWidth": true, "orderable": true },
+                { "data": "storecode", "name": "StoreCode", "autoWidth": true, "orderable": true },
+                { "data": "pincode", "name": "PinCode", "autoWidth": true, "orderable": true },
+                { "data": "city", "name": "City", "autoWidth": true, "orderable": true },
+                { "data": "location", "name": "Location", "autoWidth": true, "orderable": true },
+                { "data": "storeManagerEmail", "name": "StoreManagerEmail", "autoWidth": true, "orderable": true },
+                { "data": "associateCode", "name": "AssociateCode", "autoWidth": true, "orderable": true },
+                { "data": "paymentToCustomer", "name": "PaymentToCustomer", "autoWidth": true, "orderable": true },
+                { "data": "action", "name": "Actions", "autoWidth": true, "orderable": false},
+            ]
+        });
+    });</script>
+

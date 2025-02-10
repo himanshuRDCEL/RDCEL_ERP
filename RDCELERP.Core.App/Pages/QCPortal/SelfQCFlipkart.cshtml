@@ -1,0 +1,585 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.QCPortal.SelfQCFlipkartModel
+@{
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int imageLabelViewModelsCount = Model.selfQcVideoImageViewModel.imageLabelViewModels.Count();
+    int count = 1;
+    int count1 = 1;
+}
+<!doctype html>
+
+<html lang="en">
+<head>
+    <title>Product Description</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+          integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link href="~/SelfQC-assets/css/style.css" rel="stylesheet" />
+    <style>
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .VideoOverlay {
+            overflow-y: hidden;
+            cursor: not-allowed;
+            user-select: none;
+        }
+
+        .VideoRecState {
+            position: fixed;
+            left: 50%;
+            top: -20px;
+            transform: translate(-50%, 0);
+            max-width: 440px;
+            z-index: 999999 !important;
+        }
+
+            .VideoRecState:hover {
+                transform: translate(-50%, 0) !important;
+            }
+
+        #loader {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: #000000c2;
+            z-index: 9999;
+            height: 100%;
+        }
+
+        .loaderwrap {
+            width: 150px;
+            position: fixed;
+            background: #fff;
+            left: 50%;
+            top: 50%;
+            border-radius: 6px;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 30px rgb(0 0 0 / 10%);
+            box-sizing: content-box;
+            padding: 20px 20px 5px 20px;
+        }
+
+            .loaderwrap img {
+                width: 100%;
+                display: block;
+            }
+
+            .loaderwrap p {
+                text-align: center;
+                font-size: 13px;
+                color: #737373;
+            }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <form method="post" enctype="multipart/form-data" id="SelfQCForm">
+            <input type="hidden" asp-for="selfQcVideoImageViewModel.imageLabelViewModels.Count" id="hdnCount" />
+            <input type="hidden" asp-for="selfQCExchangeDetailsView.ProductCategory" id="hdnproducttype" />
+            <input type="hidden" asp-for="selfQcVideoImageViewModel.LoginId" id="hdnloginid" />
+            <input type="hidden" asp-for="baseurl" />
+            <div id="loader" style="display: none;">
+                <div class="loaderwrap">
+                    <img src="~/SelfQC-assets/img/digi2l-gif.gif">
+                    <p>Please Wait ...</p>
+                </div>
+            </div>
+            <div class="topwave">
+                <img src="~/SelfQC-assets/img/top-wave.svg" class="img-fluid rounded-top" />
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 mx-auto">
+                        <div class="topsec">
+                            <div class="row">
+                                <input type="hidden" id="hdnselfqcvideo" asp-for="selfQcVideoImageViewModel.SelfQCVideo" />
+                                <input type="hidden" id="hdncheckvideo" asp-for="isVideoTrue" />
+                                <div class="col-lg-7">
+                                    <div class="topcontentsec">
+                                        <h2>Welcome To Digi2L</h2>
+                                        <p>
+                                            Digi2L is India’s first company that helps you in the disposal of your used appliances and gadgets without having to face the hassles of looking for customers and the best price while ensuring spot payment and free home pick up of the used product.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 text-center logo-order">
+                                    <div class="logowrap">
+                                        <img src="~/SelfQC-assets/img/digi2l-arrow-01.png" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="meta-detail">
+                            <div class="row text-center">
+                                <div class="col-md-4 p-4">
+                                    <p>Welcome,</p>
+                                    <h5>@Model.selfQCExchangeDetailsView.CustomerName</h5>
+                                </div>
+                                <div class="col-md-4 p-4">
+                                    <p>Appliance Cateogry,</p>
+                                    <h5>@Model.selfQCExchangeDetailsView.ProductCategory</h5>
+                                </div>
+                                <div class="col-md-4 py-4">
+                                    <p>Reg. No.</p>
+                                    <h5>@Model.selfQCExchangeDetailsView.RegdNo</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 my-4">
+                                <h4 class="uploadheading mt-4">- Please upload required photos below -</h4>
+                            </div>
+                            @for (int i = 0; i < imageLabelViewModelsCount; i++)
+                            {
+                                <input type="hidden" asp-for="selfQcVideoImageViewModel.imageLabelViewModels[i].ProductImageDescription" />
+                                <input type="hidden" asp-for="selfQcVideoImageViewModel.imageLabelViewModels[i].ProductImageLabel" />
+                                <input type="hidden" asp-for="selfQcVideoImageViewModel.imageLabelViewModels[i].RegdNo" />
+                                <input type="hidden" asp-for="selfQcVideoImageViewModel.imageLabelViewModels[i].BusinessType" />
+                                <input type="hidden" asp-for="selfQcVideoImageViewModel.imageLabelViewModels[i].FileName" id="hdnFileName_@count" />
+
+                                if (Model.selfQcVideoImageViewModel.imageLabelViewModels[i].ProductImageLabel == Model.isVideoTrue)
+                                {
+                                    <div class="col-md-6" id="uploadwrap_@count">
+                                        <div class="uploadwrap videouploadbox">
+                                            <h5>@Html.DisplayFor(m => m.selfQcVideoImageViewModel.imageLabelViewModels[i].ProductImageLabel)</h5>
+                                            <div class="removebtn">
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </div>
+                                            <div class="uploadbox">
+                                                <div class="uploadtop">
+                                                    @if (Model.selfQcVideoImageViewModel.imageLabelViewModels[i].FullPlaceHolderImageUrl != null)
+                                                    {
+                                                        <img src="@Model.selfQcVideoImageViewModel.imageLabelViewModels[i].FullPlaceHolderImageUrl" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="ApplianceIconWrapper">
+                                                            <i class="fa-solid fa-tv uploadicons"></i>
+                                                        </div>
+                                                    }
+                                                    <div class="UploadContentBox">
+                                                        <video id="videoElement" name="videoElement" class="VideoBox" muted></video>
+                                                        <p class="ApplianceTitle">@Html.DisplayFor(m => m.selfQcVideoImageViewModel.imageLabelViewModels[i].ProductImageLabel)</p>
+                                                        <p class="validationmsg">
+                                                            <span id="texttospeech_@count1">@Html.DisplayFor(m => m.selfQcVideoImageViewModel.imageLabelViewModels[i].ProductImageDescription)</span>
+                                                        </p>
+                                                    </div>
+                                                    <label class="ErrorMsg" style="color:#333;"></label>
+                                                </div>
+                                                <div class="uploadbottom">
+                                                    <div class="file">
+                                                        <button id="startButton" class="btn btn-primary">Start Recording</button>
+                                                        <a href="javascript:void(0)" id="ResetButton" class="btn btn-dark mainshadow my-2" onclick="resetVideo();">Reset</a>
+                                                        <input type="hidden" asp-for="selfQcVideoImageViewModel.imageLabelViewModels[i].Base64StringValue" id="hdnBase64StringValue_@count" value="recordedVideo" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="imgpreview">
+                                            </div>
+                                            <a class="VoiceIconBox" onclick="speakText('texttospeech_@count1')"><i class="fa-solid fa-volume-high" id="texttospeech_@count1"></i></a>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-6">
+                                        <div class="uploadwrap" id="uploadwrap_@count">
+                                            <h5>@Html.DisplayFor(m => m.selfQcVideoImageViewModel.imageLabelViewModels[i].ProductImageLabel)</h5>
+                                            <div class="removebtn">
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </div>
+                                            <div class="uploadbox">
+                                                <div class="uploadtop" id="uploadtop_@count">
+                                                    @if (Model.selfQcVideoImageViewModel.imageLabelViewModels[i].FullPlaceHolderImageUrl != null)
+                                                    {
+                                                        <img src="@Model.selfQcVideoImageViewModel.imageLabelViewModels[i].FullPlaceHolderImageUrl" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="ApplianceIconWrapper">
+                                                            <i class="fa-solid fa-tv uploadicons"></i>
+                                                        </div>
+                                                    }
+                                                    <div class="UploadContentBox">
+                                                        <p class="ApplianceTitle">@Html.DisplayFor(m => m.selfQcVideoImageViewModel.imageLabelViewModels[i].ProductImageLabel)</p>
+                                                        <p class="validationmsg">
+                                                            <span id="texttospeech_@count1">@Html.DisplayFor(m => m.selfQcVideoImageViewModel.imageLabelViewModels[i].ProductImageDescription)</span>
+                                                        </p>
+                                                    </div>
+                                                    <label id="lblFileErr_@count" class="ErrorMsg" style="color:#333;"></label>
+                                                </div>
+                                                <div class="uploadbottom" id="uploadbottom_@count">
+                                                    <div class="file">
+                                                        Upload
+                                                        <input type="file" id="Image_Upload_@count" accept="image/*" asp-for="selfQcVideoImageViewModel.imageLabelViewModels[i].Image" />
+                                                        <input type="hidden" asp-for="selfQcVideoImageViewModel.imageLabelViewModels[i].Base64StringValue" id="hdnBase64StringValue_@count" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="imgpreview">
+                                                <img id="showimg_@count1" />
+                                            </div>
+                                            <a class="VoiceIconBox" onclick="speakText('texttospeech_@count1')"><i class="fa-solid fa-volume-high" id="texttospeech_@count1"></i></a>
+                                        </div>
+                                    </div>
+                                }
+                                count += 1;
+                                count1 += 1;
+                            }
+                        </div>
+                        <!-- bottom fields -->
+                        <div class="row my-4">
+                            <div class="col-12 text-end  my-4">
+                                <input type="button" value="Submit" class="btn btn-primary" id="btnSubmit">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+            integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
+    <script src="~/js/compressor.js"></script>
+
+    <script type="text/javascript">
+        function validateImages() {
+            var flag = true;
+            var a = $('#hdnCount').val();
+            for (let i = 1; i <= a; i++) {
+                var imgBase = $("#hdnBase64StringValue").val();
+                if ($("#hdnBase64StringValue_" + i).val() == '' || $("#hdnBase64StringValue_" + i).val() == null) {
+                    $("#Image_Upload_" + i).css("border", "1px solid red");
+                    $("#uploadtop_" + i).css("border", "1px solid red");
+                    $("#uploadbottom_" + i).css("border", "1px solid red");
+                    $("#Image_Upload_" + i).focus();
+                    $("#showimgbox_" + i).css("display", "flex");
+                    $("#showImg_" + i).attr('src', "");
+                    $("#lblFileErr_" + i).text("Please Upload Correct Image.");
+                    flag = false;
+                }
+                else {
+                    $("#Image_Upload_" + i).css("border", ""); $("#lblFileErr_" + i).text("");
+                }
+            }
+            return flag;
+        }
+
+        var a = $('#hdnCount').val();
+
+        $('.imgpreview img').hide();
+
+        $(document).ready(function () {
+            $('.VideoBox').hide();
+            $('.timerBox').hide();
+            $('.VideoStatus').hide();
+            $('#ResetButton').hide();
+            for (let i = 1; i <= a; i++) {
+                var uploadwrapbox = "#" + $('#uploadwrap_' + i).attr('id');
+                $(uploadwrapbox + ' .removebtn').hide();
+                $(uploadwrapbox + ' h5').hide();
+                $("#Image_Upload_" + i).bind('change', function () {
+                    $("#lblFileErr_" + i).text("");
+                    $("#lbInvoicelFileName_" + i).text("");
+                    $("#lbInvoicelFileName_" + i).append(this.files[0].name);
+                    $("#uploadtop_" + i).css("border", "none");
+                    $("#uploadbottom_" + i).css("border", "none");
+                });
+                $("#Image_Upload_" + i).resizeImg(function () {
+                    var value = parseInt("350");
+                    var Weight = parseInt("2");
+                    let type, quality; {
+                        type = "image/jpeg";
+                        quality = 0.8;
+                    }
+                    return {
+                        use_reader: false,
+                        mode: Weight,
+                        val: value,
+                        type: type,
+                        quality: quality,
+                        callback: function (result) {
+                            $("#showimg_" + i).attr('src', result);
+                            $("#hdnBase64StringValue_" + i).val(result.substr(result.indexOf(',') +
+                                1)).css("height", 100);
+                            $("#Image_Upload_" + i).val(null);
+                            //shashi
+                            $("#showimg_" + i).show();
+                            $('#uploadwrap_' + i + ' .removebtn').show();
+                            $('#uploadwrap_' + i + ' h5').show();
+                            $('#uploadwrap_' + i).addClass('uploadwrapborder');
+                            $('#uploadwrap_' + i + ' .uploadtop').hide();
+                            $('#uploadwrap_' + i + ' .uploadbottom').hide();
+                        }
+                    };
+                })
+            }
+        });
+
+        for (let j = 1; j <= a; j++) {
+            let currentJ = j;
+            $('#uploadwrap_' + currentJ + ' .removebtn').click(function () {
+                $('#uploadwrap_' + currentJ + ' .removebtn').hide();
+                $('#uploadwrap_' + currentJ + ' h5').hide();
+                $('#Image_Upload_' + currentJ).val(null);
+                $('#hdnBase64StringValue_' + currentJ).val(null);
+                $('#uploadwrap_' + currentJ).removeClass(' uploadwrapborder');
+                $('#uploadwrap_' + currentJ + ' .uploadtop').show();
+                $('#uploadwrap_' + currentJ + ' .uploadbottom').show();
+                $("#showimg_" + currentJ).removeAttr('src');
+                $("#showimg_" + currentJ).removeAttr('style');
+                $("#showimg_" + currentJ).hide();
+            });
+        }
+
+        $('#btnSubmit').click(function () {
+            if (validateImages()) {
+
+                if ("@Model.isVideoTrue" != "") {
+                    if ("@Model.isVideoTrue" != null || "@Model.isVideoTrue" != "") {
+
+                        if (videoElement.src === "") {
+                            var isvideo = "Is video Check";
+                            console.log("Video tag is empty");
+                            $('html, body').animate({
+                                scrollTop: $(".videouploadbox").offset().top
+                            }, 800);
+                            // Perform actions if the video tag is empty
+                        }
+                        else {
+                            $('#SelfQCForm').submit();
+                            $('#btnSubmit').hide();
+                        }
+                    }
+                }
+                else {
+                    $('#SelfQCForm').submit();
+                    $('#btnSubmit').hide();
+                }
+            }
+        });
+
+        function speakText(textId) {
+            const textArea = $('#' + textId);
+            const text = textArea.text();
+            if ('speechSynthesis' in window) {
+                const speech = new SpeechSynthesisUtterance();
+                speech.text = text;
+                speechSynthesis.speak(speech);
+            } else {
+                alert('Sorry, your browser doesn\'t support speech synthesis.');
+            }
+        }
+
+        const videoElement = document.getElementById('videoElement');
+        let mediaRecorder;
+        let globalStream = [];
+
+        const videoConstraints = {
+            video: {
+                width: 320,
+                height: 240,
+                frameRate: 100,
+                facingMode: getCameraFacingMode(),
+            },
+            audio: false
+        };
+
+        function getCameraFacingMode() {
+            if (isMobileOrTablet()) {
+                return {
+                    ideal: 'environment',
+                    exact: 'environment'
+                };
+            } else {
+                return 'user'; // Use the front camera for non-mobile devices
+            }
+        }
+
+        function isMobileOrTablet() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        @using Microsoft.Extensions.Configuration
+        @inject IConfiguration Configuration
+
+                    const VideotimerSec = @Json.Serialize(@Configuration.GetSection("ApplicationSettings").GetSection("VideoTimerseconds").Value);
+
+        function startRecording() {
+            // Show the overlay element
+            const overlay = document.createElement('div');
+            overlay.id = 'overlay';
+            document.body.appendChild(overlay);
+            event.preventDefault();
+            event.stopPropagation();
+            $('#videoElement').addClass('MainVideoBox');
+            $('body').addClass('VideoOverlay');
+            $('.uploadwrap').css('z-index', '-1');
+            $('.videouploadbox').css('z-index', '999999');
+            $('.videouploadbox').addClass('VideoRecState');
+            $('.VideoBox').show();
+            $('.videouploadbox .ApplianceIconWrapper').hide();
+
+            VideoTimer();
+
+            navigator.mediaDevices.getUserMedia(videoConstraints)
+                .then((stream) => {
+                    globalStream = stream;
+                    videoElement.srcObject = globalStream;
+                    videoElement.play();
+
+                    const chunks = [];
+
+                    mediaRecorder = new MediaRecorder(globalStream);
+                    mediaRecorder.addEventListener('dataavailable', (event) => {
+                        if (event.data.size > 0) {
+                            chunks.push(event.data);
+                        }
+                    });
+                    mediaRecorder.addEventListener('stop', () => {
+                        const videoBlob = new Blob(chunks, { type: 'video/webm' });
+                        videoElement.srcObject = null;
+                        videoElement.src = URL.createObjectURL(videoBlob);
+                        videoElement.controls = true;
+                        saveVideoOnBackend(videoBlob);
+                    });
+                    mediaRecorder.start();
+                })
+                .catch((error) => {
+                    console.log('Error accessing media devices:', error);
+                });
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                mediaRecorder = null;
+                globalStream.getTracks().forEach(track => track.stop());
+            }
+            $('#btnSubmit').show();
+            $('#ResetButton').show();
+            $('#startButton').hide();
+            const overlay = document.getElementById('overlay');
+            if (overlay) {
+                overlay.parentNode.removeChild(overlay);
+            }
+            $('#videoElement').removeClass('MainVideoBox');
+            $('body').removeClass('VideoOverlay');
+            $('.uploadwrap').css('z-index', '1');
+            $('.videouploadbox').removeClass('VideoRecState');
+        }
+
+        const startButton = document.getElementById('startButton');
+
+        $('#startButton').click(function () {
+            $('.videouploadbox img').hide();
+            $('.videouploadbox .ApplianceIconWrapper').hide();
+            startButton.disabled = true;
+            startRecording();
+            setTimeout(() => {
+                stopRecording();
+                startButton.disabled = false;
+            }, (VideotimerSec * 1000));
+            //}, 62000);
+        });
+
+        function resetVideo() {
+            videoElement.pause();
+            videoElement.currentTime = 0;
+            videoElement.srcObject = null;
+            videoElement.removeAttribute('src');
+            videoElement.load();
+            videoElement.controls = false;
+            videoElement.muted = true;
+            $('.VideoBox').hide();
+            $('.videouploadbox .ApplianceIconWrapper').show();
+            $('#startButton').text('Start Recording');
+            $('#startButton').show();
+            $('#ResetButton').hide();
+        }
+
+        // function saveVideoOnBackend(videoBlob) {
+        // debugger;
+        // var reader = new window.FileReader();
+        // reader.readAsDataURL(videoBlob);
+
+        // reader.onloadend = function () {
+        // var base64 = reader.result.split(',')[1];
+        // $('#hdnselfqcvideo').val(base64);
+        // }
+        // }
+
+        function saveVideoOnBackend(videoBlob) {
+            var reader = new window.FileReader();
+            reader.readAsDataURL(videoBlob);
+
+            reader.onloadend = function () {
+                var base64 = reader.result.split(',')[1];
+                debugger;
+                $('#loader').show();
+                var formData = new FormData();
+                formData.append('fileName', base64);
+                $.ajax({
+                    type: 'POST',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    url: '@Model.baseurl/QCPortal/SelfQCFlipkart?handler=CompressVideo',
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        debugger;
+                        if (response != null) {
+                            $('#hdnselfqcvideo').val(response);
+                            $('#loader').hide();
+                        } else {
+                            alert("Null Video Blob");
+                        }
+                    },
+                });
+            }
+        }
+
+        function VideoTimer() {
+            var seconds = VideotimerSec;
+            var countdown = setInterval(function () {
+                seconds--;
+                if (seconds >= 0) {
+                    $('#startButton').text('Recording... ' + seconds + ' SEC remaining');
+                } else {
+                    clearInterval(countdown);
+                }
+            }, 1000);
+        }
+
+    </script>
+</body>
+</html>

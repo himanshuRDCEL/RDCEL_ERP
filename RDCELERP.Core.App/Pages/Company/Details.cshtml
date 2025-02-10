@@ -1,0 +1,92 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.Company.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+
+
+
+<div class="row content-area">
+
+    <div class="col-12 setting">
+        <div class="card border-0 shadow">
+
+            <div class="card-header">
+                <div class="row">
+                    <div class="col">
+                        <h2 class="fs-5 fw-bold mb-0 card-title">
+                            @Html.DisplayFor(model => model.TblCompany.CompanyName)
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="card-body no-padding">
+                <div class="row detailed-reporting">
+                    <div class="col-12">
+                        <div class="mainshadow setting-right">
+                            <div class="row">
+
+                                <div class="col-12 mb-4 text-center">
+                                    <div class="editprofilepicbox mx-auto mb-4">
+                                        @if (!string.IsNullOrEmpty(Model.TblCompany.CompanyLogoUrl))
+                                        {
+                                            <img src="~/DBFiles/Company/@Html.DisplayFor(model => model.TblCompany.CompanyLogoUrl)" class="rounded-circle" style="min-width:160px;min-height:160px;object-fit: contain;" alt="Company Image">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Images/placeholder-01.png" alt="Company Image" />
+                                        }
+
+
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6 mb-3">
+                                    <p>@Html.DisplayFor(model => model.TblCompany.CompanyName)<span>Company Name</span></p>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <p>@Html.DisplayFor(model => model.TblCompany.Email)<span>Email</span></p>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <p>@Html.DisplayFor(model => model.TblCompany.Phone)<span>Phone Number</span></p>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <p>@Html.DisplayFor(model => model.TblCompany.WebSite)<span>Website</span></p>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-12 mt-4 d-flex justify-content-between">
+                                    
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a asp-page="./Index" class="btn btn-secondary mainshadow"><i class="fa-solid fa-arrow-left"></i> Back to List</a>
+                                    }
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <a asp-page="./Manage" asp-route-id="@Model.TblCompany.CompanyId"
+                                           class=" btn btn-primary mainshadow">
+                                            <i class="fa fa-pen"
+                                               aria-hidden="true"></i> &nbsp; Edit
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+        <!-- activity -->
+    </div>
+
+</div>

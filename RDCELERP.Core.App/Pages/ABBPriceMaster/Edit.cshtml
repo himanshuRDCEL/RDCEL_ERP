@@ -1,0 +1,121 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ABBPriceMaster.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "ABBPriceMaster";
+}
+
+<h1>Edit</h1>
+
+<h4>TblAbbpriceMaster</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblAbbpriceMaster.PriceMasterId" />
+            <div class="form-group">
+                <label asp-for="TblAbbpriceMaster.BusinessUnitId" class="control-label"></label>
+                <select asp-for="TblAbbpriceMaster.BusinessUnitId" class="form-control" asp-items="ViewBag.BusinessUnitId"></select>
+                <span asp-validation-for="TblAbbpriceMaster.BusinessUnitId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbpriceMaster.ProductCatId" class="control-label"></label>
+                <select asp-for="TblAbbpriceMaster.ProductCatId" class="form-control" asp-items="ViewBag.ProductCatId"></select>
+                <span asp-validation-for="TblAbbpriceMaster.ProductCatId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbpriceMaster.ProductTypeId" class="control-label"></label>
+                <select asp-for="TblAbbpriceMaster.ProductTypeId" class="form-control" asp-items="ViewBag.ProductTypeId"></select>
+                <span asp-validation-for="TblAbbpriceMaster.ProductTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbpriceMaster.FeeTypeId" class="control-label"></label>
+                <input asp-for="TblAbbpriceMaster.FeeTypeId" class="form-control" />
+                <span asp-validation-for="TblAbbpriceMaster.FeeTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbpriceMaster.Sponsor" class="control-label"></label>
+                <input asp-for="TblAbbpriceMaster.Sponsor" class="form-control" />
+                <span asp-validation-for="TblAbbpriceMaster.Sponsor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbpriceMaster.ProductCategory" class="control-label"></label>
+                <input asp-for="TblAbbpriceMaster.ProductCategory" class="form-control" />
+                <span asp-validation-for="TblAbbpriceMaster.ProductCategory" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbpriceMaster.ProductSabcategory" class="control-label"></label>
+                <input asp-for="TblAbbpriceMaster.ProductSabcategory" class="form-control" />
+                <span asp-validation-for="TblAbbpriceMaster.ProductSabcategory" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbpriceMaster.PriceStartRange" class="control-label"></label>
+                <input asp-for="TblAbbpriceMaster.PriceStartRange" class="form-control" />
+                <span asp-validation-for="TblAbbpriceMaster.PriceStartRange" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbpriceMaster.PriceEndRange" class="control-label"></label>
+                <input asp-for="TblAbbpriceMaster.PriceEndRange" class="form-control" />
+                <span asp-validation-for="TblAbbpriceMaster.PriceEndRange" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbpriceMaster.FeeType" class="control-label"></label>
+                <input asp-for="TblAbbpriceMaster.FeeType" class="form-control" />
+                <span asp-validation-for="TblAbbpriceMaster.FeeType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbpriceMaster.FeesApplicableAmt" class="control-label"></label>
+                <input asp-for="TblAbbpriceMaster.FeesApplicableAmt" class="form-control" />
+                <span asp-validation-for="TblAbbpriceMaster.FeesApplicableAmt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbpriceMaster.FeesApplicablePercentage" class="control-label"></label>
+                <input asp-for="TblAbbpriceMaster.FeesApplicablePercentage" class="form-control" />
+                <span asp-validation-for="TblAbbpriceMaster.FeesApplicablePercentage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbpriceMaster.PlanPeriodInMonths" class="control-label"></label>
+                <input asp-for="TblAbbpriceMaster.PlanPeriodInMonths" class="form-control" />
+                <span asp-validation-for="TblAbbpriceMaster.PlanPeriodInMonths" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbpriceMaster.IsActive" class="control-label"></label>
+                <input asp-for="TblAbbpriceMaster.IsActive" class="form-control" />
+                <span asp-validation-for="TblAbbpriceMaster.IsActive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbpriceMaster.CreatedBy" class="control-label"></label>
+                <input asp-for="TblAbbpriceMaster.CreatedBy" class="form-control" />
+                <span asp-validation-for="TblAbbpriceMaster.CreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbpriceMaster.CreatedDate" class="control-label"></label>
+                <input asp-for="TblAbbpriceMaster.CreatedDate" class="form-control" />
+                <span asp-validation-for="TblAbbpriceMaster.CreatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbpriceMaster.ModifiedBy" class="control-label"></label>
+                <input asp-for="TblAbbpriceMaster.ModifiedBy" class="form-control" />
+                <span asp-validation-for="TblAbbpriceMaster.ModifiedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblAbbpriceMaster.ModifiedDate" class="control-label"></label>
+                <input asp-for="TblAbbpriceMaster.ModifiedDate" class="form-control" />
+                <span asp-validation-for="TblAbbpriceMaster.ModifiedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

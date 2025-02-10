@@ -1,0 +1,77 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.ServicePartner.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "ServicePartner";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>TblServicePartner</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblServicePartner.ServicePartnerName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblServicePartner.ServicePartnerName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblServicePartner.ServicePartnerDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblServicePartner.ServicePartnerDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblServicePartner.IsActive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblServicePartner.IsActive)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblServicePartner.CreatedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblServicePartner.CreatedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblServicePartner.CreatedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblServicePartner.CreatedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblServicePartner.Modifiedby)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblServicePartner.Modifiedby)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblServicePartner.ModifiedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblServicePartner.ModifiedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblServicePartner.IsServicePartnerLocal)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblServicePartner.IsServicePartnerLocal)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TblServicePartner.User)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblServicePartner.User.UserId)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="TblServicePartner.ServicePartnerId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

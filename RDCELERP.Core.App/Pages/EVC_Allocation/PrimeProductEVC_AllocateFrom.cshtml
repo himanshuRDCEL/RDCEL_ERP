@@ -1,0 +1,354 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC_Allocation.PrimeProductEVC_AllocateFromModel
+@{
+
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="py-4">
+</div>
+<form method="post" enctype="multipart/form-data" id="PrimeAllocateForm">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="card border-0 shadow">
+                        <div class="card-header card-header-wrapper">
+                            <div class="row align-items-center card-title">
+                                <div class="col-md-6">
+                                    <h2 class="fs-5 mb-0">
+                                        Prime Product Form
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="row detailed-reporting">
+                                <div class="col-12 mt-4">
+                                    <h5>Customer Details</h5>
+                                    <hr>
+                                </div>
+                                <input type="hidden" id="hdnOrderTransId" asp-for="allocate.orderTransId" />
+
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Reg. No</span>
+                                        <input class="form-control " asp-for="allocate.RegdNo" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Customer State</span>
+                                        <input class="form-control" asp-for="allocate.Custstate" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Customer City</span>
+                                        <input class="form-control" asp-for="allocate.CustCity" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Area Locality</span>
+                                        <input class="form-control" asp-for="allocate.AreaLocality" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Customer Pincode</span>
+                                        <input class="form-control" asp-for="allocate.CustPin" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Product Group</span>
+                                        <input class="form-control txtEVCPin" asp-for="allocate.OldProdType" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Product Type</span>
+                                        <input class="form-control txtEVCPin" asp-for="allocate.ExchProdGroup" readonly />
+
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Bonus</span>
+                                        <input class="form-control txtEVCPin" asp-for="allocate.Bonus" readonly />
+                                    </p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <p>
+                                        <span class="mb-1">Actual Price After QC</span>
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <i class="fa-solid fa-indian-rupee-sign"></i>
+                                            </span>
+                                            <input class="form-control txtEVCPin" asp-for="allocate.ActualBasePrice" readonly />
+                                        </div>
+                                    </p>
+                                </div>
+                                <div class="col-12 my-4">
+                                    <h5>EVC Selection</h5>
+                                    <hr class="my-4">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-2">
+                                            @if (@ViewBag.EVcLists != null)
+                                            {
+                                                <div class="col-md-4 mb-4">
+                                                    <label class="" for="">Select EVC <span style="color:red;">*</span></label>
+                                                    <select asp-for="allocate.EvcPartnerId" class="custom-select my-1 mr-sm-2 form-select" asp-items="ViewBag.EVcLists" id="ddlEvcReg">
+                                                        <option value=0>--None--</option>
+                                                    </select>
+                                                    <span asp-validation-for="allocate.EvcregistrationId" id="EVCMessege" class="text-danger"></span>
+
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <label>EVC NotFound plz check city </label>
+                                            }
+                                            @*@Html.DropDownListFor(x => Model.Allocate_EVCFromViewModels.SelectEVCId, new SelectList(Model.Allocate_EVCFromViewModels.EVCLists, "EvcregistrationId", "EvcregdNo"), htmlAttributes: new { @class = "form-control", @onclick = "SelectEVC(this.value)", id = "DropEvc_" });*@
+                                            @*}
+                    else
+                    {
+                        <label>EVC NotFound plz check city </label>
+                    }*@
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-12 mt-4">
+                                    <h5>EVC Details</h5>
+                                    <hr class="my-4">
+                                </div>
+                                <div class="col-md-2">
+                                    <p>
+                                        <input id="txtEVCRNo" class="form-control " readonly />
+                                        <span>EVC Reg No</span>
+                                    </p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p>
+                                        <input id="txtEVCStoreCode" class="form-control " readonly />
+                                        <span>EVC Partner Code</span>
+                                    </p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p>
+                                        <input id="txtEVCState" class="form-control" readonly />
+                                        <span>EVC Partner State</span>
+                                    </p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p>
+                                        <input id="txtEVCCity" class="form-control" readonly />
+                                        <span>EVC Partner City</span>
+                                    </p>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <p>
+                                        <input id="txtEVCPin" class="form-control txtEVCPin" readonly />
+                                        <span>EVC Partner Pincode</span>
+                                    </p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p>
+                                        <input id="txtEVCWalletAmount" class="form-control txtEVCWalletAmount" readonly />
+                                        <span>Wallet Amount</span>
+                                    </p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p>
+                                        <input id="txtEVCRuningBalance" class="form-control txtEVCRuningBalance" readonly />
+                                        <span>Clear Balance</span>
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="row detailed-reporting">
+                                <div class="col-md-9">
+                                    <div class="row mb-4">
+                                        <div class="col-md-5">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <p class="mt-2"><span>Expected Price</span></p>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="input-group">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                                                        </span>
+                                                        <input type="text"class="form-control txtEVCPin" id="txtOldPrice" asp-for="allocate.ExpectedPrice" readonly />
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-1 text-end">
+                                            <input type="checkbox" value="true" style="margin-top:12px;" id="myCheck" />
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <p class="mt-2"><span>New Price</span></p>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="input-group">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                                                        </span>
+                                                        <input class="form-control txtEVCPin" id="txtNewPrice" asp-for="allocate.NewExpectedPrice" onchange="CheckPrice();" disabled maxlength="7" />
+                                                        <span class="text-danger" id="message"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-right">
+                                    @if (ViewBag.EVcLists != null)
+                                    {
+                                        @*<input type="submit" id="btnsave" value="Save" class="btn btn-primary mainshadow" disabled="disabled" />*@
+                                        <button value="Save" id="btnsave" class="btn btn-primary mainshadow" disabled="disabled">Save</button>
+                                    }
+                                    <a href="@Model.PageRedirectionURL" class="btn btn-primary">Back</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $(document).ready(function () {
+        var expectedPrice = "@Model.allocate.ExpectedPrice";
+        var list = '@ViewBag.EVcLists';
+
+        if ((list == null && list==" ")|| expectedPrice == 0) {
+
+            Swal.fire({
+                title: '@Model.title',
+                text: '@Model.text',
+                icon: 'warning',
+                timer: 3500,
+                confirmButtonText: 'Ok',
+                customClass: {
+                    confirmButton: 'btn btn-dark'
+                }
+            })
+        }
+    });
+    $("#ddlEvcReg").change(function () {
+    if ($("#ddlEvcReg").val() == 0) {
+                $("#txtEVCRNo").val(' ');
+                $("#txtEVCPin").val(' ');
+                $("#txtEVCState").val(' ');
+                $("#txtEVCCity").val(' ');
+                $("#txtEVCAddress").val(' ');
+                $("#txtEVCWalletAmount").val(' ');
+                $("#txtEVCRuningBalance").val(' ');
+                $("#txtOldPrice").val("");
+        $('#btnsave').prop('disabled', true);
+            }
+            else {
+            $.get("@URLPrefixforProd/EVC_Allocation/Allocate_EVCFrom?handler=EVCDetailsByEVCRegNo&evcPartnerId=" + $("#ddlEvcReg").val() + "&orderTransId=" + $("#hdnOrderTransId").val()).done(function (data) {
+                            $("#txtEVCRNo").val(data.evcregdNo);
+                            $("#txtEVCPin").val(data.pinCode);
+                            $("#txtEVCState").val(data.stateName);
+                            $("#txtEVCCity").val(data.cityName);
+                            $("#txtEVCAddress").val(data.regdAddressLine1);
+                            $("#txtEVCWalletAmount").val(data.evcwalletAmount);
+                            $("#txtEVCRuningBalance").val(data.runingBalance);
+                            $("#txtEVCStoreCode").val(data.evcStoreCode);
+                            $("#txtOldPrice").val(data.expectedPrice);
+                     if ($("#txtNewPrice").val() > 0 && $("#ddlEvcReg").val() > 0 && $("#myCheck").is(":checked")) {                        
+                         $('#btnsave').prop('disabled', false);
+                     }
+                     else {                       
+                         $('#btnsave').prop('disabled', true);
+                     }
+                 });
+
+                 }
+
+    });
+
+
+    //use for new price is greter then final price
+    function CheckPrice() {
+        var NewPrice = document.getElementById("txtNewPrice").value;
+        var oldPrice = document.getElementById("txtOldPrice").value;
+        var check = parseInt(NewPrice) > parseInt(oldPrice);
+        if (check == false)
+        {
+            $("#message").html("Please enter Greater price for Price After QC");
+            $('#btnsave').prop('disabled', true);
+        }
+        else {
+
+            if ($("#ddlEvcReg").val() > 0) {               
+                $("#message").html("");
+                $('#btnsave').prop('disabled', false);
+            }
+            else {
+                $("#EVCMessege").css("color", "red");
+                $("#EVCMessege").html("Pleace Select New EVC ");
+                $('#btnsave').prop('disabled', true);
+            }              
+        }
+
+    }
+
+    $(function () {
+        $("#myCheck").click(function () {
+            if ($(this).is(":checked")) {
+
+                $("#txtNewPrice").removeAttr("disabled");
+                $("#txtNewPrice").focus();
+                if ($("#txtNewPrice").val() > 0 && $("#ddlEvcReg").val() > 0 && $("#myCheck").is(":checked")) {
+                    $('#btnsave').prop('disabled', false);
+                }
+                else {
+                    $('#btnsave').prop('disabled', true);
+                }
+            }
+            else {
+                $("#txtNewPrice").attr("disabled", "disabled");
+                $('#btnsave').prop('disabled', true);
+            }
+        });
+    });
+
+    $('#btnsave').click(function () {
+        $('#btnsave').prop('disabled', true);
+        $('#loader').show();
+        $('#PrimeAllocateForm').submit();
+    });
+
+</script>

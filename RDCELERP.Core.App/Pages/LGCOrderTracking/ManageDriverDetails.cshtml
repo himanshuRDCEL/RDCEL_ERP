@@ -1,0 +1,372 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.LGCOrderTracking.ManageDriverDetailsModel
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int i = 0;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">Manage Driver Deatails</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data" id="formcontrol">
+                            <div class="row" id="ManageDriverForm">
+                                <div class="col-12 mb-4 text-center">
+                                    <div class="editprofilepicbox mx-auto">
+                                        @if (Model.driverDetailsVM.ProfilePictureImgSrc != null)
+                                        {
+                                            <img src="@Model.driverDetailsVM.ProfilePictureImgSrc" id="PreviewProfileImg" accept="image/*" style="width:160px; height:160px;" class="rounded-circle" alt="">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/ds/img/default-user-image.png" id="PreviewProfileImg" accept="image/*" style="width:160px; height:160px;" class="rounded-circle" alt="" />
+                                        }
+                                    </div>
+                                </div>
+                                <input type="hidden" asp-for="driverDetailsVM.DriverDetailsId" id="hdnDriverDetailsId" />
+                                <input type="hidden" asp-for="driverDetailsVM.ProfilePictureString" id="hdnProfileImg" />
+                                <input type="hidden" asp-for="driverDetailsVM.DriverlicenseImageString" id="hdnDriverlicenseImage" />
+                                <input type="hidden" asp-for="driverDetailsVM.VehicleRcCertificateString" id="hdnVehicleRcCertificate" />
+                                <input type="hidden" asp-for="driverDetailsVM.VehiclefitnessCertificateString" id="hdnVehiclefitnessCertificate" />
+                                <input type="hidden" asp-for="driverDetailsVM.VehicleInsuranceCertificateString" id="hdnVehicleInsuranceCertificate" />
+                                <input type="hidden" asp-for="driverDetailsVM.IsApproved" id="hdnIsApproved" />
+                                @if (Model.SPId > 0)
+                                {
+                                    <input type="hidden" asp-for="driverDetailsVM.ServicePartnerId" value="@Model.SPId" id="hdnServicePartnerId" />
+                                }
+                                else
+                                {
+                                    <input type="hidden" asp-for="driverDetailsVM.ServicePartnerId" id="hdnServicePartnerId" />
+                                    <div class="col-md-4 mb-4">
+                                        <label for="">Select Service Partner</label>
+                                        <input asp-for="driverDetailsVM.ServicePartnerBusinessName" id="ddlServicePartner" type="text" class="form-control" />
+                                        <span asp-validation-for="driverDetailsVM.DriverPhoneNumber" class="text-danger"></span>
+                                    </div>
+                                }
+
+                                <div class="col-md-4 mb-4">
+                                    @Html.AntiForgeryToken()
+                                    <label for="">Driver Name</label>
+                                    <input asp-for="driverDetailsVM.DriverName" type="text" class="form-control" />
+                                    <span asp-validation-for="driverDetailsVM.DriverName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Driver Phone Number</label>
+                                    <input asp-for="driverDetailsVM.DriverPhoneNumber" type="text" class="form-control" />
+                                    <span asp-validation-for="driverDetailsVM.DriverPhoneNumber" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">City</label>
+                                    <input asp-for="driverDetailsVM.City" type="text" class="form-control" />
+                                    <span asp-validation-for="driverDetailsVM.City" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Driver License Number</label>
+                                    <input asp-for="driverDetailsVM.DriverlicenseNumber" type="text" class="form-control" />
+                                    <span asp-validation-for="driverDetailsVM.DriverlicenseNumber" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Profile Image</label>
+                                    <input type="file" id="ProfileImg" onchange="CompressImage('ProfileImg')" class="form-control" />
+                                </div>
+                                <div class="col-md-4 mb-4"></div>
+                                <div class="col-md-4 mt-2 mb-3">
+                                    <div class="border rounded p-4 imgboxwrap">
+                                        <label for="formFile" class="form-label">Driver License Image</label>
+                                        @if (@Model.driverDetailsVM.DriverlicenseImgSrc != null)
+                                        {
+                                            <img src="@Model.driverDetailsVM.DriverlicenseImgSrc" id="PreviewDriverlicenseImage" class="ct-square img-responsive" />
+                                            <div class="my-2">
+                                                <a href="@Model.driverDetailsVM.DriverlicenseImgSrc" class="btn btn-light border w-100" download>Download</a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+
+                                            <img src="~/Images/placeholder-01.png" id="PreviewDriverlicenseImage" class="ct-square" />
+                                        }
+                                        <div class="my-2">
+                                            <span asp-validation-for="driverDetailsVM.DriverlicenseImage" class="text-danger"></span>
+                                            <small class="mb-2 mt-3 text-muted d-block">Upload</small>
+                                            <input class="form-control" id="DriverlicenseImage" onchange="CompressImage('DriverlicenseImage')" type="file" accept="image/jpeg,image/png,jpg|png" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 my-4">
+                                    <h5 class="fs-5 fw-bold mb-0">Vehicle Details</h5>
+                                    <hr />
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Vehicle Number</label>
+                                    <input asp-for="driverDetailsVM.VehicleNumber" type="text" class="form-control" />
+                                    <span asp-validation-for="driverDetailsVM.VehicleNumber" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label for="">Vehicle Rc Number</label>
+                                    <input asp-for="driverDetailsVM.VehicleRcNumber" type="text" class="form-control" />
+                                    <span asp-validation-for="driverDetailsVM.VehicleRcNumber" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4"></div>
+                                <div class="col-md-4 mt-2 mb-3">
+                                    <div class="border rounded p-4 imgboxwrap">
+                                        <label for="formFile" class="form-label">Vehicle Rc Certificate</label>
+                                        @if (@Model.driverDetailsVM.VehicleRcCertificateImgSrc != null)
+                                        {
+                                            <img src="@Model.driverDetailsVM.VehicleRcCertificateImgSrc" id="PreviewVehicleRcCertificate" class="ct-square img-responsive" />
+                                            <div class="my-2">
+                                                <a href="@Model.driverDetailsVM.VehicleRcCertificateImgSrc" class="btn btn-light border w-100" download>Download</a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+
+                                            <img src="~/Images/placeholder-01.png" id="PreviewVehicleRcCertificate" class="ct-square" />
+                                        }
+                                        <div class="my-2">
+                                            <span asp-validation-for="driverDetailsVM.VehicleRcCertificate" class="text-danger"></span>
+                                            <small class="mb-2 mt-3 text-muted d-block">Upload</small>
+                                            <input class="form-control" id="VehicleRcCertificate" onchange="CompressImage('VehicleRcCertificate')" type="file" accept="image/jpeg,image/png,jpg|png" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mt-2 mb-3">
+                                    <div class="border rounded p-4 imgboxwrap">
+                                        <label for="formFile" class="form-label">Vehicle fitness Certificate</label>
+                                        @if (@Model.driverDetailsVM.VehiclefitnessCertificateImgSrc != null)
+                                        {
+                                            <img src="@Model.driverDetailsVM.VehiclefitnessCertificateImgSrc" id="PreviewVehiclefitnessCertificate" class="ct-square img-responsive" />
+                                            <div class="my-2">
+                                                <a href="@Model.driverDetailsVM.VehiclefitnessCertificateImgSrc" class="btn btn-light border w-100" download>Download</a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+
+                                            <img src="~/Images/placeholder-01.png" id="PreviewVehiclefitnessCertificate" class="ct-square" />
+                                        }
+                                        <div class="my-2">
+                                            <span asp-validation-for="driverDetailsVM.VehiclefitnessCertificate" class="text-danger"></span>
+                                            <small class="mb-2 mt-3 text-muted d-block">Upload</small>
+                                            <input class="form-control" id="VehiclefitnessCertificate" onchange="CompressImage('VehiclefitnessCertificate')" type="file" accept="image/jpeg,image/png,jpg|png" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mt-2 mb-3">
+                                    <div class="border rounded p-4 imgboxwrap">
+                                        <label for="formFile" class="form-label">Vehicle Insurance Certificate</label>
+                                        @if (@Model.driverDetailsVM.VehicleInsuranceCertificateImgSrc != null)
+                                        {
+                                            <img src="@Model.driverDetailsVM.VehicleInsuranceCertificateImgSrc" id="PreviewVehicleInsuranceCertificate" class="ct-square img-responsive" />
+                                            <div class="my-2">
+                                                <a href="@Model.driverDetailsVM.VehicleInsuranceCertificateImgSrc" class="btn btn-light border w-100" download>Download</a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+
+                                            <img src="~/Images/placeholder-01.png" id="PreviewVehicleInsuranceCertificate" class="ct-square" />
+                                        }
+                                        <div class="my-2">
+                                            <span asp-validation-for="driverDetailsVM.VehicleInsuranceCertificate" class="text-danger"></span>
+                                            <small class="mb-2 mt-3 text-muted d-block">Upload</small>
+                                            <input class="form-control" id="VehicleInsuranceCertificate" onchange="CompressImage('VehicleInsuranceCertificate')" type="file" accept="image/jpeg,image/png,jpg|png" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-4 text-right">
+                                    <a class="btn btn-primary" value="Back" href="">Back</a>
+                                    <input class="btn btn-primary" type="submit" value="Submit" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/js/compressor.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function () {
+  //  txtDateTime.max = new Date().toISOString().slice(0, -14);
+    $('#formDiv').hide();
+    //$("#ProfileImageFile").bind('change', function () {
+    //});
+    //$("#ProfileImageFile").resizeImg(function () {
+    //    var value = parseInt("350");
+    //    var Weight = parseInt("2");
+    //    let type, quality;
+    //    {
+    //        type = "image/jpeg";
+    //        quality = 0.8;
+    //    }
+    //    return {
+    //        use_reader: false,
+    //        mode: Weight,
+    //        val: value,
+    //        type: type,
+    //        quality: quality,
+    //        callback: function (result) {
+
+    //            $("#showimgbox").css("display", "flex");
+    //            $("#PreviewProfileImg").attr('src', result);
+    //            $("#hdnBase64StringDriverProfile").val(result.substr(result.indexOf(',') + 1)).css("height", 100);
+    //            $("#ProfileImageFile").val(null);
+    //        }
+    //    };
+    //});
+    $("#ProfileImg").bind('change', function () {
+    });
+    $("#DriverlicenseImage").bind('change', function () {
+    });
+    $("#VehicleRcCertificate").bind('change', function () {
+    });
+    $("#VehiclefitnessCertificate").bind('change', function () {
+    });
+    $("#VehicleInsuranceCertificate").bind('change', function () {
+    });
+});
+
+$('.imginputbox1').change(function () {
+     $('.showimgbox1').css('display', 'flex')
+});
+
+//Compress Images onchanage
+    function CompressImage(_imageIdText) {
+       
+        debugger;
+        $('#' + _imageIdText).bind('change', function () {
+        });
+        $('#' + _imageIdText).resizeImg(function () {
+            debugger;
+            var value = parseInt("350");
+            var Weight = parseInt("2");
+            let type, quality;
+            {
+                type = "image/jpeg";
+                quality = 0.8;
+            }
+            return {
+                use_reader: false,
+                mode: Weight,
+                val: value,
+                type: type,
+                quality: quality,
+                callback: function (result) {
+                    debugger;
+                    $("#showimgbox").css("display", "flex");
+                    $('#Preview' + _imageIdText).attr('src', result);
+                    $('#hdn' + _imageIdText).val(result.substr(result.indexOf(',') + 1)).css("height", 100);
+                    $('#' + _imageIdText).val(null);
+                }
+            };
+        });
+    }
+
+    //$("#ProfileImg").bind('change', function () {
+    //});
+    //$("#ProfileImg").resizeImg(function () {
+    //    debugger;
+    //    var value = parseInt("350");
+    //    var Weight = parseInt("2");
+    //    let type, quality;
+    //    {
+    //        type = "image/jpeg";
+    //        quality = 0.8;
+    //    }
+    //    return {
+    //        use_reader: false,
+    //        mode: Weight,
+    //        val: value,
+    //        type: type,
+    //        quality: quality,
+    //        callback: function (result) {
+    //            debugger;
+    //            $("#showimgbox").css("display", "flex");
+    //            $("#PreviewProfileImg").attr('src', result);
+    //            $("#hdnProfileImg").val(result.substr(result.indexOf(',') + 1)).css("height", 100);
+    //            $("#ProfileImg").val(null);
+    //        }
+    //    };
+    //});
+</script>
+<script>
+    //Auto Complete for Service Partner
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlServicePartner").keydown(function (e) {
+            $('#submitButton').prop('disabled', true);
+            $('#hdnServicePartnerId').val("");
+            var k = e.keyCode || e.which;
+            var ok = k >= 65 && k <= 90 || // A-Z
+                k >= 96 && k <= 105 || // a-z
+                k >= 35 && k <= 40 || // arrows
+                k == 9 || //tab
+                k == 46 || //del
+                k == 8 || // backspaces
+                (!e.shiftKey && k >= 48 && k <= 57); // only 0-9 (ignore SHIFT options)
+            if (!ok || (e.ctrlKey && e.altKey)) {
+                e.preventDefault();
+            }
+        });
+
+        $("#ddlServicePartner").on("click", function () {
+            // var custCity = $("#customercity").val();
+            $(this).autocomplete("search", "#");
+        }).autocomplete({
+            classes: {
+                "ui-autocomplete": "autocompleteOnModal"
+            },
+            minLength: 0,
+            scroll: true,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/LGCOrderTracking/ManageDriverDetails?handler=SearchServicePartner", {
+                    term: extractLast(request.term),
+                    ServicePartnerId: @Model.SPId,
+                }, function (data) {
+                    response(data.slice(0, 20));
+                });
+            },
+            focus: function (event, ui) {
+
+            },
+            open: function (event, ui) {
+                var menu = $(this).autocomplete("widget");
+                menu.css({
+                    "max-height": "200px", "overflow": "hidden", "overflow-y": "scroll"
+                });
+            },
+            select: function (event, ui) {
+                var terms = split(this.value);
+                terms.pop();
+                terms.push(ui.item.value);
+                this.value = terms;
+                ServicePartnerId = ui.item.text;
+
+                $('#hdnServicePartnerId').val(ServicePartnerId);
+                return false;
+            }
+        });
+    });
+</script>

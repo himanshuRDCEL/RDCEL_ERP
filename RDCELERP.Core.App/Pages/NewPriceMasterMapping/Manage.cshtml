@@ -1,0 +1,289 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.NewPriceMasterMapping.ManageModel
+
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>Price Master Mapping
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                <input type="hidden" asp-for="priceMasterMappingViewModel.PriceMasterMappingId" id="hdnId" />
+                                <input type="hidden" asp-for="priceMasterMappingViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="priceMasterMappingViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="priceMasterMappingViewModel.IsActive" />
+                                <input type="hidden" asp-for="priceMasterMappingViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="priceMasterMappingViewModel.ModifiedDate" />
+                                <input type="hidden" asp-for="priceMasterMappingViewModel.BusinessUnitId" id="hdnbuid" />
+                                <input type="hidden" asp-for="priceMasterMappingViewModel.BrandId" id="hdnbrandid" />
+                                <input type="hidden" asp-for="priceMasterMappingViewModel.BusinessPartnerId" id="hdnBPid" />
+                                <input type="hidden" asp-for="priceMasterMappingViewModel.PriceMasterNameId" id="hdnPMMid" />
+
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Select Company<span style="color:red;">*</span></label>
+                                    <input id="ddlBU" asp-for="priceMasterMappingViewModel.BusinessUnitName" class="form-control" />
+                                    <span asp-validation-for="priceMasterMappingViewModel.BusinessUnitName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Select Business Partner</label>
+                                    <input id="ddlBP" asp-for="priceMasterMappingViewModel.BusinessPartnerName" class="form-control" />
+                                    <span asp-validation-for="priceMasterMappingViewModel.BusinessPartnerName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Select Brand <span style="color:red;">*</span></label>
+
+                                    <input id="txtbrandname" asp-for="priceMasterMappingViewModel.BrandName" class="form-control" />
+                                    <span asp-validation-for="priceMasterMappingViewModel.BrandName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Select Price Master Name<span style="color:red;">*</span></label>
+                                    <input id="ddlPMN" asp-for="priceMasterMappingViewModel.PriceMasterName" class="form-control" />
+                                    <span asp-validation-for="priceMasterMappingViewModel.PriceMasterName" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Price Start Date<span style="color:red;">*</span></label>
+
+                                    <input asp-for="priceMasterMappingViewModel.StartDate" class="form-control" id="startdate" placeholder="StartDate">
+                                    <span asp-validation-for="priceMasterMappingViewModel.StartDate" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="" for="">Price End Date<span style="color:red;">*</span></label>
+                                    <input asp-for="priceMasterMappingViewModel.EndDate" class="form-control" id="enddate" placeholder="EndDate">
+                                    <span asp-validation-for="priceMasterMappingViewModel.EndDate" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="float-right">
+                                @if (accessRule != null && accessRule.CanAdd)
+                                {
+                                    <input type="submit" value="Save" class="btn btn-primary mainshadow" />
+
+                                }
+                                @if (accessRule != null && accessRule.CanView)
+                                {
+                                    <a asp-page="./Index" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">Back to List</a>
+                                }
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div>
+        <a asp-page="Index">Back to List</a>
+    </div>*@
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+
+<script type="text/javascript">
+
+
+
+    $(document).ready(function () {
+        $("#startdate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                // Set the minimum date for the end datepicker to the selected start date plus one day
+                var minDate = new Date(selectedDate);
+                minDate.setDate(minDate.getDate() + 1);
+                $("#enddate").datepicker("option", "minDate", minDate);
+            }
+        });
+        $("#enddate").datepicker({
+            defaultDate: null,
+        });
+    });
+
+
+    var BUId = null;
+    var BrandId = null;
+    var BusinessPartnerId = null;
+    var PriceMasterNameId = null;
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlBU").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            minLength: 1,
+            source: function (request, response) {
+                $.get("@URLPrefixforProd/NewPriceMasterMapping/Manage", {
+                    handler: "SearchBUName",
+                    term: extractLast(request.term),
+                }, response);
+            },
+
+            select: function (event, ui) {
+                var terms = split(this.value);
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                this.value = terms;
+
+                BUId = ui.item.text;
+                $('#hdnbuid').val(BUId);
+                return false;
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $("#ddlBU").val(""); // Clear the input field
+                }
+            }
+        });
+    })
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#txtbrandname").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/NewPriceMasterMapping/Manage?handler=SearchBrandName", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+                select: function (event, ui) {
+                    var terms = split(this.value);
+                    terms.pop();
+                    // add the selected item
+                    terms.push(ui.item.value);
+                    this.value = terms;
+
+                    BrandId = ui.item.text;
+                    $('#hdnbrandid').val(BrandId);
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#txtbrandname").val(""); // Clear the input field
+                    }
+                }
+            });
+    })
+
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlBP").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/NewPriceMasterMapping/Manage?handler=SearchBPName", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+                select: function (event, ui) {
+                    var terms = split(this.value);
+                    terms.pop();
+                    // add the selected item
+                    terms.push(ui.item.value);
+                    this.value = terms;
+
+                    BusinessPartnerId = ui.item.text;
+                    $('#hdnBPid').val(BusinessPartnerId);
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlBP").val(""); // Clear the input field
+                    }
+                }
+            });
+    })
+
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlPMN").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/NewPriceMasterMapping/Manage?handler=SearchPriceMasterName", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+                select: function (event, ui) {
+                    var terms = split(this.value);
+                    terms.pop();
+                    // add the selected item
+                    terms.push(ui.item.value);
+                    this.value = terms;
+
+                    PriceMasterNameId = ui.item.text;
+                    $('#hdnPMMid').val(PriceMasterNameId);
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlPMN").val(""); // Clear the input field
+                    }
+                }
+            });
+    })
+
+
+</script>

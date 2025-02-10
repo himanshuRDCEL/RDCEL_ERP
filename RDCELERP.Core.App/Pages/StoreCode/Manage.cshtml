@@ -1,0 +1,99 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.StoreCode.ManageModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+
+<div class="row content-area">
+
+    <div class="col-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3>
+                    <span class="m-0">StoreCode</span>
+                </h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+                <div class="row detailbox" style="padding: 20px 0;">
+                    <div class="col-12">
+                        <div class="mainshadow setting-right">
+                            <form method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                <input type="hidden" asp-for="StoreCodeViewModel.StoreCodeId" id="hdnId" />
+                                <input type="hidden" asp-for="StoreCodeViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="StoreCodeViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="StoreCodeViewModel.IsActive" />
+                                <input type="hidden" asp-for="StoreCodeViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="StoreCodeViewModel.ModifiedDate" />
+
+                                <div class="form-group">
+                                    <label asp-for="StoreCodeViewModel.SponsorName" class="control-label"></label>
+                                    <input asp-for="StoreCodeViewModel.SponsorName" class="form-control" />
+                                    <span asp-validation-for="StoreCodeViewModel.SponsorName" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="StoreCodeViewModel.StoreCode" class="control-label"></label>
+                                    <input asp-for="StoreCodeViewModel.StoreCode" class="form-control" />
+                                    <span asp-validation-for="StoreCodeViewModel.StoreCode" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="StoreCodeViewModel.PinCode" class="control-label"></label>
+                                    <input asp-for="StoreCodeViewModel.PinCode" class="form-control" />
+                                    <span asp-validation-for="StoreCodeViewModel.PinCode" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="StoreCodeViewModel.City" class="control-label"></label>
+                                    <input asp-for="StoreCodeViewModel.City" class="form-control" />
+                                    <span asp-validation-for="StoreCodeViewModel.City" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="StoreCodeViewModel.Location" class="control-label"></label>
+                                    <input asp-for="StoreCodeViewModel.Location" class="form-control" />
+                                    <span asp-validation-for="StoreCodeViewModel.Location" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="StoreCodeViewModel.StoreManagerEmail" class="control-label"></label>
+                                    <input asp-for="StoreCodeViewModel.StoreManagerEmail" class="form-control" />
+                                    <span asp-validation-for="StoreCodeViewModel.StoreManagerEmail" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="StoreCodeViewModel.AssociateCode" class="control-label"></label>
+                                    <input asp-for="StoreCodeViewModel.AssociateCode" class="form-control" />
+                                    <span asp-validation-for="StoreCodeViewModel.AssociateCode" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="StoreCodeViewModel.PaymentToCustomer" class="control-label"></label>
+                                    <input asp-for="StoreCodeViewModel.PaymentToCustomer" class="form-control" />
+                                    <span asp-validation-for="StoreCodeViewModel.PaymentToCustomer" class="text-danger"></span>
+                                </div>
+                                <div class="float-right">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <input type="submit" value="Create" class="btn btn-primary mainshadow" />
+                                    }
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a asp-page="./Index" class="btn mainshadow" style="background: #3d3d6e;color: #fff;">Cancel</a>
+                                    }
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+        <!-- activity -->
+
+    </div>
+
+</div>

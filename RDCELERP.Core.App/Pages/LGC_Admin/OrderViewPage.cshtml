@@ -1,0 +1,255 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.LGC_Admin.OrderViewPageModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    
+}
+
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+    alert("@ViewData["UserAuth"]");
+    </script>
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header card-header-wrapper">
+                        <div class="row align-items-center card-title">
+                            <div class="col-md-6">
+                                <h2 class="fs-5 mb-0">
+                                    LGC Details
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row detailed-reporting">
+                            <div class="pt-4"></div>
+                            <div class="col-md-12 mb-3">
+                                <p><h4>Order Details</h4> </p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Order Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.RegdNo)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Ticket Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.TicketNumber)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Product Category </span>@Html.DisplayFor(model => model.lGCOrderViewModel.ProductCategory)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Product Type </span>@Html.DisplayFor(model => model.lGCOrderViewModel.ProductType)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Amount Payble Through LGC </span>@Html.DisplayFor(model => model.lGCOrderViewModel.AmountPayableThroughLGC)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Pickup Schedule Date </span>@Html.DisplayFor(model => model.lGCOrderViewModel.PickupScheduleDate)</p>
+                            </div>
+                            <div>
+                                <hr />
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <p><h4>Customer Details</h4> </p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Name </span>@Html.DisplayFor(model => model.lGCOrderViewModel.CustomerName)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Email </span>@Html.DisplayFor(model => model.lGCOrderViewModel.TblCustomerDetail.Email)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Phone Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.TblCustomerDetail.PhoneNumber)</p>
+                                <input type="hidden" asp-for="lGCOrderViewModel.TblCustomerDetail.PhoneNumber" id="hdnPhoneNumber" />
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Address1 </span>@Html.DisplayFor(model => model.lGCOrderViewModel.TblCustomerDetail.Address1)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Address2 </span>@Html.DisplayFor(model => model.lGCOrderViewModel.TblCustomerDetail.Address2)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Area Locality </span>@Html.DisplayFor(model => model.lGCOrderViewModel.TblCustomerDetail.AreaLocality)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>City </span>@Html.DisplayFor(model => model.lGCOrderViewModel.TblCustomerDetail.City)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>State </span>@Html.DisplayFor(model => model.lGCOrderViewModel.TblCustomerDetail.State)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Pincode </span>@Html.DisplayFor(model => model.lGCOrderViewModel.TblCustomerDetail.ZipCode)</p>
+                            </div>
+                            <div>
+                                <hr />
+                            </div>
+                            @* <div class="col-md-12 mb-3">
+                                <p><h4>EVC Details</h4> </p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Bussiness Name </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.BussinessName)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Contact Person </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.ContactPerson)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Phone Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.EvcmobileNumber)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Alt Phone Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.AlternateMobileNumber)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Email </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.EmailId)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Address1 </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.RegdAddressLine1)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Address2 </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.RegdAddressLine2)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>City </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.City.Name)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>State </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.State.Name)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Pincode </span>@Html.DisplayFor(model => model.lGCOrderViewModel.Tblevcregistration.PinCode)</p>
+                            </div> *@
+                            <div class="col-md-12 mb-3">
+                                <p><h4>EVC Details</h4> </p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Bussiness Name </span>@Html.DisplayFor(model => model.lGCOrderViewModel.EVCBusinessName)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Contact Person </span>@Html.DisplayFor(model => model.lGCOrderViewModel.EVCContactPerson)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Store Code </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.EvcStoreCode)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Phone Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.ContactNumber)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Alt Phone Number </span>@Html.DisplayFor(model => model.lGCOrderViewModel.EVCMobileNumber)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Email </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.EmailId)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Address1 </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.Address1)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Address2 </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.Address2)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>City </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.CityName)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>State </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.StateName)</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <p><span>Pincode </span>@Html.DisplayFor(model => model.lGCOrderViewModel.evcPartnerDetailsVM.PinCode)</p>
+                            </div>
+                            <div class="pt-4"></div>
+                            <div>
+                                <hr />
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <p><h4>QC Images</h4> </p>
+                            </div>
+                            @foreach (var item in Model.OrderImageUploadViewModel.Where(x => x.LgcpickDrop == null))
+                            {
+                                @* <div class="col-md-3 mb-3">
+                                    <div class="showimgwrap">
+                                        <img src="@item.ImageWithPath" />
+                                    </div>
+                                </div> *@
+                                <div class="col-md-3 mb-3">
+                                    <div class="showimgwrap">
+                                        @{
+                                            var extn = item.ImageName.Split(".").Last();
+                                        }
+                                        @if (extn == "jpg")
+                                        {
+                                            <img class="img-responsive" src="@item.ImageWithPath" />
+                                        }
+                                        else
+                                        {
+                                            <iframe src="@item.ImageWithPath" width="240" height="210" sandbox="" allowfullscreen="true"></iframe>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            <div>
+                                <hr />
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <p><h4>LGC Pickup Images</h4></p>
+                            </div>
+                            <div class="row">
+                                @foreach (var item in Model.OrderImageUploadViewModel.Where(x => x.LgcpickDrop == "Pickup"))
+                                {
+                                    <div class="col-md-3 mb-3 p-1">
+                                        <div class="showimgwrap">
+                                            <img src="@item.ImageWithPath" />
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                            <div>
+                                <hr />
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <p><h4>LGC Drop Images</h4></p>
+                            </div>
+                            <div class="row">
+                                @foreach (var item in Model.OrderImageUploadViewModel.Where(x => x.LgcpickDrop == "Drop"))
+                                {
+
+
+                                    <div class="col-md-3 mb-3 p-1">
+                                        <div class="showimgwrap">
+                                            <img src="@item.ImageWithPath" />
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                            <div>
+                                <hr />
+                            </div>
+                            @foreach (var item in Model.OrderImageUploadViewModel.Where(x => x.LgcpickDrop == "EVCDispute"))
+                            {
+                                <div class="col-md-12 mb-3">
+                                    <p><h4>Dispute Images</h4> </p>
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <div class="showimgwrap">
+                                        <img src="@item.ImageWithPath" />
+                                    </div>
+                                </div>
+                            }
+                            <div>
+                                <hr />
+                            </div>
+                            <a href='javascript:history.go(-1)' class="btn btn-primary">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

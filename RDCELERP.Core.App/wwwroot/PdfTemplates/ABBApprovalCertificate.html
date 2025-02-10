@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap");
+
+        body {
+            background-color: #333;
+            margin: 0;
+            padding: 0;
+            font-family: "Montserrat", sans-serif;
+            line-height: 1.2rem;
+            /*font-weight: 400;*/
+            /*padding: 20px 92px;*/
+            box-sizing: border-box;
+            background: url("[BgImg]") no-repeat;
+            font-weight: !important 200;
+            padding: 12px 78px;
+            font-size: !important 13px;
+            background-size: contain;
+            background-position: top center;
+            background-color: #fff;
+            /* width: 673px;
+            height: 950px;
+            width: 595px;
+            height: 841px;*/
+            width: 595px;
+            height: 841px;
+            margin: 0 auto;
+        }
+
+        .logowrap {
+            margin: 30px auto 25px;
+            text-align: center;
+        }
+
+            .logowrap img {
+                width: 180px;
+            }
+
+        .toptext {
+            font-size: 16px;
+            line-height: 1.85rem;
+            font-style: italic;
+            color: rgb(22, 132, 125);
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+            .row .col {
+                text-align: center;
+                width: 50%;
+            }
+
+                .row .col h6 {
+                    font-size: 11px;
+                    margin: 6px 0 4px;
+                    padding: 10px 0 10px;
+                    position: relative;
+                    color: #477f9e;
+                    font-weight: 600;
+                }
+
+                    .row .col h6::after {
+                        content: "";
+                        background: linear-gradient(to right, rgba(181, 181, 181, 0) 0%, rgb(61, 149, 86) 53%, rgba(57, 130, 53, 0) 100%);
+                        height: 1px;
+                        position: absolute;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                    }
+
+                .row .col h4 {
+                    margin: 0 0 16px 0;
+                    font-size: 12px;
+                    font-style: italic;
+                    color: #185c4a;
+                }
+
+        .copyright {
+            margin-top: 20px;
+        }
+
+            .copyright p {
+                font-size: 11px;
+                color: #777;
+                font-weight: 600;
+            }
+
+            .copyright img {
+                width: 85px;
+                display: block;
+                position: relative;
+                right: -100px;
+                top: -23px;
+            }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div>
+            <p>&nbsp;</p>
+        </div>
+        <div class="logowrap">
+            <img src="[companylogo]" alt="">
+        </div>
+        <p class="toptext">This to certify that your [Brand_Name] product, is covered by our Assured Buyback (ABB) plan. We've got all the details you need:</p>
+        <div class="row">
+            <div class="col">
+                <h6>ABB Plan Registration No.</h6>
+                <h4>[Regd_No]</h4>
+                <!--<h4>R-No. for the plan, as available with Digi2L</h4>-->
+            </div>
+            <div class="col">
+                <h6>Your Registered Mobile Number:</h6>
+                <h4>[Cust_Mobile_No]</h4>
+                <!--<h4>[Your mobile no., as provided to Digi2L]</h4>-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h6>Product Name and Description:</h6>
+                <h4>[Prod_Cat_And_Type_Desc]</h4>
+                <!--<h4>[Product Description, as provided on the invoice]</h4>-->
+            </div>
+            <div class="col">
+                <h6>Product ID:</h6>
+                <h4>[Serial_No]</h4> <!--Not Available-->
+                <!--<h4>[Serial No. of the Product, as provided on the invoice]</h4>-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h6>Invoice Number:</h6>
+                <h4>[Invoice_No]</h4> <!-- Available on Invoice or tblAbbRegistration-->
+                <!--<h4>[Invoice No. corresponding to the new product's purchase]</h4>-->
+            </div>
+            <div class="col">
+                <h6>Date Of Purchase:</h6>
+                <h4>[Date_Of_Purchase]</h4> <!--Similer type of Invoice Date-->
+                <!--<h4>[DD/MM/YYYY, the date of purchase Of the new product]</h4>-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h6>Coverage valid from:</h6>
+                <h4>[Date_of_Commencement]</h4> <!--Similer type of Invoice Date-->
+                <!--<h4>[Date of commencement of the plan's validity]</h4>-->
+            </div>
+            <div class="col">
+                <h6>Coverage valid till:</h6>
+                <h4>[Date_of_Expiry]</h4> <!--Calculate the Expiry Date according to time duration-->
+                <!--<h4>[Date of commencement of the plan's validity]</h4>-->
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col copyright">
+                <p>Powered By</p>
+                <img src="[digi2l_logo]" alt="">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,495 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.PriceMaster.ManageModel
+
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a>Price Master
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                <input type="hidden" asp-for="PriceMasterViewModel.Id" id="hdnId" />
+                                <input type="hidden" asp-for="PriceMasterViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="PriceMasterViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="PriceMasterViewModel.IsActive" />
+                                <input type="hidden" asp-for="PriceMasterViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="PriceMasterViewModel.ModifiedDate" />
+                     
+                                <input type="hidden" asp-for="PriceMasterViewModel.ProductCategoryId" id="hdnCat"/>
+                               
+
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Exch Price Code <span style="color:red;">*</span></label>
+                                    <input asp-for="PriceMasterViewModel.ExchPriceCode" id="PriceCode" class="form-control" />
+                                    <span asp-validation-for="PriceMasterViewModel.ExchPriceCode" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Product Category <span style="color:red;">*</span></label>
+
+                                    <input id="ddlCategory" asp-for="PriceMasterViewModel.ProductCat" class="form-control" />
+
+                                    <span asp-validation-for="PriceMasterViewModel.ProductCat" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Product Type <span style="color:red;">*</span></label>
+
+                                    <input id="ddlType" asp-for="PriceMasterViewModel.ProductType" class="form-control" />
+
+                                    <span asp-validation-for="PriceMasterViewModel.ProductType" class="text-danger"></span>
+                                    <span class="text-danger" id="message"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for=""> Product Type Code <span style="color:red;">*</span></label>
+
+                                    <input id="ddlProductTypeCode" asp-for="PriceMasterViewModel.ProductTypeCode" class="form-control" />
+
+                                    <span asp-validation-for="PriceMasterViewModel.ProductTypeCode" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Brand Name 1<span style="color:red;">*</span></label>
+                                    <input id="ddlBrand"  asp-for="PriceMasterViewModel.BrandName1" class="form-control" />
+                                    <span asp-validation-for="PriceMasterViewModel.BrandName1" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Brand Name 2<span style="color:red;">*</span></label>
+                                    <input id="ddlBrand2" asp-for="PriceMasterViewModel.BrandName2" class="form-control" id="txtbrand2" onchange="CheckAvailability();" />
+                                    <span asp-validation-for="PriceMasterViewModel.BrandName2" class="text-danger"></span>
+                                    <span class="text-danger" id="message"></span>
+                                    <label class="" for=""><span class="text-danger">@ViewData["Msg"]</span></label>
+                                </div>
+
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Brand Name 3<span style="color:red;">*</span></label>
+                                    <input id="ddlBrand3"  asp-for="PriceMasterViewModel.BrandName3" class="form-control" />
+                                    <span asp-validation-for="PriceMasterViewModel.BrandName3" class="text-danger"></span>
+                                    <label class="" for=""><span class="text-danger">@ViewData["Msg1"]</span></label>
+                                </div>
+
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Brand Name 4<span style="color:red;">*</span></label>
+                                    <input id="ddlBrand4" asp-for="PriceMasterViewModel.BrandName4" class="form-control" />
+                                    <span asp-validation-for="PriceMasterViewModel.BrandName4" class="text-danger"></span>
+                                    <label class="" for=""><span class="text-danger">@ViewData["Msg2"]</span></label>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Quote P High<span style="color:red;">*</span></label>
+                                    <input asp-for="PriceMasterViewModel.QuotePHigh" class="form-control" />
+                                    <span asp-validation-for="PriceMasterViewModel.QuotePHigh" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Quote Q High<span style="color:red;">*</span></label>
+                                    <input asp-for="PriceMasterViewModel.QuoteQHigh" class="form-control" />
+                                    <span asp-validation-for="PriceMasterViewModel.QuoteQHigh" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Quote R High<span style="color:red;">*</span></label>
+                                    <input asp-for="PriceMasterViewModel.QuoteRHigh" class="form-control" />
+                                    <span asp-validation-for="PriceMasterViewModel.QuoteRHigh" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Quote S High<span style="color:red;">*</span></label>
+                                    <input asp-for="PriceMasterViewModel.QuoteSHigh" class="form-control" />
+                                    <span asp-validation-for="PriceMasterViewModel.QuoteSHigh" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Quote P<span style="color:red;">*</span></label>
+                                    <input asp-for="PriceMasterViewModel.QuoteP" class="form-control" />
+                                    <span asp-validation-for="PriceMasterViewModel.QuoteP" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Quote Q<span style="color:red;">*</span></label>
+                                    <input asp-for="PriceMasterViewModel.QuoteQ" class="form-control" />
+                                    <span asp-validation-for="PriceMasterViewModel.QuoteQ" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Quote R<span style="color:red;">*</span></label>
+                                    <input asp-for="PriceMasterViewModel.QuoteR" class="form-control" />
+                                    <span asp-validation-for="PriceMasterViewModel.QuoteR" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Quote S<span style="color:red;">*</span></label>
+                                    <input asp-for="PriceMasterViewModel.QuoteS" class="form-control" />
+                                    <span asp-validation-for="PriceMasterViewModel.QuoteS" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Price Start Date<span style="color:red;">*</span></label>
+
+                                    <input asp-for="PriceMasterViewModel.PriceStartDate" class="form-control" id="startdate" placeholder="Start Date">
+                                    <span asp-validation-for="PriceMasterViewModel.PriceStartDate" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label class="" for="">Price End Date<span style="color:red;">*</span></label>
+                                    <input asp-for="PriceMasterViewModel.PriceEndDate" class="form-control" id="enddate" placeholder="End Date">
+                                    <span asp-validation-for="PriceMasterViewModel.PriceEndDate" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                    }
+                                </div>
+                                <div class="col-6 text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <input type="submit" value="Save" class="btn btn-primary mainshadow" />
+                                    }
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#startdate").datepicker({
+            defaultDate: null,
+            onSelect: function (selectedDate) {
+                // Set the minimum date for the end datepicker to the selected start date plus one day
+                var minDate = new Date(selectedDate);
+                minDate.setDate(minDate.getDate() + 1);
+                $("#enddate").datepicker("option", "minDate", minDate);
+            }
+        });
+        $("#enddate").datepicker({
+            defaultDate: null,
+        });
+    });
+
+    var ProductCategoryId = null;
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlCategory").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/PriceMaster/Manage?handler=AutoProductCatName", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+
+
+                select: function (event, ui) {
+                    $("#ddlCategory").val(ui.item.value); // Set the selected value
+                    ProductCategoryId = ui.item.text;
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlCategory").val(""); // Clear the input field
+                        ProductCategoryId = null;
+                    }
+                }
+            });
+    });
+
+    if (ProductCategoryId === null) {
+            ProductCategoryId = $('#hdnCat').val();
+        }
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlType").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/PriceMaster/Manage?handler=AutoProductTypeName", {
+                        term: extractLast(request.term),
+                        term2: ProductCategoryId
+                    }, response);
+                },
+
+                select: function (event, ui) {
+                    $("#ddlType").val(ui.item.value); // Set the selected value
+                    CheckAvailability();
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlType").val(""); // Clear the input field
+                        
+                    }
+                }
+            });
+    });
+
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlBrand").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/PriceMaster/Manage?handler=AutoBrand", {
+                        term: extractLast(request.term)
+
+                    }, response);
+                },
+
+
+                select: function (event, ui) {
+                    $("#ddlBrand").val(ui.item.value); // Set the selected value
+
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlBrand").val(""); // Clear the input field
+
+                    }
+                }
+            });
+    });
+
+     if (ProductCategoryId === null) {
+            ProductCategoryId = $('#hdnCat').val();
+        }
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlProductTypeCode").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/PriceMaster/Manage?handler=AutoProductTypeCode", {
+                        term: extractLast(request.term),
+                        term2: ProductCategoryId
+                    }, response);
+                },
+
+
+                select: function (event, ui) {
+                    $("#ddlProductTypeCode").val(ui.item.value); // Set the selected value
+
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlProductTypeCode").val(""); // Clear the input field
+
+                    }
+                }
+            });
+    });
+
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlBrand2").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/PriceMaster/Manage?handler=AutoBrand", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+
+
+                select: function (event, ui) {
+                    $("#ddlBrand2").val(ui.item.value); // Set the selected value
+
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlBrand2").val(""); // Clear the input field
+
+                    }
+                }
+            });
+    });
+
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlBrand3").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/PriceMaster/Manage?handler=AutoBrand", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+
+
+                select: function (event, ui) {
+                    $("#ddlBrand3").val(ui.item.value); // Set the selected value
+
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlBrand3").val(""); // Clear the input field
+
+                    }
+                }
+            });
+    });
+
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#ddlBrand4").on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+            .autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.get("@URLPrefixforProd/PriceMaster/Manage?handler=AutoBrand", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+
+
+                select: function (event, ui) {
+                    $("#ddlBrand4").val(ui.item.value); // Set the selected value
+
+                    return false;
+                },
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        $("#ddlBrand4").val(""); // Clear the input field
+
+                    }
+                }
+            });
+    });
+
+
+    function CheckAvailability() {
+
+        $('#ddlType').text('');
+        var name = $("#ddlType").val();
+        var category = $("#ddlCategory").val();
+        var pricecode = $("#PriceCode").val();
+        var id = $("#hdnId").val();
+        if (name === '') {
+            $("#message").html(" ");
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["URLPrefixforProd"]/PriceMaster/Manage?handler=CheckDuplicate",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "type": name, "Category": category, "Id": id, "PriceCode": pricecode },
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    $("#message").html(" ");
+                } else {
+                    $("#message").css("color", "red");
+                    $("#message").html("This price master is already exist for this category and product type.");
+                    $('#Savebtn').prop('disabled', true);
+                }
+            },
+        });
+    }
+
+
+</script>

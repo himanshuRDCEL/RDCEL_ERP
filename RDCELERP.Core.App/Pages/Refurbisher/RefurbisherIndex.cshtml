@@ -1,0 +1,227 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.Refurbisher.RefurbisherIndexModel
+@{
+    ViewData["Title"] = "Orders For QC";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+@if (accessRule != null && accessRule.CanView)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="card border-0 shadow">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h2 class="fs-5 fw-bold mb-0">Refurbisher List</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="AllRefurbisherOrderDatatable" class="table table-striped dt-responsive mainshadow" width="100%" border="1">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th class="all notexport">Id</th>
+                                            <th class="all notexport">Actions</th>
+                                            <th class="all">Refurbisher Name</th>
+                                            <th class="all">Type of Services</th>
+                                            <th class="all">Nature of Business</th>
+                                            <th class="all">Contact Person</th>
+                                            <th class="all">Address</th>
+                                            <th class="all">City Name</th>
+                                            <th class="all">State Name</th>
+                                            <th class="all">Country</th>
+                                            <th class="all">PostalCode</th>
+                                            <th class="all">Telephone</th>
+                                            <th class="all">Mobile</th>
+                                            <th class="all">GST Declaration</th>
+                                            <th class="all">GST No</th>
+                                            <th class="all">PAN No</th>
+                                            <th class="all">EmailId</th>
+                                            <th class="all">Company RegNo</th>
+                                            <th class="all">Account Holder</th>
+                                            <th class="all">Bank Name</th>
+                                            <th class="all">Branch</th>
+                                            <th class="all">Bank Account No</th>
+                                            <th class="all">IFSC Code</th>
+                                            <th class="all">UTC Employee Name</th>
+                                            <th class="all">UTC Employee Email</th>
+                                            <th class="all">UTC Employee Contact</th>
+                                            <th class="all">Refurbisher Approver Name</th>
+                                            <th class="all">Unit Department</th>
+                                            <th class="all">Manager Email</th>
+                                            <th class="all">Manager Contact</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+
+<script type="text/javascript">
+    var table = null;
+
+    $(document).ready(function () {
+        
+        var url = "@URLPrefixforProd/api/Refurbisher/RefurbisherList?companyId=" + @ViewBag.CompanyId;
+        DataTable(url);
+    });
+
+    function DataTable(url) {
+        table = $('#AllRefurbisherOrderDatatable').DataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "searching": false,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    text: '<button class="btn btn-primary" id="filterboxbtnright"><i class="fa-solid fa-filter"></i></button>',
+                    // action: function (e, dt, node, config) {
+                    //     $('.filters').toggle();
+                    // }
+                },
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper "><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Refurbisher Order',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "oLanguage": {
+                "sEmptyTable": "No Record found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+
+            "columns": [
+                { "data": "refurbisherId", "name": "RefurbisherId", "autoWidth": true },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "refurbisherName", "name": "RefurbisherName", "autoWidth": true },
+                { "data": "typeofServices", "name": "typeofServices", "autoWidth": true },
+                { "data": "natureOfBusiness", "name": "NatureOfBusiness", "autoWidth": true },
+                { "data": "contactPerson", "name": "contactPerson", "autoWidth": true },
+                { "data": "address", "name": "Address", "autoWidth": true },
+                { "data": "cityName", "name": "CityName", "autoWidth": true },
+                { "data": "stateName", "name": "StateName", "autoWidth": true },
+                { "data": "country", "name": "Country", "autoWidth": true },
+                { "data": "postalCode", "name": "PostalCode", "autoWidth": true },
+                { "data": "telephone", "name": "Telephone", "autoWidth": true },
+                { "data": "mobile", "name": "Mobile", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "gstDeclaration", "name": "gstDeclaration", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "gstno", "name": "gstno", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "panNo", "name": "panNo", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "emailid", "name": "emailid", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "companyRegNo", "name": "companyRegNo", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "accountHolder", "name": "accountHolder", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "bankName", "name": "bankName", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "branch", "name": "branch", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "bankaccountNo", "name": "bankaccountNo", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "ifscCode", "name": "ifscCode", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "utcEmployeeName", "name": "utcEmployeeName", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "utcEmployeeEmail", "name": "utcEmployeeEmail", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "utcEmployeeContact", "name": "utcEmployeeContact", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "refurbisherApprovalName", "name": "RefurbisherApprovalName", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "unitDepartment", "name": "unitDepartment", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "managerEmail", "name": "managerEmail", "autoWidth": true, "orderable": false, "visible": false },
+                { "data": "managerContact", "name": "managerContact", "autoWidth": true, "orderable": false, "visible": false }
+            ]
+        });
+    }
+
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+
+    function RefurbisherDelete(id) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You want to Delete this Order!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ok',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.get("@ViewData["URLPrefixforProd"]/Refurbisher/RefurbisherIndex?handler=RefurbisherDelete&RefurbisherId=" + id).done(function (data) {
+                    location.reload(true);
+                });
+            }
+            else {
+
+            }
+            customClass: {
+                confirmButton: 'btn btn-dark'
+            }
+        });
+    }
+</script>
+

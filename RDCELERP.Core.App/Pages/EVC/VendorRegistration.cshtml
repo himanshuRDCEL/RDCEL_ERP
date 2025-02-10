@@ -1,0 +1,1187 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EVC.VendorRegistration
+
+@{
+    ViewData["Title"] = "Vendor Registration";
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+    var BaseUrl = ViewData["BaseUrl"];
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Vendor Onboarding </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="~/NewLayout/vendor/jquery-ui/jquery-ui.css">
+
+    <link type="text/css" href="~/NewLayout/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+    <link type="text/css" href="~/NewLayout/css/jquery.dataTables.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@800&display=swap" rel="stylesheet">
+
+    <link type="text/css" href="~/NewLayout/css/style.css" rel="stylesheet">
+
+    <link href="~/SelfQC-assets/css/style.css" rel="stylesheet" />
+
+    <script src="~/NewLayout/vendor/jquery/jquery-3.6.1.min.js"></script>
+    <script src="~/NewLayout/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/NewLayout/vendor/%40popperjs/core/dist/umd/popper.min.js"></script>
+
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <style>
+
+        body {
+            color: #070139;
+        }
+
+        .form-control,
+        .form-select {
+            border: 1px solid #ccc;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 0 0 60px;
+            text-align: center;
+            color: #160952;
+            position: relative;
+            padding-bottom: 18px;
+            display: inline-block;
+        }
+
+            .section-title:after {
+                content: '';
+                position: absolute;
+                width: 60%;
+                height: 3px;
+                left: 50%;
+                right: 0;
+                bottom: 0;
+                transform: translate(-50%, 0);
+                background: transparent linear-gradient(109deg, #3325B0 0%, #AB01FC 100%) 0% 0% no-repeat padding-box;
+            }
+
+        .dot-1 {
+            height: 300px;
+            width: 300px;
+            background-color: #a603f9;
+            position: fixed;
+            border-radius: 50%;
+            top: -15%;
+            left: -2%;
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        .dot-2 {
+            height: 150px;
+            width: 150px;
+            background-color: #f05a29;
+            position: fixed;
+            border-radius: 50%;
+            top: 20%;
+            right: 6%;
+            opacity: 0.35;
+            z-index;
+            -1;
+        }
+
+        .item {
+            padding: 20px;
+        }
+
+        .btn {
+            position: relative;
+            z-index: 99999;
+        }
+
+        .topcontentsecVendor {
+            position: relative;
+            z-index: 9999;
+        }
+
+        /*         media (max-width: 767px) {
+                                                                                    .dot-1 {
+                                                                                        top: -22%;
+                                                                                        left: -30%;
+                                                                                    }
+
+                                                                                    .dot-2 {
+                                                                                        top: 36%;
+                                                                                        right: 2%;
+                                                                                    }
+                                                                                } */
+    </style>
+
+</head>
+
+<body>
+
+    <div class="dot-1"></div>
+    <div class="dot-2"></div>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-10 mx-auto">
+                <div class="topsec">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="topcontentsecVendor mt-5">
+                                <h2 class="fw-bold" style="font-family: 'Merienda', cursive;">Welcome to <span style="color: #510f72;">Digi2L</span></h2>
+                                <p>
+                                    You are one step closer to register as Vendor of Digi2L (Franchise). Please fill
+                                    below details to register. Fields with astrik (<span style="color:red;">*</span>)
+                                    mark are required to fill.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 text-center logo-order">
+                            <div class="logowrap">
+                                <img src="~/SelfQC-assets/img/digi2l-arrow-01.png" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <main class="content" style="margin: 0 !important;">
+        <div class="py-3">
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 mx-auto">
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <div class="card border-0 shadow">
+                            <div class="card-header">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h2 class="fs-5 mb-0 card-title">
+                                            <a href="#"></a> Vendor Registration Form
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form method="post" enctype="multipart/form-data" id="VendorForm">
+                                    <div class="slider">
+                                        <div class="item">
+                                            <div class="row">
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="vendorName">
+                                                        Vendor Name <span style="color:red;">*</span>
+                                                    </label>
+                                                    <input asp-for="vendorRegistrationModel.VendorName" type="text" id="vendorName" class="form-control" onkeyup="checkVendorName();">
+                                                    <span id="vendorName1" class="text-danger"></span>
+
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="typeOfServices">
+                                                        Type of Services <span style="color:red;">*</span>
+                                                    </label>
+                                                    <input asp-for="vendorRegistrationModel.typeOfServices" id="typeOfServices" class="form-control" type="text"
+                                                           value="Appliance Refurbishment/Reconditioning" onkeyup="checkTypesOfService();">
+                                                    <span id="typeOfServices1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="natureOfBusiness">
+                                                        Nature of Business <span style="color:red;">*</span>
+                                                    </label>
+                                                    <input asp-for="vendorRegistrationModel.NatureOfBusiness" id="natureOfBusiness" class="form-control" type="text"
+                                                           value="Service Provider" onkeyup="checkNatureOfBusiness();">
+                                                    <span id="natureOfBusiness1" class="text-danger"></span>
+
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="contactPerson">
+                                                        Contact Person <span style="color:red;">*</span>
+                                                    </label>
+                                                    <input asp-for="vendorRegistrationModel.contactPerson" id="contactPerson" class="form-control" type="text" value="" onkeyup="checkContactPerson();">
+                                                    <span id="contactPerson1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="address">Address <span style="color:red;">*</span></label>
+                                                    <input input asp-for="vendorRegistrationModel.Address" id="address" class="form-control" type="text" value="" onkeyup="checkAddress();">
+                                                    <span id="address1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="country">Country <span style="color:red;">*</span></label>
+                                                    <input asp-for="vendorRegistrationModel.Country" id="country" class="form-control" type="text" value="India" readonly>
+                                                    <span id="country1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="state">State <span style="color:red;">*</span></label>
+                                                    <select asp-for="vendorRegistrationModel.StateId" id="ddlState" class="form-control" asp-items="ViewBag.StateList" onchange="checkState();">
+                                                        <option>--None--</option>
+                                                    </select>
+                                                    <span id="ddlState1" class="text-danger"></span>
+                                                </div>
+
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="city">City <span style="color:red;">*</span></label>
+                                                    <select asp-for="vendorRegistrationModel.cityId" class="form-select" id="ddlCity" onchange="checkCity();">
+                                                        <option value=''>--None--</option>
+                                                    </select>
+                                                    <span id="ddlCity1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="postalCode">
+                                                        Postal code <span style="color:red;">*</span>
+                                                    </label>
+                                                    <select asp-for="vendorRegistrationModel.PostalCode" class="form-select" id="ddlPinCode" onchange="checkPostalCode();">
+                                                        <option value=''>--None--</option>
+                                                    </select>
+                                                    <span id="ddlPinCode1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="telephone">Telephone</label>
+                                                    <input asp-for="vendorRegistrationModel.Telephone" id="telephone" class="form-control" type="text" value="" onkeyup="checkTelephone();">
+                                                    <span id="telephone1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="mobile">Mobile <span style="color:red;">*</span></label>
+                                                    <input asp-for="vendorRegistrationModel.Mobile" id="mobile" class="form-control" type="text" value="" onkeyup="checkMobile();">
+                                                    <span id="mobile1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="gstDeclaration">GST Reg. or Non-GST Declared <span style="color:red;">*</span></label>
+                                                    <select asp-for="vendorRegistrationModel.gstDeclaration" id="gstDeclaration" class="form-control">
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                    <span id="gstDeclaration1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="gstin">GSTIN<span style="color:red;"> *</span></label>
+                                                    <input asp-for=vendorRegistrationModel.gstin id="gstin" class="form-control" type="text" value="" onkeyup="checkGstin();">
+                                                    <span id="gstin1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="panNo">PAN No <span style="color:red;">*</span></label>
+                                                    <input asp-for="vendorRegistrationModel.panNo" id="panNo" class="form-control" type="text" value="" onkeyup="checkPanNo();">
+                                                    <span id="panNo1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="email">E-mail ID <span style="color:red;">*</span></label>
+                                                    <input asp-for="vendorRegistrationModel.email" id="email" class="form-control" type="email" value="" onchange="checkEmail();">
+                                                    <span id="email1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="companyRegNo">Company Registration No.<span style="color:red;">*</span></label>
+                                                    <input asp-for="vendorRegistrationModel.companyRegNo" id="companyRegNo" class="form-control" type="text" value="" onkeyup="checkCompanyRegdNo();">
+                                                    <span id="companyRegNo1" class="text-danger"></span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="item">
+                                            <div class="row">
+
+                                                <div class="col-12 text-center">
+                                                    <h3 class="section-title">Bank - Details</h3>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="accountHolder">
+                                                        Account Holder Name <span style="color:red;">*</span>
+                                                    </label>
+                                                    <input asp-for="vendorRegistrationModel.accountHolder" id="accountHolder" class="form-control" type="text" value="" onkeyup="checkAccountHolder();">
+                                                    <span id="accountHolder1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="bankName">Name of Bank <span style="color:red;">*</span></label>
+                                                    <input asp-for="vendorRegistrationModel.bankName" id="bankName" class="form-control" type="text" value="" onkeyup="checkBankName();">
+                                                    <span id="bankName1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="branch">Branch <span style="color:red;">*</span></label>
+                                                    <input asp-for="vendorRegistrationModel.branch" id="branch" class="form-control" type="text" value="" onkeyup="checkBranch();">
+                                                    <span id="branch1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="accountNo">Account No <span style="color:red;">*</span></label>
+                                                    <input asp-for="vendorRegistrationModel.accountNo" id="accountNo" class="form-control" type="text" value="" onkeyup="checkBankAccountNumber();">
+                                                    <span id="accountNo1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="ifscCode">IFSC Code <span style="color:red;">*</span></label>
+                                                    <input asp-for="vendorRegistrationModel.ifscCode" id="ifscCode" class="form-control" type="text" value="" onkeyup="checkIfscCode();">
+                                                    <span id="ifscCode1" class="text-danger"></span>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="item">
+                                            <div class="row">
+
+                                                <div class="col-12 text-center">
+                                                    <h3 class="section-title">UTC Internal Business Unit SPOC details</h3>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="utcEmployeeName">
+                                                        Employee Name <span style="color:red;">*</span>
+                                                    </label>
+                                                    <input asp-for="vendorRegistrationModel.utcEmployeeName" id="utcEmployeeName" class="form-control" type="text" value="" onkeyup="checkUtcEmployeeName();">
+                                                    <span id="utcEmployeeName1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="utcEmployeeEmail">
+                                                        Employee's Email ID <span style="color:red;">*</span>
+                                                    </label>
+                                                    <input asp-for="vendorRegistrationModel.utcEmployeeEmail" id="utcEmployeeEmail" class="form-control" type="email" value="" onkeyup="checkUtcEmployeeEmailAddress();">
+                                                    <span id="utcEmployeeEmail1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="utcEmployeeContact">
+                                                        Employee's contact number <span style="color:red;">*</span>
+                                                    </label>
+                                                    <input asp-for="vendorRegistrationModel.utcEmployeeContact" id="utcEmployeeContact" class="form-control" type="text" value="" onkeyup="checkUtcEmployeeContact();">
+                                                    <span id="utcEmployeeContact1" class="text-danger"></span>
+
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="approverName">
+                                                        Approver Name (Manager & above) <span style="color:red;">*</span>
+                                                    </label>
+                                                    <input asp-for="vendorRegistrationModel.approverName" id="approverName" class="form-control" type="text" value="" onkeyup="checkApproverName();">
+                                                    <span id="approverName1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="unitDepartment">
+                                                        Unit/Department <span style="color:red;">*</span>
+                                                    </label>
+                                                    <input asp-for="vendorRegistrationModel.unitDepartment" id="unitDepartment" class="form-control" type="text" value="" onkeyup="checkUnitDepartment();">
+                                                    <span id="unitDepartment1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="managerEmail">
+                                                        Manager's Email ID <span style="color:red;">*</span>
+                                                    </label>
+                                                    <input asp-for="vendorRegistrationModel.managerEmail" id="managerEmail" class="form-control" type="email" value="" onkeyup="checkManagerEmailAddress();">
+                                                    <span id="managerEmail1" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-md-4 mb-4">
+                                                    <label for="managerContact">
+                                                        Manager's contact number <span style="color:red;">*</span>
+                                                    </label>
+                                                    <input asp-for="vendorRegistrationModel.managerContact" id="managerContact" class="form-control" type="tel" value="" onkeyup="checkManagerContact();">
+                                                    <span id="managerContact1" class="text-danger"></span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12 text-end">
+
+                                            <a href="#" class="btn btn-secondary btn-prev">Previous</a>
+                                            <a href="#" class="btn btn-primary btn-next">Next</a>
+                                            <input type="button" id="btn-save" value="Save" class="btn btn-primary btn-save" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <footer class="bg-white rounded shadow p-4 mb-4 mt-4">
+                            <div class="row">
+                                <div class="col-12 col-md-4 col-xl-6 mb-md-0">
+                                    <p class="mb-0 text-center text-lg-start">
+                                        For any clarification feel free to contact
+                                        - <a class="text-link fw-bold"
+                                             href="mailto:support@utcdigital.com">support@utcdigital.com</a> | © 2023<a class="text-primary fw-normal" href="#" target="_blank">
+                                            &nbsp; Powered by
+                                            Digi2L
+                                    </p>
+                                    <p class="mb-0 text-center text-lg-start">
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <script src="~/NewLayout/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="~/NewLayout/assets/js/custom.js"></script>
+
+    <script src="~/js/site95be.js?v=4q1jwFhaPaZgr8WAUSrux6hAuh0XDg9kPS3xIVq36I0"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            let questionboxslider = $('.slider').slick({
+                dots: false,
+                infinite: false,
+                speed: 300,
+                slidesToShow: 1,
+                draggable: false,
+                nextArrow: $('.btn-next'),
+                prevArrow: $('.btn-prev'),
+                adaptiveHeight: true
+            });
+
+            $('.btn-save').hide();
+            $('.btn-prev').hide();
+
+            $('.slider').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+                $('html, body').animate({ scrollTop: 0 }, 0);
+                if (nextSlide === 0) {
+                    $('.btn-prev').hide();
+                } else {
+                    $('.btn-prev').show();
+                }
+            });
+
+
+            $('.slider').on('afterChange', function (event, slick, currentSlide) {
+                var totalSlides = slick.slideCount;
+                if (currentSlide === totalSlides - 1) {
+                    $('.btn-next').hide();
+                    $('.btn-save').show();
+                } else {
+                    $('.btn-next').show();
+                    $('.btn-save').hide();
+                }
+            })
+
+            // Function to validate the VendorRegistrationModel
+            function validateVendorRegistration(model) {
+                $('.text-danger').text('');
+
+                var isValid = true;
+
+                // Validate each property of the model
+                if (!model.vendorName) {
+                    isValid = false;
+                    $('#vendorName1').text('Vendor Name is mendatory.');
+                } else if (!/^[A-Z]+[a-zA-Z\s]*$/.test(model.contactPerson)) {
+                    isValid = false;
+                    $('#vendorName1').text('Only use Alphabets and First letter should be Capital.');
+                }
+
+                if (!model.typeOfServices) {
+                    isValid = false;
+                    $('#typeOfServices1').text('Type of Services is required.');
+                }
+
+                if (!model.natureOfBusiness) {
+                    isValid = false;
+                    $('#natureOfBusiness1').text('Nature of Business is required.');
+                } else if (model.natureOfBusiness.length > 50) {
+                    isValid = false;
+                    $('#natureOfBusiness1').text('Nature of Business cannot exceed 50 characters.');
+                }
+
+                if (!model.contactPerson) {
+                    isValid = false;
+                    $('#contactPerson1').text('Contact Person is required.');
+                } else if (!/^[A-Z]+[a-zA-Z\s]*$/.test(model.contactPerson)) {
+                    isValid = false;
+                    $('#contactPerson1').text('Only use Alphabets and First letter should be Capital.');
+                }
+
+                if (!model.address) {
+                    isValid = false;
+                    $('#address1').text('Address is required.');
+                } else if (model.address.length > 100) {
+                    isValid = false;
+                    $('#address1').text('Address cannot exceed 100 characters.');
+                }
+
+                if (!model.city) {
+                    isValid = false;
+                    $('#ddlCity1').text('City is required.');
+                }
+
+                if (!model.state) {
+                    isValid = false;
+                    $('#ddlState1').text('State is required.');
+                }
+
+                if (!model.postalCode) {
+                    isValid = false;
+                    $('#ddlPinCode1').text('Postal Code is required.');
+                } else if (!/^[1-9][0-9]{5}$/.test(model.postalCode)) {
+                    isValid = false;
+                    $('#ddlPinCode1').text('Please enter a valid 6-digit postal code.');
+                }
+
+                if (model.telephone && !/^([0-9]{10})$/.test(model.telephone)) {
+                    isValid = false;
+                    $('#telephone1').text('Please enter a valid 10-digit telephone number.');
+                }
+
+                if (!model.mobile) {
+                    isValid = false;
+                    $('#mobile1').text('Mobile Number is required.');
+                } else if (!/^([0-9]{10})$/.test(model.mobile)) {
+                    isValid = false;
+                    $('#mobile1').text('Please enter a valid 10-digit mobile number.');
+                }
+
+
+                if (model.gstDeclaration == "Yes" || model.gstDeclaration == "yes") {
+                    if (!model.gstin) {
+                        $('#gstin1').text('GSTIN can not blank if GST Declaration selected as Yes');
+                        isValid = false;
+                    }
+                    else {
+                        if (!/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(model.gstin)) {
+                            $('#gstin1').text('Please Enter Valid GSTNo.');
+                            isValid = false;
+                        } else {
+                            $('#gstin1').text('');
+                        }
+                    }
+                }
+
+                if (!model.panNo) {
+                    isValid = false;
+                    $('#panNo1').text('PAN Number is required.');
+                } else if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(model.panNo)) {
+                    isValid = false;
+                    $('#panNo1').text('Please provide PAN number in the standard format.');
+                }
+
+                if (!model.email) {
+                    isValid = false;
+                    $('#email1').text('Email Id is required');
+                } else if (!/^([a-zA-Z0-9_\-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/.test(model.email)) {
+                    isValid = false;
+                    $('#email1').text('Please enter a valid email address.');
+                }
+                else {
+                    checkVendorEmailAddress();
+                }
+
+                if (!model.companyRegNo) {
+                    isValid = false;
+                    $('#companyRegNo1').text('Company Regd. Number is required.');
+                } else if (!/^([LUu]{1})([0-9]{5})([A-Za-z]{2})([0-9]{4})([A-Za-z]{3})([0-9]{6})$/.test(model.companyRegNo)) {
+                    isValid = false;
+                    $('#companyRegNo1').text('Please enter the valid Company Registration Number.');
+                }
+                else {
+                    $('#companyRegNo1').text('');
+                }
+
+                // Validate Bank Details...
+
+                if (!model.accountHolder) {
+                    isValid = false;
+                    $('#accountHolder1').text("Account holder's Name is required.");
+                }
+
+                if (!model.accountNo) {
+                    isValid = false;
+                    $('#accountNo1').text('Bank Account No is required');
+                } else if (!/^[0-9]{9,18}$/.test(model.accountNo)) {
+                    isValid = false;
+                    $('#accountNo1').text('Please Enter Valid Bank Account No.');
+                }
+
+                if (!model.ifscCode) {
+                    isValid = false;
+                    $('#ifscCode1').text('IFSC Code is required.');
+                } else if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(model.ifscCode)) {
+                    isValid = false;
+                    $('#ifscCode1').text('Please Enter Valid 11 Digit IFSC Code.');
+                }
+
+                if (!model.bankName) {
+                    isValid = false;
+                    $('#bankName1').text('Bank Name is required.');
+                } else if (!/^[A-Z]+[a-zA-Z\s]*$/.test(model.bankName)) {
+                    isValid = false;
+                    $('#bankName1').text('Only use Alphabets and First letter should be Capital.');
+                } else if (model.bankName.length > 50) {
+                    isValid = false;
+                    $('#bankName1').text('Bank Name cannot exceed 50 characters.');
+                }
+
+                if (!model.branch) {
+                    isValid = false;
+                    $('#branch1').text('Branch is required.');
+                }
+
+                // validate employee
+
+                if (!model.utcEmployeeEmail) {
+                    $('#utcEmployeeEmail1').text('Employee Email Id is required.');
+                }
+                else if (!/^([a-zA-Z0-9_\-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/.test(model.utcEmployeeEmail)) {
+                    $('#utcEmployeeEmail1').text('Please enter a valid Employee email address.');
+                }
+                else {
+                    $('#utcEmployeeEmail1').text('');
+                }
+
+                if (!model.utcEmployeeContact) {
+                    $('#utcEmployeeContact1').text('UTC Employee contact is required.');
+                } else if (!/^[0-9]{10}$/.test(model.utcEmployeeContact)) {
+                    $('#utcEmployeeContact1').text('Please Enter Valid 10 Digit Contact Number.');
+                }
+                else {
+                    $('#utcEmployeeContact1').text('');
+                }
+
+                if (!model.managerContact) {
+                    isValid = false;
+                    $('#managerContact1').text('Manager contact is required.');
+                } else if (!/^[0-9]{10}$/.test(model.managerContact)) {
+                    isValid = false;
+                    $('#managerContact1').text('Please Enter Valid 10 Digit Contact Number.');
+                }
+
+                if (!model.utcEmployeeName) {
+                    isValid = false;
+                    $('#utcEmployeeName1').text('UTC Employee Name is mendatory.');
+                } else if (!/^[A-Z]+[a-zA-Z\s]*$/.test(model.utcEmployeeName)) {
+                    isValid = false;
+                    $('#utcEmployeeName1').text('Only use Alphabets and First letter should be Capital.');
+                }
+
+                if (!model.approverName){
+                    isValid = false;
+                    $('#approverName1').text('Approver Name is mendatory.');
+                } else if (!/^[A-Z]+[a-zA-Z\s]*$/.test(model.utcEmployeeName)) {
+                    isValid = false;
+                    $('#approverName1').text('Only use Alphabets and First letter should be Capital.');
+                }
+                
+                if (!model.unitDepartment){
+                    isValid = false;
+                    $('#unitDepartment1').text('Unit/Department Name is mendatory.');
+                } else if (!/^[A-Za-z0-9]{5,20}$/.test(model.unitDepartment)) {
+                    isValid = false;
+                    $('#unitDepartment1').text('Unit/Department Name is mendatory.');
+                }else{
+                    $('#unitDepartment1').text('');
+                }
+
+                if (!model.managerEmail) {
+                    $('#managerEmail1').text('Manager Email Id is required.');
+                }
+                else if (!/^([a-zA-Z0-9_\-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/.test(model.managerEmail)) {
+                    $('#managerEmail1').text('Please enter a valid Manager email address.');
+                }
+                else {
+                    $('#managerEmail1').text('');
+                }
+
+                return isValid;
+            }
+
+            $('#btn-save').click(function (e) {
+                e.preventDefault();
+
+                var formData = {
+                    vendorName: $('#vendorName').val(),
+                    typeOfServices: $('#typeOfServices').val(),
+                    natureOfBusiness: $('#natureOfBusiness').val(),
+                    contactPerson: $('#contactPerson').val(),
+                    address: $('#address').val(),
+                    city: $('#ddlCity').val(),
+                    state: $('#ddlState').val(),
+                    country: $('#Country').val(),
+                    postalCode: $('#ddlPinCode').val(),
+                    telephone: $('#telephone').val(),
+                    mobile: $('#mobile').val(),
+                    gstDeclaration: $('#gstDeclaration').val(),
+                    gstin: $('#gstin').val(),
+                    panNo: $('#panNo').val(),
+                    email: $('#email').val(),
+                    companyRegNo: $('#companyRegNo').val(),
+                    accountHolder: $('#accountHolder').val(),
+                    bankName: $('#bankName').val(),
+                    branch: $('#branch').val(),
+                    accountNo: $('#accountNo').val(),
+                    ifscCode: $('#ifscCode').val(),
+                    utcEmployeeName: $('#utcEmployeeName').val(),
+                    utcEmployeeEmail: $('#utcEmployeeEmail').val(),
+                    utcEmployeeContact: $('#utcEmployeeContact').val(),
+                    approverName: $('#approverName').val(),
+                    managerEmail: $('#managerEmail').val(),
+                    managerContact: $('#managerContact').val(),
+                    unitDepartment: $('#unitDepartment').val()
+                };
+
+                // Validate the form data
+                var isValid = validateVendorRegistration(formData);
+
+                if (isValid) {
+                    $('#VendorForm').submit();
+                }
+                else {
+                    if ($('.text-danger').length > 0) {
+                        var firstErrorSlideIndex = -1;
+
+                        $('.text-danger').each(function (i) {
+                            if ($(this).text().trim() !== '') {
+                                firstErrorSlideIndex = $(this).closest('.slick-slide').index();
+                                return false;
+                            }
+                        });
+
+                        if (firstErrorSlideIndex !== -1) {
+                            questionboxslider.slick('slickGoTo', firstErrorSlideIndex);
+
+                            $('html, body').animate({
+                                scrollTop: $('.text-danger').eq(firstErrorSlideIndex).offset().top - $(window).height() / 2
+                            }, 1000);
+                        }
+                    }
+                }
+            });
+        });
+
+        function checkEmail() {
+            var checkEmail = $('#email').val();
+
+            if (!checkEmail) {
+                $('#email1').text('Email Id is required.');
+            }
+            else if (!/^([a-zA-Z0-9_\-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/.test(checkEmail)) {
+                $('#email1').text('Please enter a valid email address.');
+            }
+            else{
+                checkVendorEmailAddress();
+            }
+        }
+
+        function checkVendorEmailAddress() {
+            $.ajax({
+                type: "POST",
+                url: "@ViewData["URLPrefixforProd"]/EVC/VendorRegistration?handler=CheckEmail",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: { "email": $("#email").val() },
+                success: function (response) {
+                    if (response == true || response == "True" || response == "true") {
+                        $('#email1').text('');
+                    }
+                    else {
+                        $('#email1').text('This Email is Already Exists.');
+                    }
+                },
+            });
+        }
+
+        function checkCity() {
+            var checkCity = $('#ddlCity').val();
+            if (!checkCity) {
+                $('#ddlCity1').text('City is required.');
+            }
+            else {
+                $('#ddlCity1').text('');
+            }
+        }
+
+        function checkState() {
+            var checkState = $('#ddlState').val();
+            if (!checkState) {
+                $('#ddlState1').text('State is required.');
+            }
+            else {
+                $('#ddlState1').text('');
+            }
+        }
+
+        function checkVendorName() {
+            var checkVendorName = $('#vendorName').val();
+            if (!checkVendorName) {
+                $('#vendorName1').text('Vendor Name is mendatory.');
+            } else if (!/^[A-Z]+[a-zA-Z\s]*$/.test(checkVendorName)) {
+                $('#vendorName1').text('Only use alphabets and First letter should be Capital.');
+            }
+            else {
+                $('#vendorName1').text('');
+            }
+        }
+
+        function checkContactPerson() {
+            var checkContactPerson = $('#contactPerson').val();
+            if (!checkContactPerson) {
+                $('#contactPerson1').text('Contact Person is required.');
+            }
+            else if (!/^[A-Z]+[a-zA-Z\s]*$/.test(checkContactPerson)) {
+                $('#contactPerson1').text('Only use alphabets and First letter should be Capital.');
+            }
+            else {
+                $('#contactPerson1').text('');
+            }
+        }
+
+        function checkTypesOfService() {
+            var checkTypeOfServices = $('#typeOfServices').val();
+            if (!checkTypeOfServices) {
+                $('#typeOfServices1').text('Type Of Services is required.');
+            }
+            else {
+                $('#typeOfServices1').text('');
+            }
+        }
+
+        function checkNatureOfBusiness() {
+            var checkNatureOfBusiness = $('#natureOfBusiness').val();
+            if (!checkNatureOfBusiness) {
+                $('#natureOfBusiness1').text('Nature of Business is required.');
+            } else if (checkNatureOfBusiness.length > 50) {
+                $('#natureOfBusiness1').text('Nature of Business cannot exceed 50 characters.');
+            }
+            else {
+                $('#natureOfBusiness1').text('');
+            }
+        }
+
+        function checkAddress() {
+            var address = $('#address').val();
+            if (!address) {
+                $('#address1').text('Address is required.');
+            } else if (address.length > 100) {
+                $('#address1').text('Address cannot exceed 100 characters.');
+            }
+            else {
+                $('#address1').text('');
+            }
+        }
+
+        function checkPostalCode() {
+            var pincode = $('#ddlPinCode').val();
+            if (!pincode) {
+                console.log(pincode);
+                $('#ddlPinCode1').text('Postal Code is required.');
+            } else if (!/^[1-9][0-9]{5}$/.test(parseInt(pincode))) {
+                $('#ddlPinCode1').text('Please enter a valid 6-digit postal code.');
+            }
+            else {
+                $('#ddlPinCode1').text('');
+            }
+        }
+
+        function checkTelephone() {
+            var checkTelephone = $('#telephone').val();
+            if (checkTelephone && !/^([0-9]{10})$/.test(checkTelephone)) {
+                $('#telephone1').text('Please enter a valid 10-digit telephone number.');
+            }
+            else {
+                $('#telephone1').text('');
+            }
+        }
+
+        function checkMobile() {
+            var checkMobile = $('#mobile').val();
+
+            if (!checkMobile) {
+                $('#mobile1').text('Mobile Number is required.');
+            } else if (!/^([0-9]{10})$/.test(checkMobile)) {
+                $('#mobile1').text('Please enter a valid 10-digit mobile number.');
+            }
+            else {
+                $('#mobile1').text('');
+            }
+        }
+
+        function checkManagerContact() {
+            var checkManagerContact = $('#managerContact').val();
+            if (!checkManagerContact) {
+                $('#managerContact1').text('Manager contact is required.');
+            } else if (!/^[0-9]{10}$/.test(checkManagerContact)) {
+                $('#managerContact1').text('Please Enter Valid 10 Digit Contact Number.');
+            }
+            else {
+                $('#managerContact1').text('');
+            }
+        }
+
+        function checkCompanyRegdNo(){
+            var companyRegdNo = $('#companyRegNo').val();
+
+            if (!companyRegdNo) {
+                $('#companyRegNo1').text('Company Regd. Number is required.');
+            } else if (!/^([LUu]{1})([0-9]{5})([A-Za-z]{2})([0-9]{4})([A-Za-z]{3})([0-9]{6})$/.test(companyRegdNo)) {
+                $('#companyRegNo1').text('Please enter the valid Company Registration Number.');
+            }
+            else {
+                $('#companyRegNo1').text('');
+            }
+        }
+
+        function checkGstin() {
+            var CheckGstin = $('#gstin').val();
+            var GstDeclaration =  $('#gstDeclaration').val();
+
+            if (GstDeclaration == "Yes" || GstDeclaration == "yes"){
+                if (!CheckGstin){
+                    $('#gstin1').text('GSTIN can not blank if GST Declaration selected as Yes');
+                }
+                else{
+                    if (!/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(CheckGstin)) {
+                        $('#gstin1').text('Please Enter Valid GSTNo.');
+                    } else {
+                        $('#gstin1').text('');
+                    }
+                }
+            }
+        }
+
+        function checkPanNo() {
+            var PanNo = $('#panNo').val();
+            if (!PanNo) {
+                $('#panNo1').text('PAN Number is required.');
+            } else if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(PanNo)) {
+                $('#panNo1').text('Please provide PAN number in the standard format.');
+            }
+            else {
+                $('#panNo1').text('');
+            }
+        }
+
+        // Bank fields Validations-
+
+        function checkBankName() {
+            var BankName = $('#bankName').val();
+            if (!BankName) {
+                $('#bankName1').text('Bank Name is required.');
+            } else if (!/^[A-Z]+[a-zA-Z\s]*$/.test(BankName)) {
+                $('#bankName1').text('Only use alphabets and First letter should be Capital.');
+            } else if (BankName.length > 50) {
+                $('#bankName1').text('Bank Name cannot exceed 50 characters.');
+            } else {
+                $('#bankName1').text('');
+            }
+        }
+
+        function checkAccountHolder() {
+            var checkAccountHolder = $('#accountHolder').val();
+
+            if (!checkAccountHolder) {
+                $('#accountHolder1').text('Account holder name is required');
+            } else if (!/^[A-Z]+[a-zA-Z\s]*$/.test(checkAccountHolder)) {
+                $('#accountHolder1').text('Only use alphabets and First letter should be Capital.');
+            }
+            else {
+                $('#accountHolder1').text('');
+            }
+        }
+
+        function checkBankAccountNumber() {
+            var BankAccountNo = $('#accountNo').val();
+            if (!BankAccountNo) {
+                $('#accountNo1').text('Bank Account No is required.');
+            } else if (!/^[0-9]{9,18}$/.test(BankAccountNo)) {
+                $('#accountNo1').text('Please Enter Valid Bank Account No.');
+            } else {
+                $('#accountNo1').text('');
+            }
+        }
+
+        function checkIfscCode() {
+            var ifsccode = $('#ifscCode').val();
+            if (!ifsccode) {
+                $('#ifscCode1').text('IFSC Code is required.');
+            } else if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(ifsccode)) {
+                $('#ifscCode1').text('Please Enter Valid 11 Digit IFSC Code.');
+            }
+            else {
+                $('#ifscCode1').text('');
+            }
+        }
+
+        function checkBranch() {
+            var branch = $('#branch').val();
+            if (!branch) {
+                $('#branch1').text('Branch is required.');
+            }
+            else {
+                $('#branch1').text('');
+            }
+        }
+
+        // Employee info validations...
+
+        function checkUtcEmployeeName(){
+            var checkUtcEmployeeName = $('#utcEmployeeName').val();
+            if (!checkUtcEmployeeName) {
+                $('#utcEmployeeName1').text('UTC Employee Name is mendatory.');
+            } else if (!/^[A-Z]+[a-zA-Z\s]*$/.test(checkUtcEmployeeName)) {
+                $('#utcEmployeeName1').text('Only use Alphabets and First letter should be Capital.');
+            }
+            else {
+                $('#utcEmployeeName1').text('');
+            }
+        }
+
+        function checkUtcEmployeeEmailAddress() {
+            var checkUtcEmployeeEmail = $('#utcEmployeeEmail').val();
+            if (!checkUtcEmployeeEmail) {
+                $('#utcEmployeeEmail1').text('Employee Email Id is required.');
+            }
+            else if (!/^([a-zA-Z0-9_\-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/.test(checkUtcEmployeeEmail)) {
+                $('#utcEmployeeEmail1').text('Please enter a valid Employee email address.');
+            }
+            else {
+                $('#utcEmployeeEmail1').text('');
+            }
+        }
+
+        function checkUtcEmployeeContact() {
+            var checkUtcEmployeeContact = $('#utcEmployeeContact').val();
+
+            if (!checkUtcEmployeeContact) {
+                $('#utcEmployeeContact1').text('UTC Employee contact is required.');
+            } else if (!/^[0-9]{10}$/.test(checkUtcEmployeeContact)) {
+                $('#utcEmployeeContact1').text('Please Enter Valid 10 Digit Contact Number.');
+            }
+            else {
+                $('#utcEmployeeContact1').text('');
+            }
+        }
+
+        function checkManagerContact() {
+            var checkManagerContact = $('#managerContact').val();
+            if (!checkManagerContact) {
+                $('#managerContact1').text('Manager contact is required.');
+            } else if (!/^[0-9]{10}$/.test(checkManagerContact)) {
+                $('#managerContact1').text('Please Enter Valid 10 Digit Contact Number.');
+            }
+            else {
+                $('#managerContact1').text('');
+            }
+        }
+
+        function checkManagerEmailAddress() {
+            var checkManagerEmail = $('#managerEmail').val();
+            if (!checkManagerEmail) {
+                $('#managerEmail1').text('Manager Email Id is required.');
+            }
+            else if (!/^([a-zA-Z0-9_\-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/.test(checkManagerEmail)) {
+                $('#managerEmail1').text('Please enter a valid Manager email address.');
+            }
+            else {
+                $('#managerEmail1').text('');
+            }
+        }
+
+        function checkApproverName(){
+            var checkApproverName = $('#approverName').val();
+            console.log(checkApproverName);
+            if (!checkApproverName) {
+                $('#approverName1').text('Approver Name is mendatory.');
+            } else if (!/^[A-Z]+[a-zA-Z\s]*$/.test(checkApproverName)) {
+                $('#approverName1').text('Only use Alphabets and First letter should be Capital.');
+            }
+            else{
+                $('#approverName1').text('');
+            }
+        }
+
+        function checkUnitDepartment() {
+            var checkUnitDepartment = $('#unitDepartment').val();
+            if (!checkUnitDepartment) {
+                $('#unitDepartment1').text('Unit/Department Name is mendatory.');
+            } else if (!/^[A-Za-z0-9]{5,20}$/.test(checkUnitDepartment)) {
+                $('#unitDepartment1').text('Minimum length should be 5 and max length not exceed 20 characters');
+            } else {
+                $('#unitDepartment1').text('');
+            }
+        }
+
+        $('#gstDeclaration').change(function () {
+            var value = $('#gstDeclaration').val();
+
+            if (value == "no" || value == "No") {
+                $('#gstin').val('');
+                $('#gstin').prop('readonly', true);
+                $('#gstin1').text('');
+            }
+            else {
+                $('#gstin').prop('readonly', false);
+            }
+        });
+
+        // Handlers for Dropdown fields -
+
+        //change state by city
+        $("#ddlState").change(function () {
+            $.get("@URLPrefixforProd/EVC/VendorRegistration?handler=CityByStateId&vendorRegistrationModel.StateId=" + $(this).val()).done(function (data) {
+                $("#ddlCity").empty();
+                $("#ddlCity").append($("<option></option>").val('').html('Select City'));
+                $("#ddlPinCode").empty();
+                $("#ddlPinCode").append($("<option></option>").val('').html('Select Pin code'));
+                $.each(data, function (i, cities) {
+                    $("#ddlCity").append($("<option></option>").val(cities.cityId).html(cities.name));
+                });
+            });
+        });
+
+        //change state by city
+        $("#ddlCity").change(function () {
+            $.get("@URLPrefixforProd/EVC/VendorRegistration?handler=Pincodebycityid&vendorRegistrationModel.cityId=" + $(this).val()).done(function (data) {
+                $("#ddlPinCode").empty();
+                $("#ddlPinCode").append($("<option></option>").val('').html('Select Pin code'));
+                $.each(data, function (i, pincode) {
+                    $("#ddlPinCode").append($("<option></option>").val(pincode.zipCode).html(pincode.zipCode));
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>

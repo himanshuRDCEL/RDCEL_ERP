@@ -1,0 +1,307 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.Users.ManageModel
+
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a> User Info
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="row detailed-reporting">
+                                <div class="col-md-12 mb-3">
+                                    <div class="editprofilepicbox mx-auto form-group text-center">
+                                        @if (Model.UserViewModel.ImageName != null)
+                                        {
+                                            <img src="~/DBFiles/Users/@Model.UserViewModel.ImageName" class="rounded-circle" accept="image/*" id="imgprev" style="width:160px; height:150px;" alt="">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/ds/img/default-user-image.png" id="imgprev" class="rounded-circle" accept="image/*" style="width:160px; height:150px;" />
+                                        }
+                                       
+                                    </div>
+                                </div>
+
+                                <input type="hidden" asp-for="UserViewModel.UserId" id="hdnUserId" />
+                                <input type="hidden" asp-for="UserViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="UserViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="UserViewModel.IsActive" />
+                                <input type="hidden" asp-for="UserViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="UserViewModel.ModifiedDate" />
+                                <input type="hidden" asp-for="UserViewModel.ZohoUserId" />
+                                <input type="hidden" asp-for="UserViewModel.UserStatus" />
+                                <input type="hidden" asp-for="UserViewModel.CompanyId" />
+                                <input type="hidden" asp-for="UserViewModel.LastLogin" />
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="">First Name <span style="color:red;">*</span></label>
+                                    <input asp-for="UserViewModel.FirstName" class="form-control" placeholder="First Name" />
+                                    <span asp-validation-for="UserViewModel.FirstName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Last Name <span style="color:red;">*</span></label>
+                                    <input asp-for="UserViewModel.LastName" class="form-control" placeholder="Last Name" />
+                                    <span asp-validation-for="UserViewModel.LastName" class="text-danger"></span>
+                                </div>
+
+                                @if (Model.Editmode == false)
+                                {
+                                    <div class="col-md-4 mb-4">
+                                    <label for="">E-mail ID<span style="color:red;">*</span></label>
+                                    <input type="text" asp-for="UserViewModel.Email" class="form-control" placeholder="E-mail ID" id="txtEmail" onkeyup="CheckAvailability();" />
+                                    <span asp-validation-for="UserViewModel.Email" class="text-danger"></span>
+                                    <span class="text-danger" id="message"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Password <span style="color:red;">*</span></label>
+                                     <div class="input-group" id="PasswordInput">
+                                                <span class="input-group-text" id="basic-addon2">
+                                                    <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+                                                </span>
+                                                <input type="password"   asp-for="UserViewModel.Password" class="form-control" required />
+                                                
+                                                <i class="fa-solid fa-eye" id="PasswordViewToggle"></i>
+                                            </div>
+                                    <span asp-validation-for="UserViewModel.Password" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Phone <span style="color:red;">*</span></label>
+                                    <input asp-for="UserViewModel.Phone" type="number" class="form-control" placeholder="Phone" id="txtCode" onkeyup="CheckAvailabal();" />
+                                    <span asp-validation-for="UserViewModel.Phone" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+
+                                }
+                                else
+                                {
+                                     <div class="col-md-4 mb-4">
+                                    <label for="">E-mail ID<span style="color:red;">*</span></label>
+                                    <input type="text" asp-for="UserViewModel.Email" class="form-control" placeholder="E-mail ID" id="txtEmail" onkeyup="CheckAvailability();" readonly/>
+                                    <span asp-validation-for="UserViewModel.Email" class="text-danger"></span>
+                                    <span class="text-danger" id="message"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Password <span style="color:red;">*</span></label>
+                                     <div class="input-group" id="PasswordInput">
+                                                <span class="input-group-text" id="basic-addon2">
+                                                    <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+                                                </span>
+                                            <input asp-for="UserViewModel.Password" class="form-control" value="@Model.UserViewModel.Password" type="password" readonly />
+                                                
+                                                <i class="fa-solid fa-eye" id="PasswordViewToggle"></i>
+                                            </div>
+                                   @*  <input type="password" asp-for="UserViewModel.Password" class="form-control" placeholder="password" readonly /> *@
+                                    <span asp-validation-for="UserViewModel.Password" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Phone <span style="color:red;">*</span></label>
+                                    <input asp-for="UserViewModel.Phone" type="number" class="form-control" placeholder="Phone" id="txtCode" onkeyup="CheckAvailabal();" readonly />
+                                    <span asp-validation-for="UserViewModel.Phone" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+
+                                }
+
+                               
+                                
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="formFile" class="form-label">Upload Profile Picture </label>
+                                    <input name="UserProfile" type="file" class="form-control" accept="image/jpeg,image/png,jpg|png" onchange="return ShowImagePreview(this)" />
+                                    <span class="text-danger" id="planErrorTxt"></span>
+                                </div>
+                               
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (accessRule != null && accessRule.CanView)
+                                    {
+                                        <a href='javascript:history.go(-1)' class="btn btn-secondary">Back to List</a>
+
+                                    }
+                                </div>
+                                <div class="col-6 text-end">
+                                    @if (accessRule != null && accessRule.CanAdd)
+                                    {
+                                        <input type="submit" id="Savebtn" value="Save" class="btn btn-primary mainshadow" />
+                                    }
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#show_password').hover(function show() {
+            //Change the attribute to text
+            $('#txtPassword').attr('type', 'text');
+            $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+        },
+            function () {
+                //Change the attribute back to password
+                $('#txtPassword').attr('type', 'password');
+                $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+            });
+        //CheckBox Show Password
+        $('#ShowPassword').click(function () {
+            $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+        });
+    });
+</script>
+<script>
+    function ShowImagePreview(input) {
+
+        if (input.files && input.files[0]) {
+            var filePath = input.value;
+            var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+            if (!allowedExtensions.exec(filePath)) {
+                $('#planErrorTxt').text('Please upload logo in image format');
+                input.value = '';
+                $('#Savebtn').prop('disabled', true);
+                return false;
+            }
+            else {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imgprev').prop('src', e.target.result);
+                };
+                $('#planErrorTxt').text('');
+                $('#Savebtn').prop('disabled', false);
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    }
+</script>
+
+<script src="~/js/compressor.js"></script>
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        // Bind to the input event of the input field to clear the message whenever the input changes
+            $("#txtEmail").on('input', function () {
+                $("#txtEmail").html(" ");
+            checkErrors();
+        });
+    });
+
+    function CheckAvailability() {
+        var name = $("#txtEmail").val();
+        if (name === '') {
+            $("#message").html(" ");
+            checkErrors();
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["URLPrefixforProd"]/Users/Manage?handler=CheckEmail",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "email": $("#txtEmail").val()},
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    $("#message").html(" ");
+                    checkErrors();
+                } else {
+                    $("#message").css("color", "red");
+                    $("#message").html("This email is already exist.");
+                    checkErrors();
+                }
+            },
+        });
+    }
+
+    $(document).ready(function () {
+        // Bind to the input event of the input field to clear the message whenever the input changes
+        $("#txtCode").on('input', function () {
+            $("#messages").html(" ");
+            checkErrors();
+        });
+    });
+
+    function CheckAvailabal() {
+        var name = $("#txtCode").val();
+        if (name === '') {
+            $("#messages").html(" ");
+            checkErrors();
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["URLPrefixforProd"]/Users/Manage?handler=CheckPhone",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "phone": $("#txtCode").val() },
+            success: function (response) {
+                if (response == true || response == "True" || response == "true") {
+                    $("#messages").html(" ");
+                    checkErrors();
+                }
+                else {
+                    $("#messages").css("color", "red");
+                    $("#messages").html("This phone is already exists ");
+                    checkErrors();
+                }
+            },
+        });
+    }
+
+    function checkErrors() {
+        var nameError = $("#message").html().trim();
+        var codeError = $("#messages").html().trim();
+
+        if (nameError || codeError) {
+            $('#Savebtn').prop('disabled', true);
+        } else {
+            $('#Savebtn').prop('disabled', false);
+        }
+    }
+
+    $('#PasswordViewToggle').click(function () {
+            $(this).toggleClass('fa-eye fa-eye-slash');
+            var x = document.getElementById("UserViewModel_Password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        });
+</script>
+
+

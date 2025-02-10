@@ -1,0 +1,44 @@
+﻿@{ string styleDisplayValue = "none";
+                string messageType = RDCELERP.Common.Enums.MessageTypeEnum.success.ToString();
+                if (ViewBag.MessageType != null)
+                {
+                    messageType = ViewBag.MessageType.ToString() + "M";
+
+                    if (ViewBag.MessageType.ToString() == "" || ViewBag.MessageType.ToString() == null)
+                    {
+                        styleDisplayValue = "none";
+                    }
+                    else
+                    {
+
+                        styleDisplayValue = "block";
+
+    <script>
+        setTimeout(function () { $(".clsdvAlert").fadeOut(); }, 5000);
+    </script> }
+                } }
+<link href="~/css/message.css" rel="stylesheet" />
+<script>
+    function AlertType() { }
+
+    AlertType.success = 'successM';
+    AlertType.info = 'infoM';
+    AlertType.warning = 'warningM';
+    AlertType.error = 'errorM';
+
+
+    function ShowAlert(msg, type, parentid) {
+        var alertid = "dvAlert";
+        if (parentid != undefined)
+            alertid = parentid + " #dvAlert";
+        $("#" + alertid).html(msg);
+        $("#" + alertid).attr('class', type);
+        $("#" + alertid).fadeIn();
+        $('html, body').animate({ scrollTop: 0 }, 800);
+        //
+        setTimeout(function () { $("#" + alertid).fadeOut(); }, 5000);
+    }
+</script>
+<div id="dvAlert" class="clsdvAlert @messageType" style="display:@styleDisplayValue">
+    @Html.ValidationSummary(false)
+</div>

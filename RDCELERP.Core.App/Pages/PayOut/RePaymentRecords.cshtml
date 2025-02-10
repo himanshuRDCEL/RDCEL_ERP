@@ -1,0 +1,356 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.PayOut.RePaymentRecords
+@{
+    ViewData["Title"] = "Re Payment Records";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+
+
+                <div class="col-12 mb-4">
+                    <div class="card border-0 shadow">
+                            <div class="card-body">
+                                <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-md-12 text-xl-center mb-3 mb-xl-0 d-flex align-items-center  gap-4">
+                                        <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                                            <i class="fa-solid fa-wallet"></i>
+                                        </div>
+                                        <div>
+                                    <h2 class="h6 text-gray-400 mb-0 text-start">Wallet Balance :</h2>
+                                    <h3 class="fw-extrabold mb-1 fs-4">@Html.DisplayFor(@model => @model.ResponseData.availableBalance) INR</h3>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+</div>
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h2 class="fs-5 mb-0 card-title">Re-Payment Records</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+            <div class="col-12">
+                <div class="col-md-12 text-right">
+                    <a href="../PayOut/BeneficiaryDetails" target="_blank"
+                       class="btn btn-primary mb-2">
+                        Get/Add Beneficiary
+                    </a>
+                </div>
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active shadow" id="nav-home-tab1" data-bs-toggle="tab"
+                           href="#FailedPayments" role="tab" aria-controls="nav-home1" aria-selected="true">
+                            Failed Payments
+                        </a>
+                        <a class="nav-item nav-link shadow" id="nav-home-tab" data-bs-toggle="tab"
+                           href="#SuccessPayments" role="tab" aria-controls="nav-home" aria-selected="true">
+                            Success Payments
+                        </a>
+                    </div>
+                       
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-4">
+                <!-- Tab -->
+                <div class="card border-0 shadow noborderradius">
+                    <div class="card-body">
+                        <div class="tab-content" id="nav-tabContent">
+                            <!-- follow Up In Between 48 hrs for UPI Verification-->
+                            <div class="tab-pane fade show active" id="FailedPayments" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <div class="row datefilter mt-2 mb-4">
+                                    <div class="col-md-8 text-right datefilter-right">
+                                        <input type="text" class="form-control d-inline " autocomplete="off" id="startdate" placeholder="Start Date">
+                                        <input type="text" class="form-control d-inline " autocomplete="off" id="enddate" placeholder="End Date">
+                                        <input type="button" id="filter-dates" value="Filter" class="btn btn-primary">
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table id="FailedPayments_DT" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th class="border-bottom all notexport" scope="col">Id</th>
+                                                <th class="all notexport" scope="col">Actions</th>
+                                                <th class="border-bottom all" scope="col">RegdNo</th>
+                                                <th class="border-bottom all" scope="col">UTCReferenceID</th>
+                                                <th class="border-bottom all" scope="col">IsActive</th>
+                                                <th class="border-bottom all" scope="col">PaymentStatus</th>
+                                                <th class="border-bottom all" scope="col">paymentResponse</th>
+                                                <th class="border-bottom all" scope="col">PaymentDate</th>
+                                                <th class="border-bottom all" scope="col">Amount</th>
+                                                <th class="border-bottom all" scope="col">ModuleType</th>
+                                                <th class="border-bottom all" scope="col">TransactionType</th>
+                                                <th class="border-bottom all" scope="col">CreatedDate</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show" id="SuccessPayments" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <div class="row datefilter mt-2 mb-4">
+                                    <div class="col-md-8 text-right datefilter-right">
+                                        <input type="text" class="form-control d-inline " autocomplete="off" id="startdate2" placeholder="Start Date">
+                                        <input type="text" class="form-control d-inline " autocomplete="off" id="enddate2" placeholder="End Date">
+                                        <input type="button" id="filter-dates2" value="Filter" class="btn btn-primary">
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table id="SuccessPayments_DT" class="table align-items-center table-flush" border="1">
+                                        <thead class="thead-light">
+                                            <tr>    
+                                                <th class="border-bottom all notexport" scope="col">Id</th>
+                                                <th class="all notexport" scope="col">Actions</th>
+                                                <th class="border-bottom all" scope="col">RegdNo</th>
+                                                <th class="border-bottom all" scope="col">UTCReferenceID</th>
+                                                <th class="border-bottom all" scope="col">IsActive</th>
+                                                <th class="border-bottom all" scope="col">PaymentStatus</th>
+                                                <th class="border-bottom all" scope="col">paymentResponse</th>
+                                                <th class="border-bottom all" scope="col">PaymentDate</th>
+                                                <th class="border-bottom all" scope="col">Amount</th>
+                                                <th class="border-bottom all" scope="col">ModuleType</th>
+                                                <th class="border-bottom all" scope="col">TransactionType</th>
+                                                <th class="border-bottom all" scope="col">CreatedDate</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of tab -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#startdate").datepicker({
+            defaultDate: null
+        });
+        $("#enddate").datepicker({
+            defaultDate: null
+        });
+        $("#startdate2").datepicker({
+            defaultDate: null
+        });
+        $("#enddate2").datepicker({
+            defaultDate: null
+        });
+        var startDate = $('#startdate').val();
+        var endDate = $('#enddate').val();
+
+        var url1 = "@URLPrefixforProd/api/RePaymentList/GetRepaymentDataList?&startDate=" + startDate + "&endDate=" + endDate;
+        DataTable1(url1);
+
+        var startDate2 = $('#startdate2').val();
+        var endDate2 = $('#enddate2').val();
+
+        var url2 = "@URLPrefixforProd/api/RePaymentList/GetRepaymentDataListForSuccessPayment?&startDate=" + startDate2 + "&endDate=" + endDate2;
+        DataTable2(url2);
+    });
+    $('#filter-dates').click(function () {
+
+        var startDate = $('#startdate').val();
+        var endDate = $('#enddate').val();
+
+        var url1 = "@URLPrefixforProd/api/RePaymentList/GetRepaymentDataList?&startDate=" + startDate + "&endDate=" + endDate;
+        table1 = $('#FailedPayments_DT').DataTable();
+        table1.clear().destroy();
+        DataTable1(url1);
+    });
+
+    $('#filter-dates2').click(function () {
+        var startDate2 = $('#startdate2').val();
+        var endDate2 = $('#enddate2').val();
+
+        var url2 = "@URLPrefixforProd/api/RePaymentList/GetRepaymentDataListForSuccessPayment?&startDate=" + startDate2 + "&endDate=" + endDate2;
+        table2 = $('#SuccessPayments_DT').DataTable();
+        table2.clear().destroy();
+        DataTable2(url2);
+    });
+
+    //This Datatable function is calling for Method
+
+    function DataTable1(url1) {
+        $('#FailedPayments_DT').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Re Payment Failed Records',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "searching": false,
+            "info": true,
+            "paging": true,
+            "oLanguage": {
+                "sEmptyTable": "Data Not found"
+            },
+            "ajax": {
+                "url": url1,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+            "columns": [
+                { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                { "data": "utcReferenceId", "name": "UtcReferenceId", "autoWidth": true, "orderable": false },
+                { "data": "isActive", "name": "IsActive", "autoWidth": true, "orderable": false },
+                { "data": "paymentStatus", "name": "PaymentStatus", "autoWidth": true, "orderable": false },
+                { "data": "paymentResponse", "name": "paymentResponse", "autoWidth": true, "orderable": false },
+                { "data": "paymentDate", "name": "PaymentDate", "autoWidth": true, "orderable": true },
+                { "data": "amount", "name": "Amount", "autoWidth": true, "orderable": true },
+                { "data": "moduleType", "name": "ModuleType", "autoWidth": true, "orderable": false },
+                { "data": "transactionType", "name": "TransactionType", "autoWidth": true, "orderable": false },
+                { "data": "createdDate", "name": "createdDate", "autoWidth": true, "orderable": false },
+            ]
+        });
+    }
+
+    //This Datatable function is calling for Method
+
+    function DataTable2(url2) {
+        $('#SuccessPayments_DT').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "filter": true,
+            "dom": 'Bfrtlp',
+            "buttons": [
+                {
+                    extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
+                    title: 'Re Payment Success Records',
+                    action: newexportaction,
+                    exportOptions: {
+                        modifier: {
+                            // DataTables core
+                            order: 'index',  // 'current', 'applied', 'index',  'original'
+                            page: 'all',      // 'all',     'current' for export all pages data
+                            search: 'none'     // 'none',    'applied', 'removed'
+                        },
+                        columns: ':not(.notexport)'
+                    }
+                }
+            ],
+            "searching": false,
+            "info": true,
+            "paging": true,
+            "oLanguage": {
+                "sEmptyTable": "Data Not found"
+            },
+            "ajax": {
+                "url": url2,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+
+            "responsive": true,
+            "columns": [
+                { "data": "id", "name": "Id", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Action", "autoWidth": true, "orderable": false },
+                { "data": "regdNo", "name": "RegdNo", "autoWidth": true, "orderable": false },
+                { "data": "utcReferenceId", "name": "UtcReferenceId", "autoWidth": true, "orderable": false },
+                { "data": "isActive", "name": "IsActive", "autoWidth": true, "orderable": false },
+                { "data": "paymentStatus", "name": "PaymentStatus", "autoWidth": true, "orderable": false },
+                { "data": "paymentResponse", "name": "paymentResponse", "autoWidth": true, "orderable": false },
+                { "data": "paymentDate", "name": "PaymentDate", "autoWidth": true, "orderable": true },
+                { "data": "amount", "name": "Amount", "autoWidth": true, "orderable": true },
+                { "data": "moduleType", "name": "ModuleType", "autoWidth": true, "orderable": false },
+                { "data": "transactionType", "name": "TransactionType", "autoWidth": true, "orderable": false },
+                { "data": "createdDate", "name": "createdDate", "autoWidth": true, "orderable": false },
+            ]
+        });
+    }
+
+    //All Data Export--
+    function newexportaction(e, dt, button, config) {
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = 2147483647;
+            dt.one('preDraw', function (e, settings) {
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+</script>
+
+
+
