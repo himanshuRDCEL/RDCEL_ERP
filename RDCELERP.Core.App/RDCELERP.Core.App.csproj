@@ -131,7 +131,6 @@
     <Folder Include="Pages\QuestionerLov\RefurbisherDetails\" />
     <Folder Include="wwwroot\DBFiles\ABB\ABBApprovalCertificate\" />
     <Folder Include="wwwroot\DBFiles\Brands\" />
-    <Folder Include="wwwroot\DBFiles\EVCInvoiceRecipetByUTC\InvoiceImage\" />
     <Folder Include="wwwroot\DBFiles\EVC\CancelledCheque\" />
     <Folder Include="wwwroot\DBFiles\EVC\EWasteCertificate\" />
     <Folder Include="wwwroot\DBFiles\EVC\GSTRegistration\" />
@@ -148,7 +147,6 @@
     <Folder Include="wwwroot\DBFiles\Masters\QuestionsImages\" />
     <Folder Include="wwwroot\DBFiles\Masters\ProductTypeImages\" />
     <Folder Include="wwwroot\DBFiles\ProductTypeImage\" />
-    <Folder Include="wwwroot\DBFiles\ProductCategoryImage\" />
     <Folder Include="wwwroot\DBFiles\Sponsor\" />
     <Folder Include="wwwroot\DBFiles\QC\DiagnosticReport\" />
     <Folder Include="wwwroot\DBFiles\QC\VideoQC\" />
