@@ -3,56 +3,69 @@
 @{
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+<style>
+    .table tr {
+        border: 1px solid #00000033;
+    }
 
+    .table td {
+        font-size: 16px;
+    }
+
+    .table thead th {
+        font-size: 16px;
+        background: #eb0913cf;
+        color: #fff;
+    }
+</style>
 
 @if (Model.tblBusinessUnit.IsBulkOrder == true)
 {
     <div class="row">
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-12 mb-4">
-                <div class="card border-0 shadow">
-                    <div class="card-header">
-                        <div class="row align-items-center">
-                            <div class="col">
-                               
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="card border-0 shadow">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                </div>
                             </div>
                         </div>
-                    </div>
 
                         <div class="card-body text-center d-flex justify-content-center align-items-center" style="height: 600px;">
                             <div>
-                            <img class="w-50 d-block mx-auto mb-4" src="~/images/logo.svg" />
+                                <img class="w-50 d-block mx-auto mb-4" src="~/images/logo.svg" />
                                 <h1 class="fw-bold"><strong>Welcome to Digi2L</strong></h1>
 
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 }
 else
 {
     <div class="row datefilter mt-2 mb-4">
-    <div class="col-md-4 mb-2">
-        <h5 class="welcometxt m-0">
-            This Month
-        </h5>
-        <small class="text-muted small">March 1 2022 to March 28 2022</small>
+        <div class="col-md-4 mb-2">
+            <h5 class="welcometxt m-0">
+                This Month
+            </h5>
+            <small class="text-muted small">March 1 2022 to March 28 2022</small>
+        </div>
+
+        <div class="col-md-8 text-right datefilter-right">
+            <input type="text" class="form-control d-inline mb-2" id="startdate" placeholder="Start Date">
+            <input type="text" class="form-control d-inline mb-2" id="enddate" placeholder="End Date">
+            <input type="submit" class="d-inline btn btn-primary" value="Submit">
+        </div>
+
     </div>
 
-    <div class="col-md-8 text-right datefilter-right">
-        <input type="text" class="form-control d-inline mb-2" id="startdate" placeholder="Start Date">
-        <input type="text" class="form-control d-inline mb-2" id="enddate" placeholder="End Date">
-        <input type="submit" class="d-inline btn btn-primary" value="Submit">
-    </div>
-
-</div>
-
-<div class="row">
+    @* <div class="row">
 
     <div class="col-md-4 mb-4">
         <div class="card border-0 shadow">
@@ -182,7 +195,7 @@ else
                 </div>
                 </a>
         </div>
-       
+
     </div>
 
     <div class="col-md-4 mb-4">
@@ -206,7 +219,7 @@ else
                 </div>
                 </a>
         </div>
-       
+
     </div>
 
     <div class="col-md-4 mb-4">
@@ -230,7 +243,7 @@ else
                 </div>
                 </a>
         </div>
-        
+
     </div>
 
     <div class="col-md-4 mb-4">
@@ -254,9 +267,74 @@ else
                 </div>
                 </a>
         </div>
-        
+
     </div>
-</div>
+</div> *@
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col" class="text-center" style="width: 5%;">Select</th>
+                        <th scope="col">Order Type</th>
+                        <th scope="col" class="text-center">Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                        <td>ABB Orders</td>
+                        <td class="text-center"><span>19931</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                        <td>Exchange Orders</td>
+                        <td class="text-center"><span>10030</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                        <td>ABB Redemptions</td>
+                        <td class="text-center"><span>23</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                        <td>EVC Disputes</td>
+                        <td class="text-center"><span>8</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                        <td>Pending ABB for Approvals</td>
+                        <td class="text-center"><span class="">24</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                        <td>EVC Allocations</td>
+                        <td class="text-center"><span>3242</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                        <td>QC Done</td>
+                        <td class="text-center"><span>3242</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                        <td>Pick up Done</td>
+                        <td class="text-center"><span>3242</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                        <td>Drop Done</td>
+                        <td class="text-center"><span>3242</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
 }
 
 

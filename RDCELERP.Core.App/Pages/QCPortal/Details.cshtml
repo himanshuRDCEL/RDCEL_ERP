@@ -27,15 +27,41 @@
 
 </head>
 
+<style>
+    body{
+        background-image: url('/SelfQC-assets/img/bg.png');
+    }
+    .toplogo{
+        background:#fff;
+    }
+
+    .logowrap img {
+        max-width: 143px;
+        width: 100%;
+    }
+
+    .thankyouwrap {
+        position: relative;
+        z-index: 99;
+        background: #fff;
+        margin-top: 165px;
+        border-radius: 23px;
+        padding: 54px;
+    }
+</style>
 <body>
 
 
     <div id="wrapper" class="thankyoupage">
 
-        <div class="topwave">
-            <img src="~/SelfQC-assets/img/top-wave.svg" class="img-fluid rounded-top" alt="">
+@*          <div class="topwave">
+             <img src="~/SelfQC-assets/img/top-wave.svg" class="img-fluid rounded-top" alt="">
+         </div> *@
+        <div class="col-12 text-center logo-order toplogo">
+            <div class="logowrap">
+                <img src="~/SelfQC-assets/img/rockingdeallogo.png" alt="">
+            </div>
         </div>
-
         <div class="container">
 
             <div class="row">
@@ -43,11 +69,7 @@
                     <div class="topsec">
                         <div class="row">
                          
-                            <div class="col-12 text-center logo-order">
-                                <div class="logowrap">
-                                    <img src="~/SelfQC-assets/img/digi2l-arrow-01.png" alt="">
-                                </div>
-                            </div>
+                    
                         </div>
                     </div>
 
@@ -55,9 +77,9 @@
                     <div class="row thankyouwrap">
                         <div class="col-md-10 mx-auto my-4 text-center">
                             <div class="row">
-                                <div class="col-lg-3 col-5 mb-4 mx-auto">
+                              @*   <div class="col-lg-3 col-5 mb-4 mx-auto">
                                     <img src="~/SelfQC-assets/img/emoji-01.png" class="w-100" style="max-width:150px;" alt="">
-                                </div>
+                                </div> *@
                             </div>
 
                             <h3>Thank you!</h3>
