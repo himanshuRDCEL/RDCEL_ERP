@@ -48,5 +48,13 @@ namespace RDCELERP.Model.Whatsapp
             public string? BrandName2 { get; set; }
 
         }
+        //sa
+      
+    }
+
+    public class HttpResponseDetails
+    {
+        public HttpResponseMessage Response { get; set; }
+        public string Content { get; set; }
     }
 }

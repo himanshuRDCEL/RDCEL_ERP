@@ -59,9 +59,10 @@ namespace RDCELERP.Core.App.Pages
         {
             if (!string.IsNullOrEmpty(UserViewModel.Email) && !string.IsNullOrEmpty(UserViewModel.Password))
             {
+              
+               
                 UserViewModel.Email = SecurityHelper.EncryptString(UserViewModel.Email, _config.Value.SecurityKey);
                 UserViewModel.Password = SecurityHelper.EncryptString(UserViewModel.Password, _config.Value.SecurityKey);
-
                 LoginViewModel loginVM = _userManager.GetUserByLogin(UserViewModel.Email.Trim(), UserViewModel.Password);
 
                 if (loginVM != null && loginVM.UserViewModel != null && loginVM.UserViewModel.UserId != 0)

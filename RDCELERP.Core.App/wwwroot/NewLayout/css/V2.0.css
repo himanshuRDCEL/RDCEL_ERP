@@ -30,7 +30,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, ol li, ul li, .p, body 
 }
 
 .sidebar .nav-item .nav-link, .sidebar .nav-link .sidebar-icon, .logowrapbox .sidebar-text {
-    color: #343434;
+   
 }
 
 .sidebar .nav-item {
@@ -177,6 +177,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, ol li, ul li, .p, body 
     box-shadow: var(--V2-shadow) !important;
 }
 
+
 .thead-light {
     background: var(--V2-lightgrey);
 }
@@ -197,7 +198,7 @@ main.content {
     position: relative;
     min-height: 100vh;
     padding-bottom: 100px;
-    background: #f5f7f8;
+  
 }
 
 footer {
@@ -261,8 +262,8 @@ main.content .card {
 }
 
 #exportbtn {
-    background: #d1f9e4;
-    color: #0e743a;
+    background: #1e73be45;
+    color: #1e73be;
     font-weight: 500;
     margin-bottom: 8px;
     border: none;

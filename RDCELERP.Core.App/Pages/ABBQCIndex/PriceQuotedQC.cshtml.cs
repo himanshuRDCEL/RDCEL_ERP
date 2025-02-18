@@ -21,6 +21,7 @@ using RDCELERP.Model.Base;
 using RDCELERP.Model.SearchFilters;
 using static RDCELERP.Model.Whatsapp.WhatsappPickupDateViewModel;
 using static RDCELERP.Model.Whatsapp.WhatsappQCPriceViewModel;
+using RDCELERP.Model.ResponseModel;
 
 namespace RDCELERP.Core.App.Pages.ABBQCIndex
 {
@@ -42,6 +43,7 @@ namespace RDCELERP.Core.App.Pages.ABBQCIndex
         IABBRedemptionRepository _aBBRedemptionRepository;
         ILogging _logging;
         ICommonManager _commonManager;
+
         #endregion
 
         #region Constructor
@@ -149,6 +151,11 @@ namespace RDCELERP.Core.App.Pages.ABBQCIndex
                                     baseUrl = _baseConfig.Value.BaseURL + "PaymentDetails/ConfirmPaymentDetails?regdNo=" + tblAbbredemption.RegdNo + "&userid=" + Convert.ToInt32(_loginSession.UserViewModel.UserId) + "&status=" + tblAbbredemption.StatusId;
                                     whatsappObj.notification.@params.PageLink = baseUrl;
                                     url = _baseConfig.Value.YellowAiUrl;
+
+                                
+
+
+
 
                                     RestResponse response = _whatsappNotificationManager.Rest_InvokeWhatsappserviceCall(url, Method.Post, whatsappObj);
                                     if (response.Content != null)

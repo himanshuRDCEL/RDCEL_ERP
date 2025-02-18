@@ -412,11 +412,11 @@ namespace RDCELERP.BAL.MasterManager
                         var file = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "HTMLTemplate", tempateName);
                         content = File.ReadAllText(file);
                         content = content.Replace("[ToName]", userObj.FirstName);
-                        content = content.Replace("[Company]", company != null && !string.IsNullOrEmpty(company.CompanyName) ? company.CompanyName : "Digi2L");
+                        content = content.Replace("[Company]", company != null && !string.IsNullOrEmpty(company.CompanyName) ? company.CompanyName : "Rocking Deals");
                         content = content.Replace("[Email]", userObj.Email);
                         content = content.Replace("[Password]", userObj.Password);
                         content = content.Replace("[BaseURL]", _config.Value.BaseURL);
-                        content = content.Replace("[SupportEmail]", "Digi2L");
+                        content = content.Replace("[SupportEmail]", "Rocking Deal");
                         toEmails = string.IsNullOrEmpty(toEmails) ? userObj.Email : toEmails + ";" + userObj.Email;
                         toEmails = SecurityHelper.DecryptString(userObj.Email, _config.Value.SecurityKey);
                     }

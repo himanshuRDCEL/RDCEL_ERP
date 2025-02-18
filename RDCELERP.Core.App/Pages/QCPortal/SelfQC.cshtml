@@ -25,12 +25,53 @@
 
     <link href="~/SelfQC-assets/css/style.css" rel="stylesheet" />
     <style>
+        body {
+            background-image: url('/SelfQC-assets/img/bg.png');
+            background-size: 74% !important;
+        }
+        .uploadfile{
+            padding:5px;
+
+        }
+
+        .VoiceIconBox:hover{
+            background: #eb0913;
+        }
+
+        .uploadwrap .uploadbottom{
+            background: #eb09130f;
+        }
+        .topwave {
+            top: -7%;
+        }
+
+        .uploadheading {
+            color: #eb0913;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background: linear-gradient(109deg, #eb0913a1 0, #eb0913 100%) no-repeat padding-box;
+        }
+
+        .meta-detail {
+            background: transparent linear-gradient(305deg, #eb0913 0%, #eb0913 100%) 0% 0% no-repeat padding-box;
+            color: #fff;
+            border-radius: 6px;
+            padding: 4px;
+            margin: 10px 0;
+            border: 1px solid #eb0913;
+            box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.25);
+            position: relative;
+            z-index: 999;
+        }
+
         #overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;  
+            height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 9999;
             pointer-events: none;
@@ -65,6 +106,13 @@
             z-index: 9999;
             height: 100%;
         }
+        .uploadwrap .uploadbottom .file{
+            color: #eb0913;
+        }
+
+        .uploadwrap .uploadtop{
+            height: 365px;
+        }
 
         .loaderwrap {
             width: 150px;
@@ -79,16 +127,29 @@
             padding: 20px 20px 5px 20px;
         }
 
-            .loaderwrap img {
+        .logowrap {
+            background: #fff;
+            max-width: 157px;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+        }
+
+            .logowrap img {
+                max-width: 140px;
                 width: 100%;
-                display: block;
+                padding: 10px;
             }
 
-            .loaderwrap p {
-                text-align: center;
-                font-size: 13px;
-                color: #737373;
-            }
+        .loaderwrap img {
+            width: 100%;
+            display: block;
+        }
+
+        .loaderwrap p {
+            text-align: center;
+            font-size: 13px;
+            color: #737373;
+        }
     </style>
 </head>
 <body>
@@ -105,7 +166,7 @@
                 </div>
             </div>
             <div class="topwave">
-                <img src="~/SelfQC-assets/img/top-wave.svg" class="img-fluid rounded-top" />
+                <img src="~/SelfQC-assets/img/topwave.svg" class="img-fluid rounded-top" />
             </div>
             <div class="container">
                 <div class="row">
@@ -118,15 +179,15 @@
 
                                 <div class="col-lg-7">
                                     <div class="topcontentsec">
-                                        <h2>Welcome To Digi2L</h2>
+                                        <h2>Welcome To RDCEL</h2>
                                         <p>
-                                            Digi2L is India’s first company that helps you in the disposal of your used appliances and gadgets without having to face the hassles of looking for customers and the best price while ensuring spot payment and free home pick up of the used product.
+                                            RDCEL is India’s first company that helps you in the disposal of your used appliances and gadgets without having to face the hassles of looking for customers and the best price while ensuring spot payment and free home pick up of the used product.
                                         </p>
                                     </div>
                                 </div>
                                 <div class="col-lg-5 text-center logo-order">
                                     <div class="logowrap">
-                                        <img src="~/SelfQC-assets/img/digi2l-arrow-01.png" />
+                                        <img src="~/SelfQC-assets/img/rockingdeallogo.png" />
                                     </div>
                                 </div>
                             </div>
@@ -237,7 +298,7 @@
                                                     <label id="lblFileErr_@count" class="ErrorMsg" style="color:#333;"></label>
                                                 </div>
                                                 <div class="uploadbottom" id="uploadbottom_@count">
-                                                    <div class="file">
+                                                    <div class="file uploadfile">
                                                         Upload
                                                         <input type="file" id="Image_Upload_@count" accept="image/*" asp-for="selfQcVideoImageViewModel.imageLabelViewModels[i].Image" />
                                                         <input type="hidden" asp-for="selfQcVideoImageViewModel.imageLabelViewModels[i].Base64StringValue" id="hdnBase64StringValue_@count" />
@@ -413,7 +474,7 @@
             }
         }
 
-       // const videoElement = document.getElementById('videoElement');
+        // const videoElement = document.getElementById('videoElement');
         let mediaRecorder;
         let globalStream = [];
 
@@ -693,7 +754,7 @@
                 contentType: false,
                 processData: false,
                 success: function (response) {
-                    if(response == true){
+                    if (response == true) {
                         $("#hdnBase64StringValue_" + srNum).val("File Saved Already");
                     }
                     console.log("File Save or Not: " + response);

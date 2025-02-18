@@ -30197,7 +30197,7 @@ table tr td img {
 /* Datatable Pagination Styling - AK 01/03/2023 */
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover, .dataTables_wrapper .dataTables_paginate .paginate_button:active, .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    background: #0d004c !important;
+    background: #eb0913 !important;
     border: none !important;
     box-shadow: none !important;
     color: #fff !important;

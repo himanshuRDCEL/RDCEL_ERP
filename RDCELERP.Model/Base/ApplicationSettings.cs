@@ -145,5 +145,8 @@ namespace RDCELERP.Model.Base
         public int? DaikinBUId { get; set; }
         public bool IsDaikinAPIOrderStatus { get; set; }
 
+        public string AiSensyApiURL { get; set; }
+        public string AiSensyApiKey { get; set; }
+
     }
 }

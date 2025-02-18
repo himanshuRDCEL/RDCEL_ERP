@@ -3808,7 +3808,7 @@ namespace RDCELERP.Core.App.Controller
                             string actionURL = string.Empty;
                             var regdno = item.RegdNo;
 
-                            actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class='btn btn-sm btn-primary' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
+                            actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class='btn btn-sm' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
 
                             dealerdata = new DealerDashboardViewModel();
                             dealerdata.Id = item.Id;
@@ -3964,7 +3964,7 @@ namespace RDCELERP.Core.App.Controller
 
 
 
-                            actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class='btn btn-sm btn-primary' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
+                            actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class='btn btn-sm' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
 
                             dealerdata = new DealerDashboardViewModel();
                             dealerdata.Id = item.Id;
@@ -4154,7 +4154,7 @@ namespace RDCELERP.Core.App.Controller
 
                             string actionURL = string.Empty;
                             var regdno = item.RegdNo;
-                            actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class='btn btn-sm btn-primary' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
+                            actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class='btn btn-sm' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
                             dealerdata = new DealerDashboardViewModel();
                             dealerdata.Id = item.Id;
                             dealerdata.actionUrl = actionURL;
