@@ -291,8 +291,8 @@ namespace RDCELERP.Core.App.Controller
                         item.FinalExchangePrice = item.FinalExchangePrice > 0 ? item.FinalExchangePrice : 0;
                     }
                     actionURL = " <div class='actionbtns'>";
-                    actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class='btn btn-sm btn-primary' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
-                    actionURL = actionURL + " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
+                    actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
+                    actionURL = actionURL + " <a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
                     actionURL = actionURL + "</div>";
                     item.Action = actionURL;
 
@@ -676,8 +676,8 @@ namespace RDCELERP.Core.App.Controller
                         }
 
                         actionURL = " <div class='actionbtns'>";
-                        actionURL = actionURL + " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>&nbsp;";
-                        actionURL = actionURL + "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' onclick='RecordView(" + item.Id + ")' class='btn btn-primary btn-sm viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></a>&nbsp;";
+                        actionURL = actionURL + " <a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>&nbsp;";
+                        actionURL = actionURL + "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' onclick='RecordView(" + item.Id + ")' class=' viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></a>&nbsp;";
                         if (item.OrderCreatedDate != null)
                         {
                             int ElapsedHrs = 0;
@@ -905,8 +905,8 @@ namespace RDCELERP.Core.App.Controller
                         }
 
                         actionURL = " <div class='actionbtns'>";
-                        actionURL = actionURL + " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>&nbsp;";
-                        actionURL = actionURL + "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' onclick='RecordView(" + item.Id + ")' class='btn btn-primary btn-sm viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></a>&nbsp;";
+                        actionURL = actionURL + " <a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>&nbsp;";
+                        actionURL = actionURL + "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' onclick='RecordView(" + item.Id + ")' class=' viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></a>&nbsp;";
                         actionURL = actionURL + "</div>";
                         item.Action = actionURL;
 
@@ -1101,8 +1101,8 @@ namespace RDCELERP.Core.App.Controller
                         }
                     }
                     actionURL = " <div class='actionbtns'>";
-                    actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.ExchangeId) + "' ><button onclick='RecordView(" + item.OrderQCId + ")' class='btn btn-primary btn-sm viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
-                    actionURL = actionURL + " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
+                    actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.ExchangeId) + "' ><button onclick='RecordView(" + item.OrderQCId + ")' class=' viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
+                    actionURL = actionURL + " <a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
                     actionURL = actionURL + "</div>";
                     item.Action = actionURL;
                 }
@@ -1274,8 +1274,8 @@ namespace RDCELERP.Core.App.Controller
                         }
                     }
                     actionURL = " <div class='actionbtns'>";
-                    actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.ExchangeId) + "' ><button onclick='RecordView(" + item.OrderQCId + ")' class='btn btn-primary btn-sm viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
-                    actionURL = actionURL + " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
+                    actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.ExchangeId) + "' ><button onclick='RecordView(" + item.OrderQCId + ")' class=' viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
+                    actionURL = actionURL + " <a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
                     actionURL = actionURL + "</div>";
                     item.Action = actionURL;
                 }
@@ -1454,8 +1454,8 @@ namespace RDCELERP.Core.App.Controller
                         }
                     }
                     actionURL = " <div class='actionbtns'>";
-                    actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.ExchangeId) + "' ><button onclick='RecordView(" + item.OrderQCId + ")' class='btn btn-primary btn-sm viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
-                    actionURL = actionURL + " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
+                    actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.ExchangeId) + "' ><button onclick='RecordView(" + item.OrderQCId + ")' class=' viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
+                    actionURL = actionURL + " <a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
                     actionURL = actionURL + "</div>";
                     item.Action = actionURL;
                 }
@@ -1634,8 +1634,8 @@ namespace RDCELERP.Core.App.Controller
                         }
                     }
                     actionURL = " <div class='actionbtns'>";
-                    actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.ExchangeId) + "' ><button onclick='RecordView(" + item.OrderQCId + ")' class='btn btn-primary btn-sm viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
-                    actionURL = actionURL + " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
+                    actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.ExchangeId) + "' ><button onclick='RecordView(" + item.OrderQCId + ")' class=' viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
+                    actionURL = actionURL + " <a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
                     actionURL = actionURL + "</div>";
                     item.Action = actionURL;
                 }
@@ -1813,8 +1813,8 @@ namespace RDCELERP.Core.App.Controller
                         }
                     }
                     actionURL = " <div class='actionbtns'>";
-                    actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.ExchangeId) + "' ><button onclick='RecordView(" + item.OrderQCId + ")' class='btn btn-primary btn-sm viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
-                    actionURL = actionURL + " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
+                    actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.ExchangeId) + "' ><button onclick='RecordView(" + item.OrderQCId + ")' class=' viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
+                    actionURL = actionURL + " <a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
                     actionURL = actionURL + "</div>";
                     item.Action = actionURL;
                 }
@@ -2058,9 +2058,9 @@ namespace RDCELERP.Core.App.Controller
                         }
 
                         actionURL1 = "<div class='actionbtns'>";
-                        actionURL1 = actionURL1 + " <a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class='btn btn-primary btn-sm viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
-                        // actionURL1 = actionURL1 + " <a href ='" + URL + "/Exchange/Manage?id=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class='btn btn-sm btn-primary' data-bs-toggle='tooltip' data-bs-placement='top' title='Reopen'><i class='fa-solid fa-arrow-rotate-left'></i></button></a>";
-                        actionURL1 = actionURL1 + " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
+                        actionURL1 = actionURL1 + " <a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class=' viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
+                        // actionURL1 = actionURL1 + " <a href ='" + URL + "/Exchange/Manage?id=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Reopen'><i class='fa-solid fa-arrow-rotate-left'></i></button></a>";
+                        actionURL1 = actionURL1 + " <a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
                         actionURL1 = actionURL1 + "</div>";
                         item.Edit = actionURL1;
 
@@ -2303,9 +2303,9 @@ namespace RDCELERP.Core.App.Controller
                         }
 
                         actionURL1 = "<div class='actionbtns'>";
-                        actionURL1 = actionURL1 + " <a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class='btn btn-primary btn-sm viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
-                        // actionURL1 = actionURL1 + " <a href ='" + URL + "/Exchange/Manage?id=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class='btn btn-sm btn-primary' data-bs-toggle='tooltip' data-bs-placement='top' title='Reopen'><i class='fa-solid fa-arrow-rotate-left'></i></button></a>";
-                        actionURL1 = actionURL1 + " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
+                        actionURL1 = actionURL1 + " <a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class=' viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
+                        // actionURL1 = actionURL1 + " <a href ='" + URL + "/Exchange/Manage?id=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Reopen'><i class='fa-solid fa-arrow-rotate-left'></i></button></a>";
+                        actionURL1 = actionURL1 + " <a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
                         actionURL1 = actionURL1 + "</div>";
                         item.Edit = actionURL1;
 
@@ -2490,9 +2490,9 @@ namespace RDCELERP.Core.App.Controller
                                 }
 
                                 actionURL1 = " <div class='actionbtns'>";
-                                actionURL1 += "<a class='btn btn-primary btn-sm mx-1' target='_blank' href ='" + URL + "/PaymentDetails/ConfirmPaymentDetails?regdNo=" + item.RegdNo + "&userid=" + userid + "&exchangeid=" + item.Id + "&status=" + item.StatusId + "' title='Add UPI'>ADD UPI</a>&nbsp;";
-                                actionURL1 += "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class='btn btn-sm btn-primary' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>&nbsp;";
-                                actionURL1 += " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
+                                actionURL1 += "<a class=' mx-1' target='_blank' href ='" + URL + "/PaymentDetails/ConfirmPaymentDetails?regdNo=" + item.RegdNo + "&userid=" + userid + "&exchangeid=" + item.Id + "&status=" + item.StatusId + "' title='Add UPI'>ADD UPI</a>&nbsp;";
+                                actionURL1 += "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>&nbsp;";
+                                actionURL1 += " <a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
                                 actionURL1 += "</div>";
                                 item.Edit = actionURL1;
 
@@ -2710,10 +2710,10 @@ namespace RDCELERP.Core.App.Controller
                                     }
                                 }
                                 actionURL = " <div class='actionbtns'>";
-                                actionURL += actionURL + "<button onclick='ResendUPILink(" + item.Id + ")' data-bs-toggle='tooltip' data-bs-placement='top' title='Resend UPI Verification Link' class='btn btn-primary btn-sm mx-1'>ResendLink</button>";
-                                actionURL += "<a class='btn btn-primary btn-sm mx-1' target='_blank' href ='" + URL + "/PaymentDetails/ConfirmPaymentDetails?regdNo=" + item.RegdNo + "&userid=" + userid + "&exchangeid=" + item.Id + "&status=" + item.StatusId + "' title='Add UPI'>ADD UPI</a>&nbsp;";
-                                actionURL += "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + "," + ")' class='btn btn-sm btn-primary' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>&nbsp;";
-                                actionURL += "<a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
+                                actionURL += actionURL + "<button onclick='ResendUPILink(" + item.Id + ")' data-bs-toggle='tooltip' data-bs-placement='top' title='Resend UPI Verification Link' class=' mx-1'>ResendLink</button>";
+                                actionURL += "<a class=' mx-1' target='_blank' href ='" + URL + "/PaymentDetails/ConfirmPaymentDetails?regdNo=" + item.RegdNo + "&userid=" + userid + "&exchangeid=" + item.Id + "&status=" + item.StatusId + "' title='Add UPI'>ADD UPI</a>&nbsp;";
+                                actionURL += "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + "," + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>&nbsp;";
+                                actionURL += "<a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
                                 actionURL += "</div>";
                                 item.Action = actionURL;
 
@@ -3140,8 +3140,8 @@ namespace RDCELERP.Core.App.Controller
                     {
 
                         actionURL = " <div class='actionbtns'>";
-                        actionURL = actionURL + " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
-                        actionURL = actionURL + " <a class='btn btn-sm btn-primary' href='" + URL + "/Bulk_Order/Acceptance?regdno=" + item.RegdNo + "' title='Accept_Price'><i class='fa-regular fa-circle-check'></i></a>";
+                        actionURL = actionURL + " <a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
+                        actionURL = actionURL + " <a class='' href='" + URL + "/Bulk_Order/Acceptance?regdno=" + item.RegdNo + "' title='Accept_Price'><i class='fa-regular fa-circle-check'></i></a>";
                         actionURL = actionURL + "</div>";
                         item.Action = actionURL;
                     }
@@ -3151,8 +3151,8 @@ namespace RDCELERP.Core.App.Controller
 
                         actionURL = " <div class='actionbtns'>";
 
-                        actionURL = actionURL + " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
-                        actionURL = actionURL + " <a class='btn btn-sm btn-primary' target='_blank' href='" + URL + "/QCPortal/SelfQC?regdno=" + item.RegdNo + "' title='SelfQc'><i class='fa-solid fa-clipboard-check'></i></a>";
+                        actionURL = actionURL + " <a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
+                        actionURL = actionURL + " <a class='' target='_blank' href='" + URL + "/QCPortal/SelfQC?regdno=" + item.RegdNo + "' title='SelfQc'><i class='fa-solid fa-clipboard-check'></i></a>";
 
                         actionURL = actionURL + "</div>";
                         item.Action = actionURL;
@@ -3369,8 +3369,8 @@ namespace RDCELERP.Core.App.Controller
                             }
 
                             actionURL = " <div class='actionbtns'>";
-                            actionURL = actionURL + " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>&nbsp;";
-                            actionURL = actionURL + "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Exchange.Id) + "' onclick='RecordView(" + item.Exchange.Id + ")' class='btn btn-primary btn-sm viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></a>&nbsp;";
+                            actionURL = actionURL + " <a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>&nbsp;";
+                            actionURL = actionURL + "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Exchange.Id) + "' onclick='RecordView(" + item.Exchange.Id + ")' class=' viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></a>&nbsp;";
                             actionURL = actionURL + "</div>";
                             ratioReportSelfQcViewModel.Action = actionURL;
                             ratioReportSelfQcViewModelList.Add(ratioReportSelfQcViewModel);
@@ -3579,8 +3579,8 @@ namespace RDCELERP.Core.App.Controller
 
 
                             actionURL = " <div class='actionbtns'>";
-                            actionURL = actionURL + " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>&nbsp;";
-                            actionURL = actionURL + "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Exchange.Id) + "' onclick='RecordView(" + item.Exchange.Id + ")' class='btn btn-primary btn-sm viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></a>&nbsp;";
+                            actionURL = actionURL + " <a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>&nbsp;";
+                            actionURL = actionURL + "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Exchange.Id) + "' onclick='RecordView(" + item.Exchange.Id + ")' class=' viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></a>&nbsp;";
                             actionURL = actionURL + "</div>";
                             ratioReportSelfQcViewModel.Action = actionURL;
                             ratioReportSelfQcViewModelList.Add(ratioReportSelfQcViewModel);

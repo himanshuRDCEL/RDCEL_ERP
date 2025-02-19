@@ -136,8 +136,8 @@ namespace RDCELERP.Core.App.Controller
                     if (item.IsActive == true)
                     {
                         actionURL = " <div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/Brand/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                            "<a href='javascript: void(0)' onclick='deleteConfirmBrand(" + item.Id + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Inactive'><i class='fa-solid fa-trash'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/Brand/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                            "<a href='javascript: void(0)' onclick='deleteConfirmBrand(" + item.Id + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Inactive'><i class='fa-solid fa-trash'></i></a>";
                         actionURL = actionURL + " </div>";
                         item.Action = actionURL;
 
@@ -147,8 +147,8 @@ namespace RDCELERP.Core.App.Controller
                     else
                     {
                         actionURL = " <div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/Brand/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                            "<a href='" + "javascript:void(0)' onclick='activeConfirmBrand(" + item.Id + ")' class='btn btn-sm btn-success' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/Brand/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                            "<a href='" + "javascript:void(0)' onclick='activeConfirmBrand(" + item.Id + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
                         actionURL = actionURL + " </div>";
                         item.Action = actionURL;
 
@@ -232,8 +232,8 @@ namespace RDCELERP.Core.App.Controller
                     if (item.IsActive == true)
                     {
                         actionURL = " <div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/Brand/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                            "<a href='" + "javascript:void(0)' onclick='deleteConfirmBrand(" + item.Id + ")' class='btn btn-sm btn-success' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/Brand/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                            "<a href='" + "javascript:void(0)' onclick='deleteConfirmBrand(" + item.Id + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
                         actionURL = actionURL + " </div>";
                         item.Action = actionURL;
 
@@ -243,7 +243,7 @@ namespace RDCELERP.Core.App.Controller
                     else
                     {
                         actionURL = " <div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/Brand/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
+                        actionURL = actionURL + "<a href=' " + URL + "/Brand/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
                             "<a href='" + "javascript:void(0)' onclick='activeConfirmBrand(" + item.Id + ")' class='btn btn-sm  btn-success' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-recycle'></i></a>";
                         actionURL = actionURL + " </div>";
                         item.Action = actionURL;
@@ -483,19 +483,19 @@ namespace RDCELERP.Core.App.Controller
                     actionURL = "<div class='actionbtns'>";
                     if(item.IsActive == true)
                     {
-                        actionURL = actionURL + "<a href=' " + URL + "/Users/Manage?id=" + _protector.Encode(item.UserId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " + "<a href=' " + URL + "/Users/Details?id=" + _protector.Encode(item.UserId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='View' class='btn btn-sm btn-primary'><i class='fa-solid fa-eye'></i></a> " +
-                        "<a href=' " + URL + "/Users/ManageUserRole?id=" + (item.UserRoleId) + "&" + (item.UserId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title=' Role Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-user'></i></a> " +
-                         "<a href=' " + URL + "/Users/EncryptedEmailPass?id=" + _protector.Encode(item.UserId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='View' class='btn btn-sm btn-primary'><i class='fa-solid fa-lock'></i></a> " +
-                        "<a href='javascript: void(0)' onclick='deleteConfirmUser(" + item.UserRoleId + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Inactive'><i class='fa-solid fa-trash'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/Users/Manage?id=" + _protector.Encode(item.UserId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " + "<a href=' " + URL + "/Users/Details?id=" + _protector.Encode(item.UserId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='View' class=''><i class='fa-solid fa-eye'></i></a> " +
+                        "<a href=' " + URL + "/Users/ManageUserRole?id=" + (item.UserRoleId) + "&" + (item.UserId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title=' Role Edit' class=''><i class='fa-solid fa-user'></i></a> " +
+                         "<a href=' " + URL + "/Users/EncryptedEmailPass?id=" + _protector.Encode(item.UserId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='View' class=''><i class='fa-solid fa-lock'></i></a> " +
+                        "<a href='javascript: void(0)' onclick='deleteConfirmUser(" + item.UserRoleId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Inactive'><i class='fa-solid fa-trash'></i></a>";
                         actionURL = actionURL + " </div>";
                         ImageURL = "<img src='" + URL + "/DBFiles/Users/" + item?.User?.ImageName + "' class='brandlistimg' />";
                     }
                     else
                     {
-                        actionURL = actionURL + "<a href=' " + URL + "/Users/Manage?id=" + _protector.Encode(item.UserId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " + "<a href=' " + URL + "/Users/Details?id=" + _protector.Encode(item.UserId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='View' class='btn btn-sm btn-primary'><i class='fa-solid fa-eye'></i></a> " +
-                        "<a href=' " + URL + "/Users/ManageUserRole?id=" + (item.UserRoleId) + "&" + (item.UserId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title=' Role Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-user'></i></a> " +
-                         "<a href=' " + URL + "/Users/EncryptedEmailPass?id=" + _protector.Encode(item.UserId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='View' class='btn btn-sm btn-primary'><i class='fa-solid fa-lock'></i></a> " +
-                        "<a href='javascript: void(0)' onclick='activeConfirmUser(" + item.UserRoleId + ")' class='btn btn-sm btn-success' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/Users/Manage?id=" + _protector.Encode(item.UserId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " + "<a href=' " + URL + "/Users/Details?id=" + _protector.Encode(item.UserId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='View' class=''><i class='fa-solid fa-eye'></i></a> " +
+                        "<a href=' " + URL + "/Users/ManageUserRole?id=" + (item.UserRoleId) + "&" + (item.UserId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title=' Role Edit' class=''><i class='fa-solid fa-user'></i></a> " +
+                         "<a href=' " + URL + "/Users/EncryptedEmailPass?id=" + _protector.Encode(item.UserId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='View' class=''><i class='fa-solid fa-lock'></i></a> " +
+                        "<a href='javascript: void(0)' onclick='activeConfirmUser(" + item.UserRoleId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
                         actionURL = actionURL + " </div>";
                         ImageURL = "<img src='" + URL + "/DBFiles/Users/" + item?.User?.ImageName + "' class='brandlistimg' />";
                     }
@@ -776,8 +776,8 @@ namespace RDCELERP.Core.App.Controller
                     {
                        
                         actionURL = "<div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/ProductCategory/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                            "<a href='javascript: void(0)' onclick='deleteConfirmProductCategory(" + item.Id + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Inactive'><i class='fa-solid fa-trash'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/ProductCategory/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                            "<a href='javascript: void(0)' onclick='deleteConfirmProductCategory(" + item.Id + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Inactive'><i class='fa-solid fa-trash'></i></a>";
                         actionURL = actionURL + " </div>";
                        
                     }
@@ -785,8 +785,8 @@ namespace RDCELERP.Core.App.Controller
                     {
 
                         actionURL = "<div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/ProductCategory/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                            "<a href='javascript: void(0)' onclick='activeConfirmProductCategory(" + item.Id + ")'  class='btn btn-sm btn-success' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/ProductCategory/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                            "<a href='javascript: void(0)' onclick='activeConfirmProductCategory(" + item.Id + ")'  class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
                         actionURL = actionURL + " </div>";
                     }
 
@@ -868,15 +868,15 @@ namespace RDCELERP.Core.App.Controller
 
                     { 
                     actionURL = "<div class='actionbtns'>";
-                    actionURL = actionURL + "<a href=' " + URL + "/ProductType/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                        "<a href='javascript: void(0)' onclick='deleteConfirmProductType(" + item.Id + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='InActive'><i class='fa-solid fa-trash'></i></a>";
+                    actionURL = actionURL + "<a href=' " + URL + "/ProductType/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                        "<a href='javascript: void(0)' onclick='deleteConfirmProductType(" + item.Id + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='InActive'><i class='fa-solid fa-trash'></i></a>";
                     actionURL = actionURL + " </div>";
                     }
                     else
                     {
                         actionURL = "<div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/ProductType/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                            "<a href='javascript: void(0)' onclick='activeConfirmProductType(" + item.Id + ")' class='btn btn-sm btn-success' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/ProductType/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                            "<a href='javascript: void(0)' onclick='activeConfirmProductType(" + item.Id + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
                         actionURL = actionURL + " </div>";
                         
                     }
@@ -962,8 +962,8 @@ namespace RDCELERP.Core.App.Controller
                 {
 
                     actionURL = "<div class='actionbtns'>";
-                    actionURL = actionURL + "<a href=' " + URL + "/Company/RoleManagedumy?id=" + item.RoleId + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                        "<a href='javascript: void(0)' onclick='deleteConfirm(" + item.RoleId + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
+                    actionURL = actionURL + "<a href=' " + URL + "/Company/RoleManagedumy?id=" + item.RoleId + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                        "<a href='javascript: void(0)' onclick='deleteConfirm(" + item.RoleId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
                     actionURL = actionURL + " </div>";
                     item.Action = actionURL;
                     TblRole Role = tblRoles.FirstOrDefault(x => x.RoleId == item.RoleId);
@@ -1049,16 +1049,16 @@ namespace RDCELERP.Core.App.Controller
                     if (item.IsActive == true)
                     {
                         actionURL = "<div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/ProductQualityIndex/Manage?id=" + _protector.Encode(item.ProductQualityIndexId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                            "<a href='javascript: void(0)' onclick='deleteConfirmQuality(" + item.ProductQualityIndexId + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Inactive'><i class='fa-solid fa-trash'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/ProductQualityIndex/Manage?id=" + _protector.Encode(item.ProductQualityIndexId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                            "<a href='javascript: void(0)' onclick='deleteConfirmQuality(" + item.ProductQualityIndexId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Inactive'><i class='fa-solid fa-trash'></i></a>";
                         actionURL = actionURL + " </div>";
                     }
                     else
                     {
 
                         actionURL = "<div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/ProductQualityIndex/Manage?id=" + _protector.Encode(item.ProductQualityIndexId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                            "<a href='javascript: void(0)' onclick='activeConfirmQuality(" + item.ProductQualityIndexId + ")' class='btn btn-sm btn-success' data-bs-toggle='tooltip' data-bs-placement='top' title='active'><i class='fa-solid fa-circle-check text-white'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/ProductQualityIndex/Manage?id=" + _protector.Encode(item.ProductQualityIndexId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                            "<a href='javascript: void(0)' onclick='activeConfirmQuality(" + item.ProductQualityIndexId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='active'><i class='fa-solid fa-circle-check text-white'></i></a>";
                         actionURL = actionURL + " </div>";
 
 
@@ -1149,8 +1149,8 @@ namespace RDCELERP.Core.App.Controller
 
                     {
                         actionURL = "<div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/PinCode/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                            "<a href='javascript: void(0)' onclick='deleteConfirmPincode(" + item.Id + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Inactive'><i class='fa-solid fa-trash'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/PinCode/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                            "<a href='javascript: void(0)' onclick='deleteConfirmPincode(" + item.Id + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Inactive'><i class='fa-solid fa-trash'></i></a>";
                         actionURL = actionURL + " </div>";
 
                     }
@@ -1158,8 +1158,8 @@ namespace RDCELERP.Core.App.Controller
                     {
 
                         actionURL = "<div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/PinCode/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                            "<a href='javascript: void(0)' onclick='activeConfirmPincode(" + item.Id + ")' class='btn btn-sm  btn-success' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/PinCode/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                            "<a href='javascript: void(0)' onclick='activeConfirmPincode(" + item.Id + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
                         actionURL = actionURL + " </div>";
                     }
 
@@ -1248,8 +1248,8 @@ namespace RDCELERP.Core.App.Controller
 
                     {
                         actionURL = "<div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/State/Manage?id=" + _protector.Encode(item.StateId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                            "<a href='javascript: void(0)' onclick='deleteConfirmState(" + item.StateId + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Inactive'><i class='fa-solid fa-trash'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/State/Manage?id=" + _protector.Encode(item.StateId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                            "<a href='javascript: void(0)' onclick='deleteConfirmState(" + item.StateId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Inactive'><i class='fa-solid fa-trash'></i></a>";
                         actionURL = actionURL + " </div>";
                      
                     }
@@ -1257,8 +1257,8 @@ namespace RDCELERP.Core.App.Controller
                     {
 
                         actionURL = "<div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/State/Manage?id=" + _protector.Encode(item.StateId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                            "<a href='javascript: void(0)' onclick='activeConfirmState(" + item.StateId + ")' class='btn btn-sm btn-success' data-bs-toggle='tooltip' data-bs-placement='top' title='active'><i class='fa-solid fa-circle-check text-white'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/State/Manage?id=" + _protector.Encode(item.StateId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                            "<a href='javascript: void(0)' onclick='activeConfirmState(" + item.StateId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='active'><i class='fa-solid fa-circle-check text-white'></i></a>";
                         actionURL = actionURL + " </div>";
                     }
 
@@ -1341,8 +1341,8 @@ namespace RDCELERP.Core.App.Controller
 
                     {
                         actionURL = "<div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/City/Manage?id=" + _protector.Encode(item.CityId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                            "<a href='javascript: void(0)' onclick='deleteConfirmCity(" + item.CityId + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Inactive'><i class='fa-solid fa-trash'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/City/Manage?id=" + _protector.Encode(item.CityId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                            "<a href='javascript: void(0)' onclick='deleteConfirmCity(" + item.CityId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Inactive'><i class='fa-solid fa-trash'></i></a>";
                         actionURL = actionURL + " </div>";
 
                     }
@@ -1350,8 +1350,8 @@ namespace RDCELERP.Core.App.Controller
                     {
 
                         actionURL = "<div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/City/Manage?id=" + _protector.Encode(item.CityId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                            "<a href='javascript: void(0)' onclick='activeConfirmCity(" + item.CityId + ")' class='btn btn-sm btn-success' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/City/Manage?id=" + _protector.Encode(item.CityId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                            "<a href='javascript: void(0)' onclick='activeConfirmCity(" + item.CityId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
                         actionURL = actionURL + " </div>";
                     }
 
@@ -1438,8 +1438,8 @@ namespace RDCELERP.Core.App.Controller
                 foreach (BusinessPartnerViewModel item in BusinessPartnerList)
                 {
                     actionURL = "<div class='actionbtns'>";
-                    actionURL = actionURL + "<a href=' " + URL + "/BusinessPartner/Manage?id=" + _protector.Encode(item.BusinessPartnerId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                        "<a href='javascript: void(0)' onclick='deleteConfirmBusinessPartner(" + item.BusinessPartnerId + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
+                    actionURL = actionURL + "<a href=' " + URL + "/BusinessPartner/Manage?id=" + _protector.Encode(item.BusinessPartnerId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                        "<a href='javascript: void(0)' onclick='deleteConfirmBusinessPartner(" + item.BusinessPartnerId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
                     actionURL = actionURL + " </div>";
                     item.Action = actionURL;
 
@@ -2748,9 +2748,9 @@ namespace RDCELERP.Core.App.Controller
                 foreach (var item in TblAccesLists)
                 {
                     actionURL = " <td class='actions'>";
-                    actionURL = actionURL + "<a href=' " + URL + "/AccessList/Edit?id=" + (item.AccessListId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                         "<a href=' " + URL + "/AccessList/Details?id=" + (item.AccessListId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Details' class='btn btn-sm btn-primary'><i class='fa-solid fa-eye'></i></a> " +
-                        "<a href='javascript: void(0)' onclick='deleteConfirm(" + item.AccessListId + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
+                    actionURL = actionURL + "<a href=' " + URL + "/AccessList/Edit?id=" + (item.AccessListId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                         "<a href=' " + URL + "/AccessList/Details?id=" + (item.AccessListId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Details' class=''><i class='fa-solid fa-eye'></i></a> " +
+                        "<a href='javascript: void(0)' onclick='deleteConfirm(" + item.AccessListId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
                     actionURL = actionURL + " </div>";
                     accessListViewModel = new AccessListViewModel();
                     accessListViewModel.Action = actionURL;
@@ -2844,8 +2844,8 @@ namespace RDCELERP.Core.App.Controller
                 foreach (ImageLabelNewViewModel item in ImageLabelList)
                 {
                     actionURL = "<div class='actionbtns'>";
-                    actionURL = actionURL + "<a href=' " + URL + "/ImageLabelMaster/Manage?id=" + _protector.Encode(item.ImageLabelid) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                        "<a href='javascript: void(0)' onclick='deleteConfirmImageLabel(" + item.ImageLabelid + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
+                    actionURL = actionURL + "<a href=' " + URL + "/ImageLabelMaster/Manage?id=" + _protector.Encode(item.ImageLabelid) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                        "<a href='javascript: void(0)' onclick='deleteConfirmImageLabel(" + item.ImageLabelid + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
                     actionURL = actionURL + " </div>";
                     item.Action = actionURL;
 
@@ -2944,8 +2944,8 @@ namespace RDCELERP.Core.App.Controller
                 foreach (ServicePartnerViewModel item in ServicePartnerList)
                 {
                     actionURL = "<div class='actionbtns'>";
-                    actionURL = actionURL + "<a href=' " + URL + "/ServicePartner/Manage?id=" + _protector.Encode(item.ServicePartnerId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                        "<a href='javascript: void(0)' onclick='deleteConfirmServicePartner(" + item.ServicePartnerId + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
+                    actionURL = actionURL + "<a href=' " + URL + "/ServicePartner/Manage?id=" + _protector.Encode(item.ServicePartnerId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                        "<a href='javascript: void(0)' onclick='deleteConfirmServicePartner(" + item.ServicePartnerId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
                     actionURL = actionURL + " </div>";
                     item.Action = actionURL;
 
@@ -3025,9 +3025,9 @@ namespace RDCELERP.Core.App.Controller
                 foreach (BusinessUnitViewModel item in BusinessUnitList)
                 {
                     actionURL = "<div class='actionbtns'>";
-                    actionURL = actionURL + "<a href=' " + URL + "/BusinessUnit/ManageBusinessUnit?id=" + _protector.Encode(item.BusinessUnitId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                        /*"<a href=' " + URL + "/BusinessUnit/Edit?id=" + _protector.Encode(item.BusinessUnitId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                        */"<a href='javascript: void(0)' onclick='deleteConfirm(" + item.BusinessUnitId + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
+                    actionURL = actionURL + "<a href=' " + URL + "/BusinessUnit/ManageBusinessUnit?id=" + _protector.Encode(item.BusinessUnitId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                        /*"<a href=' " + URL + "/BusinessUnit/Edit?id=" + _protector.Encode(item.BusinessUnitId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                        */"<a href='javascript: void(0)' onclick='deleteConfirm(" + item.BusinessUnitId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
                     actionURL = actionURL + " </div>";
                     item.Action = actionURL;
 
@@ -3180,16 +3180,16 @@ namespace RDCELERP.Core.App.Controller
                     if (item.IsActive == true)
                     {
                         actionURL = "<div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/ModelNumber/Manage?id=" + _protector.Encode(item.ModelNumberId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                            "<a href='javascript: void(0)' onclick='deleteConfirmModel(" + item.ModelNumberId + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/ModelNumber/Manage?id=" + _protector.Encode(item.ModelNumberId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                            "<a href='javascript: void(0)' onclick='deleteConfirmModel(" + item.ModelNumberId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
                         actionURL = actionURL + " </div>";
                         item.Action = actionURL;
                     }
                     else
                     {
                         actionURL = "<div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/ModelNumber/Manage?id=" + _protector.Encode(item.ModelNumberId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                           "<a href='" + "javascript:void(0)' onclick='activeConfirmModel(" + item.ModelNumberId + ")' class='btn btn-sm btn-success' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/ModelNumber/Manage?id=" + _protector.Encode(item.ModelNumberId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                           "<a href='" + "javascript:void(0)' onclick='activeConfirmModel(" + item.ModelNumberId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
                         actionURL = actionURL + " </div>";
                         item.Action = actionURL;
 
@@ -3360,8 +3360,8 @@ namespace RDCELERP.Core.App.Controller
                 foreach (PriceMasterViewModel item in PriceMasterList)
                 {
                     actionURL = "<div class='actionbtns'>";
-                    actionURL = actionURL + "<a href=' " + URL + "/PriceMaster/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                        "<a href='javascript: void(0)' onclick='deleteConfirmPriceMaster(" + item.Id + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
+                    actionURL = actionURL + "<a href=' " + URL + "/PriceMaster/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                        "<a href='javascript: void(0)' onclick='deleteConfirmPriceMaster(" + item.Id + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
                     actionURL = actionURL + " </div>";
                     item.Action = actionURL;
                     TblPriceMaster PriceMaster = tblPriceMaster.FirstOrDefault(x => x.Id == item.Id);
@@ -3506,8 +3506,8 @@ namespace RDCELERP.Core.App.Controller
                 foreach (ABBPlanMasterViewModel item in ABBPlanMasterList)
                 {
                     actionURL = "<div class='actionbtns'>";
-                    actionURL = actionURL + "<a href=' " + URL + "/ABBPlanMaster/Manage?id=" + _protector.Encode(item.PlanMasterId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                        "<a href='javascript: void(0)' onclick='deleteConfirmPlanMaster(" + item.PlanMasterId + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
+                    actionURL = actionURL + "<a href=' " + URL + "/ABBPlanMaster/Manage?id=" + _protector.Encode(item.PlanMasterId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                        "<a href='javascript: void(0)' onclick='deleteConfirmPlanMaster(" + item.PlanMasterId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
                     actionURL = actionURL + " </div>";
                     item.Action = actionURL;
 
@@ -3610,8 +3610,8 @@ namespace RDCELERP.Core.App.Controller
                 foreach (ABBPriceMasterViewModel item in ABBPriceMasterList)
                 {
                     actionURL = "<div class='actionbtns'>";
-                    actionURL = actionURL + "<a href=' " + URL + "/ABBPriceMaster/Manage?id=" + _protector.Encode(item.PriceMasterId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                        "<a href='javascript: void(0)' onclick='deleteConfirmABBPriceMaster(" + item.PriceMasterId + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
+                    actionURL = actionURL + "<a href=' " + URL + "/ABBPriceMaster/Manage?id=" + _protector.Encode(item.PriceMasterId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                        "<a href='javascript: void(0)' onclick='deleteConfirmABBPriceMaster(" + item.PriceMasterId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
                     actionURL = actionURL + " </div>";
                     item.Action = actionURL;
 
@@ -4350,7 +4350,7 @@ namespace RDCELERP.Core.App.Controller
 
 
 
-                            actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class='btn btn-sm btn-primary' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
+                            actionURL = "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(item.Id) + "' ><button onclick='RecordView(" + item.Id + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
 
 
                             dealerdata = new DealerDashboardViewModel();
@@ -4607,8 +4607,8 @@ namespace RDCELERP.Core.App.Controller
                 {
 
                     actionURL = " <div class='actionbtns'>";
-                    actionURL = actionURL + "<a href=' " + URL + "/VehicleIncentive/Manage?id=" + _protector.Encode(item.IncentiveId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                        "<a href='javascript:void(0)' onclick='deleteConfirmVehicleIncentive(" + item.IncentiveId + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
+                    actionURL = actionURL + "<a href=' " + URL + "/VehicleIncentive/Manage?id=" + _protector.Encode(item.IncentiveId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                        "<a href='javascript:void(0)' onclick='deleteConfirmVehicleIncentive(" + item.IncentiveId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
                     actionURL = actionURL + " </div>";
                     item.Action = actionURL;
 
@@ -4729,8 +4729,8 @@ namespace RDCELERP.Core.App.Controller
                 foreach (ProductTechnologyViewModel item in ProductTechnologyList)
                 {
                     actionURL = "<div class='actionbtns'>";
-                    actionURL = actionURL + "<a href=' " + URL + "/ProductTechnology/Manage?id=" + _protector.Encode(item.ProductTechnologyId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                        "<a href='javascript: void(0)' onclick='deleteConfirm(" + item.ProductTechnologyId + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
+                    actionURL = actionURL + "<a href=' " + URL + "/ProductTechnology/Manage?id=" + _protector.Encode(item.ProductTechnologyId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                        "<a href='javascript: void(0)' onclick='deleteConfirm(" + item.ProductTechnologyId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
                     actionURL = actionURL + " </div>";
                     item.Action = actionURL;
                     TblProductTechnology ProductTechnology = tblProductTechnology.FirstOrDefault(x => x.ProductTechnologyId == item.ProductTechnologyId);
@@ -4833,8 +4833,8 @@ namespace RDCELERP.Core.App.Controller
         //        foreach (ProductTechnologyViewModel item in ProductTechnologyList)
         //        {
         //            actionURL = "<div class='actionbtns'>";
-        //            actionURL = actionURL + "<a href=' " + URL + "/ProductTechnology/Manage?id=" + _protector.Encode(item.ProductTechnologyId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-        //                "<a href='javascript: void(0)' onclick='deleteConfirm(" + item.ProductTechnologyId + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
+        //            actionURL = actionURL + "<a href=' " + URL + "/ProductTechnology/Manage?id=" + _protector.Encode(item.ProductTechnologyId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+        //                "<a href='javascript: void(0)' onclick='deleteConfirm(" + item.ProductTechnologyId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
         //            actionURL = actionURL + " </div>";
         //            item.Action = actionURL;
         //            TblProductTechnology ProductTechnology = tblQuestionerLOV.FirstOrDefault(x => x.ProductTechnologyId == item.ProductTechnologyId);
@@ -4991,16 +4991,16 @@ namespace RDCELERP.Core.App.Controller
 
 
                     actionURL = "<div class='actionbtns'>";
-                    actionURL = actionURL + "<a href=' " + URL + "/UniversalPriceMaster/Manage?id=" + _protector.Encode(item.PriceMasterUniversalId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                        "<a href='javascript: void(0)' onclick='deleteConfirmUniversal(" + item.PriceMasterUniversalId + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
+                    actionURL = actionURL + "<a href=' " + URL + "/UniversalPriceMaster/Manage?id=" + _protector.Encode(item.PriceMasterUniversalId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                        "<a href='javascript: void(0)' onclick='deleteConfirmUniversal(" + item.PriceMasterUniversalId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
                     actionURL = actionURL + " </div>";
                     item.Action = actionURL;
                 }
                 else
                 {
                     actionURL = "<div class='actionbtns'>";
-                    actionURL = actionURL + "<a href=' " + URL + "/UniversalPriceMaster/Manage?id=" + _protector.Encode(item.PriceMasterUniversalId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                       "<a href='" + "javascript:void(0)' onclick='activeConfirmUniversal(" + item.PriceMasterUniversalId + ")' class='btn btn-sm btn-success' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
+                    actionURL = actionURL + "<a href=' " + URL + "/UniversalPriceMaster/Manage?id=" + _protector.Encode(item.PriceMasterUniversalId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                       "<a href='" + "javascript:void(0)' onclick='activeConfirmUniversal(" + item.PriceMasterUniversalId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
                     actionURL = actionURL + " </div>";
                     item.Action = actionURL;
 
@@ -5114,8 +5114,8 @@ namespace RDCELERP.Core.App.Controller
             foreach (ProductConditionLabelViewModel item in ProductConditionLabelList)
             {
                 actionURL = "<div class='actionbtns'>";
-                actionURL = actionURL + "<a href=' " + URL + "/NewProductConditionLabel/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                    "<a href='javascript: void(0)' onclick='deleteConfirm(" + item.Id + ")' class='btn btn-sm btn-danger' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
+                actionURL = actionURL + "<a href=' " + URL + "/NewProductConditionLabel/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                    "<a href='javascript: void(0)' onclick='deleteConfirm(" + item.Id + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete'><i class='fa-solid fa-trash'></i></a>";
                 actionURL = actionURL + " </div>";
                 item.Action = actionURL;
                 TblProductConditionLabel? tblProductConditionobj = _context.TblProductConditionLabels.FirstOrDefault(x => x.Id == item.Id);
@@ -5261,7 +5261,7 @@ namespace RDCELERP.Core.App.Controller
                     if (item.IsActive == true)
                     {
                         actionURL = "<div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/ModelMapping/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> ";
+                        actionURL = actionURL + "<a href=' " + URL + "/ModelMapping/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> ";
                             
                         actionURL = actionURL + " </div>";
                         item.Action = actionURL;
@@ -5269,8 +5269,8 @@ namespace RDCELERP.Core.App.Controller
                     else
                     {
                         actionURL = "<div class='actionbtns'>";
-                        actionURL = actionURL + "<a href=' " + URL + "/ModelMapping/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen'></i></a> " +
-                           "<a href='" + "javascript:void(0)' onclick='activeConfirmModel(" + item.Id + ")' class='btn btn-sm btn-success' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
+                        actionURL = actionURL + "<a href=' " + URL + "/ModelMapping/Manage?id=" + _protector.Encode(item.Id) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-pen'></i></a> " +
+                           "<a href='" + "javascript:void(0)' onclick='activeConfirmModel(" + item.Id + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
                         actionURL = actionURL + " </div>";
                         item.Action = actionURL;
 

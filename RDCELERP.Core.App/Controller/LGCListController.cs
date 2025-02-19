@@ -323,12 +323,12 @@ namespace RDCELERP.Core.App.Controller
                 {
                     TblOrderTran tblOrderTrans = _context.TblOrderTrans.Where(x => x.IsActive == true && x.OrderTransId == item.OrderTransId).FirstOrDefault();
                     actionURL = " <td class='actions'>";
-                    actionURL = actionURL + "<a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a> &nbsp;";
-                    //actionURL = actionURL + "<a class='btn btn-sm btn-primary' target='_blanck'  href='" + _config.Value.MVCBaseURL + "/Home/CreateTicketForLogistics?RegdNo=" + item.RegdNo + "' title='Ticket Genrate'><i class='fa-solid fa-ticket'></i></a> &nbsp;";
+                    actionURL = actionURL + "<a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a> &nbsp;";
+                    //actionURL = actionURL + "<a class='' target='_blanck'  href='" + _config.Value.MVCBaseURL + "/Home/CreateTicketForLogistics?RegdNo=" + item.RegdNo + "' title='Ticket Genrate'><i class='fa-solid fa-ticket'></i></a> &nbsp;";
                     
                     if (tblOrderTrans.StatusId != 34)
                     {
-                        actionURL = actionURL + "<a href ='" + URL + "/LGC_Admin/OrderViewPage?OrderTransId=" + (item.OrderTransId) + "' ><button onclick='View(" + item.OrderTransId + ")' class='btn btn-sm btn-primary'><i class='fa-solid fa-eye'></i></button></a>" + "&nbsp;<button onclick='ReassignOrder(" + item.OrderTransId + ")' class='btn btn-primary btn-sm ml-1'>Change EVC</button> &nbsp;";
+                        actionURL = actionURL + "<a href ='" + URL + "/LGC_Admin/OrderViewPage?OrderTransId=" + (item.OrderTransId) + "' ><button onclick='View(" + item.OrderTransId + ")' class=''><i class='fa-solid fa-eye'></i></button></a>" + "&nbsp;<button onclick='ReassignOrder(" + item.OrderTransId + ")' class='btn btn-primary btn-sm ml-1'>Change EVC</button> &nbsp;";
                     }
                    
 
@@ -655,7 +655,7 @@ namespace RDCELERP.Core.App.Controller
                     {
                         string actionURL = string.Empty;
                         actionURL = " <ul class='actions'>";
-                        actionURL = "<a href ='" + URL + "/LGC_Admin/OrderViewPage?OrderTransId=" + (item.OrderTransId) + "' ><button onclick='View(" + item.OrderTransId + ")' class='btn btn-sm btn-primary'><i class='fa-solid fa-eye'></i></button></a>" + "&nbsp;<button onclick='ReassignOrder(" + item.OrderTransId + ")' class='btn btn-primary btn-sm ml-1'>Change EVC</button>" + " <button onclick = 'CancelTicket(" + item.OrderTransId + ")' class='btn btn-sm btn-primary'>Change LGC</button> &nbsp;";
+                        actionURL = "<a href ='" + URL + "/LGC_Admin/OrderViewPage?OrderTransId=" + (item.OrderTransId) + "' ><button onclick='View(" + item.OrderTransId + ")' class=''><i class='fa-solid fa-eye'></i></button></a>" + "&nbsp;<button onclick='ReassignOrder(" + item.OrderTransId + ")' class='btn btn-primary btn-sm ml-1'>Change EVC</button>" + " <button onclick = 'CancelTicket(" + item.OrderTransId + ")' class=''>Change LGC</button> &nbsp;";
                         actionURL = actionURL + "</ul>";
 
                         string productTypeDesc = null; string productCatDesc = null; string statusCode = null;
@@ -883,7 +883,7 @@ namespace RDCELERP.Core.App.Controller
                         string actionURL = string.Empty;
                         var regdno = item.Logistic.RegdNo;
                         actionURL = " <ul class='actions'>";
-                        actionURL = "<a href ='" + URL + "/LGC_Admin/OrderViewPage?OrderTransId=" + (item.OrderTransId) + "' ><button onclick='View(" + item.OrderTransId + ")' class='btn btn-sm btn-primary'><i class='fa-solid fa-eye'></i></button></a>" + "&nbsp;<button onclick='ReassignOrder(" + item.OrderTransId + ")' class='btn btn-primary btn-sm ml-1'>Change EVC</button>";
+                        actionURL = "<a href ='" + URL + "/LGC_Admin/OrderViewPage?OrderTransId=" + (item.OrderTransId) + "' ><button onclick='View(" + item.OrderTransId + ")' class=''><i class='fa-solid fa-eye'></i></button></a>" + "&nbsp;<button onclick='ReassignOrder(" + item.OrderTransId + ")' class='btn btn-primary btn-sm ml-1'>Change EVC</button>";
                         actionURL = actionURL + "</ul>";
 
                         string productTypeDesc = null; string productCatDesc = null;
@@ -1080,7 +1080,7 @@ namespace RDCELERP.Core.App.Controller
                         string actionURL = string.Empty;
                         var regdno = item.Logistic.RegdNo;
                         actionURL = " <ul class='actions'>";
-                        actionURL = "<a href ='" + URL + "/LGC_Admin/OrderViewPage?OrderTransId=" + (item.OrderTransId) + "' ><button onclick='View(" + item.OrderTransId + ")' class='btn btn-sm btn-primary'><i class='fa-solid fa-eye'></i></button></a>" + "&nbsp;<button onclick='ReassignOrder(" + item.OrderTransId + ")' class='btn btn-primary btn-sm ml-1'>Change EVC</button>";
+                        actionURL = "<a href ='" + URL + "/LGC_Admin/OrderViewPage?OrderTransId=" + (item.OrderTransId) + "' ><button onclick='View(" + item.OrderTransId + ")' class=''><i class='fa-solid fa-eye'></i></button></a>" + "&nbsp;<button onclick='ReassignOrder(" + item.OrderTransId + ")' class='btn btn-primary btn-sm ml-1'>Change EVC</button>";
                         actionURL = actionURL + "</ul>";
 
                         if (item != null)
@@ -1259,7 +1259,7 @@ namespace RDCELERP.Core.App.Controller
                         string actionURL = string.Empty;
                         actionURL = " <ul class='actions'>";
                         actionURL = "<a href ='" + URL + "/LGC_Admin/OrderViewPage?OrderTransId=" + (item.OrderTransId) + "' ><button onclick='View(" + item.OrderTransId + ")' class='btn btn-primary btn'>View</button></a> &nbsp;";
-                        actionURL = actionURL + " <button onclick = 'ReOpenTicket(" + item.OrderTransId + ")' class='btn btn-sm btn-primary'>Re-Open</button> &nbsp;";
+                        actionURL = actionURL + " <button onclick = 'ReOpenTicket(" + item.OrderTransId + ")' class=''>Re-Open</button> &nbsp;";
                         actionURL = actionURL + "</ul>";
 
                         string productTypeDesc = null; string productCatDesc = null; string custCity = null;
@@ -1596,7 +1596,7 @@ namespace RDCELERP.Core.App.Controller
                 foreach (LGC_NotapprovedViewModel item in LGC_NotApporvedViewList)
                 {
                     actionURL = " <div class='actionbtns'>";
-                    actionURL = actionURL + "<button onclick='ApprovedServicePartner(" + item.ServicePartnerId + ")' class='btn btn-sm btn-primary'>Approve</button>";
+                    actionURL = actionURL + "<button onclick='ApprovedServicePartner(" + item.ServicePartnerId + ")' class=''>Approve</button>";
 
                     //actionURL = actionURL + "<a class='mx-1 fas fa-edit' href='" + URL + "/EVC/EVC_Registration?id=" + _protector.Encode(item.EvcregistrationId) + "&AFlag=2' title='Edit' ></a>" +
                     //    "<a  href='javascript: void(0)' onclick='deleteConfirm( " + item.EvcregistrationId + " )' class='fas fa-trash' data-toggle='tooltip' data-placement='top' title='Delete''></a>";
@@ -1731,7 +1731,7 @@ namespace RDCELERP.Core.App.Controller
                 foreach (LGC_ApprovedViewModel item in LGC_ApporvedViewList)
                 {
                     actionURL = " <div class='actionbtns'>";
-                    //actionURL = actionURL + "<button onclick='ApprovedServicePartner(" + item.ServicePartnerId + ")' class='btn btn-sm btn-primary'>Approve</button>";
+                    //actionURL = actionURL + "<button onclick='ApprovedServicePartner(" + item.ServicePartnerId + ")' class=''>Approve</button>";
 
                     //actionURL = actionURL + "<a class='mx-1 fas fa-edit' href='" + URL + "/EVC/EVC_Registration?id=" + _protector.Encode(item.EvcregistrationId) + "&AFlag=2' title='Edit' ></a>" +
                     //    "<a  href='javascript: void(0)' onclick='deleteConfirm( " + item.EvcregistrationId + " )' class='fas fa-trash' data-toggle='tooltip' data-placement='top' title='Delete''></a>";
@@ -2168,7 +2168,7 @@ namespace RDCELERP.Core.App.Controller
 
 
                         //actionURL = " <div class='actionbtns'>";
-                        //actionURL = actionURL + " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>&nbsp;";
+                        //actionURL = actionURL + " <a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>&nbsp;";
                         //actionURL = actionURL + "<a href ='" + URL + "/Exchange/Manage?id=" + _protector.Encode(item.Id) + "' onclick='RecordView(" + item.Id + ")' class='btn btn-primary btn-sm viewableWithAddPermission' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></a>&nbsp;";
 
                         //TblExchangeOrderStatus exchangeOrderStatuscode = _context.TblExchangeOrderStatuses.FirstOrDefault(x => x.Id == item.StatusId);

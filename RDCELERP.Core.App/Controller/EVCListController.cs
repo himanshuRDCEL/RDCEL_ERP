@@ -184,7 +184,7 @@ namespace RDCELERP.Core.App.Controller
                     }
 
                     string actionURL = " <div class='actionbtns'>";
-                    actionURL += $"<button onclick='ApprovedEVC({item.EvcregistrationId})' class='btn btn-sm btn-primary'>Approve</button>";
+                    actionURL += $"<button onclick='ApprovedEVC({item.EvcregistrationId})' class=''>Approve</button>";
                     actionURL += $"<a class='mx-1 fas fa-edit' href='{URL}/EVC/EVC_Registration?id={_protector.Encode(item.EvcregistrationId)}&AFlag=1' title='Edit'></a>";
                     actionURL += $"<a href='javascript: void(0)' onclick='deleteConfirm({item.EvcregistrationId})' class='fas fa-trash' data-toggle='tooltip' data-placement='top' title='Delete'></a>";
                     actionURL += "</div>";
@@ -290,12 +290,12 @@ namespace RDCELERP.Core.App.Controller
                 foreach (EVC_ApprovedViewModel item in evcApprovedViewList)
                 {
                     string actionURL = " <div class='actionbtns'>";
-                    actionURL += "<a class='btn btn-sm btn-primary' href='" + URL + "/EVC_Portal/EVCUser_AllOrderRecordList?userid=" + item.UserId + "' title='All Order Details'><i class='fa-solid fa-list'></i></a> &nbsp;";
+                    actionURL += "<a class='' href='" + URL + "/EVC_Portal/EVCUser_AllOrderRecordList?userid=" + item.UserId + "' title='All Order Details'><i class='fa-solid fa-list'></i></a> &nbsp;";
                     actionURL += "<a class='mx-1 fas fa-edit' href='" + URL + "/EVC/EVC_Registration?id=" + _protector.Encode(item.EvcregistrationId) + "&AFlag=2' title ='Edit'></a>";
                     actionURL += "<a href='javascript: void(0)' onclick='deleteConfirm(" + item.EvcregistrationId + ")' class='fas fa-trash' data-toggle='tooltip' data-placement='top' title='Delete'></a>";
 
-                    actionURL += "<a class='btn btn-sm btn-primary' href='" + URL + "/EVC_Portal/EVC_PartnerList?UserId=" + item.UserId + "' title='All Partner Details'><i class='fa-solid fa-handshake'></i></a> &nbsp;";
-                    actionURL += "<a class='btn btn-sm btn-primary' href='" + URL + "/EVC_Portal/MyWalletSummary?UserId=" + item.UserId + "' title='All Wallet Details'><i class='fa-solid fa-indian-rupee-sign'></i></a> &nbsp;";
+                    actionURL += "<a class='' href='" + URL + "/EVC_Portal/EVC_PartnerList?UserId=" + item.UserId + "' title='All Partner Details'><i class='fa-solid fa-handshake'></i></a> &nbsp;";
+                    actionURL += "<a class='' href='" + URL + "/EVC_Portal/MyWalletSummary?UserId=" + item.UserId + "' title='All Wallet Details'><i class='fa-solid fa-indian-rupee-sign'></i></a> &nbsp;";
 
                     actionURL += "</div>";
                     item.Action = actionURL;
@@ -504,8 +504,8 @@ namespace RDCELERP.Core.App.Controller
                 foreach (AllWalletSummaryViewModel item in allWalletSummaryViewModels)
                 {
                     actionURL = " <div class='actionbtns'>";
-                    actionURL += "<button onclick=\"AddWalletConfirm('" + item.EvcregistrationId + "')\" class='btn btn-sm btn-primary'>Add Wallet</button> &nbsp;";
-                    actionURL += "<a class='btn btn-sm btn-primary' href='" + URL + "/EVC_Portal/MyWalletSummary?UserId=" + item.UserId + "' title='All Wallet Details'><i class='fa-solid fa-indian-rupee-sign'></i></a> &nbsp;";
+                    actionURL += "<button onclick=\"AddWalletConfirm('" + item.EvcregistrationId + "')\" class=''>Add Wallet</button> &nbsp;";
+                    actionURL += "<a class='' href='" + URL + "/EVC_Portal/MyWalletSummary?UserId=" + item.UserId + "' title='All Wallet Details'><i class='fa-solid fa-indian-rupee-sign'></i></a> &nbsp;";
 
 
                     item.Action = actionURL;
@@ -694,7 +694,7 @@ namespace RDCELERP.Core.App.Controller
                     actionURL += "</td>";
                     item.Action = actionURL;
 
-                    string actionURL1 = " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a> &nbsp;" + "<span><button onclick='PrimeProduct(" + item.OrderTransId + ")' class='btn btn-sm btn-primary'>Assign Prime Product</button></span>";
+                    string actionURL1 = " <a class='' href='" + URL + "/Index1?orderTransId=" + item.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a> &nbsp;" + "<span><button onclick='PrimeProduct(" + item.OrderTransId + ")' class=''>Assign Prime Product</button></span>";
                     item.Edit = actionURL1;
 
                     TblOrderTran OrdeDetails = TblOrderTrans.FirstOrDefault(x => x.OrderTransId == item.OrderTransId);
@@ -933,10 +933,10 @@ namespace RDCELERP.Core.App.Controller
                 foreach (AssignOrderViewModel oAssignOrderViewModel in assignOrderViewModels)
                 {
                     string actionURL = $" <td class='actions'>";
-                    actionURL += $"<a class='btn btn-sm btn-primary' href='{URL}/Index1?orderTransId={oAssignOrderViewModel.OrderTransId}' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a> &nbsp;";
+                    actionURL += $"<a class='' href='{URL}/Index1?orderTransId={oAssignOrderViewModel.OrderTransId}' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a> &nbsp;";
                     actionURL += " </td>";
                     oAssignOrderViewModel.Action = actionURL;
-                    string actionURL1 = "<button onclick='ReassignOrder(" + oAssignOrderViewModel.OrderTransId + ")' class='btn btn-sm btn-primary'><i class='fa-solid fa-repeat'></i>&nbsp; Re-assign</button>";
+                    string actionURL1 = "<button onclick='ReassignOrder(" + oAssignOrderViewModel.OrderTransId + ")' class=''><i class='fa-solid fa-repeat'></i>&nbsp; Re-assign</button>";
                     oAssignOrderViewModel.Edit = actionURL1;
 
                     TblWalletTransaction orderDetails = tblWalletTransactions.FirstOrDefault(x => x.OrderTransId == oAssignOrderViewModel.OrderTransId);
@@ -2404,7 +2404,7 @@ namespace RDCELERP.Core.App.Controller
                     string actionURL = " <div class='actionbtns'>";
                     if (item.Isapprove == true)
                     {
-                        actionURL += "<a class='btn btn-sm btn-primary' href='" + URL + "/EVC_Portal/Store_Specification?id=" + item.EvcPartnerId + "' title='Store Specification'><i class='fa-solid fa-list'></i></a> &nbsp;";
+                        actionURL += "<a class='' href='" + URL + "/EVC_Portal/Store_Specification?id=" + item.EvcPartnerId + "' title='Store Specification'><i class='fa-solid fa-list'></i></a> &nbsp;";
                     }
                     else
                     {
@@ -2538,7 +2538,7 @@ namespace RDCELERP.Core.App.Controller
                         actionURL = actionURL + " </div>";
                     }
 
-                    //actionURL += "<a class='btn btn-sm btn-primary' href='" + URL + "/EVC_Portal/Store_Specification?id=" + item.EvcPartnerpreferenceId + "' title='Store Specification'><i class='fa-solid fa-list'></i></a> &nbsp;";
+                    //actionURL += "<a class='' href='" + URL + "/EVC_Portal/Store_Specification?id=" + item.EvcPartnerpreferenceId + "' title='Store Specification'><i class='fa-solid fa-list'></i></a> &nbsp;";
                     //actionURL += "<a class='mx-1 fas fa-edit' href='" + URL + "/EVC_Portal/EVC_StoreRegistrastion?id=" + _protector.Encode(item.EvcPartnerpreferenceId) + "&AFlag=2' title ='Edit'></a>";
                     //actionURL += "<a href='javascript: void(0)' onclick='deleteConfirm(" + item.EvcPartnerpreferenceId + ")' class='fas fa-trash' data-toggle='tooltip' data-placement='top' title='Delete'></a>";
                     //actionURL += "</div>";
@@ -2679,7 +2679,7 @@ namespace RDCELERP.Core.App.Controller
                 foreach (EVC_PartnerViewModel item in eVC_PartnerViewModels)
                 {
                     string actionURL = " <div class='actionbtns'>";
-                    actionURL += "<a class='btn btn-sm btn-primary' href='" + URL + "/EVC/EVC_PartnerAddListofPincde?id=" + item.EvcPartnerId + "' title='Approve Partner'><i class='fa-solid fa-shop'></i></a> &nbsp;";
+                    actionURL += "<a class='' href='" + URL + "/EVC/EVC_PartnerAddListofPincde?id=" + item.EvcPartnerId + "' title='Approve Partner'><i class='fa-solid fa-shop'></i></a> &nbsp;";
                     actionURL += "<a class='mx-1 fas fa-edit' href='" + URL + "/EVC_Portal/EVC_StoreRegistrastion?id=" + _protector.Encode(item.EvcPartnerId) + "&AFlag=2' title ='Edit'></a>";
                     actionURL += "<a href='javascript: void(0)' onclick='deleteConfirm(" + item.EvcPartnerId + ")' class='fas fa-trash' data-toggle='tooltip' data-placement='top' title='Delete'></a>";
                     actionURL += "</div>";
@@ -2804,8 +2804,8 @@ namespace RDCELERP.Core.App.Controller
                 foreach (EVC_PartnerViewModel item in eVC_PartnerViewModels)
                 {
                     string actionURL = " <div class='actionbtns'>";
-                    actionURL += "<a class='btn btn-sm btn-primary' href='" + URL + "/EVC/EVC_PartnerAddListofPincde?id=" + item.EvcPartnerId + "' title='Approve Partner'><i class='fa-solid fa-shop'></i></a> &nbsp;";
-                    actionURL += "<a class='btn btn-sm btn-primary' href='" + URL + "/EVC_Portal/Store_Specification?id=" + item.EvcPartnerId + "' title='Store Specification'><i class='fa-solid fa-list'></i></a> &nbsp;";
+                    actionURL += "<a class='' href='" + URL + "/EVC/EVC_PartnerAddListofPincde?id=" + item.EvcPartnerId + "' title='Approve Partner'><i class='fa-solid fa-shop'></i></a> &nbsp;";
+                    actionURL += "<a class='' href='" + URL + "/EVC_Portal/Store_Specification?id=" + item.EvcPartnerId + "' title='Store Specification'><i class='fa-solid fa-list'></i></a> &nbsp;";
                     actionURL += "<a class='mx-1 fas fa-edit' href='" + URL + "/EVC_Portal/EVC_StoreRegistrastion?id=" + _protector.Encode(item.EvcPartnerId) + "&AFlag=2' title ='Edit'></a>";
                     actionURL += "<a href='javascript: void(0)' onclick='deleteConfirm(" + item.EvcPartnerId + ")' class='fas fa-trash' data-toggle='tooltip' data-placement='top' title='Delete'></a>";
                     actionURL += "</div>";
@@ -3428,10 +3428,10 @@ namespace RDCELERP.Core.App.Controller
                             oPendingCreditApprovalViewModel.EvcWalletAmount = eVCClearBalanceViewModel.walletAmount;
                         }
                         string actionURL = $" <td class='actions'>";
-                        actionURL += $"<a class='btn btn-sm btn-primary' href='{URL}/Index1?orderTransId={oPendingCreditApprovalViewModel.OrderTransId}' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a> &nbsp;";
+                        actionURL += $"<a class='' href='{URL}/Index1?orderTransId={oPendingCreditApprovalViewModel.OrderTransId}' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a> &nbsp;";
                         actionURL += " </td>";
                         oPendingCreditApprovalViewModel.Action = actionURL;
-                        string actionURL1 = "<button onclick='ApproveCreditRequest(" + oPendingCreditApprovalViewModel.CreditRequestId + ")' class='btn btn-sm btn-primary'><i class='fa-solid fa-repeat'></i>&nbsp; Credit Approve </button>";
+                        string actionURL1 = "<button onclick='ApproveCreditRequest(" + oPendingCreditApprovalViewModel.CreditRequestId + ")' class=''><i class='fa-solid fa-repeat'></i>&nbsp; Credit Approve </button>";
                         oPendingCreditApprovalViewModel.Edit = actionURL1;
 
                     }

@@ -322,14 +322,14 @@ namespace RDCELERP.Core.App.Controller
                             if (tblOrderTransObj.OrderType == Convert.ToInt32(OrderTypeEnum.Exchange))
                             {
                                 actionURL1 = " <div class='actionbtns'>";
-                                actionURL1 += "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(tblOrderTransObj.ExchangeId) + "' ><button onclick='RecordView(" + tblOrderTransObj.ExchangeId + ")' class='btn btn-sm btn-primary' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
-                                //actionURL1 += " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + tblOrderTransObj.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
+                                actionURL1 += "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(tblOrderTransObj.ExchangeId) + "' ><button onclick='RecordView(" + tblOrderTransObj.ExchangeId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
+                                //actionURL1 += " <a class='' href='" + URL + "/Index1?orderTransId=" + tblOrderTransObj.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
                                 actionURL1 += "</div>";
                             }
                             else if (tblOrderTransObj.OrderType == Convert.ToInt32(OrderTypeEnum.ABB))
                             {
                                 actionURL1 = " <div class='actionbtns'>";
-                                actionURL1 += "<a href ='" + URL + "/ABBRedemption/Manage?regdNo=" + item.RegdNo + "' ><button onclick='RecordView(" + item.RegdNo + ")'  class='btn btn-sm btn-primary' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
+                                actionURL1 += "<a href ='" + URL + "/ABBRedemption/Manage?regdNo=" + item.RegdNo + "' ><button onclick='RecordView(" + item.RegdNo + ")'  class='' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
                                 actionURL1 += "</div>";
                             }
                             item.Action = actionURL1;
@@ -592,14 +592,14 @@ namespace RDCELERP.Core.App.Controller
                             if (tblOrderTransObj.OrderType == Convert.ToInt32(OrderTypeEnum.Exchange))
                             {
                                 actionURL1 = " <div class='actionbtns'>";
-                                actionURL1 += "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(tblOrderTransObj?.ExchangeId) + "' ><button onclick='RecordView(" + tblOrderTransObj?.ExchangeId + ")' class='btn btn-sm btn-primary' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
-                                //actionURL1 += " <a class='btn btn-sm btn-primary' href='" + URL + "/Index1?orderTransId=" + tblOrderTransObj.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
+                                actionURL1 += "<a href ='" + URL + "/Exchange/Manage?Exchangeorderid=" + _protector.Encode(tblOrderTransObj?.ExchangeId) + "' ><button onclick='RecordView(" + tblOrderTransObj?.ExchangeId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
+                                //actionURL1 += " <a class='' href='" + URL + "/Index1?orderTransId=" + tblOrderTransObj.OrderTransId + "' title='TimeLine'><i class='fa solid fa-clock-rotate-left'></i></a>";
                                 actionURL1 += "</div>";
                             }
                             else if (tblOrderTransObj.OrderType == Convert.ToInt32(OrderTypeEnum.ABB))
                             {
                                 actionURL1 = " <div class='actionbtns'>";
-                                actionURL1 += "<a href ='" + URL + "/ABBRedemption/Manage?regdNo=" + item.RegdNo + "' ><button onclick='RecordView(" + item.RegdNo + ")'  class='btn btn-sm btn-primary' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
+                                actionURL1 += "<a href ='" + URL + "/ABBRedemption/Manage?regdNo=" + item.RegdNo + "' ><button onclick='RecordView(" + item.RegdNo + ")'  class='' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
                                 actionURL1 += "</div>";
                             }
                             item.Action = actionURL1;
@@ -809,7 +809,7 @@ namespace RDCELERP.Core.App.Controller
                         OrderDetailsVM = new OrderDetailsViewModel();
                         string actionURL = string.Empty;
                         actionURL = " <ul class='actions'>";
-                        actionURL = "<a href ='" + URL + "/LGC_Admin/OrderViewPage?OrderTransId=" + (item.OrderTransId) + "' ><button onclick='View(" + item.OrderTransId + ")' class='btn btn-sm btn-primary'><i class='fa-solid fa-eye'></i></button></a>";
+                        actionURL = "<a href ='" + URL + "/LGC_Admin/OrderViewPage?OrderTransId=" + (item.OrderTransId) + "' ><button onclick='View(" + item.OrderTransId + ")' class=''><i class='fa-solid fa-eye'></i></button></a>";
                         actionURL = actionURL + "</ul>";
 
                         string? productTypeDesc = null; string? productCatDesc = null; string? statusCode = null;

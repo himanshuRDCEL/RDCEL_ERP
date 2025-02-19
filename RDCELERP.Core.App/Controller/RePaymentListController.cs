@@ -74,7 +74,7 @@ namespace RDCELERP.Core.App.Controller
                         string URL = _config.Value.BaseURL + "PayOut/paymentStatus";
                         string actionURL = string.Empty;
                         actionURL = " <div class='actionbtns'>";
-                        actionURL = "<a href ='" + URL + "?RegdNo=" + item.RegdNo + "&UtcReferenceId=" + item.UtcreferenceId + "'><button onclick='RecordView(" + item.RegdNo + ")' class='btn btn-sm btn-primary' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
+                        actionURL = "<a href ='" + URL + "?RegdNo=" + item.RegdNo + "&UtcReferenceId=" + item.UtcreferenceId + "'><button onclick='RecordView(" + item.RegdNo + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
                         actionURL = actionURL + "</div>";
                         viewDataDc.ActionURL = actionURL;
                         viewDataDc.Action = actionURL;
@@ -154,7 +154,7 @@ namespace RDCELERP.Core.App.Controller
                         string URL = _config.Value.BaseURL  + "PayOut/paymentStatus";
                         string actionURL = string.Empty;
                         actionURL = " <div class='actionbtns'>";
-                        actionURL = "<a href ='" + URL + "?RegdNo=" + item.RegdNo + "&UtcReferenceId=" + item.UtcreferenceId + "'><button onclick='RecordView(" + item.RegdNo + ")' class='btn btn-sm btn-primary' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
+                        actionURL = "<a href ='" + URL + "?RegdNo=" + item.RegdNo + "&UtcReferenceId=" + item.UtcreferenceId + "'><button onclick='RecordView(" + item.RegdNo + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></button></a>";
                         viewDataDc.ActionURL = actionURL;
                         viewDataDc.Action = actionURL;
                         viewDataDc.RegdNo = item.RegdNo;
