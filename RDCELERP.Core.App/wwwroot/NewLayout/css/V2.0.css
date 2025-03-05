@@ -25,7 +25,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, ol li, ul li, .p, body 
 }
 
 #sidebarMenu {
-    background: #efefef !important;
+  
     color: var(--V2-text)
 }
 
@@ -42,10 +42,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, ol li, ul li, .p, body 
     }
 
     .logowrapbox {
-        background: var(--V2-white);
+       
         padding: 12px;
         margin-bottom: 16px;
-        box-shadow: var(--V2-shadow);
+       
         position: relative;
     }
 
@@ -85,7 +85,9 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, ol li, ul li, .p, body 
 #sidebarMenu::-webkit-scrollbar-thumb {
     background: var(--V2-gradient);
 }
-
+.sidebar-inner::-webkit-scrollbar-thumb {
+    background: var(--V2-gradient);
+}
 .sidebar .multi-level {
     background: none;
     margin-left: 15px;
@@ -106,14 +108,14 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, ol li, ul li, .p, body 
     }
 
     .sidebar .multi-level .nav-item:after {
-        content: '';
+       /* content: '';
         position: absolute;
         left: 0;
         height: 100%;
         background: #ccc;
         width: 1px;
         top: 0;
-        bottom: 0;
+        bottom: 0;*/
     }
 
         .sidebar .multi-level .nav-item:last-child:after {
@@ -127,14 +129,14 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, ol li, ul li, .p, body 
     }
 
     .sidebar .multi-level .nav-link:after {
-        content: '';
+        /*content: '';
         position: absolute;
         width: 22px;
         background: #ccc;
         height: 1px;
         left: 0;
         top: 50%;
-        transform: translate(0%, -50%)
+        transform: translate(0%, -50%)*/
     }
 
 .sidebar .nav-link .link-arrow {
@@ -174,31 +176,43 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, ol li, ul li, .p, body 
 
 .dataTables_wrapper .dataTables_scroll {
     border: none !important;
-    box-shadow: var(--V2-shadow) !important;
+    
 }
 
 
 .thead-light {
-    background: var(--V2-lightgrey);
+  /*  background: var(--V2-lightgrey);*/
+    background: #ec0a14 !important;
+    color: white !important;
+    font-size: 14px !important;
+    font-weight: bold;
 }
 
 .table .thead-light th {
-    color: var(--V2-text);
+   /* color: var(--V2-text);*/
 }
 
 .table tr {
     border: 1px solid var(--V2-lightgrey);
 }
-
+.table.dataTable {
+    border-spacing: 0 18px !important;
+    border: 0px;
+}
 table.dataTable thead th {
-    border: none;
+    border: 0px;
+    border-spacing: 0 18px !important;
+}
+.table.dataTable tbody tr {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 2px 8px rgb(0 0 0 / 8%);
 }
 
 main.content {
     position: relative;
     min-height: 100vh;
     padding-bottom: 100px;
-  
 }
 
 footer {
@@ -252,7 +266,7 @@ main.content .card {
 }
 
 .btn-primary {
-    background: #19007d;
+    background: #0c0c0c;
     opacity: 1;
     border-radius: 50px;
 }
@@ -299,8 +313,14 @@ main.content .card {
     padding: 0;
 }
 
-.nav-tabs .nav-link.active:after {
+/*.nav-tabs .nav-link.active:after {
     background: var(--V2-gradient);
+}*/
+.nav-tabs .nav-link.active {
+    border-left: 2px solid #ec0a14;
+    border-radius: 0px !important;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important;
+    margin: 0px;
 }
 
 .btn-secondary {

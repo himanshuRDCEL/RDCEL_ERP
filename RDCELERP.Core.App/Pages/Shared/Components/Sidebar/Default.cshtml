@@ -21,38 +21,95 @@
     .link-arrow {
         font-size: 1.25rem;
     }
-
+    .bx-chevron-right:before {
+    content: ">";
+}
+     .toggle {
+    position: absolute;
+    top: 50%;
+    right: -10px;
+    transform: translateY(-50%) rotate(180deg);
+    height: 25px;
+    width: 25px;
+    background-color: red;
+    color: #fff;
+    border-radius: 50%;
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    cursor: pointer;
+    transition: var(--tran-05);
+}
+.sidebarMenu{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    /* padding: 10px 14px; */
+    background: var(--sidebar-color);
+    transition: var(--tran-05);
+    z-index: 100;
+}
+.sidebar-inner{
+        height: calc(100% - 55px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: scroll;
+}
+.superadmin{
+        background: #fff;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+    padding: 5px;
+        height: 41px;
+}
 </style>
+
 <nav id="sidebarMenu" class="sidebar d-lg-block text-white collapse" data-simplebar>
-    <div class="sidebar-inner">
-        <div class="logowrapbox mx-3">
-            <div class="d-flex justify-content-center align-items-center">
-             @*   <span class="sidebar-icon">
+    <div class="logowrapbox">
+            <div class=" d-flex justify-content-center align-items-center">
+            @*   <span class="sidebar-icon">
                     @*<i class="fa-solid fa-cubes"></i>
                     <div class="logo"><a asp-area="" asp-page="/Company/SelectCompany">
                             <img src="~/images/erp.png" />
                         </a>
                         </div>
                 </span>*@
-                @if (ViewBag.PortalName != null && ViewBag.PortalLink != null)
-                {
-                    <div class="logo">
-                        <a href="@URLPrefixforProd@ViewBag.PortalLink">
-                            <img src="~/images/rocking deal.png" />
-                        </a>
-                    </div>
-                }
-                else
-                {
-                    
-                    <div class="logo">
-                            <a href="@URLPrefixforProd/Dashboard">
-                            <img src="~/images/rocking deal.png" />
-                        </a>
-                    </div>
-                }
+           @*  @if (ViewBag.PortalName != null && ViewBag.PortalLink != null)
+            {
+                        <div class="logo">
+                            <a href="@URLPrefixforProd@ViewBag.PortalLink">
+                                <img src="~/images/rocking deal.png" />
+                            </a>
+                        </div>
+            }
+            else
+            {
+
+                        <div class="logo">
+                                <a href="@URLPrefixforProd/Dashboard">
+                                <img src="~/images/rocking deal.png" />
+                            </a>
+                        </div>
+            } *@
+            <a class="nav-link dropdown-toggle pt-1 px-0 show" role="button" data-bs-toggle="dropdown" aria-expanded="true" href="/Profile/Details">
+                        <div class="media d-flex align-items-flex-start ">
+                            <div class="superadmin">
+                            <img class="avatar " alt="Image placeholder" src="/DBFiles/Users/41cdd2f336a4414f8bf590da8adb3b81Myphoto.jpg">
+                            </div>
+                            <div class="media-body ms-2 text-dark align-items-center d-lg-block" style="text-align:left;">
+                                <span  style="font-size:16px; text-align:left; "class="mb-0 font-small fw-bold sidebar-text text-gray-900"><span style="font-size:18px;">RDCEL</span> </br><span style="margin-left:4px;">Super Admin</span></span>
+                            </div>
+                        </div>
+                    </a>
             </div>
+             <i class="bx bx-chevron-right toggle" id="collapsebtn"></i>
         </div>
+    <div class="sidebar-inner">
+        
         <div class="collapse-close d-md-none">
             <a href="#sidebarMenu" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="true" aria-label="Toggle navigation" class="">
                 <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -118,7 +175,9 @@
             <img src="~/NewLayout/assets/img/logo.svg" alt="">
         </div> *@
     </div>
+  
 </nav>
+
 
 <script>
     document.querySelectorAll('.nav-link[data-bs-toggle="collapse"]').forEach(link => {

@@ -4,19 +4,21 @@
     int i = 0;
     var URLPrefixforProd = ViewData["URLPrefixforProd"];
 }
+
 <nav class="navbar navbar-top navbar-expand navbar-dashboard navbar-dark ps-0  pb-0">
     <div class="container-fluid px-0">
         <div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
             <div class="d-flex align-items-center searchwrapper">
                 <div class="d-flex">
-                    <button type="button" id="collapsebtn">
+                     <img src="~/images/Rocking Deals Logo 2-01.png" style="max-width:223px; margin-left:50px;"/>
+               @*      <button type="button" >
                         <span class="hamburger-icon">
                             <span></span>
                             <span></span>
                             <span></span>
                         </span>
 
-                    </button>
+                    </button> *@
                 </div>
                
             </div>
@@ -33,14 +35,14 @@
                             {
                             @if (String.IsNullOrEmpty(Model.ImageName))
                             {
-                            <img class="avatar rounded-circle" alt="Image placeholder" src="~/NewLayout/assets/img/team/profile-picture-3.jpg">
+                           @*  <img class="avatar rounded-circle" alt="Image placeholder" src="~/NewLayout/assets/img/team/profile-picture-3.jpg"> *@
                             }
                             else
                             {
-                            <img class="avatar rounded-circle" alt="Image placeholder" src="~/DBFiles/Users/@Model.ImageName">
+                           @*  <img class="avatar rounded-circle" alt="Image placeholder" src="~/DBFiles/Users/@Model.ImageName"> *@
                             }
                             <div class="media-body ms-2 text-dark align-items-center d-lg-block">
-                                <span class="mb-0 font-small fw-bold text-gray-900">@Model.FirstName @Model.LastName </span>
+                                @* <span class="mb-0 font-small fw-bold text-gray-900">@Model.FirstName @Model.LastName </span> *@
                                 @*<p>@loginVM.RoleViewModel.RoleName</p>*@
                             </div>
                             }
@@ -72,3 +74,5 @@
         </div>
     </div>
 </nav>
+
+

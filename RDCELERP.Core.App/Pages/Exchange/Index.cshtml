@@ -16,6 +16,12 @@
 
 <link href="~/NewLayout/css/jquery.dataTables.min.css" rel="stylesheet" />
 
+<style>
+    #ExchangeDatatable tbody tr td a button {
+     background: transparent !important;
+     border: none !important;
+    }
+</style>
 <div class="row">
     <div class="col-md-12">
         <div class="row">
@@ -500,8 +506,6 @@
         var self = this;
         var oldStart = dt.settings()[0]._iDisplayStart;
         dt.one('preXhr', function (e, s, data) {
-            // Just this once, load all data from the server...
-            data.start = 0;
             data.length = 2147483647;
             dt.one('preDraw', function (e, settings) {
                 // Call the original action function

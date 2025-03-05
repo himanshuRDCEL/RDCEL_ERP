@@ -23,6 +23,13 @@
     textarea.form-control {
         max-height: 130px;
     }
+    .nav {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  
+    }
+ 
 </style>
 
 <div class="row">
@@ -31,8 +38,9 @@
             <div class="card-header"><h3 class="fs-5 fw-bold mb-0">Exchange</h3></div>
         </div>
     </div>
-    <div class="col-md-12">
-        <div class="row align-items-center">
+    <div class="col-md-12 exchangetabs">
+
+        <div class="row align-items-center tabnav">
             <div class="col">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -59,7 +67,7 @@
 
         </div>
         <div class="row">
-            <div class="col-12 mb-4">
+            <div class="col-12">
                 <div class="card border-0 shadow noborderradius">
                     <form method="post" enctype="multipart/form-data">
                         <div class="card-body">

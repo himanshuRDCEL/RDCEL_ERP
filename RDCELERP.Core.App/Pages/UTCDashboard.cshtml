@@ -4,18 +4,92 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 <style>
-    .table tr {
-        border: 1px solid #00000033;
+    main.content .card.shadow {
+        box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.1), 5px 4px 0px 0px rgb(237 10 21 / 67%) !important;
+        /* border-top: red !important; */
+        border-width: 39px;
+        border-radius: 10px;
+        padding: 20px 0px !important;
+    }
+    .icon-shape.icon-shape-primary{
+        font-size:50px !important;
+        opacity:0.2;
+    }
+    .card-body{
+        padding-top:0px;
+    }
+    .card{
+    padding:0px !important;
+    }
+    .table-container {
+        margin: 40px auto;
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .table td {
-        font-size: 16px;
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px;
     }
 
-    .table thead th {
+    thead th {
+        background: #ec0a14 !important;
+        color: white;
+        font-size: 14px !important;
+        font-weight: bold;
+        padding: 12px;
+          
+        text-align: center;
+    }
+
+    tbody tr {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+        transition: 0.3s;
+    }
+
+        tbody tr:hover {
+            transform: scale(1.02);
+        }
+
+    tbody td {
+        padding: 18px !important;
+       
         font-size: 16px;
-        background: #eb0913cf;
-        color: #fff;
+        border-bottom: 1px solid #ddd;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .filterpopup{
+        position: absolute;
+        top: 77px;
+        right: 0;
+        width: 220px;
+        background: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 6px;
+        padding: 15px;
+        display: none;
+        z-index: 1000;
+    }
+
+    .datefilter input.form-control {
+        width: 100%;
+    }
+
+    .filterpopup input[type="submit"]{
+        width:100%;
+      
+    }
+    #filterIcon{
+        max-width: 32px;
     }
 </style>
 
@@ -58,20 +132,28 @@ else
         </div>
 
         <div class="col-md-8 text-right datefilter-right">
-            <input type="text" class="form-control d-inline mb-2" id="startdate" placeholder="Start Date">
-            <input type="text" class="form-control d-inline mb-2" id="enddate" placeholder="End Date">
-            <input type="submit" class="d-inline btn btn-primary" value="Submit">
+            <img src="~/Images/filter.png" id="filterIcon" style="cursor: pointer;">
+            </img>
+
+            <div class="filterpopup">
+                <input type="text" class="form-control d-inline mb-2" id="startdate" placeholder="Start Date">
+                <input type="text" class="form-control d-inline mb-2" id="enddate" placeholder="End Date">
+                <input type="submit" class="d-inline btn btn-primary" value="Submit">
+            </div>
+           
         </div>
 
     </div>
 
-    @* <div class="row">
+    <div class="row">
 
     <div class="col-md-4 mb-4">
         <div class="card border-0 shadow">
+               
             <a href="#">
                 <div class="card-body">
                         <div class="row d-block d-xl-flex align-items-center">
+                             
                             <div class="col-xl-8 px-xl-4">
                                 <h2 class="h6 mb-0 newcolor">ABB Orders</h2>
                                 <h3 class="fw-extrabold mb-2">19931</h3>
@@ -90,6 +172,7 @@ else
 
     <div class="col-md-4 mb-4">
         <div class="card border-0 shadow">
+
             <a href="#">
                 <div class="card-body">
                         <div class="row d-block d-xl-flex align-items-center">
@@ -269,14 +352,14 @@ else
         </div>
 
     </div>
-</div> *@
+</div>
 
 
 
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table table-bordered">
-                <thead class="table-light">
+    @* <div class="row">
+        <div class="col-md-12 table-container">
+            <table class="table table-bordered table">
+                <thead class="">
                     <tr>
                         <th scope="col" class="text-center" style="width: 5%;">Select</th>
                         <th scope="col">Order Type</th>
@@ -332,7 +415,7 @@ else
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> *@
 
 
 }
@@ -356,4 +439,11 @@ else
         });
     });
 
+</script>
+<script>
+    $(document).ready(function () {
+        $("#filterIcon").click(function () {
+            $(".filterpopup").toggle();
+        });
+    });
 </script>
