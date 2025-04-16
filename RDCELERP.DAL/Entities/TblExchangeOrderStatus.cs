@@ -14,7 +14,6 @@ namespace RDCELERP.DAL.Entities
             TblLogistics = new HashSet<TblLogistic>();
             TblOrderTrans = new HashSet<TblOrderTran>();
             TblTempData = new HashSet<TblTempDatum>();
-            TblTimelineStatusMappings = new HashSet<TblTimelineStatusMapping>();
             TblVehicleJourneyTrackingDetails = new HashSet<TblVehicleJourneyTrackingDetail>();
         }
 
@@ -31,7 +30,6 @@ namespace RDCELERP.DAL.Entities
         public virtual ICollection<TblLogistic> TblLogistics { get; set; }
         public virtual ICollection<TblOrderTran> TblOrderTrans { get; set; }
         public virtual ICollection<TblTempDatum> TblTempData { get; set; }
-        public virtual ICollection<TblTimelineStatusMapping> TblTimelineStatusMappings { get; set; }
         public virtual ICollection<TblVehicleJourneyTrackingDetail> TblVehicleJourneyTrackingDetails { get; set; }
     }
 }

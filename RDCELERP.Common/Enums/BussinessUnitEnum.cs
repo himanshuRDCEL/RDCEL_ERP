@@ -10,7 +10,7 @@ namespace RDCELERP.Common.Enums
     public enum BussinessUnitEnum
     {
         //ADD company name in description for bussiness unit =4 (D2C)
-        [Description("UTC Digital")]
+        [Description("Rocking Deals")]
         D2C = 4,
         [Description("Demo")]
         Demo = 14,

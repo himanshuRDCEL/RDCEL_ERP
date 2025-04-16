@@ -449,6 +449,7 @@ namespace RDCELERP.BAL.MasterManager
                 if (TblRole != null)
                 {
                     RoleVM = _mapper.Map<TblRole, RoleViewModel>(TblRole);
+                    RoleVM.RoleName= TblRole.RoleName!=null?TblRole.RoleName:string.Empty;
                     if (TblRole.CompanyId != null)
                     {
                         TblCompany TblCompany = _companyRepository.GetCompanyId(TblRole.CompanyId);

@@ -34,5 +34,19 @@ namespace RDCELERP.BAL.Interface
 
         public List<SelectListItem> GetProductCondition();
 
+        /// <summary>
+        /// method to get brand list
+        /// </summary>
+        /// <param name="businessunitId"></param>
+        /// <returns></returns>
+        public List<SelectListItem> GetBrandListByBUId(int ?businessunitId);
+
+        /// <summary>
+        /// method to get category list by brandId
+        /// </summary>
+        /// <param name="brandId"></param>
+        /// <returns></returns>
+        public List<SelectListItem> GetcategoryListByBrandId(int? brandId);
+
     }
 }

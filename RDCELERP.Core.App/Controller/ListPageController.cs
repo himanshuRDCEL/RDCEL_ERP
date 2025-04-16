@@ -54,6 +54,9 @@ using RDCELERP.Model.TimeLine;
 using RDCELERP.Model.UniversalPriceMaster;
 using RDCELERP.Model.Users;
 using RDCELERP.Model.VehicleIncentive;
+using RDCELERP.Model.EcomVoucher;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace RDCELERP.Core.App.Controller
 {
@@ -5330,6 +5333,154 @@ namespace RDCELERP.Core.App.Controller
         }
         #endregion
 
+        #region B2B
+        [HttpGet]
+        public async Task<IActionResult> GetItems(int customerid, string? searchValue,int businessTypeId)
+        {
+            string baseUrl = "";
+            var itemsQuery = _context.TblItems
+       .Join(_context.TblBusinessTypeMappings,
+             item => item.ItemType,
+             mapping => mapping.BusinessTypeId,
+             (item, mapping) => new { item, mapping })
+       .Where(x => x.mapping.BussinessCustomerId == customerid
+                   && x.item.IsActive == true);
+
+            // Apply search filter if searchValue is provided
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                itemsQuery = itemsQuery.Where(x => x.item.Name.ToLower().Contains(searchValue.ToLower()));
+            }
+
+            // Apply businessType filter
+            if (businessTypeId!=null&& businessTypeId >0)
+            {
+                itemsQuery = itemsQuery.Where(x => x.item.ItemType == businessTypeId);
+            }
+
+            var items = await itemsQuery
+                .Select(x => new
+                {
+                    x.item.ItemId,
+                    x.item.Name,
+                    ImageUrl = baseUrl + x.item.ImageName,
+                    x.item.Price,
+                    x.item.Description,
+                    IsSelected = false // Default value
+                })
+                .ToListAsync();
+
+            return new JsonResult(items);
+        }
+
+
+        #endregion
+        #region sa Voucher Gen
+        public async Task<ActionResult> GetEcomVoucherList(DateTime? startDate, DateTime? endDate , int? companyId)
+        {
+            string URL = _config.Value.URLPrefixforProd;
+            List<TblEcomVoucher> TblEcomVoucher = null;
+            try
+            {
+                var draw = Request.Form["draw"].FirstOrDefault();
+                var start = Request.Form["start"].FirstOrDefault();
+                var length = Request.Form["length"].FirstOrDefault();
+                var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+                var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+                var searchValue = Request.Form["search[value]"].FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+                int recordsTotal = 0;
+                //_context = new Digi2l_DevContext();
+                if (startDate == null && endDate == null)
+                {
+                    TblEcomVoucher = await _context.TblEcomVouchers.Where(x =>
+                        (string.IsNullOrEmpty(searchValue) || x.VoucherCode.ToLower().Contains(searchValue.ToLower().Trim())) || x.CompanyId==companyId).ToListAsync();
+                }
+                else
+                {
+                    startDate = Convert.ToDateTime(startDate).AddMinutes(-1);
+                    endDate = Convert.ToDateTime(endDate).AddDays(1).AddSeconds(-1);
+                    TblEcomVoucher = await _context.TblEcomVouchers
+     .Where(x => x.CreatedDate >= startDate
+         && x.CreatedDate <= endDate
+         && (string.IsNullOrEmpty(searchValue) || x.VoucherCode.ToLower().Contains(searchValue.ToLower().Trim()))
+         && (x.CompanyId.HasValue && x.CompanyId.Value == companyId))  // Handle nullable comparison
+     .ToListAsync();
+
+                }
+
+
+
+                recordsTotal = TblEcomVoucher != null ? TblEcomVoucher.Count : 0;
+                if (TblEcomVoucher != null)
+                {
+                    TblEcomVoucher = sortColumnDirection.Equals(SortingOrder.ASCENDING) ? TblEcomVoucher.OrderBy(o => o.GetType().GetProperty(sortColumn).GetValue(o, null)).ToList() : TblEcomVoucher.OrderByDescending(o => o.GetType().GetProperty(sortColumn).GetValue(o, null)).ToList();
+                    TblEcomVoucher = TblEcomVoucher.Skip(skip).Take(pageSize).ToList();
+                }
+                else
+                    TblEcomVoucher = new List<TblEcomVoucher>();
+
+                List<EcomVoucherViewModel> EcomVoucherList = _mapper.Map<List<TblEcomVoucher>, List<EcomVoucherViewModel>>(TblEcomVoucher);
+               
+                string actionURL = string.Empty;
+
+                foreach (EcomVoucherViewModel item in EcomVoucherList)
+                {                
+                    if (item.IsActive == true)
+
+                    {
+
+                        actionURL = "<div class='actionbtns'>";
+                        actionURL = actionURL + "<a href=' " + URL + "/EcomVoucher/Manage?id=" + _protector.Encode(item.EcomVoucherId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='View' class=''><i class='fa-solid fa-eye'></i></a> " +
+                            "<a href='javascript: void(0)' onclick='deleteConfirmEcomVoucher(" + item.EcomVoucherId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Inactive'><i class='fa-solid fa-trash'></i></a>";
+                        actionURL = actionURL + " </div>";
+
+                    }
+                    else
+                    {
+
+                        actionURL = "<div class='actionbtns'>";
+                        actionURL = actionURL + "<a href=' " + URL + "/EcomVoucher/Manage?id=" + _protector.Encode(item.EcomVoucherId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='view' class=''><i class='fa-solid fa-eye'></i></a> " +
+                            "<a href='javascript: void(0)' onclick='activeConfirmProductCategoryEcomVoucher(" + item.EcomVoucherId + ")'  class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
+                        actionURL = actionURL + " </div>";
+                    }
+
+                    item.Action = actionURL;
+                    TblEcomVoucher EcomVoucherDetails = TblEcomVoucher.FirstOrDefault(x => x.EcomVoucherId == item.EcomVoucherId);
+
+                    if (EcomVoucherDetails.CreatedDate != null && EcomVoucherDetails.CreatedDate != null)
+                    {
+                        //DateTime dateTime = (DateTime)item.CreatedDate;
+                        item.CreatedDateString = item.CreatedDate.Value.ToString("yyyy-MM-dd");
+                    
+                }  
+                    if (EcomVoucherDetails.EndDate != null && EcomVoucherDetails.EndDate != null)
+                    {
+                       
+                        item.EndDateString = item.EndDate.Value.ToString("yyyy-MM-dd");
+                    }
+                    item.EcomVoucherName = EnumHelper.DescriptionAttr((EcomVoucherTypeEnum)EcomVoucherDetails.EcomVoucherType);
+
+                    item.VoucherCode = StringHelper.MaskVoucherCode(item.VoucherCode);
+                    if (item.Phoneno != null)
+                    {
+                        item.Phoneno = SecurityHelper.DecryptString(item.Phoneno, _config.Value.SecurityKey);
+                    }
+                }
+
+                var data = EcomVoucherList;
+                var jsonData = new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
+                return Ok(jsonData);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+       
+        #endregion
     }
 }
 

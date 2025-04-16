@@ -21,5 +21,12 @@ namespace RDCELERP.Common.Helper
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
+        public static string MaskVoucherCode(string code)
+        {
+            if (string.IsNullOrEmpty(code) || code.Length <= 2)
+                return code; // Too short to mask
+
+            return $"{code[0]}{new string('*', code.Length - 2)}{code[^1]}";
+        }
     }
 }

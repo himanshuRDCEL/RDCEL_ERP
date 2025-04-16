@@ -1,0 +1,249 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.BusinessCustomer.ItemListModel
+@{
+    ViewData["Title"] = "Item List";
+    Layout = "_B2BCustomerLayout";
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+
+    RDCELERP.Model.Users.LoginViewModel loginVM = (RDCELERP.Model.Users.LoginViewModel)ViewBag.LoginUser;
+}
+<style>
+    .ecard-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .ecard {
+        border: 1px solid #ccc;
+        padding: 12px;
+        border-radius: 8px;
+        width: 200px;
+    }
+
+    .quantity-box {
+        width: 50px;
+        margin-top: 8px;
+    }
+
+</style>
+<!-- Welcome Message -->
+<div class="welcome" id="welcomeText"></div>
+@* 
+<form method="post">
+    <div class="ListItemViewModels-container">
+        @for (int i = 0; i < Model.ListItemViewModels.Count; i++)
+        {
+            <div class="item">
+                <h3>@Model.ListItemViewModels[i].Name</h3>
+                <p>Price: ₹@Model.ListItemViewModels[i].Price</p>
+                <input type="hidden" asp-for="ListItemViewModels[i].Price"  />
+
+                <input type="hidden" asp-for="ListItemViewModels[i].ItemId"  />
+                <input type="checkbox" asp-for="ListItemViewModels[i].IsSelected"  />
+                <label for="select-@i"><strong>Select</strong></label>
+
+                <input type="number" asp-for="ListItemViewModels[i].Quantity" min="1" value="1" class="quantity-box" />
+            </div>
+        }
+    </div>
+
+    <button type="submit">Checkout</button>
+</form> *@
+<div class="container mt-4">
+    <form id="itemForm" method="post" action="/your-submit-endpoint">
+
+        <!-- Filters Section -->
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label for="searchBox" class="form-label">Search Item</label>
+                <input type="text" id="searchBox" class="form-control" placeholder="Search by item name">
+            </div>
+
+            <div class="col-md-3">
+                <label for="businessType" class="form-label">Business Type</label>
+                <select id="businessType" class="form-select">
+                    <option value="">Select Business Type</option>
+                    <option value="1">Retail</option>
+                    <option value="2">Wholesale</option>
+                    <option value="3">Manufacturing</option>
+                </select>
+            </div>
+
+           
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="button" id="filterBtn" class="btn btn-primary w-100">Filter</button>
+            </div>
+        </div>
+
+        <!-- DataTable -->
+        <table id="ItemDataTable" class="display nowrap table table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Item ID</th>
+                    <th>Item Name</th>
+                    <th>Price</th>
+                    <th>Hidden Price</th>
+                    <th>Hidden Item ID</th>
+                    <th>Select</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+        </table>
+
+        <!-- Submit Button -->
+        <div class="mt-3 text-end">
+            <button type="submit" class="btn btn-success">Submit Selected Items</button>
+        </div>
+
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+@* 
+<script>
+    $(document).ready(function () {
+        var userId = '@loginVM.BusinessCustomerViewModel.BusinessCustomerId';
+        var searchValue = ''; 
+        var url = "@URLPrefixforProd/api/ListPage/GetItems?customerid=" + userId + "&searchValue=" + searchValue + "&businessTypeId=" + businessTypeId;
+
+       
+        console.log(url);
+        // Load items via AJAX
+        $.ajax({
+            url: url, // Update with your actual controller route
+            type: 'GET',
+            success: function (data) {
+                var container = $('#item-container');
+                container.empty(); // Clear any existing data
+
+                if (data && data.length > 0) {
+                    $.each(data, function (index, item) {
+                        var html = `
+                                <div class="item">
+                                    <h3>${item.name}</h3>
+                                    <p>Price: ₹${item.price}</p>
+                                    <input type="hidden" name="ListItemViewModels[${index}].Price" value="${item.price}" />
+                                    <input type="hidden" name="ListItemViewModels[${index}].ItemId" value="${item.itemId}" />
+                                     <input type="checkbox" name="ListItemViewModels[${index}].IsSelected" value="true" />
+
+                                    <label for="select-${index}"><strong>Select</strong></label>
+                                    <input type="number" name="ListItemViewModels[${index}].Quantity" min="1" value="1" class="quantity-box" />
+                                </div>`;
+                        container.append(html);
+                    });
+                } else {
+                    container.append('<p>No items found.</p>');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+</script>
+ *@
+<script>
+    $(document).ready(function () {
+        var userId = '@loginVM.BusinessCustomerViewModel.BusinessCustomerId';
+        var table;
+
+        // Function to initialize DataTable
+        function loadTable(searchValue = '', businessTypeId = '') {
+            if ($.fn.DataTable.isDataTable('#ItemDataTable')) {
+                $('#ItemDataTable').DataTable().destroy();
+            }
+
+            table = $('#ItemDataTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "@URLPrefixforProd/api/ListPage/GetItems",
+                    "type": "POST",
+                    "data": {
+                        customerid: userId,
+                        searchValue: searchValue,
+                        businessTypeId: businessTypeId
+                      
+                    }
+                },
+                "columns": [
+                    { "data": "itemId", "visible": false }, // Hidden Item ID
+                    { "data": "name", "name": "ItemName" }, // Item Name
+                    {
+                        "data": "price",
+                        "render": function (data) {
+                            return `₹${data}`;
+                        }
+                    }, // Price Display
+                    {
+                        "data": "price",
+                        "render": function (data, type, row, meta) {
+                            return `<input type="hidden" name="ListItemViewModels[${meta.row}].Price" value="${data}" />`;
+                        },
+                        "orderable": false,
+                        "searchable": false
+                    }, // Hidden Price Input
+                    {
+                        "data": "itemId",
+                        "render": function (data, type, row, meta) {
+                            return `<input type="hidden" name="ListItemViewModels[${meta.row}].ItemId" value="${data}" />`;
+                        },
+                        "orderable": false,
+                        "searchable": false
+                    }, // Hidden Item ID Input
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return `<input type="checkbox" name="ListItemViewModels[${meta.row}].IsSelected" value="true" />`;
+                        },
+                        "orderable": false,
+                        "searchable": false
+                    }, // Checkbox for Selection
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return `<input type="number" name="ListItemViewModels[${meta.row}].Quantity" min="1" value="1" class="quantity-box" />`;
+                        },
+                        "orderable": false,
+                        "searchable": false
+                    } // Quantity Input
+                ],
+                "oLanguage": {
+                    "sEmptyTable": "No items found."
+                },
+                "responsive": true
+            });
+        }
+
+        // Initial table load
+        loadTable();
+
+        // Filter button click event
+        $('#filterBtn').on('click', function () {
+            var searchValue = $('#searchBox').val();
+            var businessTypeId = $('#businessType').val();
+            
+
+            loadTable(searchValue, businessTypeId);
+        });
+
+        // Handle form submission
+        $('#itemForm').on('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            $.ajax({
+                url: $(this).attr('action'),
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function (response) {
+                    alert('Items submitted successfully!');
+                    console.log(response);
+                },
+                error: function (error) {
+                    console.error('Submission Error:', error);
+                }
+            });
+        });
+    });
+</script>

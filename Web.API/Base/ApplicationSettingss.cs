@@ -24,6 +24,7 @@ namespace UTC.WebAPI.Base
         public string MailjetAPIKey { get; set; }
         public string MailjetAPISecret { get; set; }
 
+      
 
     }
 }

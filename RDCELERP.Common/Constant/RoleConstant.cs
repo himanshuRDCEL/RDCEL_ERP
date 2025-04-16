@@ -17,6 +17,7 @@ namespace RDCELERP.Common.Constant
         public const string RoleSponsorAdmin = "Sponsor Admin";
         public const string RoleDealerAdmin = "Dealer Admin";
         public const string RoleServicePartner = "Service Partner";
+        public const string B2BCustomer = "B2BCustomer";
     }
     public class PortalNameConstant
     {
@@ -31,9 +32,9 @@ namespace RDCELERP.Common.Constant
     public class PortalLinkConstant
     {
         public const string LGCPortalLink = "/LGC/LogiPickDrop";
-        public const string EVCPortalLink = "/EVC_Portal/EVC_Dashboard";
+        public const string EVCPortalLink = "/Warehouse_Portal/Warehouse_Dashboard";
         public const string QCPortalLink = "/QCPortal/QCDashboard";
-        public const string EVCAdminPortalLink = "/EVC/Index";
+        public const string EVCAdminPortalLink = "/Warehouse/Index";
         public const string UTCAdminPortalLink = "/UTCDashboard";
         public const string SponsorAdminPortalLink = "/DealerDashBoard/CompanyDashBoard";
         public const string DealerAdminPortalLink = "/DealerDashBoard/DealerDashBoard";

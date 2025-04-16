@@ -15,8 +15,8 @@ namespace RDCELERP.DAL.Entities
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public DateTime? Startdate { get; set; }
-        public DateTime? Enddate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         public virtual TblBrand? Brand { get; set; }
         public virtual TblBusinessPartner? BusinessPartner { get; set; }

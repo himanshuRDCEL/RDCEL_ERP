@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using RDCELERP.Common.Constant;
 using RDCELERP.Common.Enums;
 using RDCELERP.Common.Helper;
-using RDCELERP.Core.App.Pages.EVC;
+using RDCELERP.Core.App.Pages.Warehouse;
 using RDCELERP.DAL.Entities;
 using RDCELERP.DAL.IRepository;
 using RDCELERP.DAL.Repository;
@@ -655,7 +655,7 @@ namespace RDCELERP.Core.App.Controller
                     {
                         string actionURL = string.Empty;
                         actionURL = " <ul class='actions'>";
-                        actionURL = "<a href ='" + URL + "/LGC_Admin/OrderViewPage?OrderTransId=" + (item.OrderTransId) + "' ><button onclick='View(" + item.OrderTransId + ")' class=''><i class='fa-solid fa-eye'></i></button></a>" + "&nbsp;<button onclick='ReassignOrder(" + item.OrderTransId + ")' class='btn btn-primary btn-sm ml-1'>Change EVC</button>" + " <button onclick = 'CancelTicket(" + item.OrderTransId + ")' class=''>Change LGC</button> &nbsp;";
+                        actionURL = "<a href ='" + URL + "/LGC_Admin/OrderViewPage?OrderTransId=" + (item.OrderTransId) + "' ><button onclick='View(" + item.OrderTransId + ")' class=''><i class='fa-solid fa-eye'></i></button></a>" + "&nbsp;<button onclick='ReassignOrder(" + item.OrderTransId + ")' class='btn btn-primary btn-sm ml-1'>Change Warehouse</button>" + " <button onclick = 'CancelTicket(" + item.OrderTransId + ")' class=''>Change LGC</button> &nbsp;";
                         actionURL = actionURL + "</ul>";
 
                         string productTypeDesc = null; string productCatDesc = null; string statusCode = null;

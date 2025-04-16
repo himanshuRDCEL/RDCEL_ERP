@@ -30713,9 +30713,10 @@ button.multiselect.dropdown-toggle.custom-select {
     transform: translate(-15px, -50%) rotate(0deg);
 }
 
-
+#mobilemenu{
+    display:none;
+}
 /* Added by A.k 28/08/2023 */
-
 @media (max-width:756px) {
     #btnprocessqc {
         padding-bottom: 20px;
@@ -30738,5 +30739,28 @@ button.multiselect.dropdown-toggle.custom-select {
     }
     .nav{
         width:250px;
+    }
+}
+
+@media (max-width:600px) {
+    #sidebarMenu {
+        position: fixed;
+        top: 1%;
+        z-index: 6;
+        width: 231px;
+    }
+
+    #mobilemenu {
+        background: transparent;
+        border: none;
+        display: block;
+    }
+
+    .sidebar .sidebar-text {
+        font-size: 13px;
+    }
+
+    .sidebar .multi-level .nav-link {
+        padding: 10px 10px 10px 4px !important;
     }
 }

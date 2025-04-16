@@ -16,6 +16,6 @@ namespace RDCELERP.DAL.Entities
         public DateTime? ModifiedDate { get; set; }
 
         public virtual TblUser? CreatedByNavigation { get; set; }
-        public virtual TblExchangeOrderStatus Status { get; set; } = null!;
+        public virtual TblUser? ModifiedByNavigation { get; set; }
     }
 }

@@ -45,6 +45,11 @@ using MediaToolkit.Model;
 using MediaToolkit.Options;
 using System.Collections;
 using NPOI.SS.Formula.Functions;
+using RDCELERP.Model.Whatsapp;
+using RDCELERP.Model.ResponseModel;
+using System.ComponentModel;
+using System.Reflection;
+using System.Net;
 
 namespace RDCELERP.Core.App.Pages.QCIndex
 {
@@ -395,7 +400,7 @@ namespace RDCELERP.Core.App.Pages.QCIndex
                         }
                         else
                         {
-                            fileName = QCCommentViewModel.ExchangeOrderViewModel.RegdNo + DateTime.Now.ToString("yyyyMMddHHmmssFFF") + Path.GetExtension("image.jpeg");                            
+                            fileName = QCCommentViewModel.ExchangeOrderViewModel.RegdNo + DateTime.Now.ToString("yyyyMMddHHmmssFFF") + Path.GetExtension("image.jpeg");
                         }
 
                         string filePath = _baseConfig.Value.MVCPhysicalURL;
@@ -477,7 +482,7 @@ namespace RDCELERP.Core.App.Pages.QCIndex
                         string baseUrl = string.Empty;
                         string url = string.Empty;
                         var enableEvcAutoAllocation = _config.Value.EvcAutoAllocation;
-                        
+
                         if (QCCommentViewModel.StatusId == (int)OrderStatusEnum.Waitingforcustapproval || QCCommentViewModel.StatusId == (int)OrderStatusEnum.QCByPass)
                         {
                             tblExchangeOrder = _ExchangeOrderRepository.GetRegdNo(QCCommentViewModel.ExchangeOrderViewModel.RegdNo);
@@ -502,48 +507,60 @@ namespace RDCELERP.Core.App.Pages.QCIndex
                                 {
                                     if (isupirequired == true)
                                     {
+                                        #region sa whtaspp msg
                                         WhatasappResponse whatasappResponse = new WhatasappResponse();
-
 
                                         WhatsappTemplate whatsappObj = new WhatsappTemplate();
                                         whatsappObj.userDetails = new UserDetails();
                                         whatsappObj.notification = new QCFinalPrice();
                                         whatsappObj.notification.@params = new SendDate();
                                         whatsappObj.userDetails.number = tblCustomerDetail.PhoneNumber;
-                                        whatsappObj.notification.sender = _baseConfig.Value.YelloaiSenderNumber;
-                                        whatsappObj.notification.type = _baseConfig.Value.YellowaiMesssaheType;
-                                        whatsappObj.notification.@params.Customername = tblCustomerDetail.FirstName + " " + tblCustomerDetail.LastName;
-                                        whatsappObj.notification.templateId = NotificationConstants.WaitingForPrice_Approval_instant_settlement;// deferred_settlement Template
-                                        if (QCCommentViewModel.StatusId == (int)OrderStatusEnum.QCByPass)
+                                        string templateId = NotificationConstants.qc_completed;
+                                        string phoneNumber = tblCustomerDetail.PhoneNumber;
+                                        string customerName = $"{tblCustomerDetail.FirstName} {tblCustomerDetail.LastName}";
+                                        string finalQcPrice = QCCommentViewModel.StatusId == (int)OrderStatusEnum.QCByPass
+                                            ? tblExchangeOrder.ExchangePrice.ToString()
+                                            : QCCommentViewModel.PriceAfterQC.ToString();
+
+
+                                        string pageLink = _baseConfig.Value.BaseURL +
+                                            $"PaymentDetails/ConfirmPaymentDetails?regdNo={QCCommentViewModel.ExchangeOrderViewModel.RegdNo}&status={QCCommentViewModel.StatusId}";
+
+                                        List<string> templateParams = new List<string>
+                                    {
+                                        finalQcPrice,
+                                        pageLink
+                                    };    // Send WhatsApp message
+                                        HttpResponseDetails responsewht = _whatsappNotificationManager.SendWhatsAppMessageAsync(
+                                            templateId,
+                                            phoneNumber,
+                                            templateParams
+                                        ).GetAwaiter().GetResult();
+                                       
+
+                                        string ResponseCode = responsewht.Response.StatusCode.ToString();
+                                        string WhatsappEnum = EnumHelper.DescriptionAttr(RDCELERP.Common.Enums.WhatsappEnum.SuccessCode).ToString();
+                                        if (ResponseCode == WhatsappEnum)
                                         {
-                                            whatsappObj.notification.@params.FinalQcPrice = tblExchangeOrder.ExchangePrice;
+                                            string responseforWhatasapp = responsewht.Content;
+                                            if (responseforWhatasapp != null)
+                                            {
+                                                tblwhatsappmessage = new TblWhatsAppMessage();
+                                                whatasappResponse = JsonConvert.DeserializeObject<WhatasappResponse>(responsewht.Content);
+                                                //tblwhatsappmessage.TemplateName = NotificationConstants.WaitingForPrice_Approval_deferred_settlement;
+                                                tblwhatsappmessage.TemplateName = whatsappObj.notification.templateId;
+                                                tblwhatsappmessage.IsActive = true;
+                                                tblwhatsappmessage.PhoneNumber = tblCustomerDetail.PhoneNumber;
+                                                tblwhatsappmessage.SendDate = DateTime.Now;
+                                                tblwhatsappmessage.MsgId = whatasappResponse.msgId;
+                                                _whatsAppMessageRepository.Create(tblwhatsappmessage);
+                                                _whatsAppMessageRepository.SaveChanges();
+                                            }
                                         }
-                                        else
-                                        {
-
-                                            whatsappObj.notification.@params.FinalQcPrice = QCCommentViewModel.PriceAfterQC;
-                                        }
-
-                                        baseUrl = _baseConfig.Value.BaseURL + "PaymentDetails/ConfirmPaymentDetails?regdNo=" + QCCommentViewModel.ExchangeOrderViewModel.RegdNo + "&status=" + QCCommentViewModel.StatusId;
-                                        whatsappObj.notification.@params.PageLink = baseUrl;
-                                        url = _baseConfig.Value.YellowAiUrl;
-
-
-                                        RestResponse response = _whatsappNotificationManager.Rest_InvokeWhatsappserviceCall(url, Method.Post, whatsappObj);
-                                        if (response.Content != null)
-                                        {
-                                            tblwhatsappmessage = new TblWhatsAppMessage();
-                                            whatasappResponse = JsonConvert.DeserializeObject<WhatasappResponse>(response.Content);
-                                            //tblwhatsappmessage.TemplateName = NotificationConstants.WaitingForPrice_Approval_deferred_settlement;
-                                            tblwhatsappmessage.TemplateName = whatsappObj.notification.templateId;
-                                            tblwhatsappmessage.IsActive = true;
-                                            tblwhatsappmessage.PhoneNumber = tblCustomerDetail.PhoneNumber;
-                                            tblwhatsappmessage.SendDate = DateTime.Now;
-                                            tblwhatsappmessage.MsgId = whatasappResponse.msgId;
-                                            _whatsAppMessageRepository.Create(tblwhatsappmessage);
-                                            _whatsAppMessageRepository.SaveChanges();
-                                        }
+                                        #endregion
                                     }
+
+
                                     else
                                     {
                                         WhatsAppResponse whatsAppResponse = new WhatsAppResponse();
@@ -551,21 +568,31 @@ namespace RDCELERP.Core.App.Pages.QCIndex
                                         WhatsappPickUpDateTemplate whatsappPickUpDateObj = new WhatsappPickUpDateTemplate();
                                         whatsappPickUpDateObj.userDetails = new PickUpDateUserDetails();
                                         whatsappPickUpDateObj.notification = new WhatsappPickupDateVM();
-                                        whatsappPickUpDateObj.notification.@params = new SendPickUpDate();
-                                        whatsappPickUpDateObj.userDetails.number = tblCustomerDetail.PhoneNumber;
-                                        whatsappPickUpDateObj.notification.sender = _baseConfig.Value.YelloaiSenderNumber;
-                                        whatsappPickUpDateObj.notification.type = _baseConfig.Value.YellowaiMesssaheType;
-                                        whatsappPickUpDateObj.notification.@params.Customername = tblCustomerDetail.FirstName + " " + tblCustomerDetail.LastName;
-                                        whatsappPickUpDateObj.notification.templateId = NotificationConstants.WaitingForPrice_Approval_deferred_settlement; // instant_settlement Template
+                                        #region sa
+                                        string templateId = NotificationConstants.qc_completed;
+                                        string phoneNumber = tblCustomerDetail.PhoneNumber;
+                                        string customerName = $"{tblCustomerDetail.FirstName} {tblCustomerDetail.LastName}";
+                                        string pageLink = _baseConfig.Value.BaseURL +
+                                            $"PaymentDetails/ConfirmPaymentDetails?regdNo={QCCommentViewModel.ExchangeOrderViewModel.RegdNo}&status={QCCommentViewModel.StatusId}";
 
-                                        baseUrl = _baseConfig.Value.BaseURL + "PaymentDetails/ConfirmPaymentDetails?regdNo=" + QCCommentViewModel.ExchangeOrderViewModel.RegdNo + "&status=" + QCCommentViewModel.StatusId;
-                                        whatsappPickUpDateObj.notification.@params.PageLink = baseUrl;
-                                        url = _baseConfig.Value.YellowAiUrl;
+                                        List<string> templateParams = new List<string>
+    {
+        customerName,
+        pageLink
+    };
+                                        HttpResponseDetails response = _whatsappNotificationManager.SendWhatsAppMessageAsync(
+                                            templateId,
+                                            phoneNumber,
+                                            templateParams
+                                        ).GetAwaiter().GetResult();
 
-                                        RestResponse response = _whatsappNotificationManager.Rest_InvokeWhatsappserviceCall(url, Method.Post, whatsappPickUpDateObj);
+                                        string ResponseCode = response.Response.StatusCode.ToString();
+                                        string WhatssAppStatusEnum = ExchangeOrderManager.GetEnumDescription(RDCELERP.Common.Enums.WhatsappEnum.SuccessCode).ToString();
+                                        #endregion
 
-                                        if (response.Content != null)
+                                        if (response?.Response?.StatusCode == HttpStatusCode.OK)
                                         {
+
                                             tblwhatsappmessage = new TblWhatsAppMessage();
                                             whatsAppResponse = JsonConvert.DeserializeObject<WhatsAppResponse>(response.Content);
                                             //tblwhatsappmessage.TemplateName = NotificationConstants.WaitingForPrice_Approval_deferred_settlement;
@@ -577,36 +604,38 @@ namespace RDCELERP.Core.App.Pages.QCIndex
                                             _whatsAppMessageRepository.Create(tblwhatsappmessage);
                                             _whatsAppMessageRepository.SaveChanges();
                                         }
+
                                     }
+
+
+                                    #endregion
+
+                                    #region Send SMS and Email
+                                    //smsmessage = NotificationConstants.UpiId_Verfication_SMS.Replace("(customer name)", tblCustomerDetail.FirstName + " " + tblCustomerDetail.LastName).Replace("[Price]", (QCCommentViewModel.PriceAfterQC).ToString()).Replace("[link]", baseUrl);
+                                    //flag = _notificationManager.SendQCSMS(tblCustomerDetail.PhoneNumber, smsmessage);
+
+                                    //string subject = "UPI and Pick-up details";
+                                    //string htmlbody = NotificationConstants.UpiId_Verfication_Email.Replace("[Customername]", tblCustomerDetail.FirstName + " " + tblCustomerDetail.LastName).Replace("[Priceafterqc]", (QCCommentViewModel.PriceAfterQC).ToString()).Replace("[link]", baseUrl);
+                                    //string too = tblCustomerDetail.Email;
+
+                                    //EmailResponse = _emailTemplateManager.CommonEmailBody(too, htmlbody, subject);
+                                    #endregion
+
+                                    #region Send SMS and Email for Discount Voucher
+                                    //tblBusinessPartner = _businessPartnerRepository.GetBPId(tblExchangeOrder.BusinessPartnerId);
+                                    //if (tblBusinessPartner != null && tblBusinessPartner.IsVoucher == true && tblBusinessPartner.VoucherType == 1)
+                                    //{                               
+                                    //    smsmessage = NotificationConstants.PickUp_Details_SMS.Replace("(customer name)", tblCustomerDetail.FirstName + " " + tblCustomerDetail.LastName).Replace("[link]", baseUrl);
+                                    //    flag = _notificationManager.SendQCSMS(tblCustomerDetail.PhoneNumber, smsmessage);
+                                    //    string Pickupsubject = "Pick-up details";
+                                    //    string Content = NotificationConstants.PickUp_Details_Email.Replace("[Customername]", tblCustomerDetail.FirstName + " " + tblCustomerDetail.LastName).Replace("[link]", baseUrl);
+                                    //    string Sendtoo = tblCustomerDetail.Email;
+                                    //    EmailResponse = _emailTemplateManager.CommonEmailBody(Sendtoo, Content, Pickupsubject);                               
+                                    //}
+                                    #endregion
                                 }
-                               
-                                #endregion
-
-                                #region Send SMS and Email
-                                //smsmessage = NotificationConstants.UpiId_Verfication_SMS.Replace("(customer name)", tblCustomerDetail.FirstName + " " + tblCustomerDetail.LastName).Replace("[Price]", (QCCommentViewModel.PriceAfterQC).ToString()).Replace("[link]", baseUrl);
-                                //flag = _notificationManager.SendQCSMS(tblCustomerDetail.PhoneNumber, smsmessage);
-
-                                //string subject = "UPI and Pick-up details";
-                                //string htmlbody = NotificationConstants.UpiId_Verfication_Email.Replace("[Customername]", tblCustomerDetail.FirstName + " " + tblCustomerDetail.LastName).Replace("[Priceafterqc]", (QCCommentViewModel.PriceAfterQC).ToString()).Replace("[link]", baseUrl);
-                                //string too = tblCustomerDetail.Email;
-
-                                //EmailResponse = _emailTemplateManager.CommonEmailBody(too, htmlbody, subject);
-                                #endregion
-
-                                #region Send SMS and Email for Discount Voucher
-                                //tblBusinessPartner = _businessPartnerRepository.GetBPId(tblExchangeOrder.BusinessPartnerId);
-                                //if (tblBusinessPartner != null && tblBusinessPartner.IsVoucher == true && tblBusinessPartner.VoucherType == 1)
-                                //{                               
-                                //    smsmessage = NotificationConstants.PickUp_Details_SMS.Replace("(customer name)", tblCustomerDetail.FirstName + " " + tblCustomerDetail.LastName).Replace("[link]", baseUrl);
-                                //    flag = _notificationManager.SendQCSMS(tblCustomerDetail.PhoneNumber, smsmessage);
-                                //    string Pickupsubject = "Pick-up details";
-                                //    string Content = NotificationConstants.PickUp_Details_Email.Replace("[Customername]", tblCustomerDetail.FirstName + " " + tblCustomerDetail.LastName).Replace("[link]", baseUrl);
-                                //    string Sendtoo = tblCustomerDetail.Email;
-                                //    EmailResponse = _emailTemplateManager.CommonEmailBody(Sendtoo, Content, Pickupsubject);                               
-                                //}
-                                #endregion
                             }
-                        }                       
+                        }
                     }
                 }
             }
@@ -945,6 +974,9 @@ namespace RDCELERP.Core.App.Pages.QCIndex
             }
             return list;
         }
-        #endregion
-    }
+    #endregion
+
+
+ 
+}
 }

@@ -20,7 +20,7 @@ namespace RDCELERP.DAL.Entities
         public int? BusinessPartnerId { get; set; }
         public int? PriceMasterNameId { get; set; }
 
-        public virtual TblPriceMasterName? PriceMasterName { get; set; }
+        public virtual PriceMasterName? PriceMasterName { get; set; }
         public virtual ICollection<TblBusinessUnit> TblBusinessUnits { get; set; }
         public virtual ICollection<TblSociety> TblSocieties { get; set; }
     }

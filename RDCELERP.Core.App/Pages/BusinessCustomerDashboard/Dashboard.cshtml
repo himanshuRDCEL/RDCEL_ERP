@@ -1,0 +1,140 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.BusinessCustomerDashboard.IndexModel
+@{
+    ViewData["Title"] = "Manager";
+    Layout = "_B2BCustomerLayout";
+}
+
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow border-0">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="fs-5 mb-0">
+                            Dashboard
+                        </h2>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+        <div class="card border-0 shadow">
+
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
+                    </div>
+                    <div class="col-xl-7 px-xl-0">
+
+                        <h2 class="h6 text-gray-400 mb-0">Total Orders</h2>
+                        <h3 class="fw-extrabold mb-2">@Model.DashboardViewModel.BookingOrderCount</h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+        <div class="card border-0 shadow">
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                            <i class="fa-solid fa-ticket"></i>
+                        </div>
+                    </div>
+                    <div class="col-xl-7 px-xl-0">
+                        <h2 class="h6 text-gray-400 mb-0">Inventory</h2>
+                        <h3 class="fw-extrabold mb-2">@Model.DashboardViewModel.TotalItemCount</h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+        <div class="card border-0 shadow">
+
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
+                    </div>
+                    <div class="col-xl-7 px-xl-0">
+
+                        <h2 class="h6 text-gray-400 mb-0">Payment</h2>
+                        <h3 class="fw-extrabold mb-2">00.0 </h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+        <div class="card border-0 shadow">
+
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
+                    </div>
+                    <div class="col-xl-7 px-xl-0">
+
+                        <h2 class="h6 text-gray-400 mb-0">Hot Dealls </h2>
+                        <h3 class="fw-extrabold mb-2">@Model.DashboardViewModel.HotDealsCount</h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow border-0">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="fs-5 mb-0">
+                            Get orders
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+               
+            </div>
+        </div>
+    </div>
+</div>
+<div id="formDiv">
+
+</div>
+
+
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/newlayout/assets/js/exporttable.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script type="text/javascript">
+
+   

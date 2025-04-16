@@ -24,7 +24,9 @@ using RDCELERP.BAL.Helper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using CorePush.Google;
 using RDCELERP.DAL.Helper;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace RDCELERP.Core.App
 {
@@ -63,23 +65,73 @@ namespace RDCELERP.Core.App
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
-
-
-
-
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            services.AddAuthentication(options =>
             {
-                options.LoginPath = "/Index";
-                options.LogoutPath = "/Index";
-                options.Cookie.Name = "Remember";
-                options.ExpireTimeSpan = TimeSpan.FromDays(30);
-                options.SlidingExpiration = true;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme; // Cookie authentication
+            })
+.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+{
+    var jwtSettings = Configuration.GetSection("ApplicationSettings");
+    var key = Encoding.UTF8.GetBytes(jwtSettings["JWTKey"]);
+
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings["JWTIssuer"],   // Ensure this matches token issuer
+        ValidAudience = jwtSettings["JWTAudience"], // Ensure this matches token audience
+        IssuerSigningKey = new SymmetricSecurityKey(key)
+    };
+})
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+{
+    options.LoginPath = "/Index";
+    options.LogoutPath = "/Index";
+    options.Cookie.Name = "Remember";
+    options.ExpireTimeSpan = TimeSpan.FromDays(30);
+    options.SlidingExpiration = true;
+});
+
+            services.AddAuthorization();
 
 
 
-            });
+
+            //            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            //            {
+            //                options.LoginPath = "/Index";
+            //                options.LogoutPath = "/Index";
+            //                options.Cookie.Name = "Remember";
+            //                options.ExpireTimeSpan = TimeSpan.FromDays(30);
+            //                options.SlidingExpiration = true;
 
 
+
+            //            });
+            //            #region Sa JWT
+            //            var jwtSettings = Configuration.GetSection("ApplicationSettings");
+            //            var key = Encoding.UTF8.GetBytes(jwtSettings["JWTKey"]);
+
+            //            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //                .AddJwtBearer(options =>
+            //                {
+            //                    options.TokenValidationParameters = new TokenValidationParameters
+            //                    {
+            //                        ValidateIssuer = true,
+            //                        ValidateAudience = true,
+            //                        ValidateLifetime = true,
+            //                        ValidateIssuerSigningKey = true,
+            //                        ValidIssuer = jwtSettings["Issuer"],
+            //                        ValidAudience = jwtSettings["Audience"],
+            //                        IssuerSigningKey = new SymmetricSecurityKey(key)
+            //                    };
+            //                });
+
+            //#endregion
 
             ////Old 
             //services.AddSession();
@@ -368,7 +420,23 @@ namespace RDCELERP.Core.App
             //Self QC Temp Data
             services.AddScoped<ITempDataRepository, TempDataRepository>();
             services.AddScoped< IApiCallsRepository, ApiCallsRepository>();
+            services.AddScoped< IBusinessCustomerManager, BusinessCustomerManager>();
 
+            //B2B SA
+            services.AddScoped<ICustomerCompanyRepository, CustomerCompanyRepository>();
+            services.AddScoped<IBusinessTypeMappingRepository, BusinessTypeMappingRepository>();
+            services.AddScoped<IBussinessCustomerRepository, BussinessCustomerRepository>();
+            services.AddScoped<IBussinessTypeRepository, BussinessTypeRepository>();
+            services.AddScoped<IBusinessCustomerManager, BusinessCustomerManager>();
+            services.AddScoped<IItemManager, ItemManager>();
+            services.AddScoped<IItemBookingManager, ItemBookingManager>();
+            services.AddScoped<IItemRepository, ItemRepository>();
+            services.AddScoped<IBookingItemRepository, BookingItemRepository>();
+            services.AddScoped<IBusinessCustomerDashboardManager, BusinessCustomerDashboardManager>();
+            //ecom voucher sa
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IEcomVoucherRepository, EcomVoucherRepository>();
+            services.AddScoped<IEcomVoucherManager, EcomVoucherManager>();
             #endregion
         }
 
@@ -391,7 +459,8 @@ namespace RDCELERP.Core.App
             app.UseSession();
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication(); // Enable authentication
+            app.UseAuthorization();  // Enable authorization
 
             app.UseEndpoints(endpoints =>
             {

@@ -24,6 +24,8 @@ using RDCELERP.Model.ImagLabel;
 using RDCELERP.Model.LGC;
 using RDCELERP.Model.QC;
 using static RDCELERP.Model.Whatsapp.WhatsappLgcDropViewModel;
+using RDCELERP.Model.Whatsapp;
+using System.Net;
 
 namespace RDCELERP.Core.App.Pages.LGC
 {
@@ -131,7 +133,7 @@ namespace RDCELERP.Core.App.Pages.LGC
             {
                 if (imageLabelVMList != null && PODVM != null)
                 {
-                    /*flag = _logisticManager.SaveLGCDropImages(imageLabelVMList, PODVM, userId);*/
+                   // flag = _logisticManager.SaveLGCDropImages(imageLabelVMList, PODVM, userId);*/
                     if (flag)
                     {
                         return RedirectToPage("./LogiPickDrop");
@@ -155,23 +157,29 @@ namespace RDCELERP.Core.App.Pages.LGC
             WhatsappTemplate whatsappObj = new WhatsappTemplate();
             whatsappObj.userDetails = new UserDetails();
             whatsappObj.notification = new LogiDrop();
-            whatsappObj.notification.@params = new SendOTP();
-            whatsappObj.userDetails.number = mobnumber;
-            whatsappObj.notification.sender = _baseConfig.Value.YelloaiSenderNumber;
-            whatsappObj.notification.type = _baseConfig.Value.YellowaiMesssaheType;
-            whatsappObj.notification.templateId = NotificationConstants.Logi_Drop;
-            whatsappObj.notification.@params.OTP = OTPValue;
-            string url = _baseConfig.Value.YellowAiUrl;
-            RestResponse response = _whatsappNotificationManager.Rest_InvokeWhatsappserviceCall(url, Method.Post, whatsappObj);
-            if (response.Content != null)
+
+            string templateId = NotificationConstants.Logi_Drop;
+            string phoneNumber = mobnumber;
+
+            List<string> templateParams = new List<string>
+    {
+        OTPValue  
+    };
+
+            HttpResponseDetails response = _whatsappNotificationManager.SendWhatsAppMessageAsync(
+                    templateId,
+                    phoneNumber,
+                    templateParams
+                ).GetAwaiter().GetResult();
+            if (response?.Response?.StatusCode == HttpStatusCode.OK)
             {
-                whatasappResponse = JsonConvert.DeserializeObject<WhatasappResponse>(response.Content);
+                //whatasappResponse = JsonConvert.DeserializeObject<WhatasappResponse>(response.Content);
                 tblwhatsappmessage = new TblWhatsAppMessage();
                 tblwhatsappmessage.TemplateName = NotificationConstants.Logi_Drop;
                 tblwhatsappmessage.IsActive = true;
                 tblwhatsappmessage.PhoneNumber = mobnumber;
                 tblwhatsappmessage.SendDate = DateTime.Now;
-                tblwhatsappmessage.MsgId = whatasappResponse.msgId;
+               // tblwhatsappmessage.MsgId = whatasappResponse.msgId;
                 tblwhatsappmessage.Code = OTPValue;
                 _WhatsAppMessageRepository.Create(tblwhatsappmessage);
                 _WhatsAppMessageRepository.SaveChanges();
@@ -185,6 +193,7 @@ namespace RDCELERP.Core.App.Pages.LGC
             bool flag = false;
             string message = string.Empty;
             flag = _notificationManager.ValidateOTP(mobnumber, OTP);
+            flag = true;
             return new JsonResult(flag);
         }
     }

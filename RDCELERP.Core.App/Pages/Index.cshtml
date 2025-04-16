@@ -1,8 +1,6 @@
 ﻿@page
 @model RDCELERP.Core.App.Pages.IndexModel
-@*@section scripts{
-            <partial name="_ValidationScriptsPartial" />
-    }*@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,57 +18,7 @@
         setTimeout("preventBack()", 0);
         window.onunload = function () { null };
     </script>
-    @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Cookies.js/0.4.0/cookies.js"></script>
-    <script src="~/js/jquery.cookie.js"></script>
-    <script type="text/javascript">
-    $(function () {
-    $("#btnLogin").on("click", function () {
-
-    var rememberMe = $('#remember').prop('checked');
-    if (rememberMe) {
-
-    var email = $('#txtUserId').val();
-    var password = $('#txtPassword').val();
-    // Make Ajax call to controller and validate user inputs.
-    // If valid userid and password set cookies in Ajax Success function.
-    $.cookie('email', Email, { expires: 1 });
-    $.cookie('password', Password, { expires: 1 });
-    $.cookie('rememberMe', true, { expires: 1 });
-    }
-    else {
-
-    $.cookie('email', null);
-    $.cookie('password', null);
-    $.cookie('rememberMe', null);
-    }
-    });
-    var remember = $.cookie('rememberMe');
-    if (remember == 'true') {
-
-    var mail = $.cookie('email');
-    $('#txtUserId').attr("value", mail);
-    var Pass = $.cookie('password');
-    $('#txtPassword').attr("value", Pass);
-    }
-    $("#txtUserId").on("input", function () {
-    var remember = $.cookie('rememberMe');
-    if (remember == 'true') {
-
-    var email = $.cookie('email');
-    var uId = $("#txtUserId").val();
-    if (email == uId) {
-
-    var Password = $.cookie('password');
-    $('#txtPassword').val(Password);
-    } else {
-    $('#txtPassword').val('');
-    }
-    }
-    });
-    });
-    </script>*@
-
+   
     <link href="~/newlayout/css/v2.0.css" rel="stylesheet" />
 
 </head>

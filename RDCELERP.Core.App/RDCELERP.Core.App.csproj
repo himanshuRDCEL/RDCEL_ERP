@@ -76,7 +76,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\ABB\ABBRegistrationD2C.cshtml" />
+    <Content Remove="Pages\EcomVoucher\Index.cshtml" />
     <Content Remove="Pages\PriceMasterMapping\Delete.cshtml" />
     <Content Remove="Pages\PriceMasterMapping\Details.cshtml" />
     <Content Remove="Pages\PriceMasterMapping\Edit.cshtml" />
@@ -160,21 +160,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Pages\ABBPlanMaster\Delete.cshtml" />
-    <None Include="Pages\ABBPlanMaster\Details.cshtml" />
-    <None Include="Pages\ABBPlanMaster\Edit.cshtml" />
-    <None Include="Pages\ABBPlanMaster\Index.cshtml" />
-    <None Include="Pages\ABBPlanMaster\Manage.cshtml" />
-    <None Include="Pages\ABBPriceMaster\Delete.cshtml" />
-    <None Include="Pages\ABBPriceMaster\Details.cshtml" />
-    <None Include="Pages\ABBPriceMaster\Edit.cshtml" />
-    <None Include="Pages\ABBPriceMaster\Index.cshtml" />
-    <None Include="Pages\ABBPriceMaster\Manage.cshtml" />
-    <None Include="Pages\ABBRedemption\ABBRedemption.cshtml" />
-    <None Include="Pages\ABB\ABBApproved.cshtml" />
-    <None Include="Pages\ABB\ABBRegistrationD2C.cshtml" />
-    <None Include="Pages\ABB\ABBRegistration.cshtml" />
-    <None Include="Pages\ABB\NotApproved.cshtml" />
     <None Include="Pages\AccessList\Create.cshtml" />
     <None Include="Pages\AccessList\Delete.cshtml" />
     <None Include="Pages\AccessList\Details.cshtml" />
@@ -186,9 +171,9 @@
     <None Include="Pages\BusinessPartner\Index.cshtml" />
     <None Include="Pages\BusinessPartner\Manage.cshtml" />
     <None Include="Pages\DealerDashboard\ExchangeDashboard.cshtml" />
-    <None Include="Pages\EVC_Allocation\Not_Allocated.cshtml" />
-    <None Include="Pages\EVC_Portal\EVC_Dashboard.cshtml" />
-    <None Include="Pages\EVC_Portal\EVC_UserProfile.cshtml" />
+    <None Include="Pages\EcomVoucher\Index.cshtml" />
+    <None Include="Pages\Warehouse_Portal\Warehouse_Dashboard.cshtml" />
+    <None Include="Pages\Warehouse_Portal\Warehouse_UserProfile.cshtml" />
     <None Include="Pages\ImageLabelMaster\Delete.cshtml" />
     <None Include="Pages\ImageLabelMaster\Details.cshtml" />
     <None Include="Pages\ImageLabelMaster\Edit.cshtml" />
@@ -525,5 +510,13 @@
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="https://json.schemastore.org/avro-avsc.json" /></VisualStudio></ProjectExtensions>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\EcomVoucher\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\EcomVoucher\Index.cshtml" />
+  </ItemGroup>
 
 </Project>

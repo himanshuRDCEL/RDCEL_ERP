@@ -36,14 +36,19 @@ namespace RDCELERP.BAL.MasterManager
         IEVCPODDetailsRepository _eVCPODDetailsRepository;
         IProductTypeRepository _ProductTypeRepository;
         IEVCPartnerRepository _eVCPartnerRepository;
+        IBrandRepository _brandRepository;
+        ICategoryRepository _categoryRepository;
+
         #endregion
 
-        public DropdownManager(IOrderLGCRepository orderLGCRepository, IEVCPODDetailsRepository eVCPODDetailsRepository, IProductTypeRepository productTypeRepository, IEVCPartnerRepository eVCPartnerRepository)
+        public DropdownManager(IOrderLGCRepository orderLGCRepository, IEVCPODDetailsRepository eVCPODDetailsRepository, IProductTypeRepository productTypeRepository, IEVCPartnerRepository eVCPartnerRepository, IBrandRepository brandRepository, ICategoryRepository categoryRepository)
         {
             _orderLGCRepository = orderLGCRepository;
             _eVCPODDetailsRepository = eVCPODDetailsRepository;
             _ProductTypeRepository = productTypeRepository;
             _eVCPartnerRepository = eVCPartnerRepository;
+            _brandRepository = brandRepository;
+            _categoryRepository = categoryRepository;
         }
 
         #region Get EVC City Dropdown from EVCPODDetails
@@ -281,6 +286,79 @@ namespace RDCELERP.BAL.MasterManager
             return SelectListobject;
 
         }
+        #endregion
+
+        #region Ecom sa
+        /// <summary>
+        /// method to get brand list
+        /// </summary>
+        /// <param name="businessunitId"></param>
+        /// <returns></returns>
+        public List<SelectListItem> GetBrandListByBUId(int ?businessunitId)
+        {
+            List<TblBrand> TblBrandList = null;
+            List<SelectListItem> BrandDDL = new List<SelectListItem>();
+
+            try
+            {
+                TblBrandList = _brandRepository.GetList(x=>x.BusinessUnitId == businessunitId && x.IsActive==true).ToList();
+                if (TblBrandList != null && TblBrandList.Count > 0)
+                {
+                    TblBrandList = TblBrandList.Distinct().ToList();
+                    BrandDDL = TblBrandList.ConvertAll(a =>
+                    {
+                        return new SelectListItem()
+                        {
+                            Text = a.Name,
+                            Value = a.Id.ToString(),
+                            Selected = false
+                        };
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return BrandDDL;
+
+        }
+        /// <summary>
+        /// method to get category list by brand id
+        /// </summary>
+        /// <param name="brandId"></param>
+        /// <returns></returns>
+        public List<SelectListItem> GetcategoryListByBrandId(int? brandId)
+        {
+            List<TblCategory> TblCategoryList = null;
+            List<SelectListItem> CategoryDDL = new List<SelectListItem>();
+
+            try
+            {
+                TblCategoryList = _categoryRepository.GetList(x=>x.BrandId == brandId && x.IsActive==true).ToList();
+                if (TblCategoryList != null && TblCategoryList.Count > 0)
+                {
+                    TblCategoryList = TblCategoryList.Distinct().ToList();
+                    CategoryDDL = TblCategoryList.ConvertAll(a =>
+                    {
+                        return new SelectListItem()
+                        {
+                            Text = a.Name,
+                            Value = a.CategoryId.ToString(),
+                            Selected = false
+                        };
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return CategoryDDL;
+
+        }
+
+
         #endregion
     }
 

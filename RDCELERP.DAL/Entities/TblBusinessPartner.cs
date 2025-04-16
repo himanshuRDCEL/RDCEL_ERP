@@ -10,6 +10,7 @@ namespace RDCELERP.DAL.Entities
             TblAbbredemptions = new HashSet<TblAbbredemption>();
             TblAbbregistrations = new HashSet<TblAbbregistration>();
             TblBppincodeMappings = new HashSet<TblBppincodeMapping>();
+            TblCouponMasters = new HashSet<TblCouponMaster>();
             TblExchangeOrders = new HashSet<TblExchangeOrder>();
             TblModelMappings = new HashSet<TblModelMapping>();
             TblModelNumbers = new HashSet<TblModelNumber>();
@@ -69,15 +70,19 @@ namespace RDCELERP.DAL.Entities
         public decimal? SweetenerBu { get; set; }
         public decimal? SweetenerBp { get; set; }
         public decimal? SweetenerDigi2l { get; set; }
-        public string? Upiid { get; set; }
         public bool? IsDefaultPickupAddress { get; set; }
+        public string? Upiid { get; set; }
         public bool? IsUnInstallationRequired { get; set; }
+        public bool? IsBarcodeReaderEnable { get; set; }
+        public bool? IsSrNumValidationEnable { get; set; }
+        public bool? IsCouponsAvailable { get; set; }
 
         public virtual TblBusinessUnit? BusinessUnit { get; set; }
         public virtual TblCity? CityNavigation { get; set; }
         public virtual ICollection<TblAbbredemption> TblAbbredemptions { get; set; }
         public virtual ICollection<TblAbbregistration> TblAbbregistrations { get; set; }
         public virtual ICollection<TblBppincodeMapping> TblBppincodeMappings { get; set; }
+        public virtual ICollection<TblCouponMaster> TblCouponMasters { get; set; }
         public virtual ICollection<TblExchangeOrder> TblExchangeOrders { get; set; }
         public virtual ICollection<TblModelMapping> TblModelMappings { get; set; }
         public virtual ICollection<TblModelNumber> TblModelNumbers { get; set; }

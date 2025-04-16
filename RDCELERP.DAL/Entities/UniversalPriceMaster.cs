@@ -10,9 +10,8 @@ namespace RDCELERP.DAL.Entities
         public string? PriceMasterName { get; set; }
         public int? ProductCategoryId { get; set; }
         public string? ProductCategoryName { get; set; }
-        public int? ProductTypeId { get; set; }
+        public int? ProductType { get; set; }
         public string? ProductTypeName { get; set; }
-        public string? ProductTypeCode { get; set; }
         public string? BrandName1 { get; set; }
         public string? BrandName2 { get; set; }
         public string? BrandName3 { get; set; }
@@ -38,6 +37,6 @@ namespace RDCELERP.DAL.Entities
         public virtual TblUser? ModifiedByNavigation { get; set; }
         public virtual PriceMasterName? PriceMasterNameNavigation { get; set; }
         public virtual TblProductCategory? ProductCategory { get; set; }
-        public virtual TblProductType? ProductType { get; set; }
+        public virtual TblProductType? ProductTypeNavigation { get; set; }
     }
 }

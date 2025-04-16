@@ -10,6 +10,14 @@
         <div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
             <div class="d-flex align-items-center searchwrapper">
                 <div class="d-flex">
+                    <button type="button" id="mobilemenu">
+                        <span class="hamburger-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+
+                    </button>
                      <img src="~/images/Rocking Deals Logo 2-01.png" style="max-width:223px; margin-left:50px;"/>
                @*      <button type="button" >
                         <span class="hamburger-icon">
@@ -76,3 +84,17 @@
 </nav>
 
 
+<script>
+    $(document).ready(function () {
+        // Mobile Menu Toggle
+        $('#mobilemenu').click(function () {
+            $('#sidebarMenu').slideToggle();
+        });
+
+        // Close Menu on Close Button Click
+        $('#closemenu').click(function () {
+            $('#sidebarMenu').hide();
+        });
+    });
+
+</script>

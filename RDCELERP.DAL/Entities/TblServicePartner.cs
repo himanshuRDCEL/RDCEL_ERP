@@ -8,6 +8,7 @@ namespace RDCELERP.DAL.Entities
         public TblServicePartner()
         {
             MapServicePartnerCityStates = new HashSet<MapServicePartnerCityState>();
+            TblDriverDetails = new HashSet<TblDriverDetail>();
             TblDriverLists = new HashSet<TblDriverList>();
             TblExchangeAbbstatusHistories = new HashSet<TblExchangeAbbstatusHistory>();
             TblLogistics = new HashSet<TblLogistic>();
@@ -17,7 +18,7 @@ namespace RDCELERP.DAL.Entities
         }
 
         public int ServicePartnerId { get; set; }
-        public string? ServicePartnerName { get; set; }
+        public string ServicePartnerName { get; set; } = null!;
         public string? ServicePartnerDescription { get; set; }
         public bool? IsActive { get; set; }
         public int? CreatedBy { get; set; }
@@ -58,6 +59,7 @@ namespace RDCELERP.DAL.Entities
         public virtual TblState? ServicePartnerState { get; set; }
         public virtual TblUser? User { get; set; }
         public virtual ICollection<MapServicePartnerCityState> MapServicePartnerCityStates { get; set; }
+        public virtual ICollection<TblDriverDetail> TblDriverDetails { get; set; }
         public virtual ICollection<TblDriverList> TblDriverLists { get; set; }
         public virtual ICollection<TblExchangeAbbstatusHistory> TblExchangeAbbstatusHistories { get; set; }
         public virtual ICollection<TblLogistic> TblLogistics { get; set; }

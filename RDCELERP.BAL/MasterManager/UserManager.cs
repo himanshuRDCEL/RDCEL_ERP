@@ -26,6 +26,7 @@ using Mailjet.Client.Resources;
 using RDCELERP.Model.MobileApplicationModel.Common;
 using RDCELERP.Model.MobileApplicationModel.LGC;
 using RDCELERP.Model.DriverDetails;
+using RDCELERP.Model.Company;
 
 namespace RDCELERP.BAL.MasterManager
 {
@@ -184,6 +185,13 @@ namespace RDCELERP.BAL.MasterManager
 
                         loginVM = new LoginViewModel();
                         loginVM.UserViewModel = UserVM;
+
+                        TblCompany tblCompany = _companyRepository.GetCompanyId(TblUser.CompanyId);
+                        if (tblCompany != null)
+                        {
+                            loginVM.CompanyViewModel = _mapper.Map<TblCompany, CompanyViewModel>(tblCompany);
+
+                        }
 
                     }
                 }

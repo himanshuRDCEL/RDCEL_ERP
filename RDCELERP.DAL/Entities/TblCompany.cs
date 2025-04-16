@@ -9,6 +9,8 @@ namespace RDCELERP.DAL.Entities
         {
             TblAccessLists = new HashSet<TblAccessList>();
             TblAddresses = new HashSet<TblAddress>();
+            TblCategories = new HashSet<TblCategory>();
+            TblEcomVouchers = new HashSet<TblEcomVoucher>();
             TblRoleAccesses = new HashSet<TblRoleAccess>();
             TblRoles = new HashSet<TblRole>();
             TblUserRoles = new HashSet<TblUserRole>();
@@ -34,6 +36,8 @@ namespace RDCELERP.DAL.Entities
         public virtual TblUser? ModifiedByNavigation { get; set; }
         public virtual ICollection<TblAccessList> TblAccessLists { get; set; }
         public virtual ICollection<TblAddress> TblAddresses { get; set; }
+        public virtual ICollection<TblCategory> TblCategories { get; set; }
+        public virtual ICollection<TblEcomVoucher> TblEcomVouchers { get; set; }
         public virtual ICollection<TblRoleAccess> TblRoleAccesses { get; set; }
         public virtual ICollection<TblRole> TblRoles { get; set; }
         public virtual ICollection<TblUserRole> TblUserRoles { get; set; }

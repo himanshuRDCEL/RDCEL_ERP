@@ -49,16 +49,7 @@
                     </div>
                 </nav>
             </div>
-            <!--<div class="col">
-                <div class="row datefilter">
-                    <div class="col-md-12 text-right datefilter-right">
-                        <input type="text" class="form-control d-inline mb-2" id="startdate" placeholder="Start Date" autocomplete="off">
-                        <input type="text" class="form-control d-inline mb-2" id="enddate" placeholder="End Date" autocomplete="off">-->
-            @*<input type="submit" class="d-inline btn btn-primary" value="Submit">*@
-            <!--<button id="filter-dates" class="btn btn-primary">Filter</button>
-                    </div>
-                </div>
-            </div>-->
+           
         </div>
         <div class="row">
             <div class="col-12 mb-4">
@@ -290,7 +281,7 @@
                                         @* EVCRegd No Filter *@
                                         <p class="filterheading">
                                             <input type="checkbox" name="" id="chkevcregdNo">
-                                            <label for="chkevcregdNo">EVC Regd No</label>
+                                            <label for="chkevcregdNo">Warehouse Regd No</label>
                                         </p>
                                         <div class="filterbox">
                                             @*<input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">*@
@@ -301,7 +292,7 @@
                                         @* EVCStoreCode No Filter *@
                                         <p class="filterheading">
                                             <input type="checkbox" name="" id="chkevcstoreCode">
-                                            <label for="chkevcstoreCode">EVC Partner Code</label>
+                                            <label for="chkevcstoreCode">Warehouse Partner Code</label>
                                         </p>
                                         <div class="filterbox">
                                             <input type="text" class="form-control d-inline" id="evcstoreCode" placeholder="Search EVC Partner Code">
@@ -456,7 +447,7 @@
         //For Export Buttons available inside jquery-datatable "server side processing" - End
     function ReassignOrder(Id) {
         $('#loader').show();
-        window.location.href = '@ViewData["URLPrefixforProd"]/EVC_Allocation/ReassignFrom?OId=' + Id;
+        window.location.href = '@ViewData["URLPrefixforProd"]/Warehouse_Allocation/ReassignFrom?OId=' + Id;
     }
     //Approved EVC
     function GenrateCreditRequest(id) {
@@ -800,7 +791,7 @@
                     },
                     {
                         extend: 'excel', text: '<div class="exportbtnwrapper"><button class="btn btn-primary" id="exportbtn"><i class="fa-solid fa-download"></i> Download Excel</button></div>', id: "exportbtn",
-                        title: 'Cancel Ticket By UTC',
+                        title: 'Cancel Ticket By Rocking Deals',
                         action: newexportaction,
                         exportOptions: {
 

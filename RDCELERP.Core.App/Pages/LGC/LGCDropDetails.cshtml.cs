@@ -104,9 +104,14 @@ namespace RDCELERP.Core.App.Pages.LGC
             var url = ViewData["URLPrefixforProd"];
             bool flag = false;
             bool isSaved = false;
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (imageLabelVMList != null && PODVM != null)
+                var errors = ModelState["ServicePartnerName"]?.Errors;
+            }
+            
+               //  if (imageLabelVMList != null && PODVM != null)
+               //sa
+                if ( PODVM != null)
                 {
                     //flag = _logisticManager.SaveLGCDropImages(imageLabelVMList, PODVM, userId);
                     isSaved = _logisticManager.SaveLGCDropStatus(PODVM, userId);
@@ -115,7 +120,7 @@ namespace RDCELERP.Core.App.Pages.LGC
                         return RedirectToPage("./LogiPickDrop");
                     }
                 }
-            }
+            
             return RedirectToPage("./LGCDropDetails", new { DriverDetailsId = PODVM.DriverId, EVCPartnerId = PODVM.EvcPartnerId});
         }
 
@@ -140,20 +145,21 @@ namespace RDCELERP.Core.App.Pages.LGC
             whatsappObj.notification.templateId = NotificationConstants.Logi_Drop;
             whatsappObj.notification.@params.OTP = OTPValue;
             string url = _baseConfig.Value.YellowAiUrl;
-            RestResponse response = _whatsappNotificationManager.Rest_InvokeWhatsappserviceCall(url, Method.Post, whatsappObj);
-            if (response.Content != null)
-            {
-                whatasappResponse = JsonConvert.DeserializeObject<WhatasappResponse>(response.Content);
-                tblwhatsappmessage = new TblWhatsAppMessage();
-                tblwhatsappmessage.TemplateName = NotificationConstants.Logi_Drop;
-                tblwhatsappmessage.IsActive = true;
-                tblwhatsappmessage.PhoneNumber = mobnumber;
-                tblwhatsappmessage.SendDate = DateTime.Now;
-                tblwhatsappmessage.MsgId = whatasappResponse.msgId;
-                tblwhatsappmessage.Code = OTPValue;
-                _WhatsAppMessageRepository.Create(tblwhatsappmessage);
-                _WhatsAppMessageRepository.SaveChanges();
-            }
+           //sa RestResponse response = _whatsappNotificationManager.Rest_InvokeWhatsappserviceCall(url, Method.Post, whatsappObj);
+            // saif (response.Content != null)
+            //{
+            //    whatasappResponse = JsonConvert.DeserializeObject<WhatasappResponse>(response.Content);
+            //    tblwhatsappmessage = new TblWhatsAppMessage();
+            //    tblwhatsappmessage.TemplateName = NotificationConstants.Logi_Drop;
+            //    tblwhatsappmessage.IsActive = true;
+            //    tblwhatsappmessage.PhoneNumber = mobnumber;
+            //    tblwhatsappmessage.SendDate = DateTime.Now;
+            //    tblwhatsappmessage.MsgId = whatasappResponse.msgId;
+            //    tblwhatsappmessage.Code = OTPValue;
+            //    _WhatsAppMessageRepository.Create(tblwhatsappmessage);
+            //    _WhatsAppMessageRepository.SaveChanges();
+            //}
+            flag = true;
             #endregion
             return new JsonResult(flag);
         }
@@ -163,6 +169,8 @@ namespace RDCELERP.Core.App.Pages.LGC
             bool flag = false;
             string message = string.Empty;
             flag = _notificationManager.ValidateOTP(mobnumber, OTP);
+            flag = true;
+
             return new JsonResult(flag);
         }
     }

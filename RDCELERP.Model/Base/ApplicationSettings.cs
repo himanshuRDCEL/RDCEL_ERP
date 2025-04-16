@@ -9,6 +9,7 @@ namespace RDCELERP.Model.Base
     public class ApplicationSettings
     {
         public string? BaseURL { get; set; }
+        public string? B2BBaseURL { get; set; }
         public string? Digi2l_DevContext { get; set; }
         public string? ExcelConString { get; set; }
         public string? SecurityKey { get; set; }
@@ -144,9 +145,18 @@ namespace RDCELERP.Model.Base
         public string? DaikinPushOrderStatusUrl { get; set; }
         public int? DaikinBUId { get; set; }
         public bool IsDaikinAPIOrderStatus { get; set; }
-
+        
+        //sa
         public string AiSensyApiURL { get; set; }
         public string AiSensyApiKey { get; set; }
+
+        public string JWTKey { get; set; }
+        public string JWTIssuer { get; set; }
+
+        public string JWTAudience { get; set; }
+        public string JWTUserName { get; set; }
+        public string JWTPassword { get; set; }
+
 
     }
 }

@@ -17,15 +17,19 @@ namespace RDCELERP.Common.Constant
         public const string SMS_VoucherRedemption_Confirmation = "Dear Customer - Congratulations!!! Your order has been validated and the Voucher code worth Rs. [ExchPrice]/- for [STORENAME] is [VCODE], Please share this with your dealer at the time of purchase of a [COMPANY] product. This code is valid for [VALIDTILLDATE].you can also download the same from [VLink]. From Rocking Deals.";
 
         //Live
-        public const string SMS_LGCPickup_OTP = "Dear Customer - Use [OTP] as your OTP for your product pickup by Rocking Deals. Thank You, Team Rocking Deals.";
-        public const string SMS_Drop_OTP = "Dear Retail Trade Partner - Use [OTP] as your product drop code on Rocking Deals. Thank You, Team Rocking Deals.";
+        public const string SMS_LGCPickup_OTP = "Dear Customer - Use [OTP] as your OTP for your product pickup by ROCKINGDEALS. Thank You,";
+      
         public const string SMS_EVCRegistration_OTP = "Dear Reseller - [OTP] is your OTP for EVC registration. For any help please contact [Contact] by Team Rocking Deals.";
         public const string SMS_Login_OTP = "Dear customer - Your OTP for registering as a Rocking Deals service partner driver is [OTP]. \r\nBest regards, Team Rocking Deals.";
+        //sa
+        public const string Pickup_OTP_SMS = "Dear Customer - Use {#var#} as your OTP for your product pickup by ROCKINGDEALS. Thank You,";
 
-
-        //Whatsapp
+        public const string SMS_Drop_OTP = "Dear Retail Trade Partner - Use [OTP] as your product drop code on RockingDeals. Thank You, Team ROCKINGDEALS.";
         public const string Logi_Pickup = "lgc_pickup";
         public const string Logi_Drop = "lgc_drop";
+        //Whatsapp
+      //  public const string Logi_Pickup = "lgc_pickup";
+      //  public const string Logi_Drop = "lgc_drop";
         public const string SelfQC_Link = "self_qc";
         public const string orderConfirmationForExchangeUpdated = "self_qc_generic_template_new";
 
@@ -93,6 +97,8 @@ namespace RDCELERP.Common.Constant
                         Team Rocking Deals
                        </p>";
         public const string PostSelfQCAlert = "post_selfqc_customer_alert";
+      //sa
+        public const string qc_completed = "qc_completed";
 
         //public const string PostSelfQCAlert = "post_selfqc_customer_alert";
 

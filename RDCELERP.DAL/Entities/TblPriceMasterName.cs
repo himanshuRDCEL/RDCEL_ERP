@@ -7,7 +7,6 @@ namespace RDCELERP.DAL.Entities
     {
         public TblPriceMasterName()
         {
-            Logins = new HashSet<Login>();
             TblExchangeOrders = new HashSet<TblExchangeOrder>();
             TblPriceMasterMappings = new HashSet<TblPriceMasterMapping>();
             TblUniversalPriceMasters = new HashSet<TblUniversalPriceMaster>();
@@ -24,7 +23,6 @@ namespace RDCELERP.DAL.Entities
 
         public virtual TblUser? CreatedByNavigation { get; set; }
         public virtual TblUser? ModifiedByNavigation { get; set; }
-        public virtual ICollection<Login> Logins { get; set; }
         public virtual ICollection<TblExchangeOrder> TblExchangeOrders { get; set; }
         public virtual ICollection<TblPriceMasterMapping> TblPriceMasterMappings { get; set; }
         public virtual ICollection<TblUniversalPriceMaster> TblUniversalPriceMasters { get; set; }

@@ -278,7 +278,6 @@
     </div>
 </div>
 <div id="formDiv">
-
 </div>
 
 
@@ -295,7 +294,7 @@
         var url = "@URLPrefixforProd/api/ListPage/OrderDataTableForBU?BusinessUnitId=" + BusinessUnitId;
         GetOrderCountByBusinessPartnerId(url);
 
-      });
+    });
 
 
 
@@ -322,7 +321,7 @@
         table.destroy();
         GetOrderCountByBusinessPartnerId(url);
 
-        });
+    });
 
     function GetOrderCountByBusinessPartnerId(url) {
         $("#CompanyDataTable").DataTable({
@@ -365,9 +364,9 @@
                 "url": url,
                 "type": "POST",
                 "datatype": "json",
-                   /* "contentType": "application/json; charset=utf-8",*/
+                       /* "contentType": "application/json; charset=utf-8",*/
     @* "data": { userId: userId, startDate: startDate, endDate: endDate },*@
-       },
+           },
     "columnDefs": [{
         "targets": [0],
         "visible": false,
@@ -409,8 +408,8 @@
                 { "data": "actualPickupDate", "name": "ActualPickupDate", "autoWidth": true, "orderable": false },
                 { "data": "amountPayableThroughLGC", "name": "AmountPayableThroughLGC", "autoWidth": true, "orderable": false },
             ]
-            });
-        }
+                });
+            }
 
 
 

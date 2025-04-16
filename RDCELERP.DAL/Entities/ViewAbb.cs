@@ -6,7 +6,7 @@ namespace RDCELERP.DAL.Entities
     public partial class ViewAbb
     {
         public int AbbregistrationId { get; set; }
-        public string? EmployeeId { get; set; }
+        public string? ZohoAbbregistrationId { get; set; }
         public int? BusinessUnitId { get; set; }
         public string? RegdNo { get; set; }
         public string? SponsorOrderNo { get; set; }

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 using RDCELERP.BAL.Interface;
 using RDCELERP.Common.Helper;
 using RDCELERP.Core.App.Pages.Base;
-using RDCELERP.Core.App.Pages.EVC;
+using RDCELERP.Core.App.Pages.Warehouse;
 using RDCELERP.DAL.Entities;
 using RDCELERP.Model.Base;
 using RDCELERP.Model.EVC;

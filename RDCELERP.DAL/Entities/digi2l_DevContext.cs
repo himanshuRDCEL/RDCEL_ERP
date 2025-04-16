@@ -16,6 +16,8 @@ namespace RDCELERP.DAL.Entities
         {
         }
 
+        public virtual DbSet<AbbmissingSheet1> AbbmissingSheet1s { get; set; } = null!;
+        public virtual DbSet<AllAbbTempTablesDatum> AllAbbTempTablesData { get; set; } = null!;
         public virtual DbSet<AllCallAllocation> AllCallAllocations { get; set; } = null!;
         public virtual DbSet<AllSponsorsDetailsFromZoho> AllSponsorsDetailsFromZohos { get; set; } = null!;
         public virtual DbSet<EvcallCallAllocationsDatum> EvcallCallAllocationsData { get; set; } = null!;
@@ -23,7 +25,12 @@ namespace RDCELERP.DAL.Entities
         public virtual DbSet<MapLoginUserDevice> MapLoginUserDevices { get; set; } = null!;
         public virtual DbSet<MapServicePartnerCityState> MapServicePartnerCityStates { get; set; } = null!;
         public virtual DbSet<Mapping> Mappings { get; set; } = null!;
+        public virtual DbSet<PineCroma> PineCromas { get; set; } = null!;
+        public virtual DbSet<PineLabsPriceMaster> PineLabsPriceMasters { get; set; } = null!;
+        public virtual DbSet<PlCromaJulPm> PlCromaJulPms { get; set; } = null!;
         public virtual DbSet<PriceMasterName> PriceMasterNames { get; set; } = null!;
+        public virtual DbSet<SamsungTempPm> SamsungTempPms { get; set; } = null!;
+        public virtual DbSet<Sheet1> Sheet1s { get; set; } = null!;
         public virtual DbSet<Tbl247Around> Tbl247Arounds { get; set; } = null!;
         public virtual DbSet<TblAbbplanMaster> TblAbbplanMasters { get; set; } = null!;
         public virtual DbSet<TblAbbpriceMaster> TblAbbpriceMasters { get; set; } = null!;
@@ -36,6 +43,7 @@ namespace RDCELERP.DAL.Entities
         public virtual DbSet<TblBizlogTicket> TblBizlogTickets { get; set; } = null!;
         public virtual DbSet<TblBizlogTicketStatus> TblBizlogTicketStatuses { get; set; } = null!;
         public virtual DbSet<TblBlowHornTicket> TblBlowHornTickets { get; set; } = null!;
+        public virtual DbSet<TblBookingItem> TblBookingItems { get; set; } = null!;
         public virtual DbSet<TblBpbuassociation> TblBpbuassociations { get; set; } = null!;
         public virtual DbSet<TblBpburedemptionMapping> TblBpburedemptionMappings { get; set; } = null!;
         public virtual DbSet<TblBppincodeMapping> TblBppincodeMappings { get; set; } = null!;
@@ -46,17 +54,25 @@ namespace RDCELERP.DAL.Entities
         public virtual DbSet<TblBuconfiguration> TblBuconfigurations { get; set; } = null!;
         public virtual DbSet<TblBuconfigurationMapping> TblBuconfigurationMappings { get; set; } = null!;
         public virtual DbSet<TblBuproductCategoryMapping> TblBuproductCategoryMappings { get; set; } = null!;
+        public virtual DbSet<TblBusinessCustomer> TblBusinessCustomers { get; set; } = null!;
         public virtual DbSet<TblBusinessPartner> TblBusinessPartners { get; set; } = null!;
+        public virtual DbSet<TblBusinessType> TblBusinessTypes { get; set; } = null!;
+        public virtual DbSet<TblBusinessTypeMapping> TblBusinessTypeMappings { get; set; } = null!;
         public virtual DbSet<TblBusinessUnit> TblBusinessUnits { get; set; } = null!;
+        public virtual DbSet<TblCategory> TblCategories { get; set; } = null!;
         public virtual DbSet<TblCity> TblCities { get; set; } = null!;
         public virtual DbSet<TblCompany> TblCompanies { get; set; } = null!;
         public virtual DbSet<TblConfiguration> TblConfigurations { get; set; } = null!;
+        public virtual DbSet<TblCoupon> TblCoupons { get; set; } = null!;
+        public virtual DbSet<TblCouponMaster> TblCouponMasters { get; set; } = null!;
         public virtual DbSet<TblCreditRequest> TblCreditRequests { get; set; } = null!;
         public virtual DbSet<TblCurrentAuthtoken> TblCurrentAuthtokens { get; set; } = null!;
+        public virtual DbSet<TblCustomerCompany> TblCustomerCompanies { get; set; } = null!;
         public virtual DbSet<TblCustomerDetail> TblCustomerDetails { get; set; } = null!;
         public virtual DbSet<TblCustomerFile> TblCustomerFiles { get; set; } = null!;
         public virtual DbSet<TblDriverDetail> TblDriverDetails { get; set; } = null!;
         public virtual DbSet<TblDriverList> TblDriverLists { get; set; } = null!;
+        public virtual DbSet<TblEcomVoucher> TblEcomVouchers { get; set; } = null!;
         public virtual DbSet<TblEntityType> TblEntityTypes { get; set; } = null!;
         public virtual DbSet<TblErrorLog> TblErrorLogs { get; set; } = null!;
         public virtual DbSet<TblEvcPartner> TblEvcPartners { get; set; } = null!;
@@ -79,6 +95,7 @@ namespace RDCELERP.DAL.Entities
         public virtual DbSet<TblHistory> TblHistories { get; set; } = null!;
         public virtual DbSet<TblImage> TblImages { get; set; } = null!;
         public virtual DbSet<TblImageLabelMaster> TblImageLabelMasters { get; set; } = null!;
+        public virtual DbSet<TblItem> TblItems { get; set; } = null!;
         public virtual DbSet<TblLoV> TblLoVs { get; set; } = null!;
         public virtual DbSet<TblLoginMobile> TblLoginMobiles { get; set; } = null!;
         public virtual DbSet<TblLogistic> TblLogistics { get; set; } = null!;
@@ -86,9 +103,6 @@ namespace RDCELERP.DAL.Entities
         public virtual DbSet<TblMessageDetail> TblMessageDetails { get; set; } = null!;
         public virtual DbSet<TblModelMapping> TblModelMappings { get; set; } = null!;
         public virtual DbSet<TblModelNumber> TblModelNumbers { get; set; } = null!;
-        public virtual DbSet<TblNpssqoption> TblNpssqoptions { get; set; } = null!;
-        public virtual DbSet<TblNpssqresponse> TblNpssqresponses { get; set; } = null!;
-        public virtual DbSet<TblNpssquestion> TblNpssquestions { get; set; } = null!;
         public virtual DbSet<TblOrderBasedConfig> TblOrderBasedConfigs { get; set; } = null!;
         public virtual DbSet<TblOrderImageUpload> TblOrderImageUploads { get; set; } = null!;
         public virtual DbSet<TblOrderLgc> TblOrderLgcs { get; set; } = null!;
@@ -146,12 +160,29 @@ namespace RDCELERP.DAL.Entities
         public virtual DbSet<TblVoucherVerfication> TblVoucherVerfications { get; set; } = null!;
         public virtual DbSet<TblWalletTransaction> TblWalletTransactions { get; set; } = null!;
         public virtual DbSet<TblWhatsAppMessage> TblWhatsAppMessages { get; set; } = null!;
+        public virtual DbSet<Temp27Bp160724> Temp27Bp160724s { get; set; } = null!;
+        public virtual DbSet<TempD2c> TempD2cs { get; set; } = null!;
+        public virtual DbSet<TempD2cZipcodes100624> TempD2cZipcodes100624s { get; set; } = null!;
+        public virtual DbSet<TempModelmappingBpbu27> TempModelmappingBpbu27s { get; set; } = null!;
+        public virtual DbSet<TempModelmappingBu27> TempModelmappingBu27s { get; set; } = null!;
+        public virtual DbSet<TempPlcMumPun041024> TempPlcMumPun041024s { get; set; } = null!;
         public virtual DbSet<TimeSlotMaster> TimeSlotMasters { get; set; } = null!;
         public virtual DbSet<UniversalPriceMaster> UniversalPriceMasters { get; set; } = null!;
         public virtual DbSet<ViewAbb> ViewAbbs { get; set; } = null!;
-        public virtual DbSet<ViewAbbCount> ViewAbbCounts { get; set; } = null!;
+        public virtual DbSet<ViewAllAbbredemptionDatum> ViewAllAbbredemptionData { get; set; } = null!;
+        public virtual DbSet<ViewAllExchangeData2> ViewAllExchangeData2s { get; set; } = null!;
+        public virtual DbSet<ViewAllExchangeDataAddress> ViewAllExchangeDataAddresses { get; set; } = null!;
+        public virtual DbSet<ViewAllExchangeDataDaikin> ViewAllExchangeDataDaikins { get; set; } = null!;
         public virtual DbSet<ViewAllExchangeDataForPinelab> ViewAllExchangeDataForPinelabs { get; set; } = null!;
+        public virtual DbSet<ViewAllExchangeDataPickup> ViewAllExchangeDataPickups { get; set; } = null!;
+        public virtual DbSet<ViewAllExchangeDatawithQc> ViewAllExchangeDatawithQcs { get; set; } = null!;
         public virtual DbSet<ViewAllExchangeDatum> ViewAllExchangeData { get; set; } = null!;
+        public virtual DbSet<ViewAllSponsor> ViewAllSponsors { get; set; } = null!;
+        public virtual DbSet<ViewAllexchagedataCustomer> ViewAllexchagedataCustomers { get; set; } = null!;
+        public virtual DbSet<ViewBoschDeferred> ViewBoschDeferreds { get; set; } = null!;
+        public virtual DbSet<ViewBoschvoucher> ViewBoschvouchers { get; set; } = null!;
+        public virtual DbSet<ViewExchangWithQc> ViewExchangWithQcs { get; set; } = null!;
+        public virtual DbSet<ViewQc> ViewQcs { get; set; } = null!;
         public virtual DbSet<ZohoExchangeDatum> ZohoExchangeData { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -159,12 +190,302 @@ namespace RDCELERP.DAL.Entities
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=103.127.146.29, 1433;Initial Catalog=Digi2l_Dev;Persist Security Info=False;User ID=prod_user;Password=D!g!2L@UTC2023;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-Q35HPV2\\SQLEXPRESS;Database=Digi2L_Prod;Trusted_Connection=True;TrustServerCertificate=True");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AbbmissingSheet1>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ABBMissingSheet1$");
+
+                entity.Property(e => e.AbbPlanName)
+                    .HasMaxLength(255)
+                    .HasColumnName("ABB Plan Name");
+
+                entity.Property(e => e.AbbPlanPeriodMonths).HasColumnName("ABB Plan Period (Months)");
+
+                entity.Property(e => e.Approved).HasMaxLength(255);
+
+                entity.Property(e => e.Buid).HasColumnName("BUID");
+
+                entity.Property(e => e.CustomerAddress1)
+                    .HasMaxLength(255)
+                    .HasColumnName("Customer Address 1");
+
+                entity.Property(e => e.CustomerAddress2)
+                    .HasMaxLength(255)
+                    .HasColumnName("Customer Address 2");
+
+                entity.Property(e => e.CustomerCity)
+                    .HasMaxLength(255)
+                    .HasColumnName("Customer City");
+
+                entity.Property(e => e.CustomerEMail)
+                    .HasMaxLength(255)
+                    .HasColumnName("Customer E-mail");
+
+                entity.Property(e => e.CustomerMobile)
+                    .HasMaxLength(255)
+                    .HasColumnName("Customer Mobile");
+
+                entity.Property(e => e.CustomerName)
+                    .HasMaxLength(255)
+                    .HasColumnName(" Customer Name");
+
+                entity.Property(e => e.CustomerPinCode).HasColumnName("Customer Pin Code");
+
+                entity.Property(e => e.InvoiceDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Invoice Date");
+
+                entity.Property(e => e.InvoiceImage)
+                    .HasMaxLength(255)
+                    .HasColumnName("Invoice Image");
+
+                entity.Property(e => e.InvoiceNo)
+                    .HasMaxLength(255)
+                    .HasColumnName("Invoice No");
+
+                entity.Property(e => e.Location).HasMaxLength(255);
+
+                entity.Property(e => e.MarCom)
+                    .HasMaxLength(255)
+                    .HasColumnName("Mar-Com");
+
+                entity.Property(e => e.ModelNo)
+                    .HasMaxLength(255)
+                    .HasColumnName("Model No");
+
+                entity.Property(e => e.NewPrice)
+                    .HasMaxLength(255)
+                    .HasColumnName("New Price");
+
+                entity.Property(e => e.NewProdGroup)
+                    .HasMaxLength(255)
+                    .HasColumnName("New Prod# Group");
+
+                entity.Property(e => e.NewProdType)
+                    .HasMaxLength(255)
+                    .HasColumnName("New Prod Type");
+
+                entity.Property(e => e.OrderType)
+                    .HasMaxLength(255)
+                    .HasColumnName("Order Type");
+
+                entity.Property(e => e.ProdSrNo)
+                    .HasMaxLength(255)
+                    .HasColumnName("Prod# Sr# No#");
+
+                entity.Property(e => e.ProductNetPriceExcludingGst).HasColumnName("Product Net Price (Excluding GST)");
+
+                entity.Property(e => e.RegdNo)
+                    .HasMaxLength(255)
+                    .HasColumnName("Regd No");
+
+                entity.Property(e => e.SponsorCopy)
+                    .HasMaxLength(255)
+                    .HasColumnName("Sponsor Copy");
+
+                entity.Property(e => e.SponsorName)
+                    .HasMaxLength(255)
+                    .HasColumnName("Sponsor Name");
+
+                entity.Property(e => e.SponsorOrderNo)
+                    .HasMaxLength(255)
+                    .HasColumnName("Sponsor Order No*");
+
+                entity.Property(e => e.SponsorProgCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("Sponsor Prog# code");
+
+                entity.Property(e => e.SponsorStatus)
+                    .HasMaxLength(255)
+                    .HasColumnName("Sponsor Status");
+
+                entity.Property(e => e.StoreCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("Store Code");
+
+                entity.Property(e => e.StoreName)
+                    .HasMaxLength(255)
+                    .HasColumnName("Store Name");
+
+                entity.Property(e => e.UploadDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Upload Date");
+            });
+
+            modelBuilder.Entity<AllAbbTempTablesDatum>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("All_Abb_Temp_Tables_Data");
+
+                entity.Property(e => e.AbbFees).HasColumnName("ABB Fees");
+
+                entity.Property(e => e.AbbPlanName)
+                    .HasMaxLength(255)
+                    .HasColumnName("ABB Plan Name");
+
+                entity.Property(e => e.AbbPlanPeriodMonths).HasColumnName("ABB Plan Period (Months)");
+
+                entity.Property(e => e.AbbPriceId)
+                    .HasMaxLength(255)
+                    .HasColumnName("ABB Price Id");
+
+                entity.Property(e => e.AbbdataId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("ABBDataId");
+
+                entity.Property(e => e.Approved).HasMaxLength(255);
+
+                entity.Property(e => e.CustomerAddress1)
+                    .HasMaxLength(255)
+                    .HasColumnName("Customer Address 1");
+
+                entity.Property(e => e.CustomerAddress2)
+                    .HasMaxLength(255)
+                    .HasColumnName("Customer Address 2");
+
+                entity.Property(e => e.CustomerCity)
+                    .HasMaxLength(255)
+                    .HasColumnName("Customer City");
+
+                entity.Property(e => e.CustomerEMail)
+                    .HasMaxLength(255)
+                    .HasColumnName("Customer E-mail");
+
+                entity.Property(e => e.CustomerMobile)
+                    .HasMaxLength(255)
+                    .HasColumnName("Customer Mobile");
+
+                entity.Property(e => e.CustomerName)
+                    .HasMaxLength(255)
+                    .HasColumnName(" Customer Name");
+
+                entity.Property(e => e.CustomerPinCode).HasColumnName("Customer Pin Code");
+
+                entity.Property(e => e.CustomerState)
+                    .HasMaxLength(255)
+                    .HasColumnName("Customer State");
+
+                entity.Property(e => e.HsnCodeForAbbFees)
+                    .HasMaxLength(255)
+                    .HasColumnName("HSN Code (For ABB Fees)");
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(255)
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.InvoiceDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Invoice Date");
+
+                entity.Property(e => e.InvoiceImage)
+                    .HasMaxLength(255)
+                    .HasColumnName("Invoice Image");
+
+                entity.Property(e => e.InvoiceNo)
+                    .HasMaxLength(255)
+                    .HasColumnName("Invoice No");
+
+                entity.Property(e => e.IsAbbPaymentDone)
+                    .HasMaxLength(255)
+                    .HasColumnName("Is ABB Payment Done");
+
+                entity.Property(e => e.Location).HasMaxLength(255);
+
+                entity.Property(e => e.MarCom)
+                    .HasMaxLength(255)
+                    .HasColumnName("Mar-Com");
+
+                entity.Property(e => e.ModelNo)
+                    .HasMaxLength(255)
+                    .HasColumnName("Model No");
+
+                entity.Property(e => e.NewBrand)
+                    .HasMaxLength(255)
+                    .HasColumnName("New Brand");
+
+                entity.Property(e => e.NewPrice)
+                    .HasMaxLength(255)
+                    .HasColumnName("New Price");
+
+                entity.Property(e => e.NewProdGroup)
+                    .HasMaxLength(255)
+                    .HasColumnName("New Prod# Group");
+
+                entity.Property(e => e.NewProdType)
+                    .HasMaxLength(255)
+                    .HasColumnName("New Prod Type");
+
+                entity.Property(e => e.NewSize)
+                    .HasMaxLength(255)
+                    .HasColumnName("New Size");
+
+                entity.Property(e => e.OrderId)
+                    .HasMaxLength(255)
+                    .HasColumnName("Order Id");
+
+                entity.Property(e => e.OrderType)
+                    .HasMaxLength(255)
+                    .HasColumnName("Order Type");
+
+                entity.Property(e => e.PaymentRemark)
+                    .HasMaxLength(255)
+                    .HasColumnName("Payment Remark");
+
+                entity.Property(e => e.ProdSrNo)
+                    .HasMaxLength(255)
+                    .HasColumnName("Prod# Sr# No#");
+
+                entity.Property(e => e.ProductNetPriceInclOfGst).HasColumnName("Product Net Price (Incl Of GST)");
+
+                entity.Property(e => e.RegdNo)
+                    .HasMaxLength(255)
+                    .HasColumnName("Regd No");
+
+                entity.Property(e => e.SponsorName)
+                    .HasMaxLength(255)
+                    .HasColumnName("Sponsor Name");
+
+                entity.Property(e => e.SponsorOrderNo)
+                    .HasMaxLength(255)
+                    .HasColumnName("Sponsor Order No*");
+
+                entity.Property(e => e.SponsorProgCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("Sponsor Prog# code");
+
+                entity.Property(e => e.SponsorStatus)
+                    .HasMaxLength(255)
+                    .HasColumnName("Sponsor Status");
+
+                entity.Property(e => e.StoreCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("Store Code");
+
+                entity.Property(e => e.StoreName)
+                    .HasMaxLength(255)
+                    .HasColumnName("Store Name");
+
+                entity.Property(e => e.TransactionId)
+                    .HasMaxLength(255)
+                    .HasColumnName("Transaction Id");
+
+                entity.Property(e => e.UploadDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Upload Date");
+
+                entity.Property(e => e.UploadDateTime)
+                    .HasMaxLength(255)
+                    .HasColumnName("Upload Date & Time");
+            });
+
             modelBuilder.Entity<AllCallAllocation>(entity =>
             {
                 entity.HasNoKey();
@@ -629,7 +950,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.PriceMasterName)
                     .WithMany(p => p.Logins)
                     .HasForeignKey(d => d.PriceMasterNameId)
-                    .HasConstraintName("FK__Login__PriceMast__09B45E9A");
+                    .HasConstraintName("FK__Login__PriceMast__673F4B05");
             });
 
             modelBuilder.Entity<MapLoginUserDevice>(entity =>
@@ -649,17 +970,17 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.MapLoginUserDeviceCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__MapLoginU__Creat__40AF8DC9");
+                    .HasConstraintName("FK__MapLoginU__Creat__59E54FE7");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.MapLoginUserDeviceModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__MapLoginU__Modif__3FBB6990");
+                    .HasConstraintName("FK__MapLoginU__Modif__5AD97420");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.MapLoginUserDeviceUsers)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__MapLoginU__UserI__04CFADEC");
+                    .HasConstraintName("FK__MapLoginU__UserI__75035A77");
             });
 
             modelBuilder.Entity<MapServicePartnerCityState>(entity =>
@@ -675,32 +996,32 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.City)
                     .WithMany(p => p.MapServicePartnerCityStates)
                     .HasForeignKey(d => d.CityId)
-                    .HasConstraintName("FK__Map_Servi__CityI__07E124C1");
+                    .HasConstraintName("FK__Map_Servi__CityI__093F5D4E");
 
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.MapServicePartnerCityStateCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__Map_Servi__Creat__09C96D33");
+                    .HasConstraintName("FK__Map_Servi__Creat__0B27A5C0");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.MapServicePartnerCityStateModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__Map_Servi__Modif__0ABD916C");
+                    .HasConstraintName("FK__Map_Servi__Modif__0C1BC9F9");
 
                 entity.HasOne(d => d.Pincode)
                     .WithMany(p => p.MapServicePartnerCityStates)
                     .HasForeignKey(d => d.PincodeId)
-                    .HasConstraintName("FK__Map_Servi__Pinco__06ED0088");
+                    .HasConstraintName("FK__Map_Servi__Pinco__084B3915");
 
                 entity.HasOne(d => d.ServicePartner)
                     .WithMany(p => p.MapServicePartnerCityStates)
                     .HasForeignKey(d => d.ServicePartnerId)
-                    .HasConstraintName("FK__Map_Servi__Servi__05F8DC4F");
+                    .HasConstraintName("FK__Map_Servi__Servi__075714DC");
 
                 entity.HasOne(d => d.State)
                     .WithMany(p => p.MapServicePartnerCityStates)
                     .HasForeignKey(d => d.StateId)
-                    .HasConstraintName("FK__Map_Servi__State__08D548FA");
+                    .HasConstraintName("FK__Map_Servi__State__0A338187");
             });
 
             modelBuilder.Entity<Mapping>(entity =>
@@ -718,6 +1039,227 @@ namespace RDCELERP.DAL.Entities
                 entity.Property(e => e.SrNo).HasColumnName("Sr#No");
             });
 
+            modelBuilder.Entity<PineCroma>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("_Pine_Croma");
+
+                entity.Property(e => e.Address1)
+                    .HasMaxLength(255)
+                    .HasColumnName("ADDRESS1");
+
+                entity.Property(e => e.BankAccountNumber)
+                    .HasMaxLength(255)
+                    .HasColumnName("Bank Account Number");
+
+                entity.Property(e => e.BankName)
+                    .HasMaxLength(255)
+                    .HasColumnName("Bank Name");
+
+                entity.Property(e => e.BaseOpportunityId).HasColumnName("BASE OPPORTUNITY ID");
+
+                entity.Property(e => e.BaseOpportunityId1)
+                    .HasMaxLength(255)
+                    .HasColumnName("BASE OPPORTUNITY ID1");
+
+                entity.Property(e => e.BusinessOwnershipType)
+                    .HasMaxLength(255)
+                    .HasColumnName("Business Ownership Type ");
+
+                entity.Property(e => e.ContactNumberPhone)
+                    .HasMaxLength(255)
+                    .HasColumnName("Contact Number / Phone");
+
+                entity.Property(e => e.ContactPersonName)
+                    .HasMaxLength(255)
+                    .HasColumnName("Contact Person Name");
+
+                entity.Property(e => e.DbaNameIfAny)
+                    .HasMaxLength(255)
+                    .HasColumnName("DBA NAME IF ANY");
+
+                entity.Property(e => e.EmailId)
+                    .HasMaxLength(255)
+                    .HasColumnName("Email ID");
+
+                entity.Property(e => e.FinalStatus)
+                    .HasMaxLength(255)
+                    .HasColumnName("Final Status");
+
+                entity.Property(e => e.IfscCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("IFSC Code");
+
+                entity.Property(e => e.JiraIr)
+                    .HasMaxLength(255)
+                    .HasColumnName("JIRA IR");
+
+                entity.Property(e => e.MccCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("MCC CODE");
+
+                entity.Property(e => e.MerchantId).HasColumnName("MERCHANT_ID");
+
+                entity.Property(e => e.MerchantLegalNameAsPerPan)
+                    .HasMaxLength(255)
+                    .HasColumnName("MERCHANT LEGAL NAME (AS PER PAN)");
+
+                entity.Property(e => e.MerchantName)
+                    .HasMaxLength(255)
+                    .HasColumnName("MERCHANT_NAME");
+
+                entity.Property(e => e.PanNumber)
+                    .HasMaxLength(255)
+                    .HasColumnName("Pan Number");
+
+                entity.Property(e => e.Pincode).HasColumnName("PINCODE");
+
+                entity.Property(e => e.PosId)
+                    .HasMaxLength(255)
+                    .HasColumnName("POS ID");
+
+                entity.Property(e => e.RefrenceVasCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("Refrence Vas Code");
+
+                entity.Property(e => e.Status).HasMaxLength(255);
+
+                entity.Property(e => e.StoreCity)
+                    .HasMaxLength(255)
+                    .HasColumnName("STORE_CITY");
+
+                entity.Property(e => e.StoreId)
+                    .HasMaxLength(255)
+                    .HasColumnName("Store ID");
+
+                entity.Property(e => e.StoreName)
+                    .HasMaxLength(255)
+                    .HasColumnName("STORE_NAME");
+
+                entity.Property(e => e.StoreState)
+                    .HasMaxLength(255)
+                    .HasColumnName("STORE_STATE");
+
+                entity.Property(e => e.SubStatus)
+                    .HasMaxLength(255)
+                    .HasColumnName("Sub-Status");
+            });
+
+            modelBuilder.Entity<PineLabsPriceMaster>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("PineLabsPriceMaster");
+
+                entity.Property(e => e.BrandName1)
+                    .HasMaxLength(50)
+                    .HasColumnName("BrandName_1");
+
+                entity.Property(e => e.BrandName2)
+                    .HasMaxLength(50)
+                    .HasColumnName("BrandName_2");
+
+                entity.Property(e => e.BrandName3)
+                    .HasMaxLength(50)
+                    .HasColumnName("BrandName_3");
+
+                entity.Property(e => e.BrandName4)
+                    .HasMaxLength(50)
+                    .HasColumnName("BrandName_4");
+
+                entity.Property(e => e.CreatedDate).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasMaxLength(50);
+
+                entity.Property(e => e.OtherBrand).HasMaxLength(50);
+
+                entity.Property(e => e.PriceMasterName).HasMaxLength(50);
+
+                entity.Property(e => e.ProductCategoryName).HasMaxLength(50);
+
+                entity.Property(e => e.ProductTypeCode).HasMaxLength(50);
+
+                entity.Property(e => e.ProductTypeName).HasMaxLength(50);
+
+                entity.Property(e => e.QuoteP).HasColumnName("Quote_P");
+
+                entity.Property(e => e.QuotePHigh).HasColumnName("Quote_P_High");
+
+                entity.Property(e => e.QuoteQ).HasColumnName("Quote_Q");
+
+                entity.Property(e => e.QuoteQHigh).HasColumnName("Quote_Q_High");
+
+                entity.Property(e => e.QuoteR).HasColumnName("Quote_R");
+
+                entity.Property(e => e.QuoteRHigh).HasColumnName("Quote_R_High");
+
+                entity.Property(e => e.QuoteS).HasColumnName("Quote_S");
+
+                entity.Property(e => e.QuoteSHigh).HasColumnName("Quote_S_High");
+            });
+
+            modelBuilder.Entity<PlCromaJulPm>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("PL_Croma_Jul_Pm");
+
+                entity.Property(e => e.BrandName1)
+                    .HasMaxLength(255)
+                    .HasColumnName("BrandName-1");
+
+                entity.Property(e => e.BrandName2)
+                    .HasMaxLength(255)
+                    .HasColumnName("BrandName-2");
+
+                entity.Property(e => e.BrandName3)
+                    .HasMaxLength(255)
+                    .HasColumnName("BrandName-3");
+
+                entity.Property(e => e.BrandName4)
+                    .HasMaxLength(255)
+                    .HasColumnName("BrandName-4");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(255);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OtherBrand).HasMaxLength(255);
+
+                entity.Property(e => e.PriceEndDate).HasMaxLength(255);
+
+                entity.Property(e => e.PriceMasterName).HasMaxLength(255);
+
+                entity.Property(e => e.PriceStartDate).HasMaxLength(255);
+
+                entity.Property(e => e.ProductCategoryName).HasMaxLength(255);
+
+                entity.Property(e => e.ProductTypeCode).HasMaxLength(255);
+
+                entity.Property(e => e.ProductTypeName).HasMaxLength(255);
+
+                entity.Property(e => e.QuoteP).HasColumnName("Quote-P");
+
+                entity.Property(e => e.QuotePHigh).HasColumnName("Quote-P-High");
+
+                entity.Property(e => e.QuoteQ).HasColumnName("Quote-Q");
+
+                entity.Property(e => e.QuoteQHigh).HasColumnName("Quote-Q-High");
+
+                entity.Property(e => e.QuoteR).HasColumnName("Quote-R");
+
+                entity.Property(e => e.QuoteRHigh).HasColumnName("Quote-R-High");
+
+                entity.Property(e => e.QuoteS).HasColumnName("Quote-S");
+
+                entity.Property(e => e.QuoteSHigh).HasColumnName("Quote-S-High");
+            });
+
             modelBuilder.Entity<PriceMasterName>(entity =>
             {
                 entity.ToTable("PriceMasterName");
@@ -733,12 +1275,184 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.PriceMasterNameCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__PriceMast__Creat__3414ACBA");
+                    .HasConstraintName("FK__PriceMast__Creat__43F60EC8");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.PriceMasterNameModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__PriceMast__Modif__3508D0F3");
+                    .HasConstraintName("FK__PriceMast__Modif__44EA3301");
+            });
+
+            modelBuilder.Entity<SamsungTempPm>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("Samsung_Temp_PM");
+
+                entity.Property(e => e.BrandName1)
+                    .HasMaxLength(255)
+                    .HasColumnName("BrandName-1");
+
+                entity.Property(e => e.BrandName2)
+                    .HasMaxLength(255)
+                    .HasColumnName("BrandName-2");
+
+                entity.Property(e => e.BrandName3)
+                    .HasMaxLength(255)
+                    .HasColumnName("BrandName-3");
+
+                entity.Property(e => e.BrandName4)
+                    .HasMaxLength(255)
+                    .HasColumnName("BrandName-4");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(255);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OtherBrand).HasMaxLength(255);
+
+                entity.Property(e => e.PriceEndDate).HasMaxLength(255);
+
+                entity.Property(e => e.PriceMasterName).HasMaxLength(255);
+
+                entity.Property(e => e.PriceStartDate).HasMaxLength(255);
+
+                entity.Property(e => e.ProductCategoryName).HasMaxLength(255);
+
+                entity.Property(e => e.ProductTypeCode).HasMaxLength(255);
+
+                entity.Property(e => e.ProductTypeName).HasMaxLength(255);
+
+                entity.Property(e => e.QuoteP).HasColumnName("Quote-P");
+
+                entity.Property(e => e.QuotePHigh).HasColumnName("Quote-P-High");
+
+                entity.Property(e => e.QuoteQ).HasColumnName("Quote-Q");
+
+                entity.Property(e => e.QuoteQHigh).HasColumnName("Quote-Q-High");
+
+                entity.Property(e => e.QuoteR).HasColumnName("Quote-R");
+
+                entity.Property(e => e.QuoteRHigh).HasColumnName("Quote-R-High");
+
+                entity.Property(e => e.QuoteS).HasColumnName("Quote-S");
+
+                entity.Property(e => e.QuoteSHigh).HasColumnName("Quote-S-High");
+            });
+
+            modelBuilder.Entity<Sheet1>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("Sheet1$");
+
+                entity.Property(e => e.ActualProdQltyAtTimeOfQc)
+                    .HasMaxLength(255)
+                    .HasColumnName("Actual Prod Qlty (at time of QC)");
+
+                entity.Property(e => e.AllocationStatus)
+                    .HasMaxLength(255)
+                    .HasColumnName("Allocation Status");
+
+                entity.Property(e => e.CurrentStatusCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("Current Status Code");
+
+                entity.Property(e => e.EMailSmsFlag)
+                    .HasMaxLength(255)
+                    .HasColumnName("E-Mail/ SMS Flag");
+
+                entity.Property(e => e.EvcCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("EVC Code");
+
+                entity.Property(e => e.EvcDropDate)
+                    .HasMaxLength(255)
+                    .HasColumnName("EVC Drop Date");
+
+                entity.Property(e => e.EvcDropFlag)
+                    .HasMaxLength(255)
+                    .HasColumnName("EVC Drop Flag");
+
+                entity.Property(e => e.FinalStatusCode).HasColumnName("FinalStatus Code");
+
+                entity.Property(e => e.InstallationFlag)
+                    .HasMaxLength(255)
+                    .HasColumnName("Installation Flag");
+
+                entity.Property(e => e.InvoiceDate)
+                    .HasMaxLength(255)
+                    .HasColumnName("Invoice Date");
+
+                entity.Property(e => e.InvoiceNo)
+                    .HasMaxLength(255)
+                    .HasColumnName("Invoice No");
+
+                entity.Property(e => e.LgcTktCreatedDate)
+                    .HasMaxLength(255)
+                    .HasColumnName("Lgc Tkt Created Date");
+
+                entity.Property(e => e.LgcTktNo)
+                    .HasMaxLength(255)
+                    .HasColumnName("LGC Tkt No");
+
+                entity.Property(e => e.LogisticBy)
+                    .HasMaxLength(255)
+                    .HasColumnName("Logistic By");
+
+                entity.Property(e => e.LogisticsStatusRemark)
+                    .HasMaxLength(255)
+                    .HasColumnName("Logistics Status Remark");
+
+                entity.Property(e => e.OrderFlag).HasColumnName("Order Flag");
+
+                entity.Property(e => e.PaymentFlag)
+                    .HasMaxLength(255)
+                    .HasColumnName("Payment Flag");
+
+                entity.Property(e => e.PickupDate)
+                    .HasMaxLength(255)
+                    .HasColumnName("Pickup Date");
+
+                entity.Property(e => e.PickupFlag)
+                    .HasMaxLength(255)
+                    .HasColumnName("Pickup Flag");
+
+                entity.Property(e => e.PostingDate)
+                    .HasMaxLength(255)
+                    .HasColumnName("Posting Date");
+
+                entity.Property(e => e.PostingFlag)
+                    .HasMaxLength(255)
+                    .HasColumnName("Posting Flag");
+
+                entity.Property(e => e.QcComment)
+                    .HasMaxLength(255)
+                    .HasColumnName("QC Comment");
+
+                entity.Property(e => e.QcDate)
+                    .HasMaxLength(255)
+                    .HasColumnName("QC Date");
+
+                entity.Property(e => e.QcFlag)
+                    .HasMaxLength(255)
+                    .HasColumnName("QC Flag");
+
+                entity.Property(e => e.RegdNo)
+                    .HasMaxLength(255)
+                    .HasColumnName("Regd No");
+
+                entity.Property(e => e.Rnumber)
+                    .HasMaxLength(255)
+                    .HasColumnName("Rnumber ");
+
+                entity.Property(e => e.SponsorOrderNo)
+                    .HasMaxLength(255)
+                    .HasColumnName("Sponsor Order No");
+
+                entity.Property(e => e.StatusMatching).HasMaxLength(255);
             });
 
             modelBuilder.Entity<Tbl247Around>(entity =>
@@ -858,7 +1572,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.ProductType)
                     .WithMany(p => p.TblAbbplanMasters)
                     .HasForeignKey(d => d.ProductTypeId)
-                    .HasConstraintName("FK__tblABBPla__Produ__627A95E8");
+                    .HasConstraintName("FK_tblABBPlanMaster_ProductTypeId");
             });
 
             modelBuilder.Entity<TblAbbpriceMaster>(entity =>
@@ -930,7 +1644,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.ProductType)
                     .WithMany(p => p.TblAbbpriceMasters)
                     .HasForeignKey(d => d.ProductTypeId)
-                    .HasConstraintName("FK__tblABBPri__Produ__636EBA21");
+                    .HasConstraintName("FK_tblABBPriceMaster_tblProductType");
             });
 
             modelBuilder.Entity<TblAbbredemption>(entity =>
@@ -940,7 +1654,7 @@ namespace RDCELERP.DAL.Entities
                 entity.ToTable("tblABBRedemption");
 
                 entity.Property(e => e.AbbredemptionStatus)
-                    .HasMaxLength(50)
+                    .HasMaxLength(255)
                     .HasColumnName("ABBRedemptionStatus");
 
                 entity.Property(e => e.AbbregistrationId).HasColumnName("ABBRegistrationId");
@@ -1176,18 +1890,18 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.NewProductCategoryTypeNavigation)
                     .WithMany(p => p.TblAbbregistrations)
                     .HasForeignKey(d => d.NewProductCategoryTypeId)
-                    .HasConstraintName("FK__tblABBReg__NewPr__5BCD9859");
+                    .HasConstraintName("FK__tblABBReg__PT__2B0A656D");
 
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.TblAbbregistrations)
                     .HasForeignKey(d => d.StatusId)
-                    .HasConstraintName("FK__tblABBReg__Statu__5DEAEAF5");
+                    .HasConstraintName("FK__tblABBReg__Statu__58D1301D");
             });
 
             modelBuilder.Entity<TblAccessList>(entity =>
             {
                 entity.HasKey(e => e.AccessListId)
-                    .HasName("PK__tblAcces__158C8AA401FA3C46");
+                    .HasName("PK__tblAcces__158C8AA4D383195B");
 
                 entity.ToTable("tblAccessList");
 
@@ -1233,7 +1947,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblAddress>(entity =>
             {
                 entity.HasKey(e => e.UsersAddressId)
-                    .HasName("PK__tblAddre__FB72B1D6ACE0B3AB");
+                    .HasName("PK__tblAddre__FB72B1D6E4511860");
 
                 entity.ToTable("tblAddress");
 
@@ -1277,7 +1991,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblApicall>(entity =>
             {
                 entity.HasKey(e => e.ApicallId)
-                    .HasName("PK__tblAPICa__73861C0D2DC234F5");
+                    .HasName("PK__tblAPICa__73861C0D13FE2021");
 
                 entity.ToTable("tblAPICalls");
 
@@ -1546,6 +2260,46 @@ namespace RDCELERP.DAL.Entities
                     .HasColumnName("what3words");
             });
 
+            modelBuilder.Entity<TblBookingItem>(entity =>
+            {
+                entity.HasKey(e => e.BookingItemId)
+                    .HasName("PK__tblBookingItem__D65247C2BDC3EBF0");
+
+                entity.ToTable("tblBookingItem");
+
+                entity.Property(e => e.BookingPrice).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Qccheck).HasColumnName("QCCheck");
+
+                entity.Property(e => e.QcverifiedQunatity).HasColumnName("QCVerifiedQunatity");
+
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(10, 2)");
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.TblBookingItemCreatedByNavigations)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("FK__tblBookin__Creat__4E298478");
+
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.TblBookingItems)
+                    .HasForeignKey(d => d.CustomerId)
+                    .HasConstraintName("FK__tblBookin__Custo__4D35603F");
+
+                entity.HasOne(d => d.Item)
+                    .WithMany(p => p.TblBookingItems)
+                    .HasForeignKey(d => d.ItemId)
+                    .HasConstraintName("FK__tblBookin__ItemI__4C413C06");
+
+                entity.HasOne(d => d.ModifiedByNavigation)
+                    .WithMany(p => p.TblBookingItemModifiedByNavigations)
+                    .HasForeignKey(d => d.ModifiedBy)
+                    .HasConstraintName("FK__tblBookin__Modif__4F1DA8B1");
+            });
+
             modelBuilder.Entity<TblBpbuassociation>(entity =>
             {
                 entity.HasNoKey();
@@ -1653,13 +2407,13 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.BusinessUnit)
                     .WithMany(p => p.TblBrands)
                     .HasForeignKey(d => d.BusinessUnitId)
-                    .HasConstraintName("FK__tblBrand__Busine__5D60DB10");
+                    .HasConstraintName("FK__tblBrand__Busine__6442E2C9");
             });
 
             modelBuilder.Entity<TblBrandGroup>(entity =>
             {
                 entity.HasKey(e => e.BrandGroupId)
-                    .HasName("PK__TblBrand__F118381667EA33BA");
+                    .HasName("PK__TblBrand__F1183816E8EB0D86");
 
                 entity.ToTable("TblBrandGroup");
 
@@ -1676,18 +2430,18 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.CreatedbyNavigation)
                     .WithMany(p => p.TblBrandGroupCreatedbyNavigations)
                     .HasForeignKey(d => d.Createdby)
-                    .HasConstraintName("FK__TblBrandG__Creat__1EAF7B80");
+                    .HasConstraintName("FK__TblBrandG__Creat__20CCCE1C");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblBrandGroupModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__TblBrandG__Modif__1FA39FB9");
+                    .HasConstraintName("FK__TblBrandG__Modif__21C0F255");
 
                 entity.HasOne(d => d.ProductCat)
                     .WithMany(p => p.TblBrandGroups)
                     .HasForeignKey(d => d.ProductCatId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__TblBrandG__Produ__1DBB5747");
+                    .HasConstraintName("FK__TblBrandG__Produ__1FD8A9E3");
             });
 
             modelBuilder.Entity<TblBrandSmartBuy>(entity =>
@@ -1707,7 +2461,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.Brand)
                     .WithMany(p => p.TblBrandSmartBuys)
                     .HasForeignKey(d => d.BrandId)
-                    .HasConstraintName("FK__tblBrandS__Brand__1A1FD08D");
+                    .HasConstraintName("FK__tblBrandS__Brand__4668671F");
 
                 entity.HasOne(d => d.BusinessUnit)
                     .WithMany(p => p.TblBrandSmartBuys)
@@ -1816,7 +2570,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.BusinessUnit)
                     .WithMany(p => p.TblBuproductCategoryMappings)
                     .HasForeignKey(d => d.BusinessUnitId)
-                    .HasConstraintName("FK__tblBUProd__Busin__589C25F3");
+                    .HasConstraintName("FK__tblBUProd__Busin__671F4F74");
 
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblBuproductCategoryMappingCreatedByNavigations)
@@ -1836,12 +2590,94 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.ProductCat)
                     .WithMany(p => p.TblBuproductCategoryMappingProductCats)
                     .HasForeignKey(d => d.ProductCatId)
-                    .HasConstraintName("FK__tblBUProd__Produ__59904A2C");
+                    .HasConstraintName("FK__tblBUProd__Produ__681373AD");
 
                 entity.HasOne(d => d.ProductType)
                     .WithMany(p => p.TblBuproductCategoryMappings)
                     .HasForeignKey(d => d.ProductTypeId)
                     .HasConstraintName("Fk_tblBUProductCategoryMapping_ProductTypeId");
+            });
+
+            modelBuilder.Entity<TblBusinessCustomer>(entity =>
+            {
+                entity.HasKey(e => e.BusinessCustomerId)
+                    .HasName("PK__tblBusin__AD9FEF6933B39349");
+
+                entity.ToTable("tblBusinessCustomer");
+
+                entity.Property(e => e.Category).HasMaxLength(500);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Email).HasMaxLength(1000);
+
+                entity.Property(e => e.FirstName).HasMaxLength(500);
+
+                entity.Property(e => e.FullName).HasMaxLength(1000);
+
+                entity.Property(e => e.Gender).HasMaxLength(500);
+
+                entity.Property(e => e.LastLogin).HasColumnType("datetime");
+
+                entity.Property(e => e.LastName).HasMaxLength(500);
+
+                entity.Property(e => e.MailingCity)
+                    .HasMaxLength(500)
+                    .HasColumnName("Mailing_City");
+
+                entity.Property(e => e.MailingCountry)
+                    .HasMaxLength(500)
+                    .HasColumnName("Mailing_Country");
+
+                entity.Property(e => e.MailingState)
+                    .HasMaxLength(500)
+                    .HasColumnName("Mailing_State");
+
+                entity.Property(e => e.MailingStreet)
+                    .HasMaxLength(500)
+                    .HasColumnName("Mailing_Street");
+
+                entity.Property(e => e.MailingZip)
+                    .HasMaxLength(500)
+                    .HasColumnName("Mailing_Zip");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OtherCity)
+                    .HasMaxLength(500)
+                    .HasColumnName("Other_City");
+
+                entity.Property(e => e.OtherCountry)
+                    .HasMaxLength(500)
+                    .HasColumnName("Other_Country");
+
+                entity.Property(e => e.OtherState)
+                    .HasMaxLength(500)
+                    .HasColumnName("Other_State");
+
+                entity.Property(e => e.OtherStreet)
+                    .HasMaxLength(500)
+                    .HasColumnName("Other_Street");
+
+                entity.Property(e => e.OtherZip)
+                    .HasMaxLength(500)
+                    .HasColumnName("Other_Zip");
+
+                entity.Property(e => e.Password).HasMaxLength(1000);
+
+                entity.Property(e => e.PhoneNo).HasMaxLength(1000);
+
+                entity.Property(e => e.Type).HasMaxLength(500);
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.TblBusinessCustomerCreatedByNavigations)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("FK__tblBusine__Creat__06A2E7C5");
+
+                entity.HasOne(d => d.ModifiedByNavigation)
+                    .WithMany(p => p.TblBusinessCustomerModifiedByNavigations)
+                    .HasForeignKey(d => d.ModifiedBy)
+                    .HasConstraintName("FK__tblBusine__Modif__07970BFE");
             });
 
             modelBuilder.Entity<TblBusinessPartner>(entity =>
@@ -1955,7 +2791,50 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.CityNavigation)
                     .WithMany(p => p.TblBusinessPartners)
                     .HasForeignKey(d => d.CityId)
-                    .HasConstraintName("FK__tblBusine__cityI__67C95AEA");
+                    .HasConstraintName("FK__tblBusine__cityI__65570293");
+            });
+
+            modelBuilder.Entity<TblBusinessType>(entity =>
+            {
+                entity.HasKey(e => e.BusinessTypeId)
+                    .HasName("PK__tblBusin__1D43DEC06C13D9E4");
+
+                entity.ToTable("tblBusinessType");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Description).HasMaxLength(500);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Name).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<TblBusinessTypeMapping>(entity =>
+            {
+                entity.HasKey(e => e.BusinessTypeMappingId)
+                    .HasName("PK__tblBusin__F66CC33BD50A5A21");
+
+                entity.ToTable("tblBusinessTypeMapping");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.BusinessType)
+                    .WithMany(p => p.TblBusinessTypeMappings)
+                    .HasForeignKey(d => d.BusinessTypeId)
+                    .HasConstraintName("FK__tblBusine__Busin__7D197D8B");
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.TblBusinessTypeMappingCreatedByNavigations)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("FK__tblBusine__Creat__73901351");
+
+                entity.HasOne(d => d.ModifiedByNavigation)
+                    .WithMany(p => p.TblBusinessTypeMappingModifiedByNavigations)
+                    .HasForeignKey(d => d.ModifiedBy)
+                    .HasConstraintName("FK__tblBusine__Modif__7484378A");
             });
 
             modelBuilder.Entity<TblBusinessUnit>(entity =>
@@ -2057,10 +2936,44 @@ namespace RDCELERP.DAL.Entities
                     .HasConstraintName("Fk_tblBusinessUnit_MarginType");
             });
 
+            modelBuilder.Entity<TblCategory>(entity =>
+            {
+                entity.HasKey(e => e.CategoryId)
+                    .HasName("PK__tblCat__2D971CACBEE01668");
+
+                entity.ToTable("tblCategory");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Name).HasMaxLength(150);
+
+                entity.HasOne(d => d.Brand)
+                    .WithMany(p => p.TblCategories)
+                    .HasForeignKey(d => d.BrandId)
+                    .HasConstraintName("BrandId");
+
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.TblCategories)
+                    .HasForeignKey(d => d.CompanyId)
+                    .HasConstraintName("CompanyId");
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.TblCategoryCreatedByNavigations)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("Fk_tblCategory_CreatedBy");
+
+                entity.HasOne(d => d.ModifiedByNavigation)
+                    .WithMany(p => p.TblCategoryModifiedByNavigations)
+                    .HasForeignKey(d => d.ModifiedBy)
+                    .HasConstraintName("Fk_tblCategory_ModifiedBy");
+            });
+
             modelBuilder.Entity<TblCity>(entity =>
             {
                 entity.HasKey(e => e.CityId)
-                    .HasName("PK__tblCity__F2D21B76A8A4E9FF");
+                    .HasName("PK__tblCity__F2D21B76A9539CA9");
 
                 entity.ToTable("tblCity");
 
@@ -2148,10 +3061,102 @@ namespace RDCELERP.DAL.Entities
                 entity.Property(e => e.Value).HasMaxLength(600);
             });
 
+            modelBuilder.Entity<TblCoupon>(entity =>
+            {
+                entity.HasKey(e => e.CouponId)
+                    .HasName("PK__tblCoupo__384AF1BAF6DF6623");
+
+                entity.ToTable("tblCoupon");
+
+                entity.Property(e => e.CouponL1).HasMaxLength(2000);
+
+                entity.Property(e => e.CouponL2).HasMaxLength(2000);
+
+                entity.Property(e => e.CouponL3).HasMaxLength(2000);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.UsedCoupon).HasMaxLength(2000);
+
+                entity.Property(e => e.UsedCouponValue).HasColumnType("decimal(18, 0)");
+
+                entity.HasOne(d => d.CouponMaster)
+                    .WithMany(p => p.TblCoupons)
+                    .HasForeignKey(d => d.CouponMasterId)
+                    .HasConstraintName("Fk_tblCoupon_CouponMasterId");
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.TblCouponCreatedByNavigations)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("Fk_tblCoupon_CreatedBy");
+
+                entity.HasOne(d => d.ModifiedByNavigation)
+                    .WithMany(p => p.TblCouponModifiedByNavigations)
+                    .HasForeignKey(d => d.ModifiedBy)
+                    .HasConstraintName("Fk_tblCoupon_ModifiedBy");
+
+                entity.HasOne(d => d.OrderTrans)
+                    .WithMany(p => p.TblCoupons)
+                    .HasForeignKey(d => d.OrderTransId)
+                    .HasConstraintName("Fk_tblCoupon_OrderTransId");
+            });
+
+            modelBuilder.Entity<TblCouponMaster>(entity =>
+            {
+                entity.HasKey(e => e.CouponMasterId)
+                    .HasName("PK__tblCoupo__762FC5A51E76A7FB");
+
+                entity.ToTable("tblCouponMaster");
+
+                entity.Property(e => e.CouponL1value)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("CouponL1Value");
+
+                entity.Property(e => e.CouponL2value)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("CouponL2Value");
+
+                entity.Property(e => e.CouponL3value)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("CouponL3Value");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ExpiryDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Title).HasMaxLength(255);
+
+                entity.Property(e => e.TotalValueOfCoupons).HasColumnType("decimal(18, 2)");
+
+                entity.HasOne(d => d.BusinessPartner)
+                    .WithMany(p => p.TblCouponMasters)
+                    .HasForeignKey(d => d.BusinessPartnerId)
+                    .HasConstraintName("Fk_tblCouponMaster_BusinessPartnerId");
+
+                entity.HasOne(d => d.BusinessUnit)
+                    .WithMany(p => p.TblCouponMasters)
+                    .HasForeignKey(d => d.BusinessUnitId)
+                    .HasConstraintName("Fk_tblCouponMaster_BusinessUnitId");
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.TblCouponMasterCreatedByNavigations)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("Fk_tblCouponMaster_CreatedBy");
+
+                entity.HasOne(d => d.ModifiedByNavigation)
+                    .WithMany(p => p.TblCouponMasterModifiedByNavigations)
+                    .HasForeignKey(d => d.ModifiedBy)
+                    .HasConstraintName("Fk_tblCouponMaster_ModifiedBy");
+            });
+
             modelBuilder.Entity<TblCreditRequest>(entity =>
             {
                 entity.HasKey(e => e.CreditRequestId)
-                    .HasName("PK__tblCredi__B1247BE38AEF9EF8");
+                    .HasName("PK__tblCredi__B1247BE3F3250952");
 
                 entity.ToTable("tblCreditRequests");
 
@@ -2162,33 +3167,33 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblCreditRequestCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__tblCredit__Creat__522F1F86");
+                    .HasConstraintName("FK__tblCredit__Creat__40457975");
 
                 entity.HasOne(d => d.CreditRequestApproveUser)
                     .WithMany(p => p.TblCreditRequestCreditRequestApproveUsers)
                     .HasForeignKey(d => d.CreditRequestApproveUserId)
-                    .HasConstraintName("FK__tblCredit__Credi__513AFB4D");
+                    .HasConstraintName("FK__tblCredit__Credi__3F51553C");
 
                 entity.HasOne(d => d.CreditRequestUser)
                     .WithMany(p => p.TblCreditRequestCreditRequestUsers)
                     .HasForeignKey(d => d.CreditRequestUserId)
-                    .HasConstraintName("FK__tblCredit__Credi__5046D714");
+                    .HasConstraintName("FK__tblCredit__Credi__3E5D3103");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblCreditRequestModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__tblCredit__Modif__532343BF");
+                    .HasConstraintName("FK__tblCredit__Modif__41399DAE");
 
                 entity.HasOne(d => d.WalletTransaction)
                     .WithMany(p => p.TblCreditRequests)
                     .HasForeignKey(d => d.WalletTransactionId)
-                    .HasConstraintName("FK__tblCredit__Walle__4F52B2DB");
+                    .HasConstraintName("FK__tblCredit__Walle__3D690CCA");
             });
 
             modelBuilder.Entity<TblCurrentAuthtoken>(entity =>
             {
                 entity.HasKey(e => e.CurrentAuthtokenId)
-                    .HasName("PK__tblCurre__47705605D050E341");
+                    .HasName("PK__tblCurre__47705605D0BBC029");
 
                 entity.ToTable("tblCurrentAuthtoken");
 
@@ -2197,6 +3202,51 @@ namespace RDCELERP.DAL.Entities
                 entity.Property(e => e.CurrentAuthToken).HasMaxLength(400);
 
                 entity.Property(e => e.CurrentAuthTokenName).HasMaxLength(400);
+            });
+
+            modelBuilder.Entity<TblCustomerCompany>(entity =>
+            {
+                entity.HasKey(e => e.CustomerCompanyId)
+                    .HasName("PK__tblCusto__8FC8847DFCFFEBD3");
+
+                entity.ToTable("tblCustomerCompany");
+
+                entity.Property(e => e.Address1).HasMaxLength(1000);
+
+                entity.Property(e => e.Address2).HasMaxLength(1000);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Name).HasMaxLength(500);
+
+                entity.Property(e => e.Zipcode).HasMaxLength(500);
+
+                entity.HasOne(d => d.BusinessCustomer)
+                    .WithMany(p => p.TblCustomerCompanies)
+                    .HasForeignKey(d => d.BusinessCustomerId)
+                    .HasConstraintName("FK__tblCustom__Busin__0A7378A9");
+
+                entity.HasOne(d => d.City)
+                    .WithMany(p => p.TblCustomerCompanies)
+                    .HasForeignKey(d => d.CityId)
+                    .HasConstraintName("FK__tblCustom__CityI__0B679CE2");
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.TblCustomerCompanyCreatedByNavigations)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("FK__tblCustom__Creat__0C5BC11B");
+
+                entity.HasOne(d => d.ModifiedByNavigation)
+                    .WithMany(p => p.TblCustomerCompanyModifiedByNavigations)
+                    .HasForeignKey(d => d.ModifiedBy)
+                    .HasConstraintName("FK__tblCustom__Modif__0D4FE554");
+
+                entity.HasOne(d => d.State)
+                    .WithMany(p => p.TblCustomerCompanies)
+                    .HasForeignKey(d => d.StateId)
+                    .HasConstraintName("FK__tblCustom__State__0E44098D");
             });
 
             modelBuilder.Entity<TblCustomerDetail>(entity =>
@@ -2228,6 +3278,11 @@ namespace RDCELERP.DAL.Entities
                 entity.Property(e => e.State).HasMaxLength(255);
 
                 entity.Property(e => e.ZipCode).HasMaxLength(255);
+
+                entity.HasOne(d => d.OrderTrans)
+                    .WithMany(p => p.TblCustomerDetails)
+                    .HasForeignKey(d => d.OrderTransId)
+                    .HasConstraintName("Fk_tblCustomerDetails_OrderTransId");
             });
 
             modelBuilder.Entity<TblCustomerFile>(entity =>
@@ -2328,31 +3383,51 @@ namespace RDCELERP.DAL.Entities
 
                 entity.Property(e => e.VehiclefitnessCertificate).IsUnicode(false);
 
+                entity.HasOne(d => d.ApprovedByNavigation)
+                    .WithMany(p => p.TblDriverDetailApprovedByNavigations)
+                    .HasForeignKey(d => d.ApprovedBy)
+                    .HasConstraintName("FK__tblDriver__appro__6EC0713C");
+
                 entity.HasOne(d => d.CityNavigation)
                     .WithMany(p => p.TblDriverDetails)
                     .HasForeignKey(d => d.CityId)
                     .HasConstraintName("Fk_tblDriverDetails_CityId");
 
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.TblDriverDetailCreatedByNavigations)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("FK__tblDriver__Creat__278EDA44");
+
                 entity.HasOne(d => d.Driver)
                     .WithMany(p => p.TblDriverDetails)
                     .HasForeignKey(d => d.DriverId)
-                    .HasConstraintName("FK_tblDriverDetails_DriverId");
+                    .HasConstraintName("FK__tblDriver__Drive__0F382DC6");
+
+                entity.HasOne(d => d.ModifiedbyNavigation)
+                    .WithMany(p => p.TblDriverDetailModifiedbyNavigations)
+                    .HasForeignKey(d => d.Modifiedby)
+                    .HasConstraintName("FK__tblDriver__Modif__2882FE7D");
+
+                entity.HasOne(d => d.ServicePartner)
+                    .WithMany(p => p.TblDriverDetails)
+                    .HasForeignKey(d => d.ServicePartnerId)
+                    .HasConstraintName("Fk_tblDriverDetails_ServicePartnerId");
 
                 entity.HasOne(d => d.User)
-                    .WithMany(p => p.TblDriverDetails)
+                    .WithMany(p => p.TblDriverDetailUsers)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__tblDriver__UserI__05C3D225");
+                    .HasConstraintName("FK__tblDriver__UserI__75F77EB0");
 
                 entity.HasOne(d => d.Vehicle)
                     .WithMany(p => p.TblDriverDetails)
                     .HasForeignKey(d => d.VehicleId)
-                    .HasConstraintName("FK_tblDriverDetails_VehicleId");
+                    .HasConstraintName("FK__tblDriver__Vehic__11207638");
             });
 
             modelBuilder.Entity<TblDriverList>(entity =>
             {
                 entity.HasKey(e => e.DriverId)
-                    .HasName("PK__tblDrive__F1B1CD04864B5071");
+                    .HasName("PK__tblDrive__F1B1CD040BF0AA39");
 
                 entity.ToTable("tblDriverList");
 
@@ -2379,33 +3454,79 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.City)
                     .WithMany(p => p.TblDriverLists)
                     .HasForeignKey(d => d.CityId)
-                    .HasConstraintName("FK__tblDriver__CityI__57E7F8DC");
+                    .HasConstraintName("FK__tblDriver__CityI__450A2E92");
 
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblDriverListCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__tblDriver__Creat__58DC1D15");
+                    .HasConstraintName("FK__tblDriver__Creat__45FE52CB");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblDriverListModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__tblDriver__Modif__59D0414E");
+                    .HasConstraintName("FK__tblDriver__Modif__46F27704");
 
                 entity.HasOne(d => d.ServicePartner)
                     .WithMany(p => p.TblDriverLists)
                     .HasForeignKey(d => d.ServicePartnerId)
-                    .HasConstraintName("FK__tblDriver__Servi__5AC46587");
+                    .HasConstraintName("FK__tblDriver__Servi__47E69B3D");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TblDriverListUsers)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__tblDriver__UserI__56F3D4A3");
+                    .HasConstraintName("FK__tblDriver__UserI__44160A59");
+            });
+
+            modelBuilder.Entity<TblEcomVoucher>(entity =>
+            {
+                entity.HasKey(e => e.EcomVoucherId)
+                    .HasName("PK__tblEcomV__2D971CACBEE01668");
+
+                entity.ToTable("tblEcomVoucher");
+
+                entity.Property(e => e.CategoryIds).HasMaxLength(150);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Phoneno).HasMaxLength(150);
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.VoucherCode).HasMaxLength(150);
+
+                entity.Property(e => e.Voucherstatus)
+                    .HasMaxLength(200)
+                    .HasColumnName("voucherstatus");
+
+                entity.HasOne(d => d.Brand)
+                    .WithMany(p => p.TblEcomVouchers)
+                    .HasForeignKey(d => d.BrandId)
+                    .HasConstraintName("Fk_tblEcomVoucher_BrandId");
+
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.TblEcomVouchers)
+                    .HasForeignKey(d => d.CompanyId)
+                    .HasConstraintName("Fk_tblEcomVoucher_CompanyId");
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.TblEcomVoucherCreatedByNavigations)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("Fk_tblEcomVoucher_CreatedBy");
+
+                entity.HasOne(d => d.ModifiedByNavigation)
+                    .WithMany(p => p.TblEcomVoucherModifiedByNavigations)
+                    .HasForeignKey(d => d.ModifiedBy)
+                    .HasConstraintName("Fk_tblEcomVoucher_ModifiedBy");
             });
 
             modelBuilder.Entity<TblEntityType>(entity =>
             {
                 entity.HasKey(e => e.EntityTypeId)
-                    .HasName("PK__tblEntit__E45C98F3F9E5FB33");
+                    .HasName("PK__tblEntit__E45C98F3C686EE70");
 
                 entity.ToTable("tblEntityType");
 
@@ -2447,7 +3568,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblEvcPartner>(entity =>
             {
                 entity.HasKey(e => e.EvcPartnerId)
-                    .HasName("PK__tblEvcPa__C65974CC5953EC3B");
+                    .HasName("PK__tblEvcPa__C65974CC9941518D");
 
                 entity.ToTable("tblEvcPartner");
 
@@ -2469,41 +3590,43 @@ namespace RDCELERP.DAL.Entities
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.OldEvcregistrationId).HasColumnName("OldEVCRegistrationId");
+
                 entity.Property(e => e.PinCode).HasMaxLength(255);
 
                 entity.HasOne(d => d.City)
                     .WithMany(p => p.TblEvcPartners)
                     .HasForeignKey(d => d.CityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tblEvcPar__CityI__78BEDCC2");
+                    .HasConstraintName("FK__tblEvcPar__CityI__6EAB62A3");
 
                 entity.HasOne(d => d.CreatedbyNavigation)
                     .WithMany(p => p.TblEvcPartnerCreatedbyNavigations)
                     .HasForeignKey(d => d.Createdby)
-                    .HasConstraintName("FK__tblEvcPar__Creat__7AA72534");
+                    .HasConstraintName("FK__tblEvcPar__Creat__7093AB15");
 
                 entity.HasOne(d => d.Evcregistration)
                     .WithMany(p => p.TblEvcPartners)
                     .HasForeignKey(d => d.EvcregistrationId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tblEvcPar__EVCRe__77CAB889");
+                    .HasConstraintName("FK__tblEvcPar__EVCRe__6DB73E6A");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblEvcPartnerModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__tblEvcPar__Modif__7B9B496D");
+                    .HasConstraintName("FK__tblEvcPar__Modif__7187CF4E");
 
                 entity.HasOne(d => d.State)
                     .WithMany(p => p.TblEvcPartners)
                     .HasForeignKey(d => d.StateId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tblEvcPar__State__79B300FB");
+                    .HasConstraintName("FK__tblEvcPar__State__6F9F86DC");
             });
 
             modelBuilder.Entity<TblEvcPartnerPreference>(entity =>
             {
                 entity.HasKey(e => e.EvcPartnerpreferenceId)
-                    .HasName("PK__tblEvcPa__377C5615291770FF");
+                    .HasName("PK__tblEvcPa__377C561557715F35");
 
                 entity.ToTable("tblEvcPartnerPreference");
 
@@ -2518,30 +3641,30 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.CreatedbyNavigation)
                     .WithMany(p => p.TblEvcPartnerPreferenceCreatedbyNavigations)
                     .HasForeignKey(d => d.Createdby)
-                    .HasConstraintName("FK__tblEvcPar__Creat__015422C3");
+                    .HasConstraintName("FK__tblEvcPar__Creat__7740A8A4");
 
                 entity.HasOne(d => d.Evcpartner)
                     .WithMany(p => p.TblEvcPartnerPreferences)
                     .HasForeignKey(d => d.EvcpartnerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tblEvcPar__EVCPa__7E77B618");
+                    .HasConstraintName("FK__tblEvcPar__EVCPa__74643BF9");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblEvcPartnerPreferenceModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__tblEvcPar__Modif__024846FC");
+                    .HasConstraintName("FK__tblEvcPar__Modif__7834CCDD");
 
                 entity.HasOne(d => d.ProductCat)
                     .WithMany(p => p.TblEvcPartnerPreferences)
                     .HasForeignKey(d => d.ProductCatId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tblEvcPar__Produ__7F6BDA51");
+                    .HasConstraintName("FK__tblEvcPar__Produ__75586032");
 
                 entity.HasOne(d => d.ProductQuality)
                     .WithMany(p => p.TblEvcPartnerPreferences)
                     .HasForeignKey(d => d.ProductQualityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tblEvcPar__Produ__005FFE8A");
+                    .HasConstraintName("FK__tblEvcPar__Produ__764C846B");
             });
 
             modelBuilder.Entity<TblEvcPriceMaster>(entity =>
@@ -3042,7 +4165,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.Evcpartner)
                     .WithMany(p => p.TblEvcwalletHistories)
                     .HasForeignKey(d => d.EvcpartnerId)
-                    .HasConstraintName("FK__TblEVCWal__EVCPa__04308F6E");
+                    .HasConstraintName("FK__TblEVCWal__EVCPa__7A1D154F");
 
                 entity.HasOne(d => d.Evcregistration)
                     .WithMany(p => p.TblEvcwalletHistories)
@@ -3058,7 +4181,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.OrderTrans)
                     .WithMany(p => p.TblEvcwalletHistories)
                     .HasForeignKey(d => d.OrderTransId)
-                    .HasConstraintName("FK__TblEVCWal__Order__1293BD5E");
+                    .HasConstraintName("FK__TblEVCWal__Order__02C769E9");
             });
 
             modelBuilder.Entity<TblEvcwalletStatus>(entity =>
@@ -3102,12 +4225,12 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblExchangeAbbstatusHistoryCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__tblExchan__Creat__52AE4273");
+                    .HasConstraintName("FK__tblExchan__Creat__0697FACD");
 
                 entity.HasOne(d => d.DriverDetail)
                     .WithMany(p => p.TblExchangeAbbstatusHistories)
                     .HasForeignKey(d => d.DriverDetailId)
-                    .HasConstraintName("FK__tblExchan__Drive__3D9E16F4");
+                    .HasConstraintName("FK__tblExchan__Drive__10416098");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblExchangeAbbstatusHistoryModifiedByNavigations)
@@ -3117,17 +4240,17 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.OrderTrans)
                     .WithMany(p => p.TblExchangeAbbstatusHistories)
                     .HasForeignKey(d => d.OrderTransId)
-                    .HasConstraintName("FK__tblExchan__Order__4EDDB18F");
+                    .HasConstraintName("FK__tblExchan__Order__078C1F06");
 
                 entity.HasOne(d => d.Servicepartner)
                     .WithMany(p => p.TblExchangeAbbstatusHistories)
                     .HasForeignKey(d => d.ServicepartnerId)
-                    .HasConstraintName("FK__tblExchan__Servi__3CA9F2BB");
+                    .HasConstraintName("FK__tblExchan__Servi__0F4D3C5F");
 
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.TblExchangeAbbstatusHistories)
                     .HasForeignKey(d => d.StatusId)
-                    .HasConstraintName("FK__tblExchan__Statu__4FD1D5C8");
+                    .HasConstraintName("FK__tblExchan__Statu__0880433F");
             });
 
             modelBuilder.Entity<TblExchangeOrder>(entity =>
@@ -3151,6 +4274,8 @@ namespace RDCELERP.DAL.Entities
                     .IsUnicode(false);
 
                 entity.Property(e => e.CompanyName).HasMaxLength(255);
+
+                entity.Property(e => e.CouponValue).HasColumnType("decimal(15, 2)");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
@@ -3177,6 +4302,10 @@ namespace RDCELERP.DAL.Entities
                 entity.Property(e => e.LoginId).HasColumnName("LoginID");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.NewSerialNumber)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.OrderStatus).HasMaxLength(255);
 
@@ -3245,7 +4374,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.BusinessUnit)
                     .WithMany(p => p.TblExchangeOrders)
                     .HasForeignKey(d => d.BusinessUnitId)
-                    .HasConstraintName("FK__tblExchan__Busin__1C3D2329");
+                    .HasConstraintName("FK__tblExchan__Busin__02E7657A");
 
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblExchangeOrderCreatedByNavigations)
@@ -3262,25 +4391,20 @@ namespace RDCELERP.DAL.Entities
                     .HasForeignKey(d => d.ModifiedBy)
                     .HasConstraintName("Fk_tblExchangeOrder_ModifiedBy");
 
-                entity.HasOne(d => d.NewProductType)
-                    .WithMany(p => p.TblExchangeOrderNewProductTypes)
-                    .HasForeignKey(d => d.NewProductTypeId)
-                    .HasConstraintName("FK__tblExchan__NewPr__6B0FDBE9");
-
                 entity.HasOne(d => d.PriceMasterName)
                     .WithMany(p => p.TblExchangeOrders)
                     .HasForeignKey(d => d.PriceMasterNameId)
-                    .HasConstraintName("FK__tblExchan__Price__2D32A501");
+                    .HasConstraintName("FK_PriceMasterId");
 
                 entity.HasOne(d => d.ProductTechnology)
                     .WithMany(p => p.TblExchangeOrders)
                     .HasForeignKey(d => d.ProductTechnologyId)
-                    .HasConstraintName("FK__tblExchan__Produ__58BC2184");
+                    .HasConstraintName("FK__tblExchan__Produ__46136164");
 
                 entity.HasOne(d => d.ProductType)
-                    .WithMany(p => p.TblExchangeOrderProductTypes)
+                    .WithMany(p => p.TblExchangeOrders)
                     .HasForeignKey(d => d.ProductTypeId)
-                    .HasConstraintName("FK__tblExchan__Produ__664B26CC");
+                    .HasConstraintName("FK__tblSponso__Produ__2057CCD0");
 
                 entity.HasOne(d => d.Society)
                     .WithMany(p => p.TblExchangeOrders)
@@ -3290,12 +4414,12 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.TblExchangeOrders)
                     .HasForeignKey(d => d.StatusId)
-                    .HasConstraintName("FK__tblExchan__Statu__797309D9");
+                    .HasConstraintName("FK__tblExchan__Statu__0A688BB1");
 
                 entity.HasOne(d => d.VoucherStatus)
                     .WithMany(p => p.TblExchangeOrders)
                     .HasForeignKey(d => d.VoucherStatusId)
-                    .HasConstraintName("FK__tblExchan__Vouch__17F790F9");
+                    .HasConstraintName("FK__tblExchan__Vouch__0B5CAFEA");
             });
 
             modelBuilder.Entity<TblExchangeOrderStatus>(entity =>
@@ -3326,22 +4450,22 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.Answer)
                     .WithMany(p => p.TblFeedBacks)
                     .HasForeignKey(d => d.AnswerId)
-                    .HasConstraintName("FK__tblFeedBa__Answe__2645B050");
+                    .HasConstraintName("FK__tblFeedBa__Answe__12FDD1B2");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.TblFeedBacks)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__tblFeedBa__Custo__2739D489");
+                    .HasConstraintName("FK__tblFeedBa__Custo__13F1F5EB");
 
                 entity.HasOne(d => d.ExchangeOrder)
                     .WithMany(p => p.TblFeedBacks)
                     .HasForeignKey(d => d.ExchangeOrderId)
-                    .HasConstraintName("FK__tblFeedBa__Excha__29221CFB");
+                    .HasConstraintName("FK__tblFeedBa__Excha__14E61A24");
 
                 entity.HasOne(d => d.Question)
                     .WithMany(p => p.TblFeedBacks)
                     .HasForeignKey(d => d.QuestionId)
-                    .HasConstraintName("FK__tblFeedBa__Quest__25518C17");
+                    .HasConstraintName("FK__tblFeedBa__Quest__15DA3E5D");
             });
 
             modelBuilder.Entity<TblFeedBackAnswer>(entity =>
@@ -3361,7 +4485,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.Parent)
                     .WithMany(p => p.TblFeedBackAnswers)
                     .HasForeignKey(d => d.ParentId)
-                    .HasConstraintName("FK__tblFeedBa__Paren__282DF8C2");
+                    .HasConstraintName("FK__tblFeedBa__Paren__16CE6296");
             });
 
             modelBuilder.Entity<TblFeedBackQuestion>(entity =>
@@ -3402,12 +4526,12 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.Cust)
                     .WithMany(p => p.TblHistories)
                     .HasForeignKey(d => d.CustId)
-                    .HasConstraintName("FK__tblHistor__CustI__55BFB948");
+                    .HasConstraintName("FK__tblHistor__CustI__17C286CF");
 
                 entity.HasOne(d => d.ExchangeOrder)
                     .WithMany(p => p.TblHistories)
                     .HasForeignKey(d => d.ExchangeOrderId)
-                    .HasConstraintName("FK__tblHistor__Excha__54CB950F");
+                    .HasConstraintName("FK__tblHistor__Excha__18B6AB08");
             });
 
             modelBuilder.Entity<TblImage>(entity =>
@@ -3436,7 +4560,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblImageLabelMaster>(entity =>
             {
                 entity.HasKey(e => e.ImageLabelid)
-                    .HasName("PK__tblImage__69D1D32288A0CE50");
+                    .HasName("PK__tblImage__69D1D3228B9AE167");
 
                 entity.ToTable("tblImageLabelMaster");
 
@@ -3471,12 +4595,51 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.ProductCat)
                     .WithMany(p => p.TblImageLabelMasters)
                     .HasForeignKey(d => d.ProductCatId)
-                    .HasConstraintName("FK__tblImageL__Produ__77DFC722");
+                    .HasConstraintName("FK__tblImageL__Produ__19AACF41");
 
                 entity.HasOne(d => d.ProductType)
                     .WithMany(p => p.TblImageLabelMasters)
                     .HasForeignKey(d => d.ProductTypeId)
-                    .HasConstraintName("FK__tblImageL__Produ__5CC1BC92");
+                    .HasConstraintName("FK__tblImageL__Produ__1A9EF37A");
+            });
+
+            modelBuilder.Entity<TblItem>(entity =>
+            {
+                entity.HasKey(e => e.ItemId)
+                    .HasName("PK__tblItem__D65247C2BDC3EBF0");
+
+                entity.ToTable("tblItem");
+
+                entity.Property(e => e.Brand).HasMaxLength(1000);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ImageName).HasMaxLength(1000);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Name).HasMaxLength(250);
+
+                entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Sku)
+                    .HasMaxLength(500)
+                    .HasColumnName("SKU");
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.TblItemCreatedByNavigations)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("FK__tblItem__Created__32816A03");
+
+                entity.HasOne(d => d.ItemTypeNavigation)
+                    .WithMany(p => p.TblItems)
+                    .HasForeignKey(d => d.ItemType)
+                    .HasConstraintName("FK__tblItem__ItemTyp__5E5FEC41");
+
+                entity.HasOne(d => d.ModifiedByNavigation)
+                    .WithMany(p => p.TblItemModifiedByNavigations)
+                    .HasForeignKey(d => d.ModifiedBy)
+                    .HasConstraintName("FK__tblItem__Modifie__33758E3C");
             });
 
             modelBuilder.Entity<TblLoV>(entity =>
@@ -3529,13 +4692,13 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TblLoginMobiles)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__tblLogin___UserI__70FDBF69");
+                    .HasConstraintName("FK_tblLogin_Mobile_tblUser");
             });
 
             modelBuilder.Entity<TblLogistic>(entity =>
             {
                 entity.HasKey(e => e.LogisticId)
-                    .HasName("PK__tblLogis__FAAA72862B8351BE");
+                    .HasName("PK__tblLogis__FAAA72866BCD7408");
 
                 entity.ToTable("tblLogistics");
 
@@ -3572,32 +4735,32 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblLogisticCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("Fk_tblLogistics_CreatedBy");
+                    .HasConstraintName("FK__tblLogist__Creat__2057CCD0");
 
                 entity.HasOne(d => d.DriverDetails)
                     .WithMany(p => p.TblLogistics)
                     .HasForeignKey(d => d.DriverDetailsId)
-                    .HasConstraintName("FK__tblLogist__drive__7775B2CE");
+                    .HasConstraintName("FK__tblLogist__drive__214BF109");
 
                 entity.HasOne(d => d.ModifiedbyNavigation)
                     .WithMany(p => p.TblLogisticModifiedbyNavigations)
                     .HasForeignKey(d => d.Modifiedby)
-                    .HasConstraintName("Fk_tblLogistics_ModifiedBy");
+                    .HasConstraintName("FK__tblLogist__Modif__22401542");
 
                 entity.HasOne(d => d.OrderTrans)
                     .WithMany(p => p.TblLogistics)
                     .HasForeignKey(d => d.OrderTransId)
-                    .HasConstraintName("FK__tblLogist__Order__7869D707");
+                    .HasConstraintName("FK__tblLogist__Order__2334397B");
 
                 entity.HasOne(d => d.ServicePartner)
                     .WithMany(p => p.TblLogistics)
                     .HasForeignKey(d => d.ServicePartnerId)
-                    .HasConstraintName("FK__tblLogist__Servi__795DFB40");
+                    .HasConstraintName("FK__tblLogist__Servi__24285DB4");
 
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.TblLogistics)
                     .HasForeignKey(d => d.StatusId)
-                    .HasConstraintName("FK__tblLogist__Statu__000AF8CF");
+                    .HasConstraintName("FK__tblLogist__Statu__251C81ED");
             });
 
             modelBuilder.Entity<TblMahindraLogistic>(entity =>
@@ -3742,7 +4905,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblMessageDetail>(entity =>
             {
                 entity.HasKey(e => e.MessageDetailId)
-                    .HasName("PK__tblMessa__64D41BD77C5E7BB0");
+                    .HasName("PK__tblMessa__64D41BD78E07001C");
 
                 entity.ToTable("tblMessageDetail");
 
@@ -3778,23 +4941,23 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.Brand)
                     .WithMany(p => p.TblModelMappings)
                     .HasForeignKey(d => d.BrandId)
-                    .HasConstraintName("FK__tblModelM__Brand__5A3A55A2");
+                    .HasConstraintName("FK__tblModelM__Brand__2818EA29");
 
                 entity.HasOne(d => d.BusinessPartner)
                     .WithMany(p => p.TblModelMappings)
                     .HasForeignKey(d => d.BusinessPartnerId)
-                    .HasConstraintName("FK__tblModelM__Busin__60E75331");
+                    .HasConstraintName("FK__tblModelM__Busin__2A01329B");
 
                 entity.HasOne(d => d.BusinessUnit)
                     .WithMany(p => p.TblModelMappings)
                     .HasForeignKey(d => d.BusinessUnitId)
-                    .HasConstraintName("FK__tblModelM__Busin__5FF32EF8");
+                    .HasConstraintName("FK__tblModelM__Busin__290D0E62");
 
                 entity.HasOne(d => d.Model)
                     .WithMany(p => p.TblModelMappings)
                     .HasForeignKey(d => d.ModelId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tblModelM__Model__5D16C24D");
+                    .HasConstraintName("FK__tblModelM__Model__2AF556D4");
             });
 
             modelBuilder.Entity<TblModelNumber>(entity =>
@@ -3842,12 +5005,12 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.BusinessPartner)
                     .WithMany(p => p.TblModelNumbers)
                     .HasForeignKey(d => d.BusinessPartnerId)
-                    .HasConstraintName("FK__tblModelN__Busin__1D314762");
+                    .HasConstraintName("FK__tblModelN__Busin__03DB89B3");
 
                 entity.HasOne(d => d.BusinessUnit)
                     .WithMany(p => p.TblModelNumbers)
                     .HasForeignKey(d => d.BusinessUnitId)
-                    .HasConstraintName("FK__tblModelN__Busin__5C6CB6D7");
+                    .HasConstraintName("FK__tblModelN__Busin__29E1370A");
 
                 entity.HasOne(d => d.ProductCategory)
                     .WithMany(p => p.TblModelNumbers)
@@ -3857,111 +5020,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.ProductType)
                     .WithMany(p => p.TblModelNumbers)
                     .HasForeignKey(d => d.ProductTypeId)
-                    .HasConstraintName("FK__tblModelN__Produ__5DB5E0CB");
-            });
-
-            modelBuilder.Entity<TblNpssqoption>(entity =>
-            {
-                entity.HasKey(e => e.NpssqoptionId)
-                    .HasName("PK__tblNPSSQ__5630CBF72DD1647D");
-
-                entity.ToTable("tblNPSSQOptions");
-
-                entity.Property(e => e.NpssqoptionId).HasColumnName("NPSSQOptionId");
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.NpssquestionId).HasColumnName("NPSSQuestionId");
-
-                entity.Property(e => e.Option).HasMaxLength(255);
-
-                entity.HasOne(d => d.CreatedByNavigation)
-                    .WithMany(p => p.TblNpssqoptionCreatedByNavigations)
-                    .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("Fk_tblNPSSQOptions_CreatedBy");
-
-                entity.HasOne(d => d.ModifiedByNavigation)
-                    .WithMany(p => p.TblNpssqoptionModifiedByNavigations)
-                    .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("Fk_tblNPSSQOptions_ModifiedBy");
-
-                entity.HasOne(d => d.Npssquestion)
-                    .WithMany(p => p.TblNpssqoptions)
-                    .HasForeignKey(d => d.NpssquestionId)
-                    .HasConstraintName("Fk_tblNPSSQOptions_NPSSQuestionId");
-            });
-
-            modelBuilder.Entity<TblNpssqresponse>(entity =>
-            {
-                entity.HasKey(e => e.NpssqresponseId)
-                    .HasName("PK__tblNPSSQ__387683219F4EA10E");
-
-                entity.ToTable("tblNPSSQResponse");
-
-                entity.Property(e => e.NpssqresponseId).HasColumnName("NPSSQResponseId");
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.NpssqoptionId).HasColumnName("NPSSQOptionId");
-
-                entity.Property(e => e.NpssquestionId).HasColumnName("NPSSQuestionId");
-
-                entity.HasOne(d => d.CreatedByNavigation)
-                    .WithMany(p => p.TblNpssqresponseCreatedByNavigations)
-                    .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("Fk_tblNPSSQResponse_CreatedBy");
-
-                entity.HasOne(d => d.ModifiedByNavigation)
-                    .WithMany(p => p.TblNpssqresponseModifiedByNavigations)
-                    .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("Fk_tblNPSSQResponse_ModifiedBy");
-
-                entity.HasOne(d => d.Npssqoption)
-                    .WithMany(p => p.TblNpssqresponses)
-                    .HasForeignKey(d => d.NpssqoptionId)
-                    .HasConstraintName("Fk_tblNPSSQResponse_NPSSQOptionId");
-
-                entity.HasOne(d => d.Npssquestion)
-                    .WithMany(p => p.TblNpssqresponses)
-                    .HasForeignKey(d => d.NpssquestionId)
-                    .HasConstraintName("Fk_tblNPSSQResponse_NPSSQuestionId");
-
-                entity.HasOne(d => d.OrderTrans)
-                    .WithMany(p => p.TblNpssqresponses)
-                    .HasForeignKey(d => d.OrderTransId)
-                    .HasConstraintName("Fk_tblNPSSQResponse_OrderTransId");
-            });
-
-            modelBuilder.Entity<TblNpssquestion>(entity =>
-            {
-                entity.HasKey(e => e.NpssquestionId)
-                    .HasName("PK__tblNPSSQ__C208914EEC32CFAC");
-
-                entity.ToTable("tblNPSSQuestions");
-
-                entity.Property(e => e.NpssquestionId).HasColumnName("NPSSQuestionId");
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Question).HasMaxLength(255);
-
-                entity.Property(e => e.RatingType).HasMaxLength(50);
-
-                entity.HasOne(d => d.CreatedByNavigation)
-                    .WithMany(p => p.TblNpssquestionCreatedByNavigations)
-                    .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("Fk_tblNPSSQuestions_CreatedBy");
-
-                entity.HasOne(d => d.ModifiedByNavigation)
-                    .WithMany(p => p.TblNpssquestionModifiedByNavigations)
-                    .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("Fk_tblNPSSQuestions_ModifiedBy");
+                    .HasConstraintName("FK__tblModelNo__ProductType__2B0A656D");
             });
 
             modelBuilder.Entity<TblOrderBasedConfig>(entity =>
@@ -3975,24 +5034,24 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.Brand)
                     .WithMany(p => p.TblOrderBasedConfigs)
                     .HasForeignKey(d => d.BrandId)
-                    .HasConstraintName("FK__tblOrderB__Brand__4DD47EBD");
+                    .HasConstraintName("FK__tblOrderB__Brand__2354350C");
 
                 entity.HasOne(d => d.BusinessPartner)
                     .WithMany(p => p.TblOrderBasedConfigs)
                     .HasForeignKey(d => d.BusinessPartnerId)
-                    .HasConstraintName("FK__tblOrderB__Busin__4FBCC72F");
+                    .HasConstraintName("FK__tblOrderB__Busin__253C7D7E");
 
                 entity.HasOne(d => d.BusinessUnit)
                     .WithMany(p => p.TblOrderBasedConfigs)
                     .HasForeignKey(d => d.BusinessUnitId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tblOrderB__Busin__4EC8A2F6");
+                    .HasConstraintName("FK__tblOrderB__Busin__24485945");
             });
 
             modelBuilder.Entity<TblOrderImageUpload>(entity =>
             {
                 entity.HasKey(e => e.OrderImageUploadId)
-                    .HasName("PK__tblOrder__2081518CC35015AE");
+                    .HasName("PK__tblOrder__2081518CF50EDED6");
 
                 entity.ToTable("tblOrderImageUpload");
 
@@ -4074,7 +5133,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.Evcpartner)
                     .WithMany(p => p.TblOrderLgcs)
                     .HasForeignKey(d => d.EvcpartnerId)
-                    .HasConstraintName("FK__tblOrderL__EVCPa__0524B3A7");
+                    .HasConstraintName("FK__tblOrderL__EVCPa__7B113988");
 
                 entity.HasOne(d => d.Evcpod)
                     .WithMany(p => p.TblOrderLgcs)
@@ -4084,7 +5143,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.Evcregistration)
                     .WithMany(p => p.TblOrderLgcs)
                     .HasForeignKey(d => d.EvcregistrationId)
-                    .HasConstraintName("FK__tblOrderL__EVCRe__23BE4960");
+                    .HasConstraintName("FK__tblOrderL__EVCRe__308E3499");
 
                 entity.HasOne(d => d.Logistic)
                     .WithMany(p => p.TblOrderLgcs)
@@ -4100,7 +5159,7 @@ namespace RDCELERP.DAL.Entities
                     .WithMany(p => p.TblOrderLgcs)
                     .HasForeignKey(d => d.OrderTransId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tblOrderL__Order__2B5F6B28");
+                    .HasConstraintName("FK__tblOrderL__Order__318258D2");
             });
 
             modelBuilder.Entity<TblOrderPromoVoucher>(entity =>
@@ -4225,15 +5284,20 @@ namespace RDCELERP.DAL.Entities
                     .IsUnicode(false)
                     .HasColumnName("UPIId");
 
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.TblOrderQcCreatedByNavigations)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("Fk_tblOrderQC_CreatedBy");
+
                 entity.HasOne(d => d.ModifiedByNavigation)
-                    .WithMany(p => p.TblOrderQcs)
+                    .WithMany(p => p.TblOrderQcModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
                     .HasConstraintName("Fk_tblOrderQC_ModifiedBy");
 
                 entity.HasOne(d => d.OrderTrans)
                     .WithMany(p => p.TblOrderQcs)
                     .HasForeignKey(d => d.OrderTransId)
-                    .HasConstraintName("FK__tblOrderQ__Order__2759D01A");
+                    .HasConstraintName("FK__tblOrderQ__Order__2C88998B");
             });
 
             modelBuilder.Entity<TblOrderQcrating>(entity =>
@@ -4259,33 +5323,33 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblOrderQcratingCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__tblOrderQ__Creat__1AF3F935");
+                    .HasConstraintName("FK__tblOrderQ__Creat__29AC2CE0");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblOrderQcratingModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__tblOrderQ__Modif__1BE81D6E");
+                    .HasConstraintName("FK__tblOrderQ__Modif__2AA05119");
 
                 entity.HasOne(d => d.OrderTrans)
                     .WithMany(p => p.TblOrderQcratings)
                     .HasForeignKey(d => d.OrderTransId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tblOrderQ__Order__1CDC41A7");
+                    .HasConstraintName("FK__tblOrderQ__Order__2B947552");
 
                 entity.HasOne(d => d.ProductCat)
                     .WithMany(p => p.TblOrderQcratings)
                     .HasForeignKey(d => d.ProductCatId)
-                    .HasConstraintName("FK__tblOrderQ__Produ__35A7EF71");
+                    .HasConstraintName("FK__tblOrderQ__Produ__0AF29B96");
 
                 entity.HasOne(d => d.Qcquestion)
                     .WithMany(p => p.TblOrderQcratings)
                     .HasForeignKey(d => d.QcquestionId)
-                    .HasConstraintName("FK__tblOrderQ__QCQue__369C13AA");
+                    .HasConstraintName("FK__tblOrderQ__QCQue__0BE6BFCF");
 
                 entity.HasOne(d => d.QuestionerLov)
                     .WithMany(p => p.TblOrderQcratings)
                     .HasForeignKey(d => d.QuestionerLovid)
-                    .HasConstraintName("FK__tblOrderQ__Quest__379037E3");
+                    .HasConstraintName("FK__tblOrderQ__Quest__0CDAE408");
             });
 
             modelBuilder.Entity<TblOrderTran>(entity =>
@@ -4312,6 +5376,10 @@ namespace RDCELERP.DAL.Entities
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.PdverificatonCode)
+                    .HasMaxLength(100)
+                    .HasColumnName("PDVerificatonCode");
+
                 entity.Property(e => e.QuotedPrice).HasColumnType("decimal(15, 2)");
 
                 entity.Property(e => e.RegdNo)
@@ -4326,6 +5394,8 @@ namespace RDCELERP.DAL.Entities
 
                 entity.Property(e => e.Sweetner).HasColumnType("decimal(15, 2)");
 
+                entity.Property(e => e.UnInstallationPrice).HasColumnType("decimal(15, 2)");
+
                 entity.HasOne(d => d.Abbredemption)
                     .WithMany(p => p.TblOrderTrans)
                     .HasForeignKey(d => d.AbbredemptionId)
@@ -4334,12 +5404,12 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.AssignByNavigation)
                     .WithMany(p => p.TblOrderTranAssignByNavigations)
                     .HasForeignKey(d => d.AssignBy)
-                    .HasConstraintName("FK__tblOrderT__Assig__36870511");
+                    .HasConstraintName("FK__tblOrderT__Assig__35C7EB02");
 
                 entity.HasOne(d => d.AssignToNavigation)
                     .WithMany(p => p.TblOrderTranAssignToNavigations)
                     .HasForeignKey(d => d.AssignTo)
-                    .HasConstraintName("FK__tblOrderT__Assig__377B294A");
+                    .HasConstraintName("FK__tblOrderT__Assig__36BC0F3B");
 
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblOrderTranCreatedByNavigations)
@@ -4364,12 +5434,12 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.SelfQclinkResendbyNavigation)
                     .WithMany(p => p.TblOrderTranSelfQclinkResendbyNavigations)
                     .HasForeignKey(d => d.SelfQclinkResendby)
-                    .HasConstraintName("FK__tblOrderT__SelfQ__74EE4BDE");
+                    .HasConstraintName("FK__tblOrderT__SelfQ__6ADAD1BF");
 
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.TblOrderTrans)
                     .HasForeignKey(d => d.StatusId)
-                    .HasConstraintName("FK__tblOrderT__Statu__6E565CE8");
+                    .HasConstraintName("FK__tblOrderT__Statu__382F5661");
             });
 
             modelBuilder.Entity<TblPaymentLeaser>(entity =>
@@ -4468,12 +5538,6 @@ namespace RDCELERP.DAL.Entities
             {
                 entity.ToTable("tblPinCode");
 
-                entity.HasIndex(e => e.ZipCode, "UQ__tblPinCo__2CC2CDB8C5013C8F")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.ZipCode, "UQ__tblPinCo__2CC2CDB8D3AF4E0A")
-                    .IsUnique();
-
                 entity.Property(e => e.AreaLocality).HasMaxLength(255);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
@@ -4481,8 +5545,6 @@ namespace RDCELERP.DAL.Entities
                 entity.Property(e => e.HubControl).HasMaxLength(255);
 
                 entity.Property(e => e.IsAbb).HasColumnName("IsABB");
-
-                entity.Property(e => e.IsExchange).HasColumnName("isExchange");
 
                 entity.Property(e => e.Location).HasMaxLength(255);
 
@@ -4495,7 +5557,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.City)
                     .WithMany(p => p.TblPinCodes)
                     .HasForeignKey(d => d.CityId)
-                    .HasConstraintName("FK__tblPinCod__CityI__031C6FA4");
+                    .HasConstraintName("FK__tblPinCod__CityI__3CF40B7E");
             });
 
             modelBuilder.Entity<TblPincodeMasterDtoC>(entity =>
@@ -4599,59 +5661,59 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.ProductTypeNavigation)
                     .WithMany(p => p.TblPriceMasters)
                     .HasForeignKey(d => d.ProductTypeId)
-                    .HasConstraintName("FK__tblPriceM__Produ__5F9E293D");
+                    .HasConstraintName("FK__tblProduc__Produ__1C873BEC");
             });
 
             modelBuilder.Entity<TblPriceMasterMapping>(entity =>
             {
                 entity.HasKey(e => e.PriceMasterMappingId)
-                    .HasName("PK__tblPrice__C90D5EC575201E93");
+                    .HasName("PK__tblPrice__C90D5EC5A996C837");
 
                 entity.ToTable("tblPriceMasterMapping");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Enddate).HasColumnType("datetime");
+                entity.Property(e => e.EndDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Startdate).HasColumnType("datetime");
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Brand)
                     .WithMany(p => p.TblPriceMasterMappings)
                     .HasForeignKey(d => d.BrandId)
-                    .HasConstraintName("FK__tblPriceM__Brand__24D2692A");
+                    .HasConstraintName("FK__tblPriceM__Brand__53F76C67");
 
                 entity.HasOne(d => d.BusinessPartner)
                     .WithMany(p => p.TblPriceMasterMappings)
                     .HasForeignKey(d => d.BusinessPartnerId)
-                    .HasConstraintName("FK__tblPriceM__Busin__26BAB19C");
+                    .HasConstraintName("FK__tblPriceM__Busin__55DFB4D9");
 
                 entity.HasOne(d => d.BusinessUnit)
                     .WithMany(p => p.TblPriceMasterMappings)
                     .HasForeignKey(d => d.BusinessUnitId)
-                    .HasConstraintName("FK__tblPriceM__Busin__25C68D63");
+                    .HasConstraintName("FK__tblPriceM__Busin__54EB90A0");
 
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblPriceMasterMappingCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__tblPriceM__Creat__27AED5D5");
+                    .HasConstraintName("FK__tblPriceM__Creat__56D3D912");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblPriceMasterMappingModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__tblPriceM__Modif__28A2FA0E");
+                    .HasConstraintName("FK__tblPriceM__Modif__57C7FD4B");
 
                 entity.HasOne(d => d.PriceMasterName)
                     .WithMany(p => p.TblPriceMasterMappings)
                     .HasForeignKey(d => d.PriceMasterNameId)
-                    .HasConstraintName("FK__tblPriceM__Price__29971E47");
+                    .HasConstraintName("FK__tblPriceM__Price__58BC2184");
             });
 
             modelBuilder.Entity<TblPriceMasterName>(entity =>
             {
                 entity.HasKey(e => e.PriceMasterNameId)
-                    .HasName("PK__tblPrice__EF45EED1AB14286C");
+                    .HasName("PK__tblPrice__EF45EED1BCDA3C45");
 
                 entity.ToTable("tblPriceMasterName");
 
@@ -4666,18 +5728,18 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblPriceMasterNameCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__tblPriceM__Creat__1960B67E");
+                    .HasConstraintName("FK__tblPriceM__Creat__4979DDF4");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblPriceMasterNameModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__tblPriceM__Modif__1A54DAB7");
+                    .HasConstraintName("FK__tblPriceM__Modif__4A6E022D");
             });
 
             modelBuilder.Entity<TblPriceMasterQuestioner>(entity =>
             {
                 entity.HasKey(e => e.PriceMasterQuestionerId)
-                    .HasName("PK__TblPrice__3DE8F93F8FE09720");
+                    .HasName("PK__TblPrice__3DE8F93F85BD7DD8");
 
                 entity.ToTable("TblPriceMasterQuestioner");
 
@@ -4692,17 +5754,17 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.BusinessUnit)
                     .WithMany(p => p.TblPriceMasterQuestioners)
                     .HasForeignKey(d => d.BusinessUnitId)
-                    .HasConstraintName("FK__TblPriceM__Busin__20ACD28B");
+                    .HasConstraintName("FK__TblPriceM__Busin__1D4655FB");
 
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblPriceMasterQuestionerCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__TblPriceM__Creat__22951AFD");
+                    .HasConstraintName("FK__TblPriceM__Creat__1F2E9E6D");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblPriceMasterQuestionerModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__TblPriceM__Modif__23893F36");
+                    .HasConstraintName("FK__TblPriceM__Modif__2022C2A6");
 
                 entity.HasOne(d => d.ProductCat)
                     .WithMany(p => p.TblPriceMasterQuestioners)
@@ -4712,18 +5774,18 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.ProductTechnology)
                     .WithMany(p => p.TblPriceMasterQuestioners)
                     .HasForeignKey(d => d.ProductTechnologyId)
-                    .HasConstraintName("FK__TblPriceM__Produ__21A0F6C4");
+                    .HasConstraintName("FK__TblPriceM__Produ__1E3A7A34");
 
                 entity.HasOne(d => d.ProductType)
                     .WithMany(p => p.TblPriceMasterQuestioners)
                     .HasForeignKey(d => d.ProductTypeId)
-                    .HasConstraintName("FK__TblPriceM__Produ__7F01C5FD");
+                    .HasConstraintName("FK__TblPriceM__Produ__1C5231C2");
             });
 
             modelBuilder.Entity<TblProdCatBrandMapping>(entity =>
             {
                 entity.HasKey(e => e.ProdCatBrandMappingId)
-                    .HasName("PK__TblProdC__74AA83C8235E67B2");
+                    .HasName("PK__TblProdC__74AA83C8731E4460");
 
                 entity.ToTable("TblProdCatBrandMapping");
 
@@ -4735,29 +5797,29 @@ namespace RDCELERP.DAL.Entities
                     .WithMany(p => p.TblProdCatBrandMappings)
                     .HasForeignKey(d => d.BrandGroupId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__TblProdCa__Brand__255C790F");
+                    .HasConstraintName("FK__TblProdCa__Brand__2779CBAB");
 
                 entity.HasOne(d => d.Brand)
                     .WithMany(p => p.TblProdCatBrandMappings)
                     .HasForeignKey(d => d.BrandId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__TblProdCa__Brand__2374309D");
+                    .HasConstraintName("FK__TblProdCa__Brand__25918339");
 
                 entity.HasOne(d => d.CreatedbyNavigation)
                     .WithMany(p => p.TblProdCatBrandMappingCreatedbyNavigations)
                     .HasForeignKey(d => d.Createdby)
-                    .HasConstraintName("FK__TblProdCa__Creat__26509D48");
+                    .HasConstraintName("FK__TblProdCa__Creat__286DEFE4");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblProdCatBrandMappingModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__TblProdCa__Modif__2744C181");
+                    .HasConstraintName("FK__TblProdCa__Modif__2962141D");
 
                 entity.HasOne(d => d.ProductCat)
                     .WithMany(p => p.TblProdCatBrandMappings)
                     .HasForeignKey(d => d.ProductCatId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__TblProdCa__Produ__246854D6");
+                    .HasConstraintName("FK__TblProdCa__Produ__2685A772");
             });
 
             modelBuilder.Entity<TblProductCategory>(entity =>
@@ -4803,13 +5865,13 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.BusinessPartner)
                     .WithMany(p => p.TblProductConditionLabels)
                     .HasForeignKey(d => d.BusinessPartnerId)
-                    .HasConstraintName("FK__tblProduc__Busin__1B48FEF0");
+                    .HasConstraintName("FK__tblProduc__Busin__01F34141");
 
                 entity.HasOne(d => d.BusinessUnit)
                     .WithMany(p => p.TblProductConditionLabels)
                     .HasForeignKey(d => d.BusinessUnitId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tblProduc__Busin__57C7FD4B");
+                    .HasConstraintName("FK__tblProduc__Busin__3C89F72A");
 
                 entity.HasOne(d => d.ProductCat)
                     .WithMany(p => p.TblProductConditionLabels)
@@ -4820,7 +5882,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblProductQualityIndex>(entity =>
             {
                 entity.HasKey(e => e.ProductQualityIndexId)
-                    .HasName("PK__tblProdu__D9EF5B3F4563A351");
+                    .HasName("PK__tblProdu__D9EF5B3F9CD67ECF");
 
                 entity.ToTable("tblProductQualityIndex");
 
@@ -4849,7 +5911,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblProductTechnology>(entity =>
             {
                 entity.HasKey(e => e.ProductTechnologyId)
-                    .HasName("PK__TblProdu__FD17E030E9390401");
+                    .HasName("PK__TblProdu__FD17E030936602E8");
 
                 entity.ToTable("TblProductTechnology");
 
@@ -4862,17 +5924,17 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblProductTechnologyCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__TblProduc__Creat__10766AC2");
+                    .HasConstraintName("FK__TblProduc__Creat__13BCEBC1");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblProductTechnologyModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__TblProduc__Modif__116A8EFB");
+                    .HasConstraintName("FK__TblProduc__Modif__14B10FFA");
 
                 entity.HasOne(d => d.ProductCat)
                     .WithMany(p => p.TblProductTechnologies)
                     .HasForeignKey(d => d.ProductCatId)
-                    .HasConstraintName("FK__TblProduc__Produ__0F824689");
+                    .HasConstraintName("FK__TblProduc__Produ__12C8C788");
             });
 
             modelBuilder.Entity<TblProductType>(entity =>
@@ -4927,7 +5989,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblPushNotificationMessageDetail>(entity =>
             {
                 entity.HasKey(e => e.NotificationMessageId)
-                    .HasName("PK__tblPushN__FFFA59DA2A34E8ED");
+                    .HasName("PK__tblPushN__FFFA59DAC566BF8C");
 
                 entity.ToTable("tblPushNotificationMessageDetails");
 
@@ -4949,13 +6011,13 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblPushNotificationMessageDetailModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__tblPushNo__Modif__41A3B202");
+                    .HasConstraintName("FK__tblPushNo__Modif__5BCD9859");
             });
 
             modelBuilder.Entity<TblPushNotificationSavedDetail>(entity =>
             {
                 entity.HasKey(e => e.SavedDetailsId)
-                    .HasName("PK__tblPushN__ED6094442935874F");
+                    .HasName("PK__tblPushN__ED6094445B7F571B");
 
                 entity.ToTable("tblPushNotificationSavedDetails");
 
@@ -4973,7 +6035,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblPushNotificationSavedDetailModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__tblPushNo__Modif__4297D63B");
+                    .HasConstraintName("FK__tblPushNo__Modif__5CC1BC92");
             });
 
             modelBuilder.Entity<TblQcratingMaster>(entity =>
@@ -4998,17 +6060,17 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblQcratingMasterCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__tblQCRati__Creat__162F4418");
+                    .HasConstraintName("FK__tblQCRati__Creat__24E777C3");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblQcratingMasterModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__tblQCRati__Modif__17236851");
+                    .HasConstraintName("FK__tblQCRati__Modif__25DB9BFC");
 
                 entity.HasOne(d => d.QuestionerLov)
                     .WithMany(p => p.TblQcratingMasters)
                     .HasForeignKey(d => d.QuestionerLovid)
-                    .HasConstraintName("FK__tblQCRati__Quest__18178C8A");
+                    .HasConstraintName("FK__tblQCRati__Quest__26CFC035");
             });
 
             modelBuilder.Entity<TblQcratingMasterMapping>(entity =>
@@ -5051,7 +6113,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblQuestionerLov>(entity =>
             {
                 entity.HasKey(e => e.QuestionerLovid)
-                    .HasName("PK__TblQuest__62281FF8741C4CE9");
+                    .HasName("PK__TblQuest__62281FF8056F456F");
 
                 entity.ToTable("TblQuestionerLOV");
 
@@ -5074,18 +6136,18 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblQuestionerLovCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__TblQuesti__Creat__1446FBA6");
+                    .HasConstraintName("FK__TblQuesti__Creat__22FF2F51");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblQuestionerLovModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__TblQuesti__Modif__153B1FDF");
+                    .HasConstraintName("FK__TblQuesti__Modif__23F3538A");
             });
 
             modelBuilder.Entity<TblQuestionerLovmapping>(entity =>
             {
                 entity.HasKey(e => e.QuestionerLovmappingId)
-                    .HasName("PK__TblQuest__519459829C02FC07");
+                    .HasName("PK__TblQuest__519459823715D913");
 
                 entity.ToTable("TblQuestionerLOVMapping");
 
@@ -5127,7 +6189,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblQuestionsForSweetner>(entity =>
             {
                 entity.HasKey(e => e.QuestionId)
-                    .HasName("PK__tblQuest__0DC06FAC83CEFCA4");
+                    .HasName("PK__tblQuest__0DC06FAC6F83093E");
 
                 entity.ToTable("tblQuestionsForSweetner");
 
@@ -5267,7 +6329,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblRole>(entity =>
             {
                 entity.HasKey(e => e.RoleId)
-                    .HasName("PK__tblRole__8AFACE1ABE6B7F96");
+                    .HasName("PK__tblRole__8AFACE1A7B28CB87");
 
                 entity.ToTable("tblRole");
 
@@ -5298,7 +6360,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblRoleAccess>(entity =>
             {
                 entity.HasKey(e => e.RoleAccessId)
-                    .HasName("PK__tblRoleA__C1244FD4A3A7CCEE");
+                    .HasName("PK__tblRoleA__C1244FD426B6B445");
 
                 entity.ToTable("tblRoleAccess");
 
@@ -5335,7 +6397,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblSelfQc>(entity =>
             {
                 entity.HasKey(e => e.SelfQcid)
-                    .HasName("PK__tblSelfQ__DE91E5E0DFF8B278");
+                    .HasName("PK__tblSelfQ__DE91E5E052577ECE");
 
                 entity.ToTable("tblSelfQC");
 
@@ -5366,7 +6428,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.ExchangeOrder)
                     .WithMany(p => p.TblSelfQcs)
                     .HasForeignKey(d => d.ExchangeOrderId)
-                    .HasConstraintName("FK__tblSelfQC__Excha__7CA47C3F");
+                    .HasConstraintName("FK__tblSelfQC__Excha__4959E263");
 
                 entity.HasOne(d => d.Redemption)
                     .WithMany(p => p.TblSelfQcs)
@@ -5376,13 +6438,13 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TblSelfQcs)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__tblSelfQC__UserI__73FA27A5");
+                    .HasConstraintName("FK__tblSelfQC__UserI__69E6AD86");
             });
 
             modelBuilder.Entity<TblServicePartner>(entity =>
             {
                 entity.HasKey(e => e.ServicePartnerId)
-                    .HasName("PK__tblServi__C795E7D58C35000F");
+                    .HasName("PK__tblServi__C795E7D5E8CDAC91");
 
                 entity.ToTable("tblServicePartner");
 
@@ -5471,7 +6533,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TblServicePartnerUsers)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__tblServic__UserI__75035A77");
+                    .HasConstraintName("FK__tblServic__UserI__4A4E069C");
             });
 
             modelBuilder.Entity<TblSociety>(entity =>
@@ -5557,7 +6619,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblState>(entity =>
             {
                 entity.HasKey(e => e.StateId)
-                    .HasName("PK__tblState__C3BA3B3A1000266B");
+                    .HasName("PK__tblState__C3BA3B3AC3DC3057");
 
                 entity.ToTable("tblState");
 
@@ -5631,11 +6693,6 @@ namespace RDCELERP.DAL.Entities
                 entity.Property(e => e.OrderTimeline)
                     .HasMaxLength(50)
                     .IsUnicode(false);
-
-                entity.HasOne(d => d.CreatedByNavigation)
-                    .WithMany(p => p.TblTimeLines)
-                    .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK_tblTimeLine_tblUser");
             });
 
             modelBuilder.Entity<TblTimelineStatusMapping>(entity =>
@@ -5653,15 +6710,14 @@ namespace RDCELERP.DAL.Entities
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.CreatedByNavigation)
-                    .WithMany(p => p.TblTimelineStatusMappings)
+                    .WithMany(p => p.TblTimelineStatusMappingCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK_tblTimelineStatusMapping_tblUser");
+                    .HasConstraintName("FK__tblTimeli__Creat__1308BEAA");
 
-                entity.HasOne(d => d.Status)
-                    .WithMany(p => p.TblTimelineStatusMappings)
-                    .HasForeignKey(d => d.StatusId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tblTimelineStatusMapping_tblExchangeOrderStatus");
+                entity.HasOne(d => d.ModifiedByNavigation)
+                    .WithMany(p => p.TblTimelineStatusMappingModifiedByNavigations)
+                    .HasForeignKey(d => d.ModifiedBy)
+                    .HasConstraintName("FK__tblTimeli__Modif__14F1071C");
             });
 
             modelBuilder.Entity<TblTransMasterAbbplanMaster>(entity =>
@@ -5687,12 +6743,12 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.Abbregistration)
                     .WithMany(p => p.TblTransMasterAbbplanMasters)
                     .HasForeignKey(d => d.AbbregistrationId)
-                    .HasConstraintName("FK__tblTransM__ABBRe__31A25463");
+                    .HasConstraintName("FK__tblTransM__ABBRe__1758727B");
 
                 entity.HasOne(d => d.BusinessUnit)
                     .WithMany(p => p.TblTransMasterAbbplanMasters)
                     .HasForeignKey(d => d.BusinessUnitId)
-                    .HasConstraintName("FK__tblTransM__Busin__30AE302A");
+                    .HasConstraintName("FK__tblTransM__Busin__16644E42");
             });
 
             modelBuilder.Entity<TblUnInstallationPriceMaster>(entity =>
@@ -5744,7 +6800,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblUniversalPriceMaster>(entity =>
             {
                 entity.HasKey(e => e.PriceMasterUniversalId)
-                    .HasName("PK__tblUnive__71B600B358A9AA35");
+                    .HasName("PK__tblUnive__71B600B3397FAFB0");
 
                 entity.ToTable("tblUniversalPriceMaster");
 
@@ -5817,27 +6873,27 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblUniversalPriceMasterCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__tblUniver__Creat__2C738AF2");
+                    .HasConstraintName("FK__tblUniver__Creat__4D4A6ED8");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblUniversalPriceMasterModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__tblUniver__Modif__2D67AF2B");
+                    .HasConstraintName("FK__tblUniver__Modif__4E3E9311");
 
                 entity.HasOne(d => d.PriceMasterNameNavigation)
                     .WithMany(p => p.TblUniversalPriceMasters)
                     .HasForeignKey(d => d.PriceMasterNameId)
-                    .HasConstraintName("FK__tblUniver__Price__2E5BD364");
+                    .HasConstraintName("FK__tblUniver__Price__4F32B74A");
 
                 entity.HasOne(d => d.ProductCategory)
                     .WithMany(p => p.TblUniversalPriceMasters)
                     .HasForeignKey(d => d.ProductCategoryId)
-                    .HasConstraintName("FK__tblUniver__Produ__2F4FF79D");
+                    .HasConstraintName("FK__tblUniver__Produ__5026DB83");
 
                 entity.HasOne(d => d.ProductType)
                     .WithMany(p => p.TblUniversalPriceMasters)
                     .HasForeignKey(d => d.ProductTypeId)
-                    .HasConstraintName("FK__tblUniver__Produ__30441BD6");
+                    .HasConstraintName("FK__tblUniver__Produ__511AFFBC");
             });
 
             modelBuilder.Entity<TblUpiidUpdatelog>(entity =>
@@ -5930,7 +6986,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblUserMapping>(entity =>
             {
                 entity.HasKey(e => e.UserMappingId)
-                    .HasName("PK__tblUserM__B03C2992E68DB0B9");
+                    .HasName("PK__tblUserM__B03C299247065746");
 
                 entity.ToTable("tblUserMapping");
 
@@ -5941,33 +6997,33 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.BusinessPartner)
                     .WithMany(p => p.TblUserMappings)
                     .HasForeignKey(d => d.BusinessPartnerId)
-                    .HasConstraintName("FK__tblUserMa__Busin__34D3C6C9");
+                    .HasConstraintName("FK__tblUserMa__Busin__6304A5CD");
 
                 entity.HasOne(d => d.BusinessUnit)
                     .WithMany(p => p.TblUserMappings)
                     .HasForeignKey(d => d.BusinessUnitId)
-                    .HasConstraintName("FK__tblUserMa__Busin__35C7EB02");
+                    .HasConstraintName("FK__tblUserMa__Busin__63F8CA06");
 
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblUserMappingCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__tblUserMa__Creat__36BC0F3B");
+                    .HasConstraintName("FK__tblUserMa__Creat__64ECEE3F");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblUserMappingModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__tblUserMa__Modif__37B03374");
+                    .HasConstraintName("FK__tblUserMa__Modif__65E11278");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TblUserMappingUsers)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__tblUserMa__UserI__33DFA290");
+                    .HasConstraintName("FK__tblUserMa__UserI__62108194");
             });
 
             modelBuilder.Entity<TblUserRole>(entity =>
             {
                 entity.HasKey(e => e.UserRoleId)
-                    .HasName("PK__tblUserR__3D978A35830700BB");
+                    .HasName("PK__tblUserR__3D978A35A4030B8A");
 
                 entity.ToTable("tblUserRole");
 
@@ -6057,7 +7113,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblVehicleIncentive>(entity =>
             {
                 entity.HasKey(e => e.IncentiveId)
-                    .HasName("PK__TblVehic__1617835CA772EB5E");
+                    .HasName("PK__TblVehic__1617835C10991830");
 
                 entity.ToTable("TblVehicleIncentive");
 
@@ -6104,7 +7160,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblVehicleJourneyTracking>(entity =>
             {
                 entity.HasKey(e => e.TrackingId)
-                    .HasName("PK__TblVehic__3C19EDF1D61CCDF1");
+                    .HasName("PK__TblVehic__3C19EDF1D6D1DF30");
 
                 entity.ToTable("TblVehicleJourneyTracking");
 
@@ -6148,7 +7204,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblVehicleJourneyTrackingDetail>(entity =>
             {
                 entity.HasKey(e => e.TrackingDetailsId)
-                    .HasName("PK__TblVehic__7BB78FCE7C31E747");
+                    .HasName("PK__TblVehic__7BB78FCEE646CF03");
 
                 entity.Property(e => e.BasePrice).HasColumnType("decimal(18, 0)");
 
@@ -6208,7 +7264,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.Evcpartner)
                     .WithMany(p => p.TblVehicleJourneyTrackingDetails)
                     .HasForeignKey(d => d.EvcpartnerId)
-                    .HasConstraintName("FK__TblVehicl__EVCPa__0618D7E0");
+                    .HasConstraintName("FK__TblVehicl__EVCPa__7C055DC1");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblVehicleJourneyTrackingDetailModifiedByNavigations)
@@ -6239,7 +7295,7 @@ namespace RDCELERP.DAL.Entities
             modelBuilder.Entity<TblVehicleList>(entity =>
             {
                 entity.HasKey(e => e.VehicleId)
-                    .HasName("PK__tblVehic__476B54925C27BF9D");
+                    .HasName("PK__tblVehic__476B549258437598");
 
                 entity.ToTable("tblVehicleList");
 
@@ -6267,28 +7323,28 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.City)
                     .WithMany(p => p.TblVehicleLists)
                     .HasForeignKey(d => d.CityId)
-                    .HasConstraintName("FK__tblVehicl__CityI__5DA0D232");
+                    .HasConstraintName("FK__tblVehicl__CityI__4AC307E8");
 
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblVehicleListCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__tblVehicl__Creat__5E94F66B");
+                    .HasConstraintName("FK__tblVehicl__Creat__4BB72C21");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblVehicleListModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__tblVehicl__Modif__5F891AA4");
+                    .HasConstraintName("FK__tblVehicl__Modif__4CAB505A");
 
                 entity.HasOne(d => d.ServicePartner)
                     .WithMany(p => p.TblVehicleLists)
                     .HasForeignKey(d => d.ServicePartnerId)
-                    .HasConstraintName("FK__tblVehicl__Servi__607D3EDD");
+                    .HasConstraintName("FK__tblVehicl__Servi__4D9F7493");
             });
 
             modelBuilder.Entity<TblVoucherStatus>(entity =>
             {
                 entity.HasKey(e => e.VoucherStatusId)
-                    .HasName("PK__tblVouch__E033B2A78690CCA9");
+                    .HasName("PK__tblVouch__E033B2A714901438");
 
                 entity.ToTable("tblVoucherStatus");
 
@@ -6310,13 +7366,13 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.BusinessUnit)
                     .WithMany(p => p.TblVoucherTermsAndConditions)
                     .HasForeignKey(d => d.BusinessUnitId)
-                    .HasConstraintName("FK__tblVouche__Busin__3D7E1B63");
+                    .HasConstraintName("FK__tblVouche__Busin__589C25F3");
             });
 
             modelBuilder.Entity<TblVoucherVerfication>(entity =>
             {
                 entity.HasKey(e => e.VoucherVerficationId)
-                    .HasName("PK__tblVouch__D48E82186A1EF2D0");
+                    .HasName("PK__tblVouch__D48E82186BCC0B2D");
 
                 entity.ToTable("tblVoucherVerfication");
 
@@ -6373,7 +7429,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.NewProductType)
                     .WithMany(p => p.TblVoucherVerfications)
                     .HasForeignKey(d => d.NewProductTypeId)
-                    .HasConstraintName("FK__tblVouche__NewPr__6462DE5A");
+                    .HasConstraintName("FK_tblVoucherVerficatio_NewProductTypeId");
 
                 entity.HasOne(d => d.Redemption)
                     .WithMany(p => p.TblVoucherVerfications)
@@ -6383,7 +7439,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.VoucherStatus)
                     .WithMany(p => p.TblVoucherVerfications)
                     .HasForeignKey(d => d.VoucherStatusId)
-                    .HasConstraintName("FK__tblVouche__Vouch__18EBB532");
+                    .HasConstraintName("FK__tblVouche__Vouch__59904A2C");
             });
 
             modelBuilder.Entity<TblWalletTransaction>(entity =>
@@ -6454,7 +7510,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.Evcpartner)
                     .WithMany(p => p.TblWalletTransactions)
                     .HasForeignKey(d => d.EvcpartnerId)
-                    .HasConstraintName("FK__tblWallet__EVCPa__033C6B35");
+                    .HasConstraintName("FK__tblWallet__EVCPa__7928F116");
 
                 entity.HasOne(d => d.Evcregistration)
                     .WithMany(p => p.TblWalletTransactions)
@@ -6474,7 +7530,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.OrderTrans)
                     .WithMany(p => p.TblWalletTransactions)
                     .HasForeignKey(d => d.OrderTransId)
-                    .HasConstraintName("FK__tblWallet__Order__740F363E");
+                    .HasConstraintName("FK__tblWallet__Order__61316BF4");
             });
 
             modelBuilder.Entity<TblWhatsAppMessage>(entity =>
@@ -6502,6 +7558,240 @@ namespace RDCELERP.DAL.Entities
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<Temp27Bp160724>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("Temp_27_BP160724");
+
+                entity.Property(e => e.AccountNo).HasMaxLength(255);
+
+                entity.Property(e => e.AddressLine1).HasMaxLength(255);
+
+                entity.Property(e => e.AddressLine2).HasMaxLength(255);
+
+                entity.Property(e => e.AssociateCode).HasMaxLength(255);
+
+                entity.Property(e => e.BankDetails).HasMaxLength(255);
+
+                entity.Property(e => e.Bppassword)
+                    .HasMaxLength(255)
+                    .HasColumnName("BPPassword");
+
+                entity.Property(e => e.City).HasMaxLength(255);
+
+                entity.Property(e => e.CityId).HasColumnName("cityId");
+
+                entity.Property(e => e.ContactPersonFirstName).HasMaxLength(255);
+
+                entity.Property(e => e.ContactPersonLastName).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DashBoardImage).HasMaxLength(255);
+
+                entity.Property(e => e.Description).HasMaxLength(255);
+
+                entity.Property(e => e.Email).HasMaxLength(255);
+
+                entity.Property(e => e.F52).HasMaxLength(255);
+
+                entity.Property(e => e.FormatName).HasMaxLength(255);
+
+                entity.Property(e => e.Gstnumber)
+                    .HasMaxLength(255)
+                    .HasColumnName("GSTNumber");
+
+                entity.Property(e => e.Ifsccode)
+                    .HasMaxLength(255)
+                    .HasColumnName("IFSCCode");
+
+                entity.Property(e => e.IsAbbbp).HasColumnName("IsABBBP");
+
+                entity.Property(e => e.IsD2c).HasColumnName("IsD2C");
+
+                entity.Property(e => e.IsDefaultPickupAddress).HasMaxLength(255);
+
+                entity.Property(e => e.IsExchangeBp).HasColumnName("IsExchangeBP");
+
+                entity.Property(e => e.IsOrc).HasColumnName("IsORC");
+
+                entity.Property(e => e.IsOtpRequired).HasMaxLength(255);
+
+                entity.Property(e => e.IsRedemptionSettelemtInstant).HasMaxLength(255);
+
+                entity.Property(e => e.IsUnInstallationRequired).HasMaxLength(255);
+
+                entity.Property(e => e.LogoImage).HasMaxLength(255);
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(255);
+
+                entity.Property(e => e.ModifiedDate).HasMaxLength(255);
+
+                entity.Property(e => e.Name).HasMaxLength(255);
+
+                entity.Property(e => e.NoName).HasMaxLength(255);
+
+                entity.Property(e => e.NoName1).HasMaxLength(255);
+
+                entity.Property(e => e.PaymentToCustomer).HasMaxLength(255);
+
+                entity.Property(e => e.QrcodeUrl)
+                    .HasMaxLength(255)
+                    .HasColumnName("QRCodeURL");
+
+                entity.Property(e => e.Qrimage)
+                    .HasMaxLength(255)
+                    .HasColumnName("QRImage");
+
+                entity.Property(e => e.SponsorName).HasMaxLength(255);
+
+                entity.Property(e => e.State).HasMaxLength(255);
+
+                entity.Property(e => e.StoreCode).HasMaxLength(255);
+
+                entity.Property(e => e.StoreType).HasMaxLength(255);
+
+                entity.Property(e => e.SweetenerBp).HasColumnName("SweetenerBP");
+
+                entity.Property(e => e.SweetenerBu).HasColumnName("SweetenerBU");
+
+                entity.Property(e => e.Upiid)
+                    .HasMaxLength(255)
+                    .HasColumnName("UPIId");
+            });
+
+            modelBuilder.Entity<TempD2c>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("Temp_D2C");
+
+                entity.Property(e => e.BusinessUnitId).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(255);
+
+                entity.Property(e => e.ModifiedDate).HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<TempD2cZipcodes100624>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("Temp_D2C_Zipcodes_100624");
+
+                entity.Property(e => e.BupincodeMappingId).HasColumnName("BUPincodeMappingId");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(255);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TempModelmappingBpbu27>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("Temp_Modelmapping_BPBU_27");
+            });
+
+            modelBuilder.Entity<TempModelmappingBu27>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("Temp_Modelmapping_BU_27");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.SweetenerBp)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("SweetenerBP");
+
+                entity.Property(e => e.SweetenerBu).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.SweetenerDigi2l).HasColumnType("decimal(15, 2)");
+            });
+
+            modelBuilder.Entity<TempPlcMumPun041024>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("Temp_PLC_MUM_PUN_041024");
+
+                entity.Property(e => e.BrandName1)
+                    .HasMaxLength(255)
+                    .HasColumnName("BrandName-1");
+
+                entity.Property(e => e.BrandName2)
+                    .HasMaxLength(255)
+                    .HasColumnName("BrandName-2");
+
+                entity.Property(e => e.BrandName3)
+                    .HasMaxLength(255)
+                    .HasColumnName("BrandName-3");
+
+                entity.Property(e => e.BrandName4)
+                    .HasMaxLength(255)
+                    .HasColumnName("BrandName-4");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.F29).HasMaxLength(255);
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(255);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OtherBrand).HasMaxLength(255);
+
+                entity.Property(e => e.PriceEndDate).HasMaxLength(255);
+
+                entity.Property(e => e.PriceMasterName).HasMaxLength(255);
+
+                entity.Property(e => e.PriceStartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ProductCategoryName).HasMaxLength(255);
+
+                entity.Property(e => e.ProductTypeCode).HasMaxLength(255);
+
+                entity.Property(e => e.ProductTypeName).HasMaxLength(255);
+
+                entity.Property(e => e.QuoteP).HasColumnName("Quote-P");
+
+                entity.Property(e => e.QuoteP1).HasColumnName("Quote-P1");
+
+                entity.Property(e => e.QuotePHigh).HasColumnName("Quote-P-High");
+
+                entity.Property(e => e.QuotePHigh1).HasColumnName("Quote-P-High1");
+
+                entity.Property(e => e.QuoteQ).HasColumnName("Quote-Q");
+
+                entity.Property(e => e.QuoteQ1).HasColumnName("Quote-Q1");
+
+                entity.Property(e => e.QuoteQHigh).HasColumnName("Quote-Q-High");
+
+                entity.Property(e => e.QuoteQHigh1).HasColumnName("Quote-Q-High1");
+
+                entity.Property(e => e.QuoteR).HasColumnName("Quote-R");
+
+                entity.Property(e => e.QuoteR1).HasColumnName("Quote-R1");
+
+                entity.Property(e => e.QuoteRHigh).HasColumnName("Quote-R-High");
+
+                entity.Property(e => e.QuoteRHigh1).HasColumnName("Quote-R-High1");
+
+                entity.Property(e => e.QuoteS).HasColumnName("Quote-S");
+
+                entity.Property(e => e.QuoteS1).HasColumnName("Quote-S1");
+
+                entity.Property(e => e.QuoteSHigh).HasColumnName("Quote-S-High");
+
+                entity.Property(e => e.QuoteSHigh1).HasColumnName("Quote-S-High1");
+            });
+
             modelBuilder.Entity<TimeSlotMaster>(entity =>
             {
                 entity.ToTable("TimeSlotMaster");
@@ -6509,12 +7799,22 @@ namespace RDCELERP.DAL.Entities
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.TimeSlotMasterCreatedByNavigations)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("Fk_TimeSlotMaster_CreatedBy");
+
+                entity.HasOne(d => d.ModifiedByNavigation)
+                    .WithMany(p => p.TimeSlotMasterModifiedByNavigations)
+                    .HasForeignKey(d => d.ModifiedBy)
+                    .HasConstraintName("Fk_TimeSlotMaster_ModifiedBy");
             });
 
             modelBuilder.Entity<UniversalPriceMaster>(entity =>
             {
                 entity.HasKey(e => e.PriceMasterUniversalId)
-                    .HasName("PK__Universa__71B600B31BE1D48A");
+                    .HasName("PK__Universa__71B600B35C76E667");
 
                 entity.ToTable("UniversalPriceMaster");
 
@@ -6547,8 +7847,6 @@ namespace RDCELERP.DAL.Entities
                 entity.Property(e => e.PriceStartDate).HasMaxLength(255);
 
                 entity.Property(e => e.ProductCategoryName).HasMaxLength(255);
-
-                entity.Property(e => e.ProductTypeCode).HasMaxLength(255);
 
                 entity.Property(e => e.ProductTypeName).HasMaxLength(255);
 
@@ -6587,27 +7885,27 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.UniversalPriceMasterCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__Universal__Creat__37E53D9E");
+                    .HasConstraintName("FK__Universal__Creat__52442E1F");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.UniversalPriceMasterModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__Universal__Modif__38D961D7");
+                    .HasConstraintName("FK__Universal__Modif__53385258");
 
                 entity.HasOne(d => d.PriceMasterNameNavigation)
                     .WithMany(p => p.UniversalPriceMasters)
                     .HasForeignKey(d => d.PriceMasterNameId)
-                    .HasConstraintName("FK__Universal__Price__39CD8610");
+                    .HasConstraintName("FK__Universal__Price__4F67C174");
 
                 entity.HasOne(d => d.ProductCategory)
                     .WithMany(p => p.UniversalPriceMasters)
                     .HasForeignKey(d => d.ProductCategoryId)
-                    .HasConstraintName("FK__Universal__Produ__3AC1AA49");
+                    .HasConstraintName("FK__Universal__Produ__505BE5AD");
 
-                entity.HasOne(d => d.ProductType)
+                entity.HasOne(d => d.ProductTypeNavigation)
                     .WithMany(p => p.UniversalPriceMasters)
-                    .HasForeignKey(d => d.ProductTypeId)
-                    .HasConstraintName("FK__Universal__Produ__3BB5CE82");
+                    .HasForeignKey(d => d.ProductType)
+                    .HasConstraintName("FK__Universal__Produ__515009E6");
             });
 
             modelBuilder.Entity<ViewAbb>(entity =>
@@ -6666,10 +7964,6 @@ namespace RDCELERP.DAL.Entities
 
                 entity.Property(e => e.CustState)
                     .HasMaxLength(150)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EmployeeId)
-                    .HasMaxLength(250)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Hsncode)
@@ -6733,17 +8027,864 @@ namespace RDCELERP.DAL.Entities
                 entity.Property(e => e.UploadDateTime).HasColumnType("datetime");
 
                 entity.Property(e => e.YourRegistrationNo).HasMaxLength(50);
+
+                entity.Property(e => e.ZohoAbbregistrationId)
+                    .HasMaxLength(50)
+                    .HasColumnName("ZohoABBRegistrationId");
             });
 
-            modelBuilder.Entity<ViewAbbCount>(entity =>
+            modelBuilder.Entity<ViewAllAbbredemptionDatum>(entity =>
             {
                 entity.HasNoKey();
 
-                entity.ToView("View_ABB_Count");
+                entity.ToView("View_AllABBRedemptionData");
 
-                entity.Property(e => e.CountBu).HasColumnName("CountBU");
+                entity.Property(e => e.AbbregistrationId).HasColumnName("ABBRegistrationId");
 
-                entity.Property(e => e.Name).HasMaxLength(250);
+                entity.Property(e => e.ActualDropDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ActualPickupDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BrandName).HasMaxLength(255);
+
+                entity.Property(e => e.BusinessPartnerName).HasMaxLength(250);
+
+                entity.Property(e => e.BusinessUnit).HasMaxLength(250);
+
+                entity.Property(e => e.CancellationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.City).HasMaxLength(150);
+
+                entity.Property(e => e.CompanyName).HasMaxLength(250);
+
+                entity.Property(e => e.CurrentStatus)
+                    .HasMaxLength(5)
+                    .HasColumnName("Current Status");
+
+                entity.Property(e => e.CustCity)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust City");
+
+                entity.Property(e => e.CustEMail)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust E-mail");
+
+                entity.Property(e => e.CustMobile)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust Mobile");
+
+                entity.Property(e => e.CustName)
+                    .HasMaxLength(511)
+                    .HasColumnName("Cust Name");
+
+                entity.Property(e => e.CustState)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust State");
+
+                entity.Property(e => e.CustZipCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust ZipCode");
+
+                entity.Property(e => e.EvcAllocated)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("EVC Allocated");
+
+                entity.Property(e => e.EvcAssignedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("EVC AssignedDate");
+
+                entity.Property(e => e.Evcprice)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("EVCPrice");
+
+                entity.Property(e => e.InstallationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsOrc)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("Is ORC");
+
+                entity.Property(e => e.IssueDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Issue Date");
+
+                entity.Property(e => e.Lgccomments)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("LGCComments");
+
+                entity.Property(e => e.LgcpayableAmt)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("LGCPayableAmt");
+
+                entity.Property(e => e.LogisticsPartner)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Logistics Partner");
+
+                entity.Property(e => e.OrderDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OrderDate1)
+                    .HasColumnType("date")
+                    .HasColumnName("Order Date");
+
+                entity.Property(e => e.Pincode).HasMaxLength(150);
+
+                entity.Property(e => e.PodName)
+                    .HasMaxLength(600)
+                    .HasColumnName("POD Name");
+
+                entity.Property(e => e.PreferredPickupDate)
+                    .HasMaxLength(204)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PriceAfterQc)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("PriceAfterQC");
+
+                entity.Property(e => e.ProdCatCode).HasMaxLength(255);
+
+                entity.Property(e => e.ProdTypeCode).HasMaxLength(255);
+
+                entity.Property(e => e.ProductCat)
+                    .HasMaxLength(255)
+                    .HasColumnName("Product Cat");
+
+                entity.Property(e => e.ProductType)
+                    .HasMaxLength(255)
+                    .HasColumnName("Product Type");
+
+                entity.Property(e => e.ProposedPickDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ProposedQcdate)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("ProposedQCDate");
+
+                entity.Property(e => e.Qccomments)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("QCComments");
+
+                entity.Property(e => e.Qcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("QCDate");
+
+                entity.Property(e => e.Qcflag)
+                    .HasMaxLength(5)
+                    .HasColumnName("QCFlag");
+
+                entity.Property(e => e.QualityAfterQc)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("QualityAfterQC");
+
+                entity.Property(e => e.RedemptionDate).HasColumnType("date");
+
+                entity.Property(e => e.RedemptionValue).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.RegdNo).HasMaxLength(10);
+
+                entity.Property(e => e.Rescheduledate).HasColumnType("datetime");
+
+                entity.Property(e => e.SelfQcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("SelfQCDate");
+
+                entity.Property(e => e.SponsorServiceRefId)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.StatusDescription).HasMaxLength(255);
+
+                entity.Property(e => e.StatusName).HasMaxLength(30);
+
+                entity.Property(e => e.StoreCode).HasMaxLength(150);
+
+                entity.Property(e => e.StoreName).HasMaxLength(250);
+
+                entity.Property(e => e.TicketGenerationDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Ticket Generation Date");
+
+                entity.Property(e => e.TicketNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Upiid)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("upiid");
+
+                entity.Property(e => e.VoucherNo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("Voucher No");
+            });
+
+            modelBuilder.Entity<ViewAllExchangeData2>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_AllExchangeData2");
+
+                entity.Property(e => e.ActualDropDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ActualPickupDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BrandName).HasMaxLength(255);
+
+                entity.Property(e => e.BusinessPartnerName).HasMaxLength(250);
+
+                entity.Property(e => e.BusinessUnit).HasMaxLength(250);
+
+                entity.Property(e => e.CancellationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.City).HasMaxLength(150);
+
+                entity.Property(e => e.CompanyName).HasMaxLength(255);
+
+                entity.Property(e => e.CurrentStatus)
+                    .HasMaxLength(5)
+                    .HasColumnName("Current Status");
+
+                entity.Property(e => e.CustCity)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust City");
+
+                entity.Property(e => e.CustEMail)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust E-mail");
+
+                entity.Property(e => e.CustMobile)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust Mobile");
+
+                entity.Property(e => e.CustName)
+                    .HasMaxLength(511)
+                    .HasColumnName("Cust Name");
+
+                entity.Property(e => e.CustState)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust State");
+
+                entity.Property(e => e.CustZipCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust ZipCode");
+
+                entity.Property(e => e.EmployeeId)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EvcAllocated)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("EVC Allocated");
+
+                entity.Property(e => e.EvcAssignedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("EVC AssignedDate");
+
+                entity.Property(e => e.Evcprice)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("EVCPrice");
+
+                entity.Property(e => e.ExchangePrice).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.Expr1).HasMaxLength(255);
+
+                entity.Property(e => e.InstallationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsFromHome)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("Is From Home");
+
+                entity.Property(e => e.IsOrc)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("Is ORC");
+
+                entity.Property(e => e.IssueDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Issue Date");
+
+                entity.Property(e => e.Lgccomments)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("LGCComments");
+
+                entity.Property(e => e.LgcpayableAmt)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("LGCPayableAmt");
+
+                entity.Property(e => e.LogisticsPartner)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Logistics Partner");
+
+                entity.Property(e => e.OldProductPrice)
+                    .HasColumnType("decimal(16, 2)")
+                    .HasColumnName("Old Product Price");
+
+                entity.Property(e => e.OrderDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OrderDate1)
+                    .HasColumnType("date")
+                    .HasColumnName("Order Date");
+
+                entity.Property(e => e.Pincode).HasMaxLength(150);
+
+                entity.Property(e => e.PodName)
+                    .HasMaxLength(600)
+                    .HasColumnName("POD Name");
+
+                entity.Property(e => e.PreferredPickupDate)
+                    .HasMaxLength(204)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PriceAfterQc)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("PriceAfterQC");
+
+                entity.Property(e => e.ProdCatCode).HasMaxLength(255);
+
+                entity.Property(e => e.ProdTypeCode).HasMaxLength(255);
+
+                entity.Property(e => e.ProductCat)
+                    .HasMaxLength(255)
+                    .HasColumnName("Product Cat");
+
+                entity.Property(e => e.ProductCondition).HasMaxLength(50);
+
+                entity.Property(e => e.ProductType)
+                    .HasMaxLength(255)
+                    .HasColumnName("Product Type");
+
+                entity.Property(e => e.ProposedPickDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ProposedQcdateTime)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("ProposedQCDate time");
+
+                entity.Property(e => e.Qccomments)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("QCComments");
+
+                entity.Property(e => e.Qcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("QCDate");
+
+                entity.Property(e => e.Qcflag)
+                    .HasMaxLength(5)
+                    .HasColumnName("QCFlag");
+
+                entity.Property(e => e.QualityAfterQc)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("QualityAfterQC");
+
+                entity.Property(e => e.RegdNo).HasMaxLength(15);
+
+                entity.Property(e => e.Rescheduledate).HasColumnType("datetime");
+
+                entity.Property(e => e.SelfQcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("SelfQCDate");
+
+                entity.Property(e => e.SponsorOrderNumber).HasMaxLength(255);
+
+                entity.Property(e => e.SponsorServiceRefId).HasMaxLength(400);
+
+                entity.Property(e => e.StatusDescription).HasMaxLength(255);
+
+                entity.Property(e => e.StatusName).HasMaxLength(30);
+
+                entity.Property(e => e.StoreCode).HasMaxLength(150);
+
+                entity.Property(e => e.StoreName).HasMaxLength(250);
+
+                entity.Property(e => e.Sweetener).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.SweetenerAmount)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Sweetener Amount");
+
+                entity.Property(e => e.TicketGenerationDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Ticket Generation Date");
+
+                entity.Property(e => e.TicketNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Upiid)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("UPIId");
+
+                entity.Property(e => e.VoucherAmount)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Voucher Amount");
+
+                entity.Property(e => e.VoucherNo)
+                    .HasMaxLength(200)
+                    .HasColumnName("Voucher No");
+
+                entity.Property(e => e.VoucherStatus)
+                    .HasMaxLength(8)
+                    .IsUnicode(false)
+                    .HasColumnName("Voucher Status");
+
+                entity.Property(e => e.VoucherStatusDetail)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("Voucher Status Detail");
+            });
+
+            modelBuilder.Entity<ViewAllExchangeDataAddress>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_All_exchangeData_Address");
+
+                entity.Property(e => e.ActualDropDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ActualPickupDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Address1).HasMaxLength(255);
+
+                entity.Property(e => e.Address2).HasMaxLength(255);
+
+                entity.Property(e => e.Arealocality).HasMaxLength(50);
+
+                entity.Property(e => e.BrandName).HasMaxLength(255);
+
+                entity.Property(e => e.BusinessPartnerName).HasMaxLength(250);
+
+                entity.Property(e => e.BusinessUnit).HasMaxLength(250);
+
+                entity.Property(e => e.CancellationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.City).HasMaxLength(150);
+
+                entity.Property(e => e.CompanyName).HasMaxLength(255);
+
+                entity.Property(e => e.CurrentStatus)
+                    .HasMaxLength(5)
+                    .HasColumnName("Current Status");
+
+                entity.Property(e => e.CustCity)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust City");
+
+                entity.Property(e => e.CustEMail)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust E-mail");
+
+                entity.Property(e => e.CustMobile)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust Mobile");
+
+                entity.Property(e => e.CustName)
+                    .HasMaxLength(511)
+                    .HasColumnName("Cust Name");
+
+                entity.Property(e => e.CustState)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust State");
+
+                entity.Property(e => e.CustZipCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust ZipCode");
+
+                entity.Property(e => e.District).HasMaxLength(50);
+
+                entity.Property(e => e.EvcAllocated)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("EVC Allocated");
+
+                entity.Property(e => e.EvcAssignedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("EVC AssignedDate");
+
+                entity.Property(e => e.Evcprice)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("EVCPrice");
+
+                entity.Property(e => e.ExchangePrice).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.Expr1).HasMaxLength(255);
+
+                entity.Property(e => e.InstallationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsFromHome)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("Is From Home");
+
+                entity.Property(e => e.IsOrc)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("Is ORC");
+
+                entity.Property(e => e.IssueDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Issue Date");
+
+                entity.Property(e => e.Lgccomments)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("LGCComments");
+
+                entity.Property(e => e.LgcpayableAmt)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("LGCPayableAmt");
+
+                entity.Property(e => e.LogisticsPartner)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Logistics Partner");
+
+                entity.Property(e => e.OldProductPrice)
+                    .HasColumnType("decimal(16, 2)")
+                    .HasColumnName("Old Product Price");
+
+                entity.Property(e => e.OrderDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OrderDate1)
+                    .HasColumnType("date")
+                    .HasColumnName("Order Date");
+
+                entity.Property(e => e.Pincode).HasMaxLength(150);
+
+                entity.Property(e => e.PodName)
+                    .HasMaxLength(600)
+                    .HasColumnName("POD Name");
+
+                entity.Property(e => e.PreferredPickupDate)
+                    .HasMaxLength(204)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PriceAfterQc)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("PriceAfterQC");
+
+                entity.Property(e => e.ProdCatCode).HasMaxLength(255);
+
+                entity.Property(e => e.ProdTypeCode).HasMaxLength(255);
+
+                entity.Property(e => e.ProductCat)
+                    .HasMaxLength(255)
+                    .HasColumnName("Product Cat");
+
+                entity.Property(e => e.ProductCondition).HasMaxLength(50);
+
+                entity.Property(e => e.ProductType)
+                    .HasMaxLength(255)
+                    .HasColumnName("Product Type");
+
+                entity.Property(e => e.ProposedPickDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ProposedQcdateTime)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("ProposedQCDate time");
+
+                entity.Property(e => e.Qccomments)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("QCComments");
+
+                entity.Property(e => e.Qcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("QCDate");
+
+                entity.Property(e => e.Qcflag)
+                    .HasMaxLength(5)
+                    .HasColumnName("QCFlag");
+
+                entity.Property(e => e.QualityAfterQc)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("QualityAfterQC");
+
+                entity.Property(e => e.RegdNo).HasMaxLength(15);
+
+                entity.Property(e => e.Rescheduledate).HasColumnType("datetime");
+
+                entity.Property(e => e.SelfQcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("SelfQCDate");
+
+                entity.Property(e => e.SponsorOrderNumber).HasMaxLength(255);
+
+                entity.Property(e => e.SponsorServiceRefId).HasMaxLength(400);
+
+                entity.Property(e => e.StatusDescription).HasMaxLength(255);
+
+                entity.Property(e => e.StatusName).HasMaxLength(30);
+
+                entity.Property(e => e.StoreCode).HasMaxLength(150);
+
+                entity.Property(e => e.StoreName).HasMaxLength(250);
+
+                entity.Property(e => e.Sweetener).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.SweetenerAmount)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Sweetener Amount");
+
+                entity.Property(e => e.Taluk).HasMaxLength(50);
+
+                entity.Property(e => e.TicketGenerationDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Ticket Generation Date");
+
+                entity.Property(e => e.TicketNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Upiid)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("UPIId");
+
+                entity.Property(e => e.VoucherAmount)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Voucher Amount");
+
+                entity.Property(e => e.VoucherNo)
+                    .HasMaxLength(200)
+                    .HasColumnName("Voucher No");
+
+                entity.Property(e => e.VoucherStatus)
+                    .HasMaxLength(8)
+                    .IsUnicode(false)
+                    .HasColumnName("Voucher Status");
+
+                entity.Property(e => e.VoucherStatusDetail)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("Voucher Status Detail");
+            });
+
+            modelBuilder.Entity<ViewAllExchangeDataDaikin>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_AllExchangeData_Daikin");
+
+                entity.Property(e => e.ActualDropDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ActualPickupDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BrandName).HasMaxLength(255);
+
+                entity.Property(e => e.BusinessPartnerName).HasMaxLength(250);
+
+                entity.Property(e => e.BusinessUnit).HasMaxLength(250);
+
+                entity.Property(e => e.CancellationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.City).HasMaxLength(150);
+
+                entity.Property(e => e.CompanyName).HasMaxLength(255);
+
+                entity.Property(e => e.CurrentStatus)
+                    .HasMaxLength(5)
+                    .HasColumnName("Current Status");
+
+                entity.Property(e => e.CustCity)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust City");
+
+                entity.Property(e => e.CustEMail)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust E-mail");
+
+                entity.Property(e => e.CustMobile)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust Mobile");
+
+                entity.Property(e => e.CustName)
+                    .HasMaxLength(511)
+                    .HasColumnName("Cust Name");
+
+                entity.Property(e => e.CustState)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust State");
+
+                entity.Property(e => e.CustZipCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust ZipCode");
+
+                entity.Property(e => e.EvcAllocated)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("EVC Allocated");
+
+                entity.Property(e => e.EvcAssignedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("EVC AssignedDate");
+
+                entity.Property(e => e.Evcprice)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("EVCPrice");
+
+                entity.Property(e => e.ExchangePrice).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.Expr1).HasMaxLength(255);
+
+                entity.Property(e => e.InstallationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsFromHome)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("Is From Home");
+
+                entity.Property(e => e.IsOrc)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("Is ORC");
+
+                entity.Property(e => e.IssueDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Issue Date");
+
+                entity.Property(e => e.Lgccomments)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("LGCComments");
+
+                entity.Property(e => e.LgcpayableAmt)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("LGCPayableAmt");
+
+                entity.Property(e => e.LogisticsPartner)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Logistics Partner");
+
+                entity.Property(e => e.OldProductPrice)
+                    .HasColumnType("decimal(16, 2)")
+                    .HasColumnName("Old Product Price");
+
+                entity.Property(e => e.OrderDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OrderDate1)
+                    .HasColumnType("date")
+                    .HasColumnName("Order Date");
+
+                entity.Property(e => e.Pincode).HasMaxLength(150);
+
+                entity.Property(e => e.PodName)
+                    .HasMaxLength(600)
+                    .HasColumnName("POD Name");
+
+                entity.Property(e => e.PreferredPickupDate)
+                    .HasMaxLength(204)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PriceAfterQc)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("PriceAfterQC");
+
+                entity.Property(e => e.ProductCat)
+                    .HasMaxLength(255)
+                    .HasColumnName("Product Cat");
+
+                entity.Property(e => e.ProductCondition).HasMaxLength(50);
+
+                entity.Property(e => e.ProductType)
+                    .HasMaxLength(255)
+                    .HasColumnName("Product Type");
+
+                entity.Property(e => e.ProposedPickDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ProposedQcdateTime)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("ProposedQCDate time");
+
+                entity.Property(e => e.Qccomments)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("QCComments");
+
+                entity.Property(e => e.Qcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("QCDate");
+
+                entity.Property(e => e.Qcflag)
+                    .HasMaxLength(5)
+                    .HasColumnName("QCFlag");
+
+                entity.Property(e => e.QualityAfterQc)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("QualityAfterQC");
+
+                entity.Property(e => e.RegdNo).HasMaxLength(15);
+
+                entity.Property(e => e.Rescheduledate).HasColumnType("datetime");
+
+                entity.Property(e => e.SelfQcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("SelfQCDate");
+
+                entity.Property(e => e.SponsorOrderNumber).HasMaxLength(255);
+
+                entity.Property(e => e.SponsorServiceRefId).HasMaxLength(400);
+
+                entity.Property(e => e.StatusDescription).HasMaxLength(255);
+
+                entity.Property(e => e.StatusName).HasMaxLength(30);
+
+                entity.Property(e => e.StoreCode).HasMaxLength(150);
+
+                entity.Property(e => e.StoreName).HasMaxLength(250);
+
+                entity.Property(e => e.Sweetener).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.SweetenerAmount)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Sweetener Amount");
+
+                entity.Property(e => e.TicketGenerationDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Ticket Generation Date");
+
+                entity.Property(e => e.TicketNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Upiid)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("upiid");
+
+                entity.Property(e => e.VoucherAmount)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Voucher Amount");
+
+                entity.Property(e => e.VoucherNo)
+                    .HasMaxLength(200)
+                    .HasColumnName("Voucher No");
+
+                entity.Property(e => e.VoucherStatus)
+                    .HasMaxLength(8)
+                    .IsUnicode(false)
+                    .HasColumnName("Voucher Status");
+
+                entity.Property(e => e.VoucherStatusDetail)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("Voucher Status Detail");
             });
 
             modelBuilder.Entity<ViewAllExchangeDataForPinelab>(entity =>
@@ -6814,6 +8955,458 @@ namespace RDCELERP.DAL.Entities
                     .HasColumnName("UTRNumber");
 
                 entity.Property(e => e.VoucherCode).HasMaxLength(200);
+            });
+
+            modelBuilder.Entity<ViewAllExchangeDataPickup>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_AllExchangeData_Pickup");
+
+                entity.Property(e => e.ActualDropDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ActualPickupDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Address1).HasMaxLength(255);
+
+                entity.Property(e => e.Address2).HasMaxLength(255);
+
+                entity.Property(e => e.BrandName).HasMaxLength(255);
+
+                entity.Property(e => e.BusinessPartnerName).HasMaxLength(250);
+
+                entity.Property(e => e.BusinessUnit).HasMaxLength(250);
+
+                entity.Property(e => e.CancellationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.City).HasMaxLength(150);
+
+                entity.Property(e => e.CompanyName).HasMaxLength(255);
+
+                entity.Property(e => e.CurrentStatus)
+                    .HasMaxLength(5)
+                    .HasColumnName("Current Status");
+
+                entity.Property(e => e.CustCity)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust City");
+
+                entity.Property(e => e.CustEMail)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust E-mail");
+
+                entity.Property(e => e.CustMobile)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust Mobile");
+
+                entity.Property(e => e.CustName)
+                    .HasMaxLength(511)
+                    .HasColumnName("Cust Name");
+
+                entity.Property(e => e.CustState)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust State");
+
+                entity.Property(e => e.CustZipCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust ZipCode");
+
+                entity.Property(e => e.EvcAllocated)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("EVC Allocated");
+
+                entity.Property(e => e.EvcAssignedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("EVC AssignedDate");
+
+                entity.Property(e => e.Evcprice)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("EVCPrice");
+
+                entity.Property(e => e.ExchangePrice).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.Expr1).HasMaxLength(255);
+
+                entity.Property(e => e.InstallationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsFromHome)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("Is From Home");
+
+                entity.Property(e => e.IsOrc)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("Is ORC");
+
+                entity.Property(e => e.IssueDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Issue Date");
+
+                entity.Property(e => e.Lgccomments)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("LGCComments");
+
+                entity.Property(e => e.LgcpayableAmt)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("LGCPayableAmt");
+
+                entity.Property(e => e.LogisticsPartner)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Logistics Partner");
+
+                entity.Property(e => e.OldProductPrice)
+                    .HasColumnType("decimal(16, 2)")
+                    .HasColumnName("Old Product Price");
+
+                entity.Property(e => e.OrderDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OrderDate1)
+                    .HasColumnType("date")
+                    .HasColumnName("Order Date");
+
+                entity.Property(e => e.Pincode).HasMaxLength(150);
+
+                entity.Property(e => e.PodName)
+                    .HasMaxLength(600)
+                    .HasColumnName("POD Name");
+
+                entity.Property(e => e.PreferredPickupDate)
+                    .HasMaxLength(204)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PriceAfterQc)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("PriceAfterQC");
+
+                entity.Property(e => e.ProdCatCode).HasMaxLength(255);
+
+                entity.Property(e => e.ProdTypeCode).HasMaxLength(255);
+
+                entity.Property(e => e.ProductCat)
+                    .HasMaxLength(255)
+                    .HasColumnName("Product Cat");
+
+                entity.Property(e => e.ProductCondition).HasMaxLength(50);
+
+                entity.Property(e => e.ProductType)
+                    .HasMaxLength(255)
+                    .HasColumnName("Product Type");
+
+                entity.Property(e => e.ProposedPickDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ProposedQcdateTime)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("ProposedQCDate time");
+
+                entity.Property(e => e.Qccomments)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("QCComments");
+
+                entity.Property(e => e.Qcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("QCDate");
+
+                entity.Property(e => e.Qcflag)
+                    .HasMaxLength(5)
+                    .HasColumnName("QCFlag");
+
+                entity.Property(e => e.QualityAfterQc)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("QualityAfterQC");
+
+                entity.Property(e => e.RegdNo).HasMaxLength(15);
+
+                entity.Property(e => e.Rescheduledate).HasColumnType("datetime");
+
+                entity.Property(e => e.SelfQcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("SelfQCDate");
+
+                entity.Property(e => e.SponsorOrderNumber).HasMaxLength(255);
+
+                entity.Property(e => e.SponsorServiceRefId).HasMaxLength(400);
+
+                entity.Property(e => e.StatusDescription).HasMaxLength(255);
+
+                entity.Property(e => e.StatusName).HasMaxLength(30);
+
+                entity.Property(e => e.StoreCode).HasMaxLength(150);
+
+                entity.Property(e => e.StoreName).HasMaxLength(250);
+
+                entity.Property(e => e.Sweetener).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.SweetenerAmount)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Sweetener Amount");
+
+                entity.Property(e => e.TicketGenerationDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Ticket Generation Date");
+
+                entity.Property(e => e.TicketNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Upiid)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("upiid");
+
+                entity.Property(e => e.VoucherAmount)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Voucher Amount");
+
+                entity.Property(e => e.VoucherNo)
+                    .HasMaxLength(200)
+                    .HasColumnName("Voucher No");
+
+                entity.Property(e => e.VoucherStatus)
+                    .HasMaxLength(8)
+                    .IsUnicode(false)
+                    .HasColumnName("Voucher Status");
+
+                entity.Property(e => e.VoucherStatusDetail)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("Voucher Status Detail");
+            });
+
+            modelBuilder.Entity<ViewAllExchangeDatawithQc>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_AllExchangeDatawithQC");
+
+                entity.Property(e => e.ActualDropDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ActualPickupDate).HasColumnType("datetime");
+
+                entity.Property(e => e.BrandName).HasMaxLength(255);
+
+                entity.Property(e => e.BusinessPartnerName).HasMaxLength(250);
+
+                entity.Property(e => e.BusinessUnit).HasMaxLength(250);
+
+                entity.Property(e => e.CancellationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.City).HasMaxLength(150);
+
+                entity.Property(e => e.CompanyName).HasMaxLength(255);
+
+                entity.Property(e => e.CurrentStatus)
+                    .HasMaxLength(5)
+                    .HasColumnName("Current Status");
+
+                entity.Property(e => e.CustCity)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust City");
+
+                entity.Property(e => e.CustEMail)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust E-mail");
+
+                entity.Property(e => e.CustMobile)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust Mobile");
+
+                entity.Property(e => e.CustName)
+                    .HasMaxLength(511)
+                    .HasColumnName("Cust Name");
+
+                entity.Property(e => e.CustState)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust State");
+
+                entity.Property(e => e.CustZipCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust ZipCode");
+
+                entity.Property(e => e.EvcAllocated)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("EVC Allocated");
+
+                entity.Property(e => e.EvcAssignedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("EVC AssignedDate");
+
+                entity.Property(e => e.Evcprice)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("EVCPrice");
+
+                entity.Property(e => e.ExchangePrice).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.Expr1).HasMaxLength(255);
+
+                entity.Property(e => e.InstallationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsFromHome)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("Is From Home");
+
+                entity.Property(e => e.IsOrc)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("Is ORC");
+
+                entity.Property(e => e.IssueDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Issue Date");
+
+                entity.Property(e => e.LastQcby)
+                    .HasMaxLength(301)
+                    .HasColumnName("lastQCBy");
+
+                entity.Property(e => e.LastQcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LastQCDate");
+
+                entity.Property(e => e.Lgccomments)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("LGCComments");
+
+                entity.Property(e => e.LgcpayableAmt)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("LGCPayableAmt");
+
+                entity.Property(e => e.LogisticsPartner)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Logistics Partner");
+
+                entity.Property(e => e.OldProductPrice)
+                    .HasColumnType("decimal(16, 2)")
+                    .HasColumnName("Old Product Price");
+
+                entity.Property(e => e.OrderDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OrderDate1)
+                    .HasColumnType("date")
+                    .HasColumnName("Order Date");
+
+                entity.Property(e => e.Pincode).HasMaxLength(150);
+
+                entity.Property(e => e.PodName)
+                    .HasMaxLength(600)
+                    .HasColumnName("POD Name");
+
+                entity.Property(e => e.PreferredPickupDate)
+                    .HasMaxLength(204)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PriceAfterQc)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("PriceAfterQC");
+
+                entity.Property(e => e.ProdCatCode).HasMaxLength(255);
+
+                entity.Property(e => e.ProdTypeCode).HasMaxLength(255);
+
+                entity.Property(e => e.ProductCat)
+                    .HasMaxLength(255)
+                    .HasColumnName("Product Cat");
+
+                entity.Property(e => e.ProductCondition).HasMaxLength(50);
+
+                entity.Property(e => e.ProductType)
+                    .HasMaxLength(255)
+                    .HasColumnName("Product Type");
+
+                entity.Property(e => e.ProposedPickDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ProposedQcdateTime)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("ProposedQCDate time");
+
+                entity.Property(e => e.Qccomments)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("QCComments");
+
+                entity.Property(e => e.Qcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("QCDate");
+
+                entity.Property(e => e.Qcflag)
+                    .HasMaxLength(5)
+                    .HasColumnName("QCFlag");
+
+                entity.Property(e => e.Qcstatus)
+                    .HasMaxLength(5)
+                    .HasColumnName("QCStatus");
+
+                entity.Property(e => e.QualityAfterQc)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("QualityAfterQC");
+
+                entity.Property(e => e.RegdNo).HasMaxLength(15);
+
+                entity.Property(e => e.Rescheduledate).HasColumnType("datetime");
+
+                entity.Property(e => e.SelfQcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("SelfQCDate");
+
+                entity.Property(e => e.SponsorOrderNumber).HasMaxLength(255);
+
+                entity.Property(e => e.SponsorServiceRefId).HasMaxLength(400);
+
+                entity.Property(e => e.StatusDescription).HasMaxLength(255);
+
+                entity.Property(e => e.StatusName).HasMaxLength(30);
+
+                entity.Property(e => e.StoreCode).HasMaxLength(150);
+
+                entity.Property(e => e.StoreName).HasMaxLength(250);
+
+                entity.Property(e => e.Sweetener).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.SweetenerAmount)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Sweetener Amount");
+
+                entity.Property(e => e.TicketGenerationDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Ticket Generation Date");
+
+                entity.Property(e => e.TicketNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Upiid)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("UPIId");
+
+                entity.Property(e => e.VoucherAmount)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Voucher Amount");
+
+                entity.Property(e => e.VoucherNo)
+                    .HasMaxLength(200)
+                    .HasColumnName("Voucher No");
+
+                entity.Property(e => e.VoucherStatus)
+                    .HasMaxLength(8)
+                    .IsUnicode(false)
+                    .HasColumnName("Voucher Status");
+
+                entity.Property(e => e.VoucherStatusDetail)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("Voucher Status Detail");
             });
 
             modelBuilder.Entity<ViewAllExchangeDatum>(entity =>
@@ -7036,6 +9629,742 @@ namespace RDCELERP.DAL.Entities
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("Voucher Status Detail");
+            });
+
+            modelBuilder.Entity<ViewAllSponsor>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_All_Sponsor");
+
+                entity.Property(e => e.Address1)
+                    .HasMaxLength(255)
+                    .HasColumnName("Address 1");
+
+                entity.Property(e => e.Address2)
+                    .HasMaxLength(255)
+                    .HasColumnName("Address 2");
+
+                entity.Property(e => e.Brandname).HasMaxLength(255);
+
+                entity.Property(e => e.CompanyName).HasMaxLength(255);
+
+                entity.Property(e => e.CustCity)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust. City");
+
+                entity.Property(e => e.CustEMail)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust E-mail");
+
+                entity.Property(e => e.CustMobile)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust Mobile");
+
+                entity.Property(e => e.CustName)
+                    .HasMaxLength(511)
+                    .HasColumnName("Cust Name");
+
+                entity.Property(e => e.CustZipCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust ZipCode");
+
+                entity.Property(e => e.EstimatedDeliveryDate).HasMaxLength(255);
+
+                entity.Property(e => e.ExchangeAmt)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Exchange Amt");
+
+                entity.Property(e => e.InvDate)
+                    .HasColumnType("date")
+                    .HasColumnName("Inv Date");
+
+                entity.Property(e => e.InvoiceUrl).HasColumnName("invoiceURL");
+
+                entity.Property(e => e.NewProdGroup)
+                    .HasMaxLength(255)
+                    .HasColumnName("New Prod Group");
+
+                entity.Property(e => e.NewProdType)
+                    .HasMaxLength(255)
+                    .HasColumnName("New Prod Type");
+
+                entity.Property(e => e.NewProductModelNo)
+                    .HasMaxLength(255)
+                    .HasColumnName("New Product Model No");
+
+                entity.Property(e => e.OldProdGroup)
+                    .HasMaxLength(255)
+                    .HasColumnName("Old Prod Group");
+
+                entity.Property(e => e.OldProdType)
+                    .HasMaxLength(255)
+                    .HasColumnName("Old Prod Type");
+
+                entity.Property(e => e.OldProductPrice)
+                    .HasColumnType("decimal(16, 2)")
+                    .HasColumnName("Old Product Price");
+
+                entity.Property(e => e.OrderDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Order Date");
+
+                entity.Property(e => e.PriceAfterQc)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("PriceAfterQC");
+
+                entity.Property(e => e.ProductCondition).HasMaxLength(50);
+
+                entity.Property(e => e.RegdNo).HasMaxLength(15);
+
+                entity.Property(e => e.Size).HasMaxLength(255);
+
+                entity.Property(e => e.SponsorOrderNumber).HasMaxLength(255);
+
+                entity.Property(e => e.State).HasMaxLength(255);
+
+                entity.Property(e => e.StoreCode).HasMaxLength(150);
+
+                entity.Property(e => e.StoreName).HasMaxLength(250);
+
+                entity.Property(e => e.SweetenerAmount)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Sweetener Amount");
+
+                entity.Property(e => e.VoucherAmt)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Voucher Amt");
+
+                entity.Property(e => e.VoucherCode).HasMaxLength(200);
+            });
+
+            modelBuilder.Entity<ViewAllexchagedataCustomer>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_Allexchagedata_customer");
+
+                entity.Property(e => e.ActualDropDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ActualPickupDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Address1).HasMaxLength(255);
+
+                entity.Property(e => e.Address2).HasMaxLength(255);
+
+                entity.Property(e => e.BrandName).HasMaxLength(255);
+
+                entity.Property(e => e.BusinessPartnerName).HasMaxLength(250);
+
+                entity.Property(e => e.BusinessUnit).HasMaxLength(250);
+
+                entity.Property(e => e.CancellationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.City).HasMaxLength(150);
+
+                entity.Property(e => e.CompanyName).HasMaxLength(255);
+
+                entity.Property(e => e.CurrentStatus)
+                    .HasMaxLength(5)
+                    .HasColumnName("Current Status");
+
+                entity.Property(e => e.CustCity)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust City");
+
+                entity.Property(e => e.CustEMail)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust E-mail");
+
+                entity.Property(e => e.CustMobile)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust Mobile");
+
+                entity.Property(e => e.CustName)
+                    .HasMaxLength(511)
+                    .HasColumnName("Cust Name");
+
+                entity.Property(e => e.CustState)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust State");
+
+                entity.Property(e => e.CustZipCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust ZipCode");
+
+                entity.Property(e => e.EvcAllocated)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("EVC Allocated");
+
+                entity.Property(e => e.EvcAssignedDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("EVC AssignedDate");
+
+                entity.Property(e => e.Evcprice)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("EVCPrice");
+
+                entity.Property(e => e.ExchangePrice).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.Expr1).HasMaxLength(255);
+
+                entity.Property(e => e.InstallationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IsFromHome)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("Is From Home");
+
+                entity.Property(e => e.IsOrc)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("Is ORC");
+
+                entity.Property(e => e.IssueDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Issue Date");
+
+                entity.Property(e => e.Lgccomments)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("LGCComments");
+
+                entity.Property(e => e.LgcpayableAmt)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("LGCPayableAmt");
+
+                entity.Property(e => e.LogisticsPartner)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("Logistics Partner");
+
+                entity.Property(e => e.OldProductPrice)
+                    .HasColumnType("decimal(16, 2)")
+                    .HasColumnName("Old Product Price");
+
+                entity.Property(e => e.OrderDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OrderDate1)
+                    .HasColumnType("date")
+                    .HasColumnName("Order Date");
+
+                entity.Property(e => e.Pincode).HasMaxLength(150);
+
+                entity.Property(e => e.PodName)
+                    .HasMaxLength(600)
+                    .HasColumnName("POD Name");
+
+                entity.Property(e => e.PreferredPickupDate)
+                    .HasMaxLength(204)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PriceAfterQc)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("PriceAfterQC");
+
+                entity.Property(e => e.ProdCatCode).HasMaxLength(255);
+
+                entity.Property(e => e.ProdTypeCode).HasMaxLength(255);
+
+                entity.Property(e => e.ProductCat)
+                    .HasMaxLength(255)
+                    .HasColumnName("Product Cat");
+
+                entity.Property(e => e.ProductCondition).HasMaxLength(50);
+
+                entity.Property(e => e.ProductType)
+                    .HasMaxLength(255)
+                    .HasColumnName("Product Type");
+
+                entity.Property(e => e.ProposedPickDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ProposedQcdateTime)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("ProposedQCDate time");
+
+                entity.Property(e => e.Qccomments)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("QCComments");
+
+                entity.Property(e => e.Qcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("QCDate");
+
+                entity.Property(e => e.Qcflag)
+                    .HasMaxLength(5)
+                    .HasColumnName("QCFlag");
+
+                entity.Property(e => e.QualityAfterQc)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("QualityAfterQC");
+
+                entity.Property(e => e.RegdNo).HasMaxLength(15);
+
+                entity.Property(e => e.Rescheduledate).HasColumnType("datetime");
+
+                entity.Property(e => e.SelfQcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("SelfQCDate");
+
+                entity.Property(e => e.SponsorOrderNumber).HasMaxLength(255);
+
+                entity.Property(e => e.SponsorServiceRefId).HasMaxLength(400);
+
+                entity.Property(e => e.StatusDescription).HasMaxLength(255);
+
+                entity.Property(e => e.StatusName).HasMaxLength(30);
+
+                entity.Property(e => e.StoreCode).HasMaxLength(150);
+
+                entity.Property(e => e.StoreName).HasMaxLength(250);
+
+                entity.Property(e => e.Sweetener).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.SweetenerAmount)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Sweetener Amount");
+
+                entity.Property(e => e.TicketGenerationDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Ticket Generation Date");
+
+                entity.Property(e => e.TicketNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Upiid)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("UPIId");
+
+                entity.Property(e => e.VoucherAmount)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Voucher Amount");
+
+                entity.Property(e => e.VoucherNo)
+                    .HasMaxLength(200)
+                    .HasColumnName("Voucher No");
+
+                entity.Property(e => e.VoucherStatus)
+                    .HasMaxLength(8)
+                    .IsUnicode(false)
+                    .HasColumnName("Voucher Status");
+
+                entity.Property(e => e.VoucherStatusDetail)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("Voucher Status Detail");
+            });
+
+            modelBuilder.Entity<ViewBoschDeferred>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_BOSCH_Deferred");
+
+                entity.Property(e => e.Address1)
+                    .HasMaxLength(255)
+                    .HasColumnName("Address 1");
+
+                entity.Property(e => e.Address2)
+                    .HasMaxLength(255)
+                    .HasColumnName("Address 2");
+
+                entity.Property(e => e.Brandname).HasMaxLength(255);
+
+                entity.Property(e => e.CompanyName).HasMaxLength(255);
+
+                entity.Property(e => e.CustCity)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust. City");
+
+                entity.Property(e => e.CustEMail)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust E-mail");
+
+                entity.Property(e => e.CustMobile)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust Mobile");
+
+                entity.Property(e => e.CustName)
+                    .HasMaxLength(511)
+                    .HasColumnName("Cust Name");
+
+                entity.Property(e => e.CustZipCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust ZipCode");
+
+                entity.Property(e => e.EstimatedDeliveryDate).HasMaxLength(255);
+
+                entity.Property(e => e.ExchangeAmt)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Exchange Amt");
+
+                entity.Property(e => e.InvDate)
+                    .HasColumnType("date")
+                    .HasColumnName("Inv Date");
+
+                entity.Property(e => e.InvoiceUrl).HasColumnName("invoiceURL");
+
+                entity.Property(e => e.NewProdGroup)
+                    .HasMaxLength(255)
+                    .HasColumnName("New Prod Group");
+
+                entity.Property(e => e.NewProdType)
+                    .HasMaxLength(255)
+                    .HasColumnName("New Prod Type");
+
+                entity.Property(e => e.NewProductModelNo)
+                    .HasMaxLength(255)
+                    .HasColumnName("New Product Model No");
+
+                entity.Property(e => e.OldProdGroup)
+                    .HasMaxLength(255)
+                    .HasColumnName("Old Prod Group");
+
+                entity.Property(e => e.OldProdType)
+                    .HasMaxLength(255)
+                    .HasColumnName("Old Prod Type");
+
+                entity.Property(e => e.OldProductPrice)
+                    .HasColumnType("decimal(16, 2)")
+                    .HasColumnName("Old Product Price");
+
+                entity.Property(e => e.OrderDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Order Date");
+
+                entity.Property(e => e.PriceAfterQc)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("PriceAfterQC");
+
+                entity.Property(e => e.ProductCondition).HasMaxLength(50);
+
+                entity.Property(e => e.RegdNo).HasMaxLength(15);
+
+                entity.Property(e => e.Size).HasMaxLength(255);
+
+                entity.Property(e => e.SponsorOrderNumber).HasMaxLength(255);
+
+                entity.Property(e => e.State).HasMaxLength(255);
+
+                entity.Property(e => e.StoreCode).HasMaxLength(150);
+
+                entity.Property(e => e.StoreName).HasMaxLength(250);
+
+                entity.Property(e => e.SweetenerAmount)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Sweetener Amount");
+
+                entity.Property(e => e.VoucherAmt)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Voucher Amt");
+
+                entity.Property(e => e.VoucherCode).HasMaxLength(200);
+            });
+
+            modelBuilder.Entity<ViewBoschvoucher>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_BOSCHVoucher");
+
+                entity.Property(e => e.Address1)
+                    .HasMaxLength(255)
+                    .HasColumnName("Address 1");
+
+                entity.Property(e => e.Address2)
+                    .HasMaxLength(255)
+                    .HasColumnName("Address 2");
+
+                entity.Property(e => e.Brandname).HasMaxLength(255);
+
+                entity.Property(e => e.City).HasMaxLength(150);
+
+                entity.Property(e => e.CustCity)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust. City");
+
+                entity.Property(e => e.CustEMail)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust E-mail");
+
+                entity.Property(e => e.CustMobile)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust Mobile");
+
+                entity.Property(e => e.CustName)
+                    .HasMaxLength(511)
+                    .HasColumnName("Cust Name");
+
+                entity.Property(e => e.CustZipCode)
+                    .HasMaxLength(255)
+                    .HasColumnName("Cust ZipCode");
+
+                entity.Property(e => e.EstimatedDeliveryDate).HasMaxLength(255);
+
+                entity.Property(e => e.InvDate)
+                    .HasColumnType("date")
+                    .HasColumnName("Inv Date");
+
+                entity.Property(e => e.InvoiceUrl)
+                    .HasMaxLength(667)
+                    .HasColumnName("invoiceURL");
+
+                entity.Property(e => e.IsFromHome)
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("Is From Home");
+
+                entity.Property(e => e.IssueDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Issue Date");
+
+                entity.Property(e => e.Location).HasMaxLength(250);
+
+                entity.Property(e => e.NewProductModelNo)
+                    .HasMaxLength(255)
+                    .HasColumnName("New Product Model No");
+
+                entity.Property(e => e.NewProductType)
+                    .HasMaxLength(255)
+                    .HasColumnName("New Product Type");
+
+                entity.Property(e => e.OldProdGroup)
+                    .HasMaxLength(255)
+                    .HasColumnName("Old Prod Group");
+
+                entity.Property(e => e.OldProdType)
+                    .HasMaxLength(255)
+                    .HasColumnName("Old Prod Type");
+
+                entity.Property(e => e.OldProductPrice)
+                    .HasColumnType("decimal(16, 2)")
+                    .HasColumnName("Old Product Price");
+
+                entity.Property(e => e.OrderDate)
+                    .HasColumnType("date")
+                    .HasColumnName("Order Date");
+
+                entity.Property(e => e.PayerCode)
+                    .HasMaxLength(20)
+                    .HasColumnName("Payer Code");
+
+                entity.Property(e => e.PayerEmail)
+                    .HasMaxLength(150)
+                    .HasColumnName("Payer Email");
+
+                entity.Property(e => e.PayerPhone)
+                    .HasMaxLength(20)
+                    .HasColumnName("Payer Phone");
+
+                entity.Property(e => e.Pincode).HasMaxLength(150);
+
+                entity.Property(e => e.ProductCondition).HasMaxLength(50);
+
+                entity.Property(e => e.RegdNo).HasMaxLength(15);
+
+                entity.Property(e => e.Size).HasMaxLength(255);
+
+                entity.Property(e => e.SponsorOrderNumber).HasMaxLength(255);
+
+                entity.Property(e => e.StoreCode).HasMaxLength(150);
+
+                entity.Property(e => e.StoreName)
+                    .HasMaxLength(250)
+                    .HasColumnName("Store Name");
+
+                entity.Property(e => e.SweetenerAmount)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Sweetener Amount");
+
+                entity.Property(e => e.VoucherAmt)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("Voucher Amt");
+
+                entity.Property(e => e.VoucherNo)
+                    .HasMaxLength(200)
+                    .HasColumnName("Voucher No");
+
+                entity.Property(e => e.VoucherStatus)
+                    .HasMaxLength(8)
+                    .IsUnicode(false)
+                    .HasColumnName("Voucher Status");
+
+                entity.Property(e => e.VoucherStatusName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ZohoSponsorOrderId).HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<ViewExchangWithQc>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_ExchangWithQC");
+
+                entity.Property(e => e.AbbredemptionId).HasColumnName("ABBRedemptionId");
+
+                entity.Property(e => e.Bonus).HasMaxLength(50);
+
+                entity.Property(e => e.Comment1)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Comment2)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Comment3)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CompanyName).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EndTime).HasMaxLength(15);
+
+                entity.Property(e => e.EstimatedDeliveryDate).HasMaxLength(255);
+
+                entity.Property(e => e.Evcprice)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("EVCPrice");
+
+                entity.Property(e => e.EvcpriceMasterId).HasColumnName("EVCPriceMasterId");
+
+                entity.Property(e => e.ExchPriceCode).HasMaxLength(50);
+
+                entity.Property(e => e.ExchangePrice).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.Expr2).HasColumnType("datetime");
+
+                entity.Property(e => e.Expr3).HasMaxLength(255);
+
+                entity.Property(e => e.Expr6).HasColumnType("datetime");
+
+                entity.Property(e => e.Expr7).HasColumnType("datetime");
+
+                entity.Property(e => e.Expr8).HasMaxLength(15);
+
+                entity.Property(e => e.Expr9).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.FinalPriceAfterQc)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("FinalPriceAfterQC");
+
+                entity.Property(e => e.InvoiceNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IsUnInstallationRequired).HasMaxLength(5);
+
+                entity.Property(e => e.LoginId).HasColumnName("LoginID");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OrderQcid).HasColumnName("OrderQCId");
+
+                entity.Property(e => e.PriceAfterQc)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("PriceAfterQC");
+
+                entity.Property(e => e.ProductCondition).HasMaxLength(50);
+
+                entity.Property(e => e.ProductNumber).HasMaxLength(200);
+
+                entity.Property(e => e.ProposedQcdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("ProposedQCDate");
+
+                entity.Property(e => e.PurchasedProductCategory).HasMaxLength(300);
+
+                entity.Property(e => e.Qccomments)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("QCComments");
+
+                entity.Property(e => e.Qcdate)
+                    .HasMaxLength(20)
+                    .HasColumnName("QCDate");
+
+                entity.Property(e => e.QualityAfterQc)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("QualityAfterQC");
+
+                entity.Property(e => e.QuotedPrice).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.RegdNo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SaleAssociateCode).HasMaxLength(100);
+
+                entity.Property(e => e.SaleAssociateName).HasMaxLength(200);
+
+                entity.Property(e => e.SalesAssociateEmail).HasMaxLength(500);
+
+                entity.Property(e => e.SalesAssociatePhone).HasMaxLength(50);
+
+                entity.Property(e => e.SponsorOrderNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.StartTime).HasMaxLength(15);
+
+                entity.Property(e => e.StoreCode).HasMaxLength(300);
+
+                entity.Property(e => e.Sweetner).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.VoucherCode).HasMaxLength(200);
+
+                entity.Property(e => e.VoucherCodeExpDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<ViewQc>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("View_QC");
+
+                entity.Property(e => e.CompanyName).HasMaxLength(255);
+
+                entity.Property(e => e.CustomerName).HasMaxLength(511);
+
+                entity.Property(e => e.OrderDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Order Date");
+
+                entity.Property(e => e.QcDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("QC Date");
+
+                entity.Property(e => e.QcDoneBy)
+                    .HasMaxLength(301)
+                    .HasColumnName("QC done By");
+
+                entity.Property(e => e.Qccomments)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("QCComments");
+
+                entity.Property(e => e.RegdNo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SelfQcDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Self QC Date");
+
+                entity.Property(e => e.StatusCode).HasMaxLength(5);
+
+                entity.Property(e => e.StatusDescription).HasMaxLength(255);
             });
 
             modelBuilder.Entity<ZohoExchangeDatum>(entity =>

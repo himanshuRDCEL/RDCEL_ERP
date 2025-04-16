@@ -19,5 +19,6 @@ namespace RDCELERP.Common.Constant
         public const string NewEVCUser = "New_EVC_User.html";
         public const string NewLGCUser = "New_LGC_User.html";
         public const string ServicePartnerUser = "ServicePartnerUser.html";
+        public const string NewbussinessCustomerAdded = "NewbussinessCustomerAdded.html";
     }
 }

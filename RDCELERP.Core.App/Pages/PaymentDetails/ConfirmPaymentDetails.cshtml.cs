@@ -425,21 +425,25 @@ namespace RDCELERP.Core.App.Pages.PaymentDetails
                             if (UpiNoViewModel.UPIId != null)
                             {
                                 cashfreeAuthCall = _cashfreePayoutCall.CashFreeAuthCall();
+                                cashfreeAuthCall.subCode = subcode;
                                 if (cashfreeAuthCall.subCode == subcode)
                                 {
                                     root = _UpiIdVerification.CheckUpiId(UpiNoViewModel.Regdno, UpiNoViewModel.UPIId, cashfreeAuthCall.data.token);
-                                    //if (root.subCode == subcode && !string.IsNullOrEmpty(root.data.nameAtBank)&& root.data.accountExists=="YES")
+                                    
                                     if (root.subCode == subcode && root.data.accountExists == "YES")
                                         {
                                         int statusid = !String.IsNullOrEmpty(HttpContext.Request.Query["status"]) ? Convert.ToInt32(HttpContext.Request.Query["status"]) : 0;
+                                       
                                         if ((statusid == (int?)OrderStatusEnum.Waitingforcustapproval || statusid == (int?)OrderStatusEnum.QCByPass))
                                         {
-                                            UpiNoViewModel.StatusId = Convert.ToInt32(HttpContext.Request.Query["status"]);
+                                            UpiNoViewModel.StatusId 
+                                                = Convert.ToInt32(HttpContext.Request.Query["status"]);
                                             UpiNoViewModel.Userid = UpiNoViewModel.Userid == 0 || UpiNoViewModel.Userid == null ? 3 : UpiNoViewModel.Userid;
                                             result = _QcCommentManager.SaveUpino(UpiNoViewModel);
                                             if (result > 0)
                                             {
-                                                beneficiaryResponse = AddBeneficiary(UpiNoViewModel, tblOrderTran, cashfreeAuthCall);
+                                               beneficiaryResponse = AddBeneficiary(UpiNoViewModel, tblOrderTran, cashfreeAuthCall);
+                                               // beneficiaryResponse.subCode = subcode;
                                                 if (beneficiaryResponse.subCode == subcode)
                                                 {
                                                     string beneficiaryResponseMsg = beneficiaryResponse.message;
@@ -450,8 +454,8 @@ namespace RDCELERP.Core.App.Pages.PaymentDetails
 
                                                     if (enableEvcAutoAllocation == true)
                                                     {
-                                                        #region EVC Auto-Allocation Phase II
-                                                        return RedirectToPage("/EVC_Allocation/AutoAllocation", new { orderTransId = tblOrderTran.OrderTransId });
+                                                        #region warehouse Auto-Allocation Phase II
+                                                        return RedirectToPage("/Warehouse_Allocation/AutoAllocation", new { orderTransId = tblOrderTran.OrderTransId });
                                                         #endregion
                                                     }
                                                     else
@@ -483,8 +487,8 @@ namespace RDCELERP.Core.App.Pages.PaymentDetails
                                         }
                                     }
 
-                                    //else if (subcode==root.subCode && string.IsNullOrEmpty(root.data.nameAtBank)&& root.data.accountExists=="NO")
-                                    else if (subcode == root.subCode && root.data.accountExists == "NO")
+                                    else if (subcode==root.subCode && string.IsNullOrEmpty(root.data.nameAtBank)&& root.data.accountExists=="NO")
+                                  
                                     {
                                         var timeslot = _dropdownManager.GetTimeSlot();
                                         if (timeslot != null)
@@ -529,7 +533,7 @@ namespace RDCELERP.Core.App.Pages.PaymentDetails
                                 if (enableEvcAutoAllocation == true)
                                 {
                                     #region EVC Auto-Allocation Phase II
-                                    return RedirectToPage("/EVC_Allocation/AutoAllocation", new { orderTransId = tblOrderTran.OrderTransId });
+                                    return RedirectToPage("/Warehouse_Allocation/AutoAllocation", new { orderTransId = tblOrderTran.OrderTransId });
                                     #endregion
                                 }
                                 else
@@ -587,7 +591,7 @@ namespace RDCELERP.Core.App.Pages.PaymentDetails
                 addBeneficiarry.pincode = tblOrderTran.Abbredemption.Abbregistration.CustPinCode != null ? tblOrderTran.Abbredemption.Abbregistration.CustPinCode : string.Empty;
                 addBeneficiarry.vpa = UpiNoViewModel.UPIId;
             }
-            beneficiaryResponse = _cashfreePayoutCall.AddBenefiaciary(addBeneficiarry, cashfreeAuthCall.data.token);
+           beneficiaryResponse = _cashfreePayoutCall.AddBenefiaciary(addBeneficiarry, cashfreeAuthCall.data.token);
 
             return beneficiaryResponse;
         }

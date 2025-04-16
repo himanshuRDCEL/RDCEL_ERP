@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using RDCELERP.Common.Helper;
 using Microsoft.Extensions.Options;
 using RDCELERP.Model.Base;
+using RDCELERP.Common.Constant;
 
 namespace RDCELERP.Core.App.Pages
 {
@@ -72,14 +73,17 @@ namespace RDCELERP.Core.App.Pages
                     {
                         SessionHelper.SetObjectAsJson(HttpContext.Session, "LoginUser", loginVM);
 
-                        //if (loginVM.RoleViewModel.RoleName == Common.Constant.RoleConstant.RoleEVPPortal)
-                        //    return new RedirectToPageResult("/EVC_Portal/EVC_Dashboard");
+                        if (loginVM.RoleViewModel.RoleName == Common.Constant.RoleConstant.RoleEVPPortal)
+                           return new RedirectToPageResult("/Warehouse_Portal/Warehouse_Dashboard");
                         //else if (loginVM.RoleViewModel.RoleName == Common.Constant.RoleConstant.RoleLGCAdmin)
                         //    return new RedirectToPageResult("/LGC/LogiPickDrop");
                         //else
                         //   return new RedirectToPageResult("Company/SelectCompany");
 
-                        return new RedirectToPageResult("Company/SelectCompany");
+                        
+
+                            return new RedirectToPageResult("Company/SelectCompany");
+                       
                     }
                     else
                     {

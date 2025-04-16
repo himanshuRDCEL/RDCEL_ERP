@@ -37,5 +37,6 @@ namespace RDCELERP.Common.Enums
         QcAdmin = 13,
         [Description("QC")]
         QC = 14,
+      
     }
 }

@@ -12,7 +12,5 @@ namespace RDCELERP.DAL.Entities
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-
-        public virtual TblUser? CreatedByNavigation { get; set; }
     }
 }

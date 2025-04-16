@@ -9,6 +9,7 @@ namespace RDCELERP.DAL.Entities
         {
             MapServicePartnerCityStates = new HashSet<MapServicePartnerCityState>();
             TblBusinessPartners = new HashSet<TblBusinessPartner>();
+            TblCustomerCompanies = new HashSet<TblCustomerCompany>();
             TblDriverDetails = new HashSet<TblDriverDetail>();
             TblDriverLists = new HashSet<TblDriverList>();
             TblEvcPartners = new HashSet<TblEvcPartner>();
@@ -34,6 +35,7 @@ namespace RDCELERP.DAL.Entities
         public virtual TblState? State { get; set; }
         public virtual ICollection<MapServicePartnerCityState> MapServicePartnerCityStates { get; set; }
         public virtual ICollection<TblBusinessPartner> TblBusinessPartners { get; set; }
+        public virtual ICollection<TblCustomerCompany> TblCustomerCompanies { get; set; }
         public virtual ICollection<TblDriverDetail> TblDriverDetails { get; set; }
         public virtual ICollection<TblDriverList> TblDriverLists { get; set; }
         public virtual ICollection<TblEvcPartner> TblEvcPartners { get; set; }

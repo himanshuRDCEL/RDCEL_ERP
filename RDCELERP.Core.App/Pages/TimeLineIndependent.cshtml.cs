@@ -185,7 +185,7 @@ namespace RDCELERP.Core.App.Pages
                             //var ordertimeline = TblExchangeOrderStatus.GroupBy(p => p.StatusName).ToList();
                             foreach (var item1 in TblExchangeOrderStatus)
                             {
-                                TblTimelineStatusMappings = _context.TblTimelineStatusMappings.Where(x => x.StatusId == item1.Id).Include(x => x.CreatedByNavigation).ToList();
+                                TblTimelineStatusMappings = _context.TblTimelineStatusMappings.Where(x => x.StatusId == item1.Id).ToList();
 
                                 foreach (var item2 in TblTimelineStatusMappings)
                                 {
@@ -315,7 +315,7 @@ namespace RDCELERP.Core.App.Pages
 
                             foreach (var item1 in TblExchangeOrderStatus)
                             {
-                                TblTimelineStatusMappings = _context.TblTimelineStatusMappings.Where(x => x.StatusId == item1.Id).Include(x => x.CreatedByNavigation).ToList();
+                                TblTimelineStatusMappings = _context.TblTimelineStatusMappings.Where(x => x.StatusId == item1.Id).ToList();
 
                                 foreach (var item2 in TblTimelineStatusMappings)
                                 {

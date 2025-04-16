@@ -86,6 +86,11 @@ namespace RDCELERP.DAL.Entities
         public int? BusinessUnitId { get; set; }
         public int? PriceMasterNameId { get; set; }
         public bool? IsDiagnoseV2 { get; set; }
+        public bool? IsSrNumValid { get; set; }
+        public string? NewSerialNumber { get; set; }
+        public int? CouponId { get; set; }
+        public bool? IsCouponAplied { get; set; }
+        public decimal? CouponValue { get; set; }
 
         public virtual TblBrand? Brand { get; set; }
         public virtual TblBusinessPartner? BusinessPartner { get; set; }
@@ -93,7 +98,6 @@ namespace RDCELERP.DAL.Entities
         public virtual TblUser? CreatedByNavigation { get; set; }
         public virtual TblCustomerDetail? CustomerDetails { get; set; }
         public virtual TblUser? ModifiedByNavigation { get; set; }
-        public virtual TblProductType? NewProductType { get; set; }
         public virtual TblPriceMasterName? PriceMasterName { get; set; }
         public virtual TblProductTechnology? ProductTechnology { get; set; }
         public virtual TblProductType? ProductType { get; set; }

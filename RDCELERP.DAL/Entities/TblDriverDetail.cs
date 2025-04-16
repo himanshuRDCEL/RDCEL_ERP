@@ -40,8 +40,12 @@ namespace RDCELERP.DAL.Entities
         public DateTime? JourneyPlanDate { get; set; }
         public int? VehicleId { get; set; }
 
+        public virtual TblUser? ApprovedByNavigation { get; set; }
         public virtual TblCity? CityNavigation { get; set; }
+        public virtual TblUser? CreatedByNavigation { get; set; }
         public virtual TblDriverList? Driver { get; set; }
+        public virtual TblUser? ModifiedbyNavigation { get; set; }
+        public virtual TblServicePartner? ServicePartner { get; set; }
         public virtual TblUser? User { get; set; }
         public virtual TblVehicleList? Vehicle { get; set; }
         public virtual ICollection<TblExchangeAbbstatusHistory> TblExchangeAbbstatusHistories { get; set; }

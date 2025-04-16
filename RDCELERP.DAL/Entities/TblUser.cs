@@ -25,6 +25,8 @@ namespace RDCELERP.DAL.Entities
             TblAddressUsers = new HashSet<TblAddress>();
             TblApicallCreatedByNavigations = new HashSet<TblApicall>();
             TblApicallModifiedByNavigations = new HashSet<TblApicall>();
+            TblBookingItemCreatedByNavigations = new HashSet<TblBookingItem>();
+            TblBookingItemModifiedByNavigations = new HashSet<TblBookingItem>();
             TblBppincodeMappingCreatedByNavigations = new HashSet<TblBppincodeMapping>();
             TblBppincodeMappingModifiedByNavigations = new HashSet<TblBppincodeMapping>();
             TblBrandGroupCreatedbyNavigations = new HashSet<TblBrandGroup>();
@@ -37,18 +39,35 @@ namespace RDCELERP.DAL.Entities
             TblBuconfigurationModifiedByNavigations = new HashSet<TblBuconfiguration>();
             TblBuproductCategoryMappingCreatedByNavigations = new HashSet<TblBuproductCategoryMapping>();
             TblBuproductCategoryMappingModifiedByNavigations = new HashSet<TblBuproductCategoryMapping>();
+            TblBusinessCustomerCreatedByNavigations = new HashSet<TblBusinessCustomer>();
+            TblBusinessCustomerModifiedByNavigations = new HashSet<TblBusinessCustomer>();
+            TblBusinessTypeMappingCreatedByNavigations = new HashSet<TblBusinessTypeMapping>();
+            TblBusinessTypeMappingModifiedByNavigations = new HashSet<TblBusinessTypeMapping>();
+            TblCategoryCreatedByNavigations = new HashSet<TblCategory>();
+            TblCategoryModifiedByNavigations = new HashSet<TblCategory>();
             TblCompanyCreatedByNavigations = new HashSet<TblCompany>();
             TblCompanyModifiedByNavigations = new HashSet<TblCompany>();
+            TblCouponCreatedByNavigations = new HashSet<TblCoupon>();
+            TblCouponMasterCreatedByNavigations = new HashSet<TblCouponMaster>();
+            TblCouponMasterModifiedByNavigations = new HashSet<TblCouponMaster>();
+            TblCouponModifiedByNavigations = new HashSet<TblCoupon>();
             TblCreditRequestCreatedByNavigations = new HashSet<TblCreditRequest>();
             TblCreditRequestCreditRequestApproveUsers = new HashSet<TblCreditRequest>();
             TblCreditRequestCreditRequestUsers = new HashSet<TblCreditRequest>();
             TblCreditRequestModifiedByNavigations = new HashSet<TblCreditRequest>();
+            TblCustomerCompanyCreatedByNavigations = new HashSet<TblCustomerCompany>();
+            TblCustomerCompanyModifiedByNavigations = new HashSet<TblCustomerCompany>();
             TblCustomerFileCreatedByNavigations = new HashSet<TblCustomerFile>();
             TblCustomerFileModifiedByNavigations = new HashSet<TblCustomerFile>();
-            TblDriverDetails = new HashSet<TblDriverDetail>();
+            TblDriverDetailApprovedByNavigations = new HashSet<TblDriverDetail>();
+            TblDriverDetailCreatedByNavigations = new HashSet<TblDriverDetail>();
+            TblDriverDetailModifiedbyNavigations = new HashSet<TblDriverDetail>();
+            TblDriverDetailUsers = new HashSet<TblDriverDetail>();
             TblDriverListCreatedByNavigations = new HashSet<TblDriverList>();
             TblDriverListModifiedByNavigations = new HashSet<TblDriverList>();
             TblDriverListUsers = new HashSet<TblDriverList>();
+            TblEcomVoucherCreatedByNavigations = new HashSet<TblEcomVoucher>();
+            TblEcomVoucherModifiedByNavigations = new HashSet<TblEcomVoucher>();
             TblEntityTypeCreatedByNavigations = new HashSet<TblEntityType>();
             TblEntityTypeModifiedByNavigations = new HashSet<TblEntityType>();
             TblEvcPartnerCreatedbyNavigations = new HashSet<TblEvcPartner>();
@@ -71,22 +90,19 @@ namespace RDCELERP.DAL.Entities
             TblExchangeOrderModifiedByNavigations = new HashSet<TblExchangeOrder>();
             TblImageLabelMasterCreatedByNavigations = new HashSet<TblImageLabelMaster>();
             TblImageLabelMasterModifiedbyNavigations = new HashSet<TblImageLabelMaster>();
+            TblItemCreatedByNavigations = new HashSet<TblItem>();
+            TblItemModifiedByNavigations = new HashSet<TblItem>();
             TblLoginMobiles = new HashSet<TblLoginMobile>();
             TblLogisticCreatedByNavigations = new HashSet<TblLogistic>();
             TblLogisticModifiedbyNavigations = new HashSet<TblLogistic>();
-            TblNpssqoptionCreatedByNavigations = new HashSet<TblNpssqoption>();
-            TblNpssqoptionModifiedByNavigations = new HashSet<TblNpssqoption>();
-            TblNpssqresponseCreatedByNavigations = new HashSet<TblNpssqresponse>();
-            TblNpssqresponseModifiedByNavigations = new HashSet<TblNpssqresponse>();
-            TblNpssquestionCreatedByNavigations = new HashSet<TblNpssquestion>();
-            TblNpssquestionModifiedByNavigations = new HashSet<TblNpssquestion>();
             TblOrderImageUploadCreatedByNavigations = new HashSet<TblOrderImageUpload>();
             TblOrderImageUploadModifiedbyNavigations = new HashSet<TblOrderImageUpload>();
             TblOrderLgcCreatedByNavigations = new HashSet<TblOrderLgc>();
             TblOrderLgcModifiedByNavigations = new HashSet<TblOrderLgc>();
+            TblOrderQcCreatedByNavigations = new HashSet<TblOrderQc>();
+            TblOrderQcModifiedByNavigations = new HashSet<TblOrderQc>();
             TblOrderQcratingCreatedByNavigations = new HashSet<TblOrderQcrating>();
             TblOrderQcratingModifiedByNavigations = new HashSet<TblOrderQcrating>();
-            TblOrderQcs = new HashSet<TblOrderQc>();
             TblOrderTranAssignByNavigations = new HashSet<TblOrderTran>();
             TblOrderTranAssignToNavigations = new HashSet<TblOrderTran>();
             TblOrderTranCreatedByNavigations = new HashSet<TblOrderTran>();
@@ -126,8 +142,8 @@ namespace RDCELERP.DAL.Entities
             TblServicePartnerUsers = new HashSet<TblServicePartner>();
             TblTempDatumCreatedByNavigations = new HashSet<TblTempDatum>();
             TblTempDatumModifiedbyNavigations = new HashSet<TblTempDatum>();
-            TblTimeLines = new HashSet<TblTimeLine>();
-            TblTimelineStatusMappings = new HashSet<TblTimelineStatusMapping>();
+            TblTimelineStatusMappingCreatedByNavigations = new HashSet<TblTimelineStatusMapping>();
+            TblTimelineStatusMappingModifiedByNavigations = new HashSet<TblTimelineStatusMapping>();
             TblUniversalPriceMasterCreatedByNavigations = new HashSet<TblUniversalPriceMaster>();
             TblUniversalPriceMasterModifiedByNavigations = new HashSet<TblUniversalPriceMaster>();
             TblUserMappingCreatedByNavigations = new HashSet<TblUserMapping>();
@@ -146,6 +162,8 @@ namespace RDCELERP.DAL.Entities
             TblVehicleListModifiedByNavigations = new HashSet<TblVehicleList>();
             TblWalletTransactionCreatedByNavigations = new HashSet<TblWalletTransaction>();
             TblWalletTransactionModifiedByNavigations = new HashSet<TblWalletTransaction>();
+            TimeSlotMasterCreatedByNavigations = new HashSet<TimeSlotMaster>();
+            TimeSlotMasterModifiedByNavigations = new HashSet<TimeSlotMaster>();
             UniversalPriceMasterCreatedByNavigations = new HashSet<UniversalPriceMaster>();
             UniversalPriceMasterModifiedByNavigations = new HashSet<UniversalPriceMaster>();
         }
@@ -189,6 +207,8 @@ namespace RDCELERP.DAL.Entities
         public virtual ICollection<TblAddress> TblAddressUsers { get; set; }
         public virtual ICollection<TblApicall> TblApicallCreatedByNavigations { get; set; }
         public virtual ICollection<TblApicall> TblApicallModifiedByNavigations { get; set; }
+        public virtual ICollection<TblBookingItem> TblBookingItemCreatedByNavigations { get; set; }
+        public virtual ICollection<TblBookingItem> TblBookingItemModifiedByNavigations { get; set; }
         public virtual ICollection<TblBppincodeMapping> TblBppincodeMappingCreatedByNavigations { get; set; }
         public virtual ICollection<TblBppincodeMapping> TblBppincodeMappingModifiedByNavigations { get; set; }
         public virtual ICollection<TblBrandGroup> TblBrandGroupCreatedbyNavigations { get; set; }
@@ -201,18 +221,35 @@ namespace RDCELERP.DAL.Entities
         public virtual ICollection<TblBuconfiguration> TblBuconfigurationModifiedByNavigations { get; set; }
         public virtual ICollection<TblBuproductCategoryMapping> TblBuproductCategoryMappingCreatedByNavigations { get; set; }
         public virtual ICollection<TblBuproductCategoryMapping> TblBuproductCategoryMappingModifiedByNavigations { get; set; }
+        public virtual ICollection<TblBusinessCustomer> TblBusinessCustomerCreatedByNavigations { get; set; }
+        public virtual ICollection<TblBusinessCustomer> TblBusinessCustomerModifiedByNavigations { get; set; }
+        public virtual ICollection<TblBusinessTypeMapping> TblBusinessTypeMappingCreatedByNavigations { get; set; }
+        public virtual ICollection<TblBusinessTypeMapping> TblBusinessTypeMappingModifiedByNavigations { get; set; }
+        public virtual ICollection<TblCategory> TblCategoryCreatedByNavigations { get; set; }
+        public virtual ICollection<TblCategory> TblCategoryModifiedByNavigations { get; set; }
         public virtual ICollection<TblCompany> TblCompanyCreatedByNavigations { get; set; }
         public virtual ICollection<TblCompany> TblCompanyModifiedByNavigations { get; set; }
+        public virtual ICollection<TblCoupon> TblCouponCreatedByNavigations { get; set; }
+        public virtual ICollection<TblCouponMaster> TblCouponMasterCreatedByNavigations { get; set; }
+        public virtual ICollection<TblCouponMaster> TblCouponMasterModifiedByNavigations { get; set; }
+        public virtual ICollection<TblCoupon> TblCouponModifiedByNavigations { get; set; }
         public virtual ICollection<TblCreditRequest> TblCreditRequestCreatedByNavigations { get; set; }
         public virtual ICollection<TblCreditRequest> TblCreditRequestCreditRequestApproveUsers { get; set; }
         public virtual ICollection<TblCreditRequest> TblCreditRequestCreditRequestUsers { get; set; }
         public virtual ICollection<TblCreditRequest> TblCreditRequestModifiedByNavigations { get; set; }
+        public virtual ICollection<TblCustomerCompany> TblCustomerCompanyCreatedByNavigations { get; set; }
+        public virtual ICollection<TblCustomerCompany> TblCustomerCompanyModifiedByNavigations { get; set; }
         public virtual ICollection<TblCustomerFile> TblCustomerFileCreatedByNavigations { get; set; }
         public virtual ICollection<TblCustomerFile> TblCustomerFileModifiedByNavigations { get; set; }
-        public virtual ICollection<TblDriverDetail> TblDriverDetails { get; set; }
+        public virtual ICollection<TblDriverDetail> TblDriverDetailApprovedByNavigations { get; set; }
+        public virtual ICollection<TblDriverDetail> TblDriverDetailCreatedByNavigations { get; set; }
+        public virtual ICollection<TblDriverDetail> TblDriverDetailModifiedbyNavigations { get; set; }
+        public virtual ICollection<TblDriverDetail> TblDriverDetailUsers { get; set; }
         public virtual ICollection<TblDriverList> TblDriverListCreatedByNavigations { get; set; }
         public virtual ICollection<TblDriverList> TblDriverListModifiedByNavigations { get; set; }
         public virtual ICollection<TblDriverList> TblDriverListUsers { get; set; }
+        public virtual ICollection<TblEcomVoucher> TblEcomVoucherCreatedByNavigations { get; set; }
+        public virtual ICollection<TblEcomVoucher> TblEcomVoucherModifiedByNavigations { get; set; }
         public virtual ICollection<TblEntityType> TblEntityTypeCreatedByNavigations { get; set; }
         public virtual ICollection<TblEntityType> TblEntityTypeModifiedByNavigations { get; set; }
         public virtual ICollection<TblEvcPartner> TblEvcPartnerCreatedbyNavigations { get; set; }
@@ -235,22 +272,19 @@ namespace RDCELERP.DAL.Entities
         public virtual ICollection<TblExchangeOrder> TblExchangeOrderModifiedByNavigations { get; set; }
         public virtual ICollection<TblImageLabelMaster> TblImageLabelMasterCreatedByNavigations { get; set; }
         public virtual ICollection<TblImageLabelMaster> TblImageLabelMasterModifiedbyNavigations { get; set; }
+        public virtual ICollection<TblItem> TblItemCreatedByNavigations { get; set; }
+        public virtual ICollection<TblItem> TblItemModifiedByNavigations { get; set; }
         public virtual ICollection<TblLoginMobile> TblLoginMobiles { get; set; }
         public virtual ICollection<TblLogistic> TblLogisticCreatedByNavigations { get; set; }
         public virtual ICollection<TblLogistic> TblLogisticModifiedbyNavigations { get; set; }
-        public virtual ICollection<TblNpssqoption> TblNpssqoptionCreatedByNavigations { get; set; }
-        public virtual ICollection<TblNpssqoption> TblNpssqoptionModifiedByNavigations { get; set; }
-        public virtual ICollection<TblNpssqresponse> TblNpssqresponseCreatedByNavigations { get; set; }
-        public virtual ICollection<TblNpssqresponse> TblNpssqresponseModifiedByNavigations { get; set; }
-        public virtual ICollection<TblNpssquestion> TblNpssquestionCreatedByNavigations { get; set; }
-        public virtual ICollection<TblNpssquestion> TblNpssquestionModifiedByNavigations { get; set; }
         public virtual ICollection<TblOrderImageUpload> TblOrderImageUploadCreatedByNavigations { get; set; }
         public virtual ICollection<TblOrderImageUpload> TblOrderImageUploadModifiedbyNavigations { get; set; }
         public virtual ICollection<TblOrderLgc> TblOrderLgcCreatedByNavigations { get; set; }
         public virtual ICollection<TblOrderLgc> TblOrderLgcModifiedByNavigations { get; set; }
+        public virtual ICollection<TblOrderQc> TblOrderQcCreatedByNavigations { get; set; }
+        public virtual ICollection<TblOrderQc> TblOrderQcModifiedByNavigations { get; set; }
         public virtual ICollection<TblOrderQcrating> TblOrderQcratingCreatedByNavigations { get; set; }
         public virtual ICollection<TblOrderQcrating> TblOrderQcratingModifiedByNavigations { get; set; }
-        public virtual ICollection<TblOrderQc> TblOrderQcs { get; set; }
         public virtual ICollection<TblOrderTran> TblOrderTranAssignByNavigations { get; set; }
         public virtual ICollection<TblOrderTran> TblOrderTranAssignToNavigations { get; set; }
         public virtual ICollection<TblOrderTran> TblOrderTranCreatedByNavigations { get; set; }
@@ -290,8 +324,8 @@ namespace RDCELERP.DAL.Entities
         public virtual ICollection<TblServicePartner> TblServicePartnerUsers { get; set; }
         public virtual ICollection<TblTempDatum> TblTempDatumCreatedByNavigations { get; set; }
         public virtual ICollection<TblTempDatum> TblTempDatumModifiedbyNavigations { get; set; }
-        public virtual ICollection<TblTimeLine> TblTimeLines { get; set; }
-        public virtual ICollection<TblTimelineStatusMapping> TblTimelineStatusMappings { get; set; }
+        public virtual ICollection<TblTimelineStatusMapping> TblTimelineStatusMappingCreatedByNavigations { get; set; }
+        public virtual ICollection<TblTimelineStatusMapping> TblTimelineStatusMappingModifiedByNavigations { get; set; }
         public virtual ICollection<TblUniversalPriceMaster> TblUniversalPriceMasterCreatedByNavigations { get; set; }
         public virtual ICollection<TblUniversalPriceMaster> TblUniversalPriceMasterModifiedByNavigations { get; set; }
         public virtual ICollection<TblUserMapping> TblUserMappingCreatedByNavigations { get; set; }
@@ -310,6 +344,8 @@ namespace RDCELERP.DAL.Entities
         public virtual ICollection<TblVehicleList> TblVehicleListModifiedByNavigations { get; set; }
         public virtual ICollection<TblWalletTransaction> TblWalletTransactionCreatedByNavigations { get; set; }
         public virtual ICollection<TblWalletTransaction> TblWalletTransactionModifiedByNavigations { get; set; }
+        public virtual ICollection<TimeSlotMaster> TimeSlotMasterCreatedByNavigations { get; set; }
+        public virtual ICollection<TimeSlotMaster> TimeSlotMasterModifiedByNavigations { get; set; }
         public virtual ICollection<UniversalPriceMaster> UniversalPriceMasterCreatedByNavigations { get; set; }
         public virtual ICollection<UniversalPriceMaster> UniversalPriceMasterModifiedByNavigations { get; set; }
     }

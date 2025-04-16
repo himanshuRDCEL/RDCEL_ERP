@@ -22,7 +22,6 @@ namespace RDCELERP.DAL.Entities
         public string? PinCode { get; set; }
         public int CityId { get; set; }
         public int StateId { get; set; }
-        public string? EmailId { get; set; }
         public string? ContactNumber { get; set; }
         public string? EvcStoreCode { get; set; }
         public bool? IsActive { get; set; }
@@ -32,6 +31,8 @@ namespace RDCELERP.DAL.Entities
         public DateTime? ModifiedDate { get; set; }
         public string? ListOfPincode { get; set; }
         public bool? IsApprove { get; set; }
+        public string? EmailId { get; set; }
+        public int? OldEvcregistrationId { get; set; }
 
         public virtual TblCity City { get; set; } = null!;
         public virtual TblUser? CreatedbyNavigation { get; set; }

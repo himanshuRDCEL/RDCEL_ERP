@@ -9,7 +9,7 @@ namespace RDCELERP.Common.Enums
 {
     public enum CompanyNameenum
     {
-        [Description("UTC Digital")]
+        [Description("Rockingdeals")]
         UTC = 1007,       
     }
 }

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using RDCELERP.Model.Product;
 using RDCELERP.Model.Master;
 using RDCELERP.Model.BusinessUnit;
+using RDCELERP.Model.BusinessCustomer;
+using RDCELERP.Model.Company;
 
 namespace RDCELERP.Model.Users
 {
@@ -19,7 +21,12 @@ namespace RDCELERP.Model.Users
         public ProductCategoryViewModel? productCategoryViewModel { get; set; }
         public UserRoleLoginViewModel? UserRoleLoginViewModel { get; set; }
         public BusinessUnitViewModel? BusinessUnitViewModel { get; set; }
-        
+
+
         public bool? IsAdmin { get; set; }
+        //sa
+        public BusinessCustomerViewModel? BusinessCustomerViewModel { get; set; }
+        public CompanyViewModel CompanyViewModel { get; set; }
+
     }
 }

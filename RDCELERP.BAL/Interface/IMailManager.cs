@@ -27,7 +27,8 @@ namespace RDCELERP.BAL.Interface
         /// <param name="body">Body</param>
         /// <param name="subject">Subject</param>
         public void SendEmail(string to, string body, string subject);
-        public  Task<bool> SendEmailAsync(string to, string body, string subject);  
+        public  Task<bool> SendEmailAsync(string to, string body, string subject);
+        public  Task<bool> SingleSendEmailAsync(string toEmail, string body, string subject);
         public  Task<bool> SendEmailforevcAsync(string to, string body, string subject);
         public Task<bool> SendEmailforLGCAsync(string to, string body, string subject);
 

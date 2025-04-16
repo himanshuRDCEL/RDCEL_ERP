@@ -16,6 +16,8 @@ namespace RDCELERP.Model.Base
         public string? Action { get; set; }
         public string? Edit { get; set; }
         public int? LoggedInUserId { get; set; }
+
+        public string? CreatedDateString { get; set; }
     }
 
     public class AccessRuleViewModel

@@ -53,6 +53,7 @@ namespace RDCELERP.DAL.Entities
         public decimal? SweetenerDigi2l { get; set; }
         public decimal? Sweetener { get; set; }
 
+        public virtual TblUser? CreatedByNavigation { get; set; }
         public virtual TblUser? ModifiedByNavigation { get; set; }
         public virtual TblOrderTran? OrderTrans { get; set; }
     }

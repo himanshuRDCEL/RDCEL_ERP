@@ -33,7 +33,9 @@ namespace RDCELERP.DAL.Entities
         public string? SponsorRefId { get; set; }
         public string? AreaLocality { get; set; }
         public int? AreaLocalityId { get; set; }
+        public int? OrderTransId { get; set; }
 
+        public virtual TblOrderTran? OrderTrans { get; set; }
         public virtual ICollection<TblAbbredemption> TblAbbredemptions { get; set; }
         public virtual ICollection<TblAbbregistration> TblAbbregistrations { get; set; }
         public virtual ICollection<TblExchangeOrder> TblExchangeOrders { get; set; }

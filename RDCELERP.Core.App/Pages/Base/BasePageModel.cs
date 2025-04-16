@@ -54,7 +54,7 @@ namespace RDCELERP.Core.App.Pages.Base
                 ViewData["CompanyId"] = _loginSession.RoleViewModel?.CompanyId;
                 ViewData["LoggedInUserId"] = _loginSession.UserViewModel?.UserId;
                 ViewData["BusinessUnitVM"] = _loginSession.RoleViewModel?.BusinessUnitViewModel;
-                //ViewData["BusinessUnitId"] = _loginSession.BusinessUnitViewModel.BusinessUnitId;
+                
                 ViewData["RoleAccessVMList"] = _loginSession.RoleViewModel?.RoleAccessViewModelList;
                 /*ViewData["UrlNew"] =*/
                 var FullUrl = context.ActionDescriptor.ViewEnginePath;

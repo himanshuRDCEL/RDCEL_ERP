@@ -381,6 +381,8 @@ namespace RDCELERP.CoreWebApi
             services.AddScoped<ITempDataRepository, TempDataRepository>();
             services.AddScoped<IUserMappingRepository, UserMappingRepository>();
             services.AddScoped<IApiCallsRepository, ApiCallsRepository>();
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -56,6 +56,10 @@ using RDCELERP.Model.DealerDashBoard;
 using RDCELERP.Model.Refurbisher;
 using RDCELERP.DAL.Repository;
 using RDCELERP.Model.APICalls;
+using RDCELERP.BAL.MasterManager;
+using RDCELERP.Model.BusinessCustomer;
+using RDCELERP.Model.Zoho;
+using RDCELERP.Model.EcomVoucher;
 
 namespace RDCELERP.BAL.Common
 {
@@ -288,6 +292,10 @@ namespace RDCELERP.BAL.Common
 
             //CreateMap<ApicallTable, ApicallViewModel>().ReverseMap();
             CreateMap<ApicallViewModel, TblApicall>().ReverseMap();
+           CreateMap<BusinessCustomerViewModel,TblBusinessCustomer >().ReverseMap();
+            CreateMap<TblItem,ItemViewModel>().ReverseMap();
+            CreateMap<TblEcomVoucher,EcomVoucherViewModel>().ReverseMap();
+
 
         }
     }

@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.Net;
 using RDCELERP.Model.TemplateConfiguration;
 using NPOI.HPSF;
+using Newtonsoft.Json;
 
 namespace RDCELERP.BAL.MasterManager
 {
@@ -222,6 +223,39 @@ namespace RDCELERP.BAL.MasterManager
             return response;
         }
 
+        #region sa mailjet
+        public async Task<bool> SingleSendEmailAsync(string toEmail, string body, string subject)
+        {
+            try
+            {
+                MailjetClient client = new MailjetClient(_config.Value.MailjetAPIKey, _config.Value.MailjetAPISecret);
+
+                var email = new TransactionalEmailBuilder()
+                 .WithFrom(new SendContact(_config.Value.FromEmail, _config.Value.FromDisplayName))
+                 .WithTo(new SendContact(toEmail))
+                 .WithSubject(subject)
+                 .WithHtmlPart(body)
+                 .Build();
+
+
+                TransactionalEmailResponse response = await client.SendTransactionalEmailAsync(email);
+
+                if (response.Messages != null && response.Messages.Length > 0 &&
+                    !string.IsNullOrEmpty(response.Messages[0].Status) &&
+                    response.Messages[0].Status.ToLower().Equals("success"))
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logging.WriteErrorToDB("Mail Manager", "SingleSendEmailAsync",ex);
+            }
+
+            return false;
+        }
+
+        #endregion
         #endregion
 
         #region use for EVC welcome Messege
@@ -738,6 +772,10 @@ namespace RDCELERP.BAL.MasterManager
             return flag;
         }
         #endregion
+
+
+
+        
     }
 }
 

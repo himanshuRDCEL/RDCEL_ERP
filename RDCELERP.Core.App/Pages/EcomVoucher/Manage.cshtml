@@ -1,0 +1,377 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.EcomVoucher.ManageModel
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+<style>
+    #importPhoneNoBtn {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .input-group {
+        display: flex;
+        gap: 10px;
+        max-width: 400px;
+    }
+
+    .phone-number {
+        width: 50%;
+        background: #f5f5f5;
+    }
+
+    .voucher-code {
+        width: 50%;
+    }
+
+
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a> Ecom Voucher
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="row detailed-reporting">
+                                <div class="col-md-12 mb-3">
+                                  
+                                </div>
+
+                                <input type="hidden" asp-for="EcomVoucherViewModel.EcomVoucherId" id="hdnEcomVoucherId" />
+                                <input type="hidden" asp-for="EcomVoucherViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="EcomVoucherViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="EcomVoucherViewModel.IsActive" />
+                                <input type="hidden" asp-for="EcomVoucherViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="EcomVoucherViewModel.ModifiedDate" />
+                                
+                                <input type="hidden" asp-for="EcomVoucherViewModel.CompanyId" id="CompanyIdHidden" />
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label>Voucher Type<span style="color:red;">*</span></label>
+                                       <select id="voucherType" class="form-control" asp-for="EcomVoucherViewModel.EcomVoucherType">
+                                            <option value="">Select Voucher Type</option>
+
+    @foreach (var item in Model.EcomVoucherViewModel.EcomVoucherTypeList)
+    {
+
+                                                <option value="@item.Value" selected="@item.Selected">@item.Text</option>
+
+
+    }
+</select>
+                                    </div>
+                                    <div class="col-md-4 mb-3" id="code">
+                                        <label for="">Code</label>
+                                        <input asp-for="EcomVoucherViewModel.VoucherCode" class="form-control" placeholder="Code" readonly="readonly"/>
+                                        <span asp-validation-for="EcomVoucherViewModel.VoucherCode" class="text-danger"></span>
+                                    </div>
+                                    <div id="countField">
+
+                                        <div class="col-md-4 mb-3">
+                                            <label for="">Count<span style="color:red;">*</span></label>
+                                            <input asp-for="EcomVoucherViewModel.VoucherCount" class="form-control" placeholder="Count" />
+                                            <span asp-validation-for="EcomVoucherViewModel.VoucherCount" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div id="brandCategoryFields" class="row" style="display: none;">
+                                        <div class="col-md-4 mb-3">
+                                        <label>Brand<span style="color:red;">*</span></label>
+                                        <select id="brandDropdown" class="form-control" asp-for="EcomVoucherViewModel.BrandId">
+                                            <option value="">Select Brand</option>
+                                            @if(Model.EcomVoucherViewModel.BrandList!=null){
+                                            @foreach (var brand in Model.EcomVoucherViewModel.BrandList)
+                                            {
+                                                <option value="@brand.Value">@brand.Text</option>
+                                            }
+                                            }
+                                        </select>
+                                            <span id="brandError" class="text-danger"></span>
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Category<span style="color:red;">*</span></label>
+                                        <select id="categoryDropdown" class="form-control" asp-for="EcomVoucherViewModel.SelectedCategoryIds" multiple>
+                                            <option value="">Select Category</option>
+                                        </select>
+                                            <span id="categoryError" class="text-danger"></span>
+
+                                    </div>
+                                    </div>
+
+                                </div>
+                                <div id="phone" style="display:none;">
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Phone</label>
+                                    <input asp-for="EcomVoucherViewModel.Phoneno" class="form-control" placeholder="Phone No" />
+                                    <span asp-validation-for="EcomVoucherViewModel.Phoneno" class="text-danger"></span>
+                                </div>
+                                </div>
+                                <div class="col-md-4 mb-3" id="import" style="display:none;">
+                                <button type = "button"id="importPhoneNoBtn" type="button"> Import Phone No.</button>
+
+                                <input type="file" id="importFile" accept=".csv, .xlsx" style="display: none;" />
+
+                                <div id="importedData"></div> <!-- Yaha Imported Data Show Hoga -->
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Start Date <span style="color:red;">*</span></label>
+                                    <input asp-for="EcomVoucherViewModel.StartDate" class="form-control" placeholder="Last Name" />
+                                    <span asp-validation-for="EcomVoucherViewModel.StartDate" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="">End Date <span style="color:red;">*</span></label>
+                                    <input asp-for="EcomVoucherViewModel.EndDate" class="form-control" placeholder="End Date" />
+                                    <span asp-validation-for="EcomVoucherViewModel.EndDate" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Voucher Status</label>
+                                    <input asp-for="EcomVoucherViewModel.VoucherStatus"  class="form-control" placeholder="Voucher Status" readonly />
+                                    <span asp-validation-for="EcomVoucherViewModel.VoucherStatus" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label>Value Type<span style="color:red;">*</span></label>
+                                    <select id="valueType" class="form-control" asp-for="EcomVoucherViewModel.ValueType">
+                                        <option value="">Select Value</option>
+                                        @foreach (var item in Model.EcomVoucherViewModel.EcomVoucherValueTypeList)
+                                        {
+                                           
+                                            <option value="@item.Value" selected="@item.Selected">@item.Text</option>
+
+
+                                        }
+                                    </select>
+                                </div>
+                                <div id="fix">
+                                <div class="col-md-4 mb-3">
+                                        <label for="">Fixed Value</label>
+                                        <input asp-for="EcomVoucherViewModel.FixedValue" class="form-control" placeholder="Fixed Value" />
+                                        <span asp-validation-for="EcomVoucherViewModel.FixedValue" class="text-danger"></span>
+                                </div>
+                                </div>
+                                <div id="perc">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="">Percentage</label>
+                                        <input asp-for="EcomVoucherViewModel.Percentage" class="form-control" placeholder="Percentage" />
+                                        <span asp-validation-for="EcomVoucherViewModel.Percentage" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="">Limit</label>
+                                        <input asp-for="EcomVoucherViewModel.PercLimit" class="form-control" placeholder="Max Discount" />
+                                        <span asp-validation-for="EcomVoucherViewModel.PercLimit" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+                              
+                                <div class="col-6 text-end">
+                                   
+                                        <input type="submit" id="Savebtn" value="Save" class="btn btn-primary mainshadow" />
+                                    
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+
+
+        $("#importPhoneNoBtn").click(function () {
+            $("#importFile").click();
+        });
+
+        $("#importFile").change(function (event) {
+            var file = event.target.files[0];
+            if (!file) {
+                alert("Please select a file.");
+                return;
+            }
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var data = new Uint8Array(e.target.result);
+                var workbook = XLSX.read(data, { type: "array" });
+
+                var sheetName = workbook.SheetNames[0]; // First Sheet
+                var sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 });
+
+                $("#importedData").empty(); // Purani Data Clear
+
+                sheetData.forEach(function (row, index) {
+                    if (index > 0) { // Skip Header Row
+                        var phoneNumber = row[0] ? row[0].toString().trim() : ""; // 1st Column -> Phone Number
+                        if (phoneNumber) {
+                            $("#importedData").append(`
+                                <div class="input-group mb-2">
+                                    <input type="text" class="form-control phone-number" value="${phoneNumber}" readonly />
+                                        <input type="text" class="form-control voucher-code" name="EcomVoucherViewModel.PhoneNumbers[${index - 1}].VoucherCode" placeholder="Enter Voucher Code" readonly />
+                                        <input type="hidden" name="EcomVoucherViewModel.PhoneNumbers[${index - 1}].PhoneNumber" value="${phoneNumber}" />
+                                </div>
+                            `);
+                        }
+                    }
+                });
+            };
+            reader.readAsArrayBuffer(file);
+        });
+    });
+
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+    function toggleFields() {
+        var selectedValue = $("#voucherType").val();
+
+        if (selectedValue === "1") { // Generic Voucher
+            $("#countField").show();
+            $("#voucherCount").attr("required", true);
+            $("#brandCategoryFields").hide();
+            $("#brandDropdown, #categoryDropdown").removeAttr("required");
+            $("#brandError, #categoryError").text(""); // Clear errors
+                $("#Phone").hide();
+                $("#import").hide();
+                $("#code").show();
+
+        }
+        else if (selectedValue === "2") { // Brand-Specific Voucher
+            $("#countField").hide();
+            $("#voucherCount").removeAttr("required");
+            $("#brandCategoryFields").show();
+            $("#brandDropdown, #categoryDropdown").attr("required", true);
+                $("#Phone").hide();
+                $("#import").hide();
+                $("#code").show();
+
+
+        }
+        else { // Hide all fields if not Generic or Brand-Specific
+            $("#countField, #brandCategoryFields").hide();
+            $("#voucherCount, #brandDropdown, #categoryDropdown").removeAttr("required");
+            $("#brandError, #categoryError").text("");
+                $("#Phone").show();
+                $("#import").show();
+                $("#code").hide();
+
+
+        }
+    }
+
+        function toggleValueTypeFields() {
+           
+            var selectedValue = $("#valueType").val();
+
+         
+            if (selectedValue === "1") { // fix type
+                $("#fix").show();
+           
+                $("#prec").hide();
+
+            }
+            else if (selectedValue === "2") { // prec type
+                $("#prec").show();
+                $("#fix").hide();
+              
+            }
+            else { 
+                $("#prec").hide(); 
+                $("#fix").hide();
+
+
+            }
+        }
+
+    // Run on page load
+    toggleFields();
+        toggleValueTypeFields();
+
+    // On dropdown change
+    $("#voucherType").change(function () {
+        toggleFields();
+    }); 
+    $("#valueType").change(function () {
+            toggleValueTypeFields();
+    });
+
+    // Form submission validation
+    $("form").submit(function (e) {
+        var selectedValue = $("#voucherType").val();
+        var isValid = true;
+
+        // Reset previous error messagesphon
+        $("#brandError, #categoryError, #countError").text("");
+
+        if (selectedValue === "3" && $("#voucherCount").val().trim() === "") {
+            $("#countError").text("Count is required for Generic Voucher.");
+            isValid = false;
+        }
+        else if (selectedValue === "2") {
+            if (!$("#brandDropdown").val()) {
+                $("#brandError").text("Brand is required.");
+                isValid = false;
+            }
+            if (!$("#categoryDropdown").val()) {
+                $("#categoryError").text("Category is required.");
+                isValid = false;
+            }
+        }
+
+        if (!isValid) {
+            e.preventDefault(); // Stop form submission
+        }
+    });
+});
+   
+    $(document).ready(function () {
+        $(document).on('change', 'input[name="EcomVoucherViewModel.StartDate"]', function () {
+            
+            var startDateVal = new Date($(this).val());
+            var voucherTypeId = $('#voucherType').val();
+            let formattedStartDate = new Date(startDateVal).toISOString().slice(0, 16);
+
+            if (startDateVal && voucherTypeId) {
+                $.ajax({
+                    url: './Manage?handler=VoucherDuration',
+                     type: 'GET',
+                    data: {
+                        voucherTypeId: voucherTypeId,
+                        startDate: formattedStartDate
+                    },
+                    success: function (endate) {
+                      
+                        $('input[name="EcomVoucherViewModel.EndDate"]').val(endate);
+                        
+                    }
+                });
+            }
+        });
+    });
+
+</script>

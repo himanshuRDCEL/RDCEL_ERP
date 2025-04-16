@@ -7,13 +7,14 @@ namespace RDCELERP.DAL.Entities
     {
         public TblOrderTran()
         {
+            TblCoupons = new HashSet<TblCoupon>();
+            TblCustomerDetails = new HashSet<TblCustomerDetail>();
             TblCustomerFiles = new HashSet<TblCustomerFile>();
             TblEvcdisputes = new HashSet<TblEvcdispute>();
             TblEvcpoddetails = new HashSet<TblEvcpoddetail>();
             TblEvcwalletHistories = new HashSet<TblEvcwalletHistory>();
             TblExchangeAbbstatusHistories = new HashSet<TblExchangeAbbstatusHistory>();
             TblLogistics = new HashSet<TblLogistic>();
-            TblNpssqresponses = new HashSet<TblNpssqresponse>();
             TblOrderLgcs = new HashSet<TblOrderLgc>();
             TblOrderQcratings = new HashSet<TblOrderQcrating>();
             TblOrderQcs = new HashSet<TblOrderQc>();
@@ -44,6 +45,9 @@ namespace RDCELERP.DAL.Entities
         public int? SelfQclinkResendby { get; set; }
         public int? AssignBy { get; set; }
         public int? AssignTo { get; set; }
+        public decimal? UnInstallationPrice { get; set; }
+        public bool? IsUnInstallationPricePaid { get; set; }
+        public string? PdverificatonCode { get; set; }
 
         public virtual TblAbbredemption? Abbredemption { get; set; }
         public virtual TblUser? AssignByNavigation { get; set; }
@@ -54,13 +58,14 @@ namespace RDCELERP.DAL.Entities
         public virtual TblLoV? OrderTypeNavigation { get; set; }
         public virtual TblUser? SelfQclinkResendbyNavigation { get; set; }
         public virtual TblExchangeOrderStatus? Status { get; set; }
+        public virtual ICollection<TblCoupon> TblCoupons { get; set; }
+        public virtual ICollection<TblCustomerDetail> TblCustomerDetails { get; set; }
         public virtual ICollection<TblCustomerFile> TblCustomerFiles { get; set; }
         public virtual ICollection<TblEvcdispute> TblEvcdisputes { get; set; }
         public virtual ICollection<TblEvcpoddetail> TblEvcpoddetails { get; set; }
         public virtual ICollection<TblEvcwalletHistory> TblEvcwalletHistories { get; set; }
         public virtual ICollection<TblExchangeAbbstatusHistory> TblExchangeAbbstatusHistories { get; set; }
         public virtual ICollection<TblLogistic> TblLogistics { get; set; }
-        public virtual ICollection<TblNpssqresponse> TblNpssqresponses { get; set; }
         public virtual ICollection<TblOrderLgc> TblOrderLgcs { get; set; }
         public virtual ICollection<TblOrderQcrating> TblOrderQcratings { get; set; }
         public virtual ICollection<TblOrderQc> TblOrderQcs { get; set; }

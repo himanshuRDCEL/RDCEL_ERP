@@ -129,6 +129,7 @@
                                     <input type="hidden" asp-for="PODVM.ProductCatName" value="@Model.lGCOrderViewModel?.ProductCategory" />
                                     <input type="hidden" asp-for="PODVM.CustName" value="@Model.lGCOrderViewModel?.CustomerName" />
                                     <input type="hidden" asp-for="PODVM.CustPincode" value="@Model.lGCOrderViewModel?.TblCustomerDetail.ZipCode" />
+                                    <input type="hidden" asp-for="PODVM.ServicePartnerName" value="@Model.tblServicePartner.ServicePartnerName" />
 
                                     <div id="mainDropLoadDiv">
                                         <h4 style="text-align: center;">LGC Drop</h4>
@@ -293,7 +294,13 @@
                         alert("OTP is not correct. Please enter correct OTP");
                     }
                 }
+                                           
+
             });
+
+
+
+            
         }
     });
 
@@ -319,6 +326,10 @@
                 }
             },
         });
+
+
+        $("#lgcDropForm").submit();
+
     }
 
     function validateImages() {
@@ -399,6 +410,8 @@
         var userId="@Model.tblServicePartner.UserId";
         var DriverDetailsId = "@Model.lGCOrderViewModel.DriverId";
         var EvcPartnerId = "@Model.lGCOrderViewModel.EvcpartnerId";
+        var ServicePartnerName = "@Model.tblServicePartner.ServicePartnerName";
+       
 
         var startDate = $('#startdate').val();
         var endDate = $('#enddate').val();

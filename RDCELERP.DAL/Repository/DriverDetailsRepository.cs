@@ -26,10 +26,10 @@ namespace RDCELERP.DAL.Repository
             if (driverDetailsId > 0)
             {
                 tblDriverDetail = _context.TblDriverDetails
-                    .Include(x=>x.Driver).ThenInclude(x=>x.City)
-                    .Include(x => x.Driver).ThenInclude(x => x.ServicePartner)
-                    .Include(x=>x.Vehicle).ThenInclude(x => x.City)
-                    .Include(x=>x.Driver)
+                    //.Include(x=>x.Driver).ThenInclude(x=>x.City)
+                   // .Include(x => x.Driver).ThenInclude(x => x.ServicePartner)
+                   // .Include(x=>x.Vehicle).ThenInclude(x => x.City)
+                    //.Include(x=>x.Driver)
                     .Where(x => x.IsActive == true && x.DriverDetailsId == driverDetailsId).FirstOrDefault();
             }
             return tblDriverDetail;

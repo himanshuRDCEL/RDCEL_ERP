@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon" href="~/Images/favicon.png" sizes="32x32" />
+    <link rel="icon" href="~/Images/favicon.png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="~/Images/favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="~/NewLayout/vendor/jquery-ui/jquery-ui.css">
+
+    <link type="text/css" href="~/NewLayout/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+    <link type="text/css" href="~/NewLayout/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link type="text/css" href="~/NewLayout/css/style.css" rel="stylesheet">
+
+    <link href="~/newlayout/css/v2.0.css" rel="stylesheet" />
+
+    <script src="~/NewLayout/vendor/jquery/jquery-3.6.1.min.js"></script>
+    <script src="~/NewLayout/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/NewLayout/vendor/@@popperjs/core/dist/umd/popper.min.js"></script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    @* <script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>*@
+
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        /* Default state: Plus icon */
+        .link-arrow::before {
+            content: "+";
+            font-size: 1.25rem;
+            display: inline-block;
+            transition: transform 0.2s ease, content 0.2s ease;
+        }
+
+        /* Expanded state: Minus icon */
+        .link-arrow[aria-expanded="true"]::before {
+            content: "-";
+        }
+
+        .link-arrow {
+            font-size: 1.25rem;
+        }
+
+        .bx-chevron-right:before {
+            content: ">";
+        }
+
+        .toggle {
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            transform: translateY(-50%) rotate(180deg);
+            height: 25px;
+            width: 25px;
+            background-color: red;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            transition: var(--tran-05);
+        }
+
+        .sidebarMenu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            /* padding: 10px 14px; */
+            background: var(--sidebar-color);
+            transition: var(--tran-05);
+            z-index: 100;
+        }
+
+        .sidebar-inner {
+            height: calc(100% - 55px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: scroll;
+        }
+
+        .superadmin {
+            background: #fff;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+            padding: 5px;
+            height: 41px;
+        }
+    </style>
+</head>
+@{
+    RDCELERP.Model.Users.LoginViewModel loginVM = (RDCELERP.Model.Users.LoginViewModel)ViewBag.LoginUser;
+    List<RDCELERP.Model.Role.RoleAccessViewModel> roleAccessList = (List<RDCELERP.Model.Role.RoleAccessViewModel>)ViewBag.RoleAccessList;
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int i = 0;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+
+   
+}
+
+@*Do not Change its position*@
+
+@*Do not Change its position*@
+<body>
+
+    <div id="loader">
+        <div class="loaderwrap">
+            <img src="~/images/digi2l-gif.gif" />
+            <p>Please Wait ...</p>
+        </div>
+    </div>
+
+
+    <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
+      
+            <a class="navbar-brand me-lg-5">
+                <img src="~/images/erp-2-01.png" />
+            </a>
+        
+        <div class="d-flex align-items-center">
+            <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </button>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-top navbar-expand navbar-dashboard navbar-dark ps-0  pb-0">
+        <div class="container-fluid px-0">
+            <div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
+                <div class="d-flex align-items-center searchwrapper">
+                    <div class="d-flex">
+                        <img src="~/images/Rocking Deals Logo 2-01.png" style="max-width:223px; margin-left:50px;" />
+                      
+                    </div>
+
+                </div>
+
+                <!-- Navbar links -->
+                <div style="text-align:center">
+                    @Html.Partial("_MessagePartial")
+                </div>
+                <ul class="navbar-nav align-items-center profilewrapperbox">
+                    <li class="nav-item dropdown ms-lg-3">
+                        <a class="nav-link dropdown-toggle pt-1 px-0" asp-page="/Profile/Details" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          
+                        </a>
+                      
+                        <div class="logoutwrapper">
+                            <a asp-page="/Logout" id="logoutbtnwrap1" class="logoutbtn">
+
+                                <i data-feather="log-out" style="color: #f05a29"></i>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="content">
+
+
+        <nav id="sidebarMenu" class="sidebar d-lg-block text-white collapse" data-simplebar>
+            <div class="logowrapbox">
+                <div class=" d-flex justify-content-center align-items-center">
+                   
+                    <a class="nav-link dropdown-toggle pt-1 px-0 show" role="button" data-bs-toggle="dropdown" aria-expanded="true" href="/Profile/Details">
+                        <div class="media d-flex align-items-flex-start ">
+                            <div class="superadmin">
+                                <img class="avatar " alt="Image placeholder" src="~/DBFiles/Users/@loginVM.BusinessCustomerViewModel.ImageName">
+                            </div>
+                            <div class="media-body ms-2 text-dark align-items-center d-lg-block" style="text-align:left;">
+                                <span style="font-size:16px; text-align:left; " class="mb-0 font-small fw-bold sidebar-text text-gray-900"><span style="font-size:18px;">@loginVM.BusinessCustomerViewModel.FirstName</span> </br><span style="margin-left:4px;">@loginVM.BusinessCustomerViewModel.LastName</span></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <i class="bx bx-chevron-right toggle" id="collapsebtn"></i>
+            </div>
+            <div class="sidebar-inner">
+
+                <div class="collapse-close d-md-none">
+                    <a href="#sidebarMenu" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="true" aria-label="Toggle navigation" class="">
+                        <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                </div>
+               
+                    <div class="multi-level collapse show" role="list" id="submenu-components_6" aria-expanded="false" style="">
+                        <ul class="flex-column nav newcollapsemenu">
+                        <li class="nav-item">
+                            <a href="@URLPrefixforProd/BusinessCustomerDashboard/Dashboard" class="nav-link">
+                                <span class="sidebar-text">Dashboard</span>
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                            <a href="@URLPrefixforProd/BusinessCustomer/Itemlist" class="nav-link">
+                                    <span class="sidebar-text">All Items</span>
+                                </a>
+                            </li>
+                        <li class="nav-item">
+                            <a href="@URLPrefixforProd/BusinessCustomer/Itemlist" class="nav-link">
+                                <span class="sidebar-text">Hot Deals</span>
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                            <a href="@URLPrefixforProd/BusinessCustomer/BookingList" class="nav-link">
+                                    <span class="sidebar-text">Order</span>
+                                </a>
+                            </li>
+                        <li class="nav-item">
+                            <a href="@URLPrefixforProd/BusinessCustomer/BookingList" class="nav-link">
+                                <span class="sidebar-text">Payment History</span>
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                            <a href="@URLPrefixforProd/Users/SendEmailtoUser" class="nav-link">
+                                    <span class="sidebar-text">Send Email to Users</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul>
+                        </ul>
+                    </div>
+              
+            </div>
+
+        </nav>
+
+        <div class="py-3">
+        </div>
+        @RenderBody()
+        @*//sidebar
+        //body*@
+
+        <footer class="bg-white  shadow p-4 m-0" id="">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-4 col-xl-6 mb-md-0">
+                    <p class="mb-0 text-center text-center">
+                        ©
+                        <script>document.write(new Date().getFullYear())</script> &nbsp; Powered by RockingDeals
+                    </p>
+                </div>
+            </div>
+
+        </footer>
+
+
+    </main>
+
+
+    <script src="~/NewLayout/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="~/NewLayout/assets/js/custom.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        feather.replace();
+    </script>
+    <script>
+        document.querySelectorAll('.nav-link[data-bs-toggle="collapse"]').forEach(link => {
+            link.addEventListener('click', function () {
+                const arrow = this.querySelector('.link-arrow');
+                const isExpanded = arrow.getAttribute('aria-expanded') === 'true';
+                arrow.setAttribute('aria-expanded', !isExpanded); // Toggle aria-expanded
+            });
+        });
+
+    </script>
+</body>
+
+</html>
+
+
+

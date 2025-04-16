@@ -65,8 +65,8 @@ namespace RDCELERP.BAL.MasterManager
                         TblPriceMasterMapping.PriceMasterNameId = PriceMasterMappingVM.PriceMasterNameId;
                         DateTime startDate = Convert.ToDateTime(PriceMasterMappingVM.StartDate);
                         DateTime endDate = Convert.ToDateTime(PriceMasterMappingVM.EndDate);
-                        TblPriceMasterMapping.Startdate = startDate;
-                        TblPriceMasterMapping.Enddate = endDate;
+                        TblPriceMasterMapping.StartDate = startDate;
+                        TblPriceMasterMapping.EndDate = endDate;
                         TblPriceMasterMapping.ModifiedBy = userId;
                         TblPriceMasterMapping.ModifiedDate = _currentDatetime;
                         TblPriceMasterMapping.CreatedBy = PriceMasterMappingVM.CreatedBy;
@@ -86,8 +86,8 @@ namespace RDCELERP.BAL.MasterManager
                         TblPriceMasterMapping.PriceMasterNameId = PriceMasterMappingVM.PriceMasterNameId;
                         DateTime startDate = Convert.ToDateTime(PriceMasterMappingVM.StartDate);
                         DateTime endDate = Convert.ToDateTime(PriceMasterMappingVM.EndDate);
-                        TblPriceMasterMapping.Startdate = startDate;
-                        TblPriceMasterMapping.Enddate = endDate;
+                        TblPriceMasterMapping.StartDate = startDate;
+                        TblPriceMasterMapping.EndDate = endDate;
                         TblPriceMasterMapping.IsActive = true;
                         TblPriceMasterMapping.CreatedDate = _currentDatetime;
                         TblPriceMasterMapping.CreatedBy = userId;

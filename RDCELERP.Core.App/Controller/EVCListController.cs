@@ -14,7 +14,7 @@ using RDCELERP.BAL.Interface;
 using RDCELERP.Common.Constant;
 using RDCELERP.Common.Enums;
 using RDCELERP.Common.Helper;
-using RDCELERP.Core.App.Pages.EVC;
+using RDCELERP.Core.App.Pages.Warehouse;
 using RDCELERP.DAL.Entities;
 using RDCELERP.DAL.IRepository;
 using RDCELERP.DAL.Repository;
@@ -838,16 +838,16 @@ namespace RDCELERP.Core.App.Controller
                 }
                 #endregion
                 IQueryable<TblWalletTransaction> query = _context.TblWalletTransactions
-                    .Include(x => x.Evcregistration)
-                    .Include(x => x.Evcpartner)
-                    .Include(x => x.OrderTrans).ThenInclude(x => x.Exchange).ThenInclude(x => x.ProductType).ThenInclude(x => x.ProductCat)
-                    .Include(x => x.OrderTrans).ThenInclude(x => x.Exchange).ThenInclude(x => x.CustomerDetails)
-                    .Include(x => x.OrderTrans).ThenInclude(x => x.Abbredemption).ThenInclude(x => x.Abbregistration).ThenInclude(x => x.NewProductCategory)
-                    .Include(x => x.OrderTrans).ThenInclude(x => x.Abbredemption).ThenInclude(x => x.Abbregistration).ThenInclude(x => x.NewProductCategoryTypeNavigation)
-                    .Include(x => x.OrderTrans).ThenInclude(x => x.Abbredemption).ThenInclude(x => x.CustomerDetails)
-                    .Include(x => x.OrderTrans).ThenInclude(x => x.Abbredemption).ThenInclude(x => x.Abbregistration).ThenInclude(x => x.BusinessUnit)
+                    //.Include(x => x.Evcregistration)
+                    //.Include(x => x.Evcpartner)
+                    //.Include(x => x.OrderTrans).ThenInclude(x => x.Exchange).ThenInclude(x => x.ProductType).ThenInclude(x => x.ProductCat)
+                    //.Include(x => x.OrderTrans).ThenInclude(x => x.Exchange).ThenInclude(x => x.CustomerDetails)
+                    //.Include(x => x.OrderTrans).ThenInclude(x => x.Abbredemption).ThenInclude(x => x.Abbregistration).ThenInclude(x => x.NewProductCategory)
+                    //.Include(x => x.OrderTrans).ThenInclude(x => x.Abbredemption).ThenInclude(x => x.Abbregistration).ThenInclude(x => x.NewProductCategoryTypeNavigation)
+                    //.Include(x => x.OrderTrans).ThenInclude(x => x.Abbredemption).ThenInclude(x => x.CustomerDetails)
+                    //.Include(x => x.OrderTrans).ThenInclude(x => x.Abbredemption).ThenInclude(x => x.Abbregistration).ThenInclude(x => x.BusinessUnit)
                     .Where(x => x.IsActive == true
-                    && x.OrderTrans.StatusId == Convert.ToInt32(OrderStatusEnum.EVCAllocationcompleted) && x.ModifiedDate != null && x.OrderofAssignDate != null);
+                    /*&& x.OrderTrans.StatusId == Convert.ToInt32(OrderStatusEnum.EVCAllocationcompleted) && x.ModifiedDate != null && x.OrderofAssignDate != null*/);
 
                 if (orderStartDate != null && orderEndDate != null)
                 {
@@ -1755,7 +1755,7 @@ namespace RDCELERP.Core.App.Controller
                 foreach (EVCUser_AllOrderRecordViewModel item in EVCUser_AllOrderRecordViewModels)
                 {
                     actionURL = " <td class='actions'>";
-                    actionURL = actionURL + "<a href='" + URL + "/EVC_Portal/OrderdetailsViewPageForEVC_PortAL?OrderTransId=" + (item.orderTransId) + "' ><button onclick='View(" + item.orderTransId + ")' class='btn btn-primary btn'>View</button></a>";
+                    actionURL = actionURL + "<a href='" + URL + "/Warehouse_Portal/OrderdetailsViewPageForWarehouse_PortAL?OrderTransId=" + (item.orderTransId) + "' ><button onclick='View(" + item.orderTransId + ")' class='btn btn-primary btn'>View</button></a>";
                     // actionURL = actionURL + " <li><a class='mx-1 fas fa-edit' href='" + URL + "/EVC_Portal/OrderdetailsViewPageForEVC_PortAL?OrderTransId=" + (item.orderTransId) + " class='btn btn-primary btn' title='Edit' ></a></li>";
                     actionURL = actionURL + " </td>";
                     item.Action = actionURL;

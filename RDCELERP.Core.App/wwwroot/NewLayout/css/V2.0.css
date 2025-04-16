@@ -295,7 +295,7 @@ main.content .card {
 .sidebar .nav-item .nav-link:hover, .sidebar .nav-item .nav-link.active {
 /*    border-left: 4px solid #333;*/
     transition: 0;
-    padding: 0.55rem 1.1rem !important;
+    padding: 0.55rem 1.1rem;
 }
 
 .sidebar .nav-item .multi-level .nav-item .nav-link:hover  {
@@ -303,7 +303,7 @@ main.content .card {
 }
 
 .sidebar .multi-level .nav-link:hover {
-    padding: 10px 10px 10px 30px !important;
+    padding: 10px 10px 10px 30px;
 }
 
 #filterboxbtnright {
@@ -452,18 +452,19 @@ label {
     box-shadow: 2px 0 6px rgba(0,0,0,0.45);
 }
 .collapse-close a {
-    color: #fff !important;
-    background: #3a23b5;
+    color: #000 !important;
+    /* background: #3a23b5; */
     padding: 6px;
-    width: 47px;
-    height: 47px;
+    width: 37px;
+    height: 37px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.35);
+    /* box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35); */
     position: fixed;
     top: 0;
     right: 0;
+    left: 44%;
 }
 
 .loginWrapper {

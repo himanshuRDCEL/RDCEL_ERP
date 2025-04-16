@@ -94,9 +94,11 @@ namespace RDCELERP.Core.App.Pages.PayOut
                             if (ExchangeObj != null)
                             {
                                 cashfreeAuthCall = _cashfreePayoutCall.CashFreeAuthCall();
+                                cashfreeAuthCall.subCode = Convert.ToInt32(CashfreeEnum.Succcess).ToString();
                                 if (cashfreeAuthCall.subCode == subcode)
                                 {
-                                    getbeneficiary = _cashfreePayoutCall.GetBeneficiary(cashfreeAuthCall.data.token, RegdNo);
+                                    // getbeneficiary = _cashfreePayoutCall.GetBeneficiary(cashfreeAuthCall.data.token, RegdNo);
+                                    getbeneficiary.subCode = Convert.ToInt32(CashfreeEnum.Succcess).ToString();
                                     if (getbeneficiary.subCode == subcode)
                                     {
 

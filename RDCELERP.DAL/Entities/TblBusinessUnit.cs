@@ -18,6 +18,7 @@ namespace RDCELERP.DAL.Entities
             TblBuproductCategoryMappings = new HashSet<TblBuproductCategoryMapping>();
             TblBusinessPartners = new HashSet<TblBusinessPartner>();
             TblCompanies = new HashSet<TblCompany>();
+            TblCouponMasters = new HashSet<TblCouponMaster>();
             TblExchangeOrders = new HashSet<TblExchangeOrder>();
             TblModelMappings = new HashSet<TblModelMapping>();
             TblModelNumbers = new HashSet<TblModelNumber>();
@@ -66,6 +67,7 @@ namespace RDCELERP.DAL.Entities
         public bool? IsBumultiBrand { get; set; }
         public bool? IsBud2c { get; set; }
         public bool? ShowAbbPlan { get; set; }
+        public bool? IsQualityWorkingNonWorking { get; set; }
         public bool? IsInvoiceDetailsRequired { get; set; }
         public bool? IsNewProductDetailsRequired { get; set; }
         public int? Gsttype { get; set; }
@@ -78,7 +80,6 @@ namespace RDCELERP.DAL.Entities
         public bool? IsAreaLocality { get; set; }
         public bool? IsValidationBasedSweetner { get; set; }
         public bool? IsQualityRequiredOnUi { get; set; }
-        public bool? IsQualityWorkingNonWorking { get; set; }
         public bool? IsStandardPriceMaster { get; set; }
         public bool? ShowEmplyeeCode { get; set; }
         public bool? IsQcdateTimeRequiredOnD2c { get; set; }
@@ -110,6 +111,7 @@ namespace RDCELERP.DAL.Entities
         public virtual ICollection<TblBuproductCategoryMapping> TblBuproductCategoryMappings { get; set; }
         public virtual ICollection<TblBusinessPartner> TblBusinessPartners { get; set; }
         public virtual ICollection<TblCompany> TblCompanies { get; set; }
+        public virtual ICollection<TblCouponMaster> TblCouponMasters { get; set; }
         public virtual ICollection<TblExchangeOrder> TblExchangeOrders { get; set; }
         public virtual ICollection<TblModelMapping> TblModelMappings { get; set; }
         public virtual ICollection<TblModelNumber> TblModelNumbers { get; set; }
