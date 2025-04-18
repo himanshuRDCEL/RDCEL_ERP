@@ -30,6 +30,25 @@
         width: 50%;
     }
 
+    .newtabledata{
+        border: 1px solid #dddddd;
+        text-align: left;
+      
+    }
+
+        .newtabledata tr, td, th{
+            padding: 8px;
+        }
+
+    .exportbutton{
+        background: #0c0c0c;
+        opacity: 1;
+        border-radius: 9px;
+        color: #fff;
+        padding: 5px 25px;
+        font-size: 18px;
+    }
+
 
 </style>
 <div class="row">
@@ -81,12 +100,12 @@
                                         <input asp-for="EcomVoucherViewModel.VoucherCode" class="form-control" placeholder="Code" readonly="readonly"/>
                                         <span asp-validation-for="EcomVoucherViewModel.VoucherCode" class="text-danger"></span>
                                     </div>
-                                    <div id="countField">
+                                    <div id="countField"  class="col-md-4 mb-3">
 
-                                        <div class="col-md-4 mb-3">
+                                        <div>
                                             <label for="">Count<span style="color:red;">*</span></label>
-                                            <input asp-for="EcomVoucherViewModel.VoucherCount" class="form-control" placeholder="Count" />
-                                            <span asp-validation-for="EcomVoucherViewModel.VoucherCount" class="text-danger"></span>
+                                            <input asp-for="EcomVoucherViewModel.VoucherCount" class="form-control" placeholder="Count"/>
+                                            <span id="countError" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <div id="brandCategoryFields" class="row" style="display: none;">
@@ -105,16 +124,25 @@
 
                                     </div>
 
-                                    <div class="col-md-4 mb-3">
+                                  <div class="col-md-4 mb-3">
                                         <label>Category<span style="color:red;">*</span></label>
                                         <select id="categoryDropdown" class="form-control" asp-for="EcomVoucherViewModel.SelectedCategoryIds" multiple>
                                             <option value="">Select Category</option>
                                         </select>
                                             <span id="categoryError" class="text-danger"></span>
 
+                                    </div> 
+                                     
                                     </div>
-                                    </div>
+                                            <div class="col-md-4 mb-3" id="import" style= "display:none;margin-top:29px;">
+                                <button type = "button"id="importPhoneNoBtn" type="button"> Import Phone No.</button>
 
+                                <input type="file" id="importFile" accept=".csv, .xlsx" style="display: none;" />
+
+                                <div id="importedData"></div> <!-- Yaha Imported Data Show Hoga -->
+                                </div>
+                                 
+                                  
                                 </div>
                                 <div id="phone" style="display:none;">
                                 <div class="col-md-4 mb-3">
@@ -123,13 +151,7 @@
                                     <span asp-validation-for="EcomVoucherViewModel.Phoneno" class="text-danger"></span>
                                 </div>
                                 </div>
-                                <div class="col-md-4 mb-3" id="import" style="display:none;">
-                                <button type = "button"id="importPhoneNoBtn" type="button"> Import Phone No.</button>
-
-                                <input type="file" id="importFile" accept=".csv, .xlsx" style="display: none;" />
-
-                                <div id="importedData"></div> <!-- Yaha Imported Data Show Hoga -->
-                                </div>
+                        
                                 <div class="col-md-4 mb-3">
                                     <label for="">Start Date <span style="color:red;">*</span></label>
                                     <input asp-for="EcomVoucherViewModel.StartDate" class="form-control" placeholder="Last Name" />
@@ -140,7 +162,8 @@
                                     <input asp-for="EcomVoucherViewModel.EndDate" class="form-control" placeholder="End Date" />
                                     <span asp-validation-for="EcomVoucherViewModel.EndDate" class="text-danger"></span>
                                 </div>
-                                <div class="col-md-4 mb-3">
+                               
+                                <div class="col-md-4 mb-3" id="voucherstatus">
                                     <label for="">Voucher Status</label>
                                     <input asp-for="EcomVoucherViewModel.VoucherStatus"  class="form-control" placeholder="Voucher Status" readonly />
                                     <span asp-validation-for="EcomVoucherViewModel.VoucherStatus" class="text-danger"></span>
@@ -165,7 +188,7 @@
                                         <span asp-validation-for="EcomVoucherViewModel.FixedValue" class="text-danger"></span>
                                 </div>
                                 </div>
-                                <div id="perc">
+                                <div id="perc" class="row" style="display:none;">
                                     <div class="col-md-4 mb-3">
                                         <label for="">Percentage</label>
                                         <input asp-for="EcomVoucherViewModel.Percentage" class="form-control" placeholder="Percentage" />
@@ -177,7 +200,40 @@
                                         <span asp-validation-for="EcomVoucherViewModel.PercLimit" class="text-danger"></span>
                                     </div>
                                 </div>
+                                <div class="col-md-4" style="sisplay:none margin-top:29px;" id="exportbuttonDiv">
+                                    <button id="exportToExcel" type="button" class="exportbutton" type="button">Export</button>
 
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    @if (Model.EcomVoucherViewModel.EcomPhoneSpecificsListVM != null && Model.EcomVoucherViewModel.EcomPhoneSpecificsListVM.Count > 0)
+                                    {
+                                        <table id="voucherTable" class="newtabledata  table align-items-center dataTable ">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>Phoneno</th>
+                                                    <th>VoucherCode</th>
+                                                    <th>Voucherstatus</th>
+                                                </tr>
+                                            </thead>
+                                             @foreach(var item in Model.EcomVoucherViewModel.EcomPhoneSpecificsListVM)
+                                        { 
+                                           
+                                            <tbody >
+                                            <tr>
+                                                <td> @item.Phoneno</td>
+                                                <td> @item.VoucherCode</td>
+                                                <td> @item.Voucherstatus</td>
+                                            </tr>
+                                           
+                                            </tbody>
+
+                                             } 
+
+                                        </table>
+                                    }
+
+                                </div>
 
                             </div>
                             <div class="row">
@@ -189,6 +245,7 @@
                                 </div>
 
                             </div>
+                               
                         </form>
                     </div>
                 </div>
@@ -200,7 +257,6 @@
 
 <script>
     $(document).ready(function () {
-
 
 
         $("#importPhoneNoBtn").click(function () {
@@ -231,8 +287,8 @@
                             $("#importedData").append(`
                                 <div class="input-group mb-2">
                                     <input type="text" class="form-control phone-number" value="${phoneNumber}" readonly />
-                                        <input type="text" class="form-control voucher-code" name="EcomVoucherViewModel.PhoneNumbers[${index - 1}].VoucherCode" placeholder="Enter Voucher Code" readonly />
-                                        <input type="hidden" name="EcomVoucherViewModel.PhoneNumbers[${index - 1}].PhoneNumber" value="${phoneNumber}" />
+                                                <input type="text" class="form-control voucher-code" name="EcomVoucherViewModel.EcomPhoneSpecificsListVM[${index - 1}].VoucherCode" placeholder="Enter Voucher Code" readonly />
+                                                <input type="hidden" name="EcomVoucherViewModel.EcomPhoneSpecificsListVM[${index - 1}].Phoneno" value="${phoneNumber}" />
                                 </div>
                             `);
                         }
@@ -257,8 +313,12 @@ $(document).ready(function () {
             $("#brandDropdown, #categoryDropdown").removeAttr("required");
             $("#brandError, #categoryError").text(""); // Clear errors
                 $("#Phone").hide();
+
                 $("#import").hide();
                 $("#code").show();
+                $("#voucherstatus").show();
+                $("#exportbuttonDiv").hide();
+
 
         }
         else if (selectedValue === "2") { // Brand-Specific Voucher
@@ -269,7 +329,19 @@ $(document).ready(function () {
                 $("#Phone").hide();
                 $("#import").hide();
                 $("#code").show();
+                $("#voucherstatus").show();
+                $("#exportbuttonDiv").hide();
 
+
+
+        }
+        else if (selectedValue === "3") {
+           
+         $("#import").show();
+                $("#exportbuttonDiv").show();
+          $("#voucherstatus").hide();
+                $("#countField").hide();
+                $("#code").hide();
 
         }
         else { // Hide all fields if not Generic or Brand-Specific
@@ -277,31 +349,33 @@ $(document).ready(function () {
             $("#voucherCount, #brandDropdown, #categoryDropdown").removeAttr("required");
             $("#brandError, #categoryError").text("");
                 $("#Phone").show();
-                $("#import").show();
+
+                $("#exportbuttonDiv").hide();
+
                 $("#code").hide();
+               
 
 
         }
     }
 
         function toggleValueTypeFields() {
-           
-            var selectedValue = $("#valueType").val();
-
          
+            var selectedValue = $("#valueType").val();
+          
             if (selectedValue === "1") { // fix type
                 $("#fix").show();
            
-                $("#prec").hide();
+                $("#perc").hide();
 
             }
             else if (selectedValue === "2") { // prec type
-                $("#prec").show();
+                $("#perc").show();
                 $("#fix").hide();
               
             }
             else { 
-                $("#prec").hide(); 
+                $("#perc").hide();
                 $("#fix").hide();
 
 
@@ -311,7 +385,8 @@ $(document).ready(function () {
     // Run on page load
     toggleFields();
         toggleValueTypeFields();
-
+        $("#voucherType").trigger("change");
+        $("#valueType").trigger("change");
     // On dropdown change
     $("#voucherType").change(function () {
         toggleFields();
@@ -319,20 +394,22 @@ $(document).ready(function () {
     $("#valueType").change(function () {
             toggleValueTypeFields();
     });
-
+   
     // Form submission validation
     $("form").submit(function (e) {
-        var selectedValue = $("#voucherType").val();
+        alert("df");
+       var selectedValue = $("#voucherType").val();
         var isValid = true;
-
-        // Reset previous error messagesphon
         $("#brandError, #categoryError, #countError").text("");
 
-        if (selectedValue === "3" && $("#voucherCount").val().trim() === "") {
+       
+        if (selectedValue === "1" && $("#voucherCount").val() === "") {
+                
             $("#countError").text("Count is required for Generic Voucher.");
             isValid = false;
         }
         else if (selectedValue === "2") {
+                      
             if (!$("#brandDropdown").val()) {
                 $("#brandError").text("Brand is required.");
                 isValid = false;
@@ -342,7 +419,9 @@ $(document).ready(function () {
                 isValid = false;
             }
         }
-
+           
+        
+       //  e.preventDefault();
         if (!isValid) {
             e.preventDefault(); // Stop form submission
         }
@@ -372,6 +451,93 @@ $(document).ready(function () {
                 });
             }
         });
+
+
+        $('#brandDropdown').change(function () {
+            var brandId = $(this).val();
+
+            if (brandId) {
+                $.ajax({
+                    url: './Manage?handler=GetCategoriesByBrand',
+                    type: 'GET',
+                    data: { brandId: brandId },
+                    success: function (response) {
+                        // Clear existing categories
+                        $('#categoryDropdown').empty();
+                        $('#categoryDropdown').append('<option value="">--Select Category--</option>');
+
+                        // Populate new categories
+                        $.each(response, function (index, category) {
+                            console.log(category);
+                            $('#categoryDropdown').append('<option value="' + category.value + '">' + category.text + '</option>');
+                        });
+                    },
+                    error: function () {
+                        alert('Failed to retrieve categories.');
+                    }
+                });
+            } else {
+                $('#categoryDropdown').empty();
+                $('#categoryDropdown').append('<option value="">--Select Category--</option>');
+            }
+        });
     });
 
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#exportToExcel').click(function () {
+            var table = document.getElementById('voucherTable');
+            var workbook = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+
+            // Get today's date
+            var today = new Date();
+            var dateStr = today.toISOString().split('T')[0]; // yyyy-mm-dd
+
+            // Generate filename
+            var filename = 'VoucherData_' + dateStr + '.xlsx';
+
+            XLSX.writeFile(workbook, filename);
+        });
+    });
+</script>
+
+<script>
+    const selectBox = document.querySelector('.selectBox');
+    const checkboxes = document.getElementById('checkboxList');
+    const selectAll = document.getElementById('selectAll');
+
+    function toggleCheckboxes() {
+        checkboxes.style.display = checkboxes.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function toggleSelectAll(source) {
+        const inputs = checkboxes.querySelectorAll('input[type="checkbox"]:not(#selectAll)');
+        inputs.forEach(input => input.checked = source.checked);
+        updateDisplay();
+    }
+
+    function updateDisplay() {
+        const selected = [];
+        const inputs = checkboxes.querySelectorAll('input[type="checkbox"]:not(#selectAll)');
+        let allChecked = true;
+
+        inputs.forEach(input => {
+            if (input.checked) selected.push(input.value);
+            else allChecked = false;
+        });
+
+        selectBox.textContent = selected.length > 0 ? selected.join(', ') : 'Select Options';
+        selectAll.checked = allChecked;
+    }
+
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('.multiselect')) {
+            checkboxes.style.display = 'none';
+        }
+    });
+</script>
+
+
+

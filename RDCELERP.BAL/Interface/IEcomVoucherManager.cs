@@ -16,7 +16,7 @@ namespace RDCELERP.BAL.Interface
      /// <param name="EcomVM">EcomVM</param>
      /// <param name="EcomVMId">EcomVMId</param>
      /// <returns>int</returns>
-       public int ManageEcomVoucher(EcomVoucherViewModel EcomVM, int userId, int? companyId);
+       public bool ManageEcomVoucher(EcomVoucherViewModel EcomVM, int userId, int? companyId);
 
 
         /// <summary>

@@ -5,6 +5,11 @@ namespace RDCELERP.DAL.Entities
 {
     public partial class TblEcomVoucher
     {
+        public TblEcomVoucher()
+        {
+            TblEcomPhoneSpecifics = new HashSet<TblEcomPhoneSpecific>();
+        }
+
         public int EcomVoucherId { get; set; }
         public string? VoucherCode { get; set; }
         public string? Phoneno { get; set; }
@@ -31,5 +36,6 @@ namespace RDCELERP.DAL.Entities
         public virtual TblCompany? Company { get; set; }
         public virtual TblUser? CreatedByNavigation { get; set; }
         public virtual TblUser? ModifiedByNavigation { get; set; }
+        public virtual ICollection<TblEcomPhoneSpecific> TblEcomPhoneSpecifics { get; set; }
     }
 }

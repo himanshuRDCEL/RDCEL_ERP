@@ -66,6 +66,8 @@ namespace RDCELERP.DAL.Entities
             TblDriverListCreatedByNavigations = new HashSet<TblDriverList>();
             TblDriverListModifiedByNavigations = new HashSet<TblDriverList>();
             TblDriverListUsers = new HashSet<TblDriverList>();
+            TblEcomPhoneSpecificCreatedByNavigations = new HashSet<TblEcomPhoneSpecific>();
+            TblEcomPhoneSpecificModifiedByNavigations = new HashSet<TblEcomPhoneSpecific>();
             TblEcomVoucherCreatedByNavigations = new HashSet<TblEcomVoucher>();
             TblEcomVoucherModifiedByNavigations = new HashSet<TblEcomVoucher>();
             TblEntityTypeCreatedByNavigations = new HashSet<TblEntityType>();
@@ -248,6 +250,8 @@ namespace RDCELERP.DAL.Entities
         public virtual ICollection<TblDriverList> TblDriverListCreatedByNavigations { get; set; }
         public virtual ICollection<TblDriverList> TblDriverListModifiedByNavigations { get; set; }
         public virtual ICollection<TblDriverList> TblDriverListUsers { get; set; }
+        public virtual ICollection<TblEcomPhoneSpecific> TblEcomPhoneSpecificCreatedByNavigations { get; set; }
+        public virtual ICollection<TblEcomPhoneSpecific> TblEcomPhoneSpecificModifiedByNavigations { get; set; }
         public virtual ICollection<TblEcomVoucher> TblEcomVoucherCreatedByNavigations { get; set; }
         public virtual ICollection<TblEcomVoucher> TblEcomVoucherModifiedByNavigations { get; set; }
         public virtual ICollection<TblEntityType> TblEntityTypeCreatedByNavigations { get; set; }

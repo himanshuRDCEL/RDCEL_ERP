@@ -295,7 +295,7 @@ namespace RDCELERP.BAL.Common
            CreateMap<BusinessCustomerViewModel,TblBusinessCustomer >().ReverseMap();
             CreateMap<TblItem,ItemViewModel>().ReverseMap();
             CreateMap<TblEcomVoucher,EcomVoucherViewModel>().ReverseMap();
-
+            CreateMap<TblEcomPhoneSpecific,EcomPhoneSpecificsViewModel>().ReverseMap();
 
         }
     }

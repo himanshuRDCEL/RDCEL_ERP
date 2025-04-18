@@ -72,6 +72,7 @@ namespace RDCELERP.DAL.Entities
         public virtual DbSet<TblCustomerFile> TblCustomerFiles { get; set; } = null!;
         public virtual DbSet<TblDriverDetail> TblDriverDetails { get; set; } = null!;
         public virtual DbSet<TblDriverList> TblDriverLists { get; set; } = null!;
+        public virtual DbSet<TblEcomPhoneSpecific> TblEcomPhoneSpecifics { get; set; } = null!;
         public virtual DbSet<TblEcomVoucher> TblEcomVouchers { get; set; } = null!;
         public virtual DbSet<TblEntityType> TblEntityTypes { get; set; } = null!;
         public virtual DbSet<TblErrorLog> TblErrorLogs { get; set; } = null!;
@@ -3475,6 +3476,39 @@ namespace RDCELERP.DAL.Entities
                     .WithMany(p => p.TblDriverListUsers)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK__tblDriver__UserI__44160A59");
+            });
+
+            modelBuilder.Entity<TblEcomPhoneSpecific>(entity =>
+            {
+                entity.HasKey(e => e.EcomPhoneSpecificId)
+                    .HasName("PK__tblEcomVphone__2D971CACBEE01668");
+
+                entity.ToTable("tblEcomPhoneSpecific");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Phoneno).HasMaxLength(150);
+
+                entity.Property(e => e.VoucherCode).HasMaxLength(150);
+
+                entity.Property(e => e.Voucherstatus).HasMaxLength(200);
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.TblEcomPhoneSpecificCreatedByNavigations)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("Fk_tblEcomPhoneSpecific_CreatedBy");
+
+                entity.HasOne(d => d.EcomVoucher)
+                    .WithMany(p => p.TblEcomPhoneSpecifics)
+                    .HasForeignKey(d => d.EcomVoucherId)
+                    .HasConstraintName("Fk_tblEcomPhoneSpecific_EcomVoucherId");
+
+                entity.HasOne(d => d.ModifiedByNavigation)
+                    .WithMany(p => p.TblEcomPhoneSpecificModifiedByNavigations)
+                    .HasForeignKey(d => d.ModifiedBy)
+                    .HasConstraintName("Fk_tblEcomPhoneSpecific_ModifiedBy");
             });
 
             modelBuilder.Entity<TblEcomVoucher>(entity =>

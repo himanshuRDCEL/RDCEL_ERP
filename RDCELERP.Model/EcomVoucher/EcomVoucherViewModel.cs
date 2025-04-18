@@ -42,6 +42,9 @@ namespace RDCELERP.Model.EcomVoucher
         public bool? IsUsed { get; set; }
 
         public List<EcomVoucher> PhoneNumbers { get; set; }
+        public List<EcomPhoneSpecificsViewModel> EcomPhoneSpecificsListVM { get; set; }
+
+
 
 
     }

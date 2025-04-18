@@ -21,6 +21,7 @@ namespace RDCELERP.BAL.MasterManager
     public class EcomVoucherManager : IEcomVoucherManager
     {
         IEcomVoucherRepository _ecomVoucherRepository;
+        IEcomPhoneSpecificsRepository   _ecomPhoneSpecificsRepository;
         DateTime _currentDatetime = DateTime.Now.TrimMilliseconds();
         private CustomDataProtection _protector;
         IErrorLogManager _errorLogManager;
@@ -30,7 +31,7 @@ namespace RDCELERP.BAL.MasterManager
         IOptions<ApplicationSettings> _config;
         public EcomVoucherManager(IErrorLogManager errorLogManager,
         IMailManager mailManager,IMapper mapper,ILogging logging,
-        IOptions<ApplicationSettings> config, IEcomVoucherRepository ecomVoucherRepository, CustomDataProtection protector) {
+        IOptions<ApplicationSettings> config, IEcomVoucherRepository ecomVoucherRepository, CustomDataProtection protector,IEcomPhoneSpecificsRepository  ecomPhoneSpecificsRepository) {
             _ecomVoucherRepository = ecomVoucherRepository;
             _protector = protector;
             _errorLogManager = errorLogManager;
@@ -38,6 +39,7 @@ namespace RDCELERP.BAL.MasterManager
             _mapper = mapper;
             _logging = logging;
             _config = config;
+            _ecomPhoneSpecificsRepository = ecomPhoneSpecificsRepository;
         }
 
         /// <summary>
@@ -46,7 +48,7 @@ namespace RDCELERP.BAL.MasterManager
         /// <param name="EcomVM">EcomVM</param>
         /// <param name="EcomVMId">EcomVMId</param>
         /// <returns>int</returns>
-      public  int ManageEcomVoucher(EcomVoucherViewModel EcomVM, int userId, int? companyId)
+      public  bool ManageEcomVoucher(EcomVoucherViewModel EcomVM, int userId, int? companyId)
         {
             TblEcomVoucher TblEcomVoucher = new TblEcomVoucher();
             bool flag = false;
@@ -71,9 +73,9 @@ namespace RDCELERP.BAL.MasterManager
                     }
                     else
                     {
-                        if (EcomVM.PhoneNumbers != null && EcomVM.PhoneNumbers.Any() && EcomVM.EcomVoucherType==Convert.ToInt32(EcomVoucherTypeEnum.PhoneSpecificVoucher))
+                        if (EcomVM.EcomPhoneSpecificsListVM != null && EcomVM.EcomPhoneSpecificsListVM.Any() && EcomVM.EcomVoucherType==Convert.ToInt32(EcomVoucherTypeEnum.PhoneSpecificVoucher))
                         {
-                            ManagePhoneSpecificVoucher(EcomVM,userId,companyId);         
+                            flag= ManagePhoneSpecificVoucher(EcomVM,userId,companyId);         
                     }
 
                         if (EcomVM.VoucherCount != null && EcomVM.VoucherCount > 0 && EcomVM.EcomVoucherType == Convert.ToInt32(EcomVoucherTypeEnum.GenericVoucher))
@@ -95,6 +97,7 @@ namespace RDCELERP.BAL.MasterManager
                         }
                     }
                     _ecomVoucherRepository.SaveChanges();
+                    flag = true;
                 }
             }
             catch (Exception ex)
@@ -102,7 +105,7 @@ namespace RDCELERP.BAL.MasterManager
                 _logging.WriteErrorToDB("EcomVoucherManager", "ManageEcomVoucher", ex);
             }
 
-            return TblEcomVoucher.EcomVoucherId;
+            return flag;
         }
 
         /// <summary>
@@ -124,6 +127,31 @@ namespace RDCELERP.BAL.MasterManager
                 {
                     
                     EcomVM = _mapper.Map<TblEcomVoucher, EcomVoucherViewModel>(TblEcomVoucher);
+
+                    if (EcomVM != null)
+                    {
+                        if (EcomVM.VoucherCode != null)
+                        {
+                            EcomVM.VoucherCode = StringHelper.MaskVoucherCode(EcomVM.VoucherCode);
+
+                        }
+
+                        List<TblEcomPhoneSpecific> tblEcomPhone=_ecomPhoneSpecificsRepository.GetList(x=>x.IsActive == true && x.EcomVoucherId==EcomVM.EcomVoucherId).ToList();
+
+                        if (tblEcomPhone != null && tblEcomPhone.Count>0)
+                        {
+                            EcomVM.EcomPhoneSpecificsListVM = _mapper.Map<List<TblEcomPhoneSpecific>,List<EcomPhoneSpecificsViewModel>>(tblEcomPhone);
+                            foreach(var item in EcomVM.EcomPhoneSpecificsListVM)
+                            {
+                                if (item.Phoneno != null)
+                                {
+                                    item.Phoneno=SecurityHelper.DecryptString(item.Phoneno, _config.Value.SecurityKey);
+                                  //  item.VoucherCode = StringHelper.MaskVoucherCode(item.VoucherCode);
+
+                                }
+                            }
+                        }
+                        }
 
                 }
 
@@ -156,9 +184,10 @@ namespace RDCELERP.BAL.MasterManager
                         Voucherstatus = EcomVoucherStatusEnum.Generated.ToString(),
                         VoucherCode = GenerateVoucher(),
                         CreatedDate = _currentDatetime,
+                        CreatedBy= userId,
                         StartDate = EcomVM.StartDate,
                         EndDate = EcomVM.EndDate,
-                        CompanyId = EcomVM.CompanyId,
+                        CompanyId = companyId,
                         ValueType = EcomVM.ValueType,
                         FixedValue = EcomVM.FixedValue,
                         Percentage = EcomVM.Percentage,
@@ -184,34 +213,57 @@ namespace RDCELERP.BAL.MasterManager
         public bool ManagePhoneSpecificVoucher(EcomVoucherViewModel EcomVM,int? userId, int? companyId)
         {
             bool flag = false;
+            int ecomVoucherId = 0;
             try
             {
-                if (EcomVM != null && EcomVM.PhoneNumbers != null)
+                if (EcomVM != null && EcomVM.EcomPhoneSpecificsListVM != null)
                 {
-                    foreach (var item in EcomVM.PhoneNumbers)
+                    TblEcomVoucher voucher = new TblEcomVoucher
                     {
-                        TblEcomVoucher voucher = new TblEcomVoucher
+
+                        IsActive = true,
+                        Voucherstatus = EcomVoucherStatusEnum.Generated.ToString(),
+                        BrandId = EcomVM.BrandId,
+                        CategoryIds = EcomVM.CategoryIds,
+                        StartDate = EcomVM.StartDate,
+                        EndDate = EcomVM.EndDate,
+                        ValueType = EcomVM.ValueType,
+                        FixedValue = EcomVM.FixedValue,
+                        Percentage = EcomVM.Percentage,
+                        PercLimit = EcomVM.PercLimit,
+                        CreatedDate = _currentDatetime,
+                        CreatedBy = userId,
+                        CompanyId = companyId,
+                        EcomVoucherType = Convert.ToInt32(EcomVoucherTypeEnum.PhoneSpecificVoucher)
+                    };
+                    _ecomVoucherRepository.Create(voucher);
+                    _ecomVoucherRepository.SaveChanges();
+                    ecomVoucherId = voucher.EcomVoucherId;
+
+                }
+
+
+                if (ecomVoucherId > 0)
+                {
+
+                    foreach (var item in EcomVM.EcomPhoneSpecificsListVM)
+                    {
+                        TblEcomPhoneSpecific pHvoucher = new TblEcomPhoneSpecific
                         {
-                            Phoneno = SecurityHelper.EncryptString(item.PhoneNumber, _config.Value.SecurityKey),
-                            IsActive = true,
+                            Phoneno = SecurityHelper.EncryptString(item.Phoneno, _config.Value.SecurityKey),
                             Voucherstatus = EcomVoucherStatusEnum.Generated.ToString(),
                             VoucherCode = GenerateVoucher(),
-                            StartDate =EcomVM.StartDate,
-                            EndDate =EcomVM.EndDate,
-                            ValueType =EcomVM.ValueType,
-                            FixedValue =EcomVM.FixedValue,
-                            Percentage =EcomVM.Percentage,
-                            PercLimit =EcomVM.PercLimit,
+                            EcomVoucherId=ecomVoucherId,
+                            IsActive = true,
                             CreatedDate = _currentDatetime,
                             CreatedBy = userId,
-                            CompanyId = companyId,
-                            EcomVoucherType = Convert.ToInt32(EcomVoucherTypeEnum.PhoneSpecificVoucher)
                         };
-                        _ecomVoucherRepository.Create(voucher);
+                        _ecomPhoneSpecificsRepository.Create(pHvoucher);
                     }
-                    _ecomVoucherRepository.SaveChanges();
-flag=true;
+                    _ecomPhoneSpecificsRepository.SaveChanges();
+                    flag = true;
                 }
+            
             }
             catch (Exception ex)
             {

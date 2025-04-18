@@ -437,6 +437,7 @@ namespace RDCELERP.Core.App
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IEcomVoucherRepository, EcomVoucherRepository>();
             services.AddScoped<IEcomVoucherManager, EcomVoucherManager>();
+            services.AddScoped<IEcomPhoneSpecificsRepository, EcomPhoneSpecificsRepository>();
             #endregion
         }
 

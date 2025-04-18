@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using RDCELERP.BAL.Enum;
+using static ICSharpCode.SharpZipLib.Zip.ExtendedUnixData;
 
 namespace RDCELERP.Core.App.Pages.EcomVoucher
 {
@@ -101,7 +102,7 @@ namespace RDCELERP.Core.App.Pages.EcomVoucher
 
         public IActionResult OnPostAsync(EcomVoucherViewModel EcomVoucherViewModel)
         {
-            int result = 0;
+            bool result = false;
 
             if (EcomVoucherViewModel.SelectedCategoryIds != null && EcomVoucherViewModel.SelectedCategoryIds.Count > 0)
             {
@@ -114,7 +115,7 @@ namespace RDCELERP.Core.App.Pages.EcomVoucher
             }
              result = _ecomVoucherManager.ManageEcomVoucher(EcomVoucherViewModel, _loginSession.UserViewModel.UserId, _loginSession.RoleViewModel.CompanyId);
 
-            if (result > 0)
+            if (result==true)
             {
                 return RedirectToPage("Index");
             }
