@@ -76,13 +76,13 @@ namespace RDCELERP.BAL.MasterManager
                         if (EcomVM.EcomPhoneSpecificsListVM != null && EcomVM.EcomPhoneSpecificsListVM.Any() && EcomVM.EcomVoucherType==Convert.ToInt32(EcomVoucherTypeEnum.PhoneSpecificVoucher))
                         {
                             flag= ManagePhoneSpecificVoucher(EcomVM,userId,companyId);         
-                    }
+                        }
 
-                        if (EcomVM.VoucherCount != null && EcomVM.VoucherCount > 0 && EcomVM.EcomVoucherType == Convert.ToInt32(EcomVoucherTypeEnum.GenericVoucher))
+                      else  if (EcomVM.VoucherCount != null && EcomVM.VoucherCount > 0 && EcomVM.EcomVoucherType == Convert.ToInt32(EcomVoucherTypeEnum.GenericVoucher))
                         {
                             flag = ManageGenericVoucher(EcomVM,userId,companyId);
                         }
-                        else  if (EcomVM.Phoneno != null && EcomVM.EcomVoucherType == Convert.ToInt32(EcomVoucherTypeEnum.BrandSpecificVoucher))
+                        else  if (EcomVM.EcomVoucherType == Convert.ToInt32(EcomVoucherTypeEnum.BrandSpecificVoucher))
                             {
 
                             //Code to Insert the object

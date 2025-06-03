@@ -17,6 +17,7 @@ namespace RDCELERP.DAL.Entities
         public int? BusinessPartnerId { get; set; }
         public bool? IsSweetenerApplicable { get; set; }
         public int? ProductCatId { get; set; }
+        public bool? IsOldProductBaseSweetener { get; set; }
 
         public virtual TblBusinessPartner? BusinessPartner { get; set; }
         public virtual TblBusinessUnit BusinessUnit { get; set; } = null!;

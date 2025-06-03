@@ -14,16 +14,18 @@
 }
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="card-header">
         <div class="row align-items-center">
-            <div class="card-header">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h2 class="fs-5 mb-0 card-title">Warehouse Wallet information</h2>
-                    </div>
-                </div>
-            </div>
             <div class="col">
+                <h2 class="fs-5 mb-0 card-title">Warehouse Wallet information</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+    
+        <div class="row align-items-flex-start" style="background:#fff;">
+        
+            <div class="col-md-2 p-0">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active shadow" id="nav-home-tab1" data-bs-toggle="tab"
@@ -37,9 +39,7 @@
                     </div>
                 </nav>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12 mb-4">
+            <div class="col-md-10 mb-4">
                 <!-- Tab -->
                 <div class="card border-0 shadow noborderradius">
                     <div class="card-body">
@@ -58,7 +58,7 @@
                                                 <th class="all">Wallet Amount</th>
                                                 <th class="all">Clear Balance</th>
                                                 <th class="all">Date</th>
-                                                
+
                                             </tr>
                                         </thead>
                                     </table>
@@ -74,17 +74,17 @@
                                                 <th class="all notexport">Credit Request Id</th>
                                                 <th class="all notexport">Time Line</th>
                                                 <th class="all notexport">Approve Request</th>
-                                                <th class="all">Order Regd No</th>                                               
+                                                <th class="all">Order Regd No</th>
                                                 <th class="all">EVC Regd No</th>
                                                 <th class="all">Wallet Amount</th>
                                                 <th class="all">Clear Balance</th>
                                                 <th class="all">EVC Amount</th>
-                                                <th class="all">Order Amount</th> 
+                                                <th class="all">Order Amount</th>
                                                 <th class="all">Status Code</th>
                                                 <th class="all">Old Prod Type</th>
                                                 <th class="all">Exch Prod Group</th>
-                                                <th class="all">Customer Name</th>                                                                                              
-                                                <th class="all">Customer City</th>                                                                                           
+                                                <th class="all">Customer Name</th>
+                                                <th class="all">Customer City</th>
                                                 <th class="all">Genrate Request By</th>
                                                 <th class="all">Request Date</th>
                                             </tr>
@@ -149,7 +149,7 @@
                                     @*<input type="text" class="form-control d-inline" id="regdNo" placeholder="Search RegdNo">*@
                                     <input type="text" class="form-control d-inline" id="evcregdNo" placeholder="Search EVCRegdNo">
 
-                                </div>                               
+                                </div>
                                 @* Submit Filter *@
                                 <div class="filterbtnwrap">
                                     <a id="btnFilter" class="btn btn-primary">Filter</a>
@@ -251,7 +251,7 @@
                                     <input type="text" class="form-control d-inline" id="evcregdNo2" placeholder="Search EVCRegdNo">
                                 </div>
                                 <div class="filter-seprator"></div>
-                               
+
                                 @* Submit Filter *@
                                 <div class="filterbtnwrap">
                                     <a id="btnFilter2" class="btn btn-primary">Filter</a>
@@ -265,6 +265,9 @@
                 </div>
                 <!-- End of tab -->
             </div>
+
+        </div>
+        <div class="row">
         </div>
     </div>
 </div>
@@ -764,7 +767,7 @@
     function AddWalletConfirm(_EvcregistrationId) {
         $('#loader').show();
         var evcRegistration = _EvcregistrationId;
-        window.location.href = '@ViewData["URLPrefixforProd"]/EVC/EVCWalletRechargeByAdmin?EVCRegistration=' + evcRegistration;
+        window.location.href = '@ViewData["URLPrefixforProd"]/Warehouse/WarehouseWalletRechargeByAdmin?EVCRegistration=' + evcRegistration;
 
     }
     function WalletRe_Calculation() {
@@ -781,7 +784,7 @@
             confirmButtonText: 'Ok',
         }).then((result) => {
             if (result.isConfirmed) {
-                $.get("@URLPrefixforProd/EVC/AddEVCWalletBalance?handler=ApproveCreditRequest&Id=" + Id).done(function (data) {
+                $.get("@URLPrefixforProd/Warehouse/AddWarehouseWalletBalance?handler=ApproveCreditRequest&Id=" + Id).done(function (data) {
                     location.reload(true);
                 });
             }
@@ -821,7 +824,7 @@
             .autocomplete({
                 minLength: 3,
                 source: function (request, response) {
-                    $.get("@URLPrefixforProd/EVC/AddEVCWalletBalance?handler=SearchRegdNo", {
+                    $.get("@URLPrefixforProd/Warehouse/AddWarehouseWalletBalance?handler=SearchRegdNo", {
                         term: extractLast(request.term)
                     }, response);
                 },
@@ -871,7 +874,7 @@
             .autocomplete({
                 minLength: 3,
                 source: function (request, response) {
-                    $.get("@URLPrefixforProd/EVC/AddEVCWalletBalance?handler=SearchEVCRegdNo", {
+                    $.get("@URLPrefixforProd/Warehouse/AddWarehouseWalletBalance?handler=SearchEVCRegdNo", {
                         term: extractLast(request.term)
                     }, response);
                 },

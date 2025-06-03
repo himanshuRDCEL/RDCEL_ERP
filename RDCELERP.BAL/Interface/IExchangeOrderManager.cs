@@ -11,6 +11,7 @@ using RDCELERP.Model.ExchangeOrder;
 using RDCELERP.Model.MobileApplicationModel;
 using RDCELERP.Model.MobileApplicationModel.Questioners;
 using RDCELERP.Model.QCComment;
+using RDCELERP.DAL.Entities;
 
 namespace RDCELERP.BAL.Interface
 {
@@ -32,5 +33,9 @@ namespace RDCELERP.BAL.Interface
 
         // Added for Diagnose V2
         public ResponseResult AddMultipleOrdersV2(MultipleExchangeOrdersDataModel multipleExchangeOrdersDataModel, string username);
+
+        //sa
+        public bool SendVoucherAfterQC(TblExchangeOrder exchangeOrderDC);
+
     }
 }

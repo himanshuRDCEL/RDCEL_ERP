@@ -43,7 +43,7 @@ namespace RDCELERP.BAL.MasterManager
 
                 if (dt != null && dt.Rows.Count > 0)
                 {
-                    DataRow row = dt.Rows[0]; // Get the first row
+                    DataRow row = dt.Rows[0]; 
 
                     return new DashboardViewModel
                     {
@@ -56,7 +56,7 @@ namespace RDCELERP.BAL.MasterManager
                 }
                 else
                 {
-                    return null; // No data found, return null
+                    return null; 
                 }
             }
             catch (Exception ex)
@@ -64,7 +64,7 @@ namespace RDCELERP.BAL.MasterManager
                 _logging.WriteErrorToDB("BusinessCustomerDashBoardManager", "GetCustomerDashboardbyid", ex);
             }
 
-            return null; // In case of an exception, return null
+            return null; 
         }
 
     }

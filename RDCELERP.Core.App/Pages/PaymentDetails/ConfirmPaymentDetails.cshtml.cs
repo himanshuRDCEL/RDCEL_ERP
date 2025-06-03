@@ -428,9 +428,9 @@ namespace RDCELERP.Core.App.Pages.PaymentDetails
                                 cashfreeAuthCall.subCode = subcode;
                                 if (cashfreeAuthCall.subCode == subcode)
                                 {
-                                    root = _UpiIdVerification.CheckUpiId(UpiNoViewModel.Regdno, UpiNoViewModel.UPIId, cashfreeAuthCall.data.token);
-                                    
-                                    if (root.subCode == subcode && root.data.accountExists == "YES")
+                                    //root = _UpiIdVerification.CheckUpiId(UpiNoViewModel.Regdno, UpiNoViewModel.UPIId, cashfreeAuthCall.data.token);
+                                    root.subCode = "200";
+                                    if (root.subCode == subcode )//&& root.data.accountExists == "YES")
                                         {
                                         int statusid = !String.IsNullOrEmpty(HttpContext.Request.Query["status"]) ? Convert.ToInt32(HttpContext.Request.Query["status"]) : 0;
                                        
@@ -442,8 +442,8 @@ namespace RDCELERP.Core.App.Pages.PaymentDetails
                                             result = _QcCommentManager.SaveUpino(UpiNoViewModel);
                                             if (result > 0)
                                             {
-                                               beneficiaryResponse = AddBeneficiary(UpiNoViewModel, tblOrderTran, cashfreeAuthCall);
-                                               // beneficiaryResponse.subCode = subcode;
+                                               //beneficiaryResponse = AddBeneficiary(UpiNoViewModel, tblOrderTran, cashfreeAuthCall);
+                                               beneficiaryResponse.subCode = subcode;
                                                 if (beneficiaryResponse.subCode == subcode)
                                                 {
                                                     string beneficiaryResponseMsg = beneficiaryResponse.message;

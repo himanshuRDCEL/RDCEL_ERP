@@ -101,6 +101,7 @@ namespace RDCELERP.Core.App.Pages.QCPortal
             if (selfQcVideoImageViewModel.imageLabelViewModels != null && selfQcVideoImageViewModel.imageLabelViewModels.Count > 0)
             {
                 flag = _QCManager.UpdateSelfQCImageToDB(selfQcVideoImageViewModel);
+
                 if (flag == true)
                 {
                     return RedirectToPage("./Details");

@@ -62,6 +62,7 @@ namespace RDCELERP.Core.App.Pages
             {
               
                
+               string de = SecurityHelper.DecryptString("1lBw2PgFbMTm9x95p/ZWw80FMcPuxY2mpks1bQ7+PyZYAazKHeWdeXX9IG+cNuxX\r\n1lBw2PgFbMTm9x95p/ZWw80FMcPuxY2mpks1bQ7+PyZYAazKHeWdeXX9IG+cNuxX", _config.Value.SecurityKey);
                 UserViewModel.Email = SecurityHelper.EncryptString(UserViewModel.Email, _config.Value.SecurityKey);
                 UserViewModel.Password = SecurityHelper.EncryptString(UserViewModel.Password, _config.Value.SecurityKey);
                 LoginViewModel loginVM = _userManager.GetUserByLogin(UserViewModel.Email.Trim(), UserViewModel.Password);

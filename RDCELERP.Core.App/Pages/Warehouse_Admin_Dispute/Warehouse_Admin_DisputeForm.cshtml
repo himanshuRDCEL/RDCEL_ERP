@@ -144,7 +144,7 @@
                 <a href='javascript:history.go(-1)' class="btn btn-primary">Back to List</a>
                 @if (accessRule != null && accessRule.CanView && @Model.EVCDisputeViewModels.Status != null && @Model.EVCDisputeViewModels.EvcdisputeId != 0)
                 {
-                    <a href='@URLPrefixforProd/EVC_Admin_Dispute/DisputeViewPage?OrderTransId=@Model.EVCDisputeViewModels.orderTransId' class="btn btn-primary">View Product Details</a>
+                <a href='@URLPrefixforProd/Warehouse_Admin_Dispute/DisputeViewPage?OrderTransId=@Model.EVCDisputeViewModels.orderTransId' class="btn btn-primary">View Product Details</a>
                     <a href='@URLPrefixforProd/Index1?OrderTransId=@Model.EVCDisputeViewModels.orderTransId' class="btn btn-primary">Time Line</a>
                 }
             </div>
@@ -155,7 +155,7 @@
 
     <script type="text/javascript">
         function OnChangeEVCDetails(_evcId) {
-            $.get("@URLPrefixforProd/EVC_Admin_Dispute/EVC_Admin_DisputeForm?handler=GetOrderByEVCID&EVCDisputeViewModels.EvcregistrationId=" + _evcId).done(function (data) {
+        $.get("@URLPrefixforProd/Warehouse_Admin_Dispute/Warehouse_Admin_DisputeForm?handler=GetOrderByEVCID&EVCDisputeViewModels.EvcregistrationId=" + _evcId).done(function (data) {
             $("#ddlordid").empty(); // Clear the plese wait
             $("#ddlordid").append($("<option></option>").val('').html('Select OrderID'));
             $.each(data, function (i, Orders) {
@@ -173,7 +173,7 @@
         }
         else {
             $("#txtOrdertransh").val("");
-           $.get("@URLPrefixforProd/EVC_Dispute/EVC_DisputeForm?handler=ProductDetailsByTransId&EVCDisputeViewModels.orderTransId=" + $(this).val()).done(function (data) {
+            $.get("@URLPrefixforProd/Warehouse_Dispute/Warehouse_DisputeForm?handler=ProductDetailsByTransId&EVCDisputeViewModels.orderTransId=" + $(this).val()).done(function (data) {
                 $("#txtProTypeName").val(data.productTypeName);
                 $("#txtProcatName").val(data.productCatName);
             });
@@ -274,7 +274,7 @@
             .autocomplete({
                 minLength: 0,
                 source: function (request, response) {
-                    $.get("@URLPrefixforProd/EVC_Admin_Dispute/EVC_Admin_DisputeForm?handler=SearchEVCRedgid", {
+                    $.get("@URLPrefixforProd/Warehouse_Admin_Dispute/Warehouse_Admin_DisputeForm?handler=SearchEVCRedgid", {
                         term: extractLast(request.term)
                     }, response);
                 },

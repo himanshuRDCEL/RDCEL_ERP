@@ -52,11 +52,12 @@ namespace RDCELERP.BAL.MasterManager
         IImageHelper _imageHelper;
         IBusinessUnitRepository _banginessUnitRepository;
         ITempDataRepository _tempDataRepository;
+        IExchangeOrderManager _exchangeOrderManager;
         #endregion
 
         #region Constructor
 
-        public QCManager(IExchangeOrderRepository exchangeOrderRepository, IImageLabelRepository imageLabelRepository, IProductTypeRepository productTypeRepository, IWebHostEnvironment webHostEnvironment, IMapper mapper, ILogging logging, IABBRedemptionRepository abbRedemptionRepository, ISelfQCRepository selfQCRepository, ILovRepository lovRepository, IOrderImageUploadRepository orderImageUploadRepository, ICustomerDetailsRepository customerDetailsRepository, IProductCategoryRepository productCategoryRepository, IAbbRegistrationRepository abbRegistrationRepository, IOrderTransRepository orderTransRepository, IExchangeABBStatusHistoryRepository exchangeABBStatusHistoryRepository, IOptions<ApplicationSettings> baseConfig, ICommonManager commonManager, IWhatsAppMessageRepository whatsAppMessageRepository, IWhatsappNotificationManager whatsappNotificationManager, IImageHelper imageHelper, IBusinessUnitRepository banginessUnitRepository, ITempDataRepository tempDataRepository)
+        public QCManager(IExchangeOrderRepository exchangeOrderRepository, IImageLabelRepository imageLabelRepository, IProductTypeRepository productTypeRepository, IWebHostEnvironment webHostEnvironment, IMapper mapper, ILogging logging, IABBRedemptionRepository abbRedemptionRepository, ISelfQCRepository selfQCRepository, ILovRepository lovRepository, IOrderImageUploadRepository orderImageUploadRepository, ICustomerDetailsRepository customerDetailsRepository, IProductCategoryRepository productCategoryRepository, IAbbRegistrationRepository abbRegistrationRepository, IOrderTransRepository orderTransRepository, IExchangeABBStatusHistoryRepository exchangeABBStatusHistoryRepository, IOptions<ApplicationSettings> baseConfig, ICommonManager commonManager, IWhatsAppMessageRepository whatsAppMessageRepository, IWhatsappNotificationManager whatsappNotificationManager, IImageHelper imageHelper, IBusinessUnitRepository banginessUnitRepository, ITempDataRepository tempDataRepository, IExchangeOrderManager exchangeOrderManager)
 
         {
             _exchangeOrderRepository = exchangeOrderRepository;
@@ -82,6 +83,7 @@ namespace RDCELERP.BAL.MasterManager
             _imageHelper = imageHelper;
             _banginessUnitRepository = banginessUnitRepository;
             _tempDataRepository = tempDataRepository;
+            _exchangeOrderManager = exchangeOrderManager;
         }
 
         #endregion
@@ -1063,6 +1065,12 @@ namespace RDCELERP.BAL.MasterManager
 
                                     }
                                     return flag = true;
+                                }
+
+                                TblBusinessUnit businessUnit = _banginessUnitRepository.GetSingle(x => x.BusinessUnitId == tblExchangeOrder.BusinessUnitId && x.IsActive == true);
+                                if (businessUnit!=null && businessUnit.IsVoucherAfterQc == true)
+                                {
+                                    bool isSend = _exchangeOrderManager.SendVoucherAfterQC(tblExchangeOrder);
                                 }
                                 #endregion
                             }

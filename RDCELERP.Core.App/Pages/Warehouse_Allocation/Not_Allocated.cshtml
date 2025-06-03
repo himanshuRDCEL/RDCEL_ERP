@@ -534,7 +534,7 @@
             .autocomplete({
                 minLength: 3,
                 source: function (request, response) {
-                    $.get("@URLPrefixforProd/EVC_Allocation/Not_Allocated?handler=SearchRegdNo", {
+                    $.get("@URLPrefixforProd/Warehouse_Allocation/Not_Allocated?handler=SearchRegdNo", {
                         term: extractLast(request.term)
                     }, response);
                 },
@@ -566,7 +566,7 @@
 
     function PrimeProduct(Id) {
         $('#loader').show();
-        window.location.href = '@ViewData["URLPrefixforProd"]/EVC_Allocation/PrimeProductEVC_AllocateFrom?OId=' + Id;
+        window.location.href = '@ViewData["URLPrefixforProd"]/Warehouse_Allocation/PrimeProductWarehouse_AllocateFrom?OId=' + Id;
     }
 
     $("#exportbtn").click(function (event) {

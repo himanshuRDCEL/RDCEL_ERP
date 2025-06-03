@@ -275,7 +275,7 @@
     }
 
     function ApprovedEVC(id) {
-        $.get("@URLPrefixforProd/EVC/EVC_NotApproved?handler=ApprovedEVC&RegistionId=" + id).done(function (data) {
+            $.get("@URLPrefixforProd/Warehouse/Warehouse_NotApproved?handler=ApprovedEVC&RegistionId=" + id).done(function (data) {
             console.log(data);
             location.reload(true);
         });

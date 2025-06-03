@@ -10,6 +10,8 @@ namespace RDCELERP.DAL.Entities
             TblAbbredemptions = new HashSet<TblAbbredemption>();
             TblAbbregistrations = new HashSet<TblAbbregistration>();
             TblBppincodeMappings = new HashSet<TblBppincodeMapping>();
+            TblCatBrandSweetenerMappings = new HashSet<TblCatBrandSweetenerMapping>();
+            TblCatBrandSweeteners = new HashSet<TblCatBrandSweetener>();
             TblCouponMasters = new HashSet<TblCouponMaster>();
             TblExchangeOrders = new HashSet<TblExchangeOrder>();
             TblModelMappings = new HashSet<TblModelMapping>();
@@ -82,6 +84,8 @@ namespace RDCELERP.DAL.Entities
         public virtual ICollection<TblAbbredemption> TblAbbredemptions { get; set; }
         public virtual ICollection<TblAbbregistration> TblAbbregistrations { get; set; }
         public virtual ICollection<TblBppincodeMapping> TblBppincodeMappings { get; set; }
+        public virtual ICollection<TblCatBrandSweetenerMapping> TblCatBrandSweetenerMappings { get; set; }
+        public virtual ICollection<TblCatBrandSweetener> TblCatBrandSweeteners { get; set; }
         public virtual ICollection<TblCouponMaster> TblCouponMasters { get; set; }
         public virtual ICollection<TblExchangeOrder> TblExchangeOrders { get; set; }
         public virtual ICollection<TblModelMapping> TblModelMappings { get; set; }

@@ -322,7 +322,7 @@
                 $("#btnsave").prop('disabled', true);
             }
             else {
-                $.get("@URLPrefixforProd/EVC_Allocation/Allocate_EVCFrom?handler=EVCDetailsByEVCRegNo&evcPartnerId=" + $("#ddlEvcReg").val() + "&orderTransId="+$("#hdnOrderTransId").val()).done(function (data) {
+                $.get("@URLPrefixforProd/Warehouse_Allocation/Allocate_EVCFrom?handler=EVCDetailsByEVCRegNo&evcPartnerId=" + $("#ddlEvcReg").val() + "&orderTransId=" + $("#hdnOrderTransId").val()).done(function (data) {
                     $("#EVCMessege").html(" ");
                     $("#txtEVCRNo").val(data.evcregdNo);
                     $("#txtEVCPin").val(data.pinCode);

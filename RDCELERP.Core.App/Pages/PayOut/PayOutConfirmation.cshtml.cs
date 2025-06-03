@@ -136,9 +136,9 @@ namespace RDCELERP.Core.App.Pages.PayOut
                                     getbeneficiary = _cashfreePayoutCall.GetBeneficiary(cashfreeAuthCall.data.token, RegdNo);
                                     if (getbeneficiary.subCode == subcode)
                                     {
-                                        getbeneficiary.data.FinalExchangePrice = OrderTransObj.FinalPriceAfterQc.ToString();
-                                        getbeneficiary.data.ExchangeId = redemptionObj.RedemptionId;
-                                        getbeneficiary.data.ordertype = Convert.ToInt32(OrderTransObj.OrderType);
+                                    //    getbeneficiary.data.FinalExchangePrice = OrderTransObj.FinalPriceAfterQc.ToString();
+                                    //    getbeneficiary.data.ExchangeId = redemptionObj.RedemptionId;
+                                    //    getbeneficiary.data.ordertype = Convert.ToInt32(OrderTransObj.OrderType);
                                     }
                                     else
                                     {

@@ -527,7 +527,7 @@
             .autocomplete({
                 minLength: 3,
                 source: function (request, response) {
-                    $.get("@URLPrefixforProd/EVC_Allocation/PickupDeclineList?handler=SearchRegdNo", {
+                    $.get("@URLPrefixforProd/Warehouse_Allocation/PickupDeclineList?handler=SearchRegdNo", {
                         term: extractLast(request.term)
                     }, response);
                 },
@@ -577,7 +577,7 @@
             .autocomplete({
                 minLength: 3,
                 source: function (request, response) {
-                    $.get("@URLPrefixforProd/EVC_Allocation/PickupDeclineList?handler=SearchEVCRegdNo", {
+                    $.get("@URLPrefixforProd/Warehouse_Allocation/PickupDeclineList?handler=SearchEVCRegdNo", {
                         term: extractLast(request.term)
                     }, response);
                 },

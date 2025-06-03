@@ -515,7 +515,7 @@
 
      function ReassignOrder(Id) {
         $('#loader').show();
-        window.location.href = '@ViewData["URLPrefixforProd"]/EVC_Allocation/ReassignFrom?OId=' + Id;
+        window.location.href = '@ViewData["URLPrefixforProd"]/Warehouse_Allocation/ReassignFrom?OId=' + Id;
         $('#loader').hide();
     }
 </script>
@@ -539,7 +539,7 @@
             .autocomplete({
                 minLength: 3,
                 source: function (request, response) {
-                    $.get("@URLPrefixforProd/EVC_Allocation/Assign_Order?handler=SearchRegdNo", {
+                    $.get("@URLPrefixforProd/Warehouse_Allocation/Assign_Order?handler=SearchRegdNo", {
                         term: extractLast(request.term)
                     }, response);
                 },
@@ -589,7 +589,7 @@
             .autocomplete({
                 minLength: 3,
                 source: function (request, response) {
-                    $.get("@URLPrefixforProd/EVC_Allocation/Assign_Order?handler=SearchEVCRegdNo", {
+                    $.get("@URLPrefixforProd/Warehouse_Allocation/Assign_Order?handler=SearchEVCRegdNo", {
                         term: extractLast(request.term)
                     }, response);
                 },

@@ -26,41 +26,269 @@
         margin-top: 8px;
     }
 
+    .item {
+        background: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        width: 320px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-family: sans-serif;
+    }
+
+    .product-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .inner-card {
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .price {
+        color: #ec020df7;
+    }
+
+    .select-container {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+    }
+
+        .select-container input[type="checkbox"] {
+            transform: scale(1.2);
+        }
+
+    .quantity-box {
+        width: 60px;
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 16px;
+    }
+
+        .quantity-box:focus {
+            outline: 2px solid #007bff;
+        }
+
+    .ListItemViewModels-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    /* Filters Section */
+    .filters-container {
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: end;
+        gap: 10px;
+        font-family: sans-serif;
+    }
+
+        /* Labels Styling */
+        .filters-container .form-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Input & Select Box */
+        .filters-container .form-control,
+        .filters-container .form-select {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+            .filters-container .form-control:focus,
+            .filters-container .form-select:focus {
+                border-color: #007bff;
+                outline: none;
+                box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.3);
+            }
+
+        /* Button Styling */
+        .filters-container .btn-primary {
+            background-color: #28a745;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 6px;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+    .allbtn {
+        background-color: #28a745;
+        border: none;
+        color: #fff;
+        font-weight: bold;
+        padding: 10px 15px;
+        border-radius: 6px;
+        transition: 0.3s;
+        font-family: sans-serif;
+    }
+
+    .quantity-box {
+        width: 60px;
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    /* Product Card Container */
+    .product-card {
+        width: 250px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        padding: 15px;
+        transition: 0.3s;
+        font-family: sans-serif;
+    }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+    /* Product Image */
+    .product-image {
+        width: 100%;
+        border-radius: 8px;
+    }
+
+    /* Product Details */
+    .product-details {
+        padding: 10px;
+    }
+
+    .product-name {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 10px 0;
+    }
+
+    .product-description {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 8px;
+    }
+
+    /* Price */
+    .product-price {
+        font-size: 16px;
+        font-weight: bold;
+        color: #007bff;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    /* Quantity and Checkbox */
+    .product-actions {
+        display: flex;
+        align-items: end;
+        gap: 10px;
+        justify-content: space-between;
+    }
+
+    /* Quantity Input */
+    .quantity-box {
+        width: 50px;
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    /* Select Checkbox */
+    .select-container {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+        .select-container input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .select-container label {
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+    .maincard {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
 </style>
 <!-- Welcome Message -->
 <div class="welcome" id="welcomeText"></div>
-@* 
+@*
 <form method="post">
     <div class="ListItemViewModels-container">
-        @for (int i = 0; i < Model.ListItemViewModels.Count; i++)
-        {
-            <div class="item">
-                <h3>@Model.ListItemViewModels[i].Name</h3>
-                <p>Price: ₹@Model.ListItemViewModels[i].Price</p>
-                <input type="hidden" asp-for="ListItemViewModels[i].Price"  />
+        @for (int i = 0; i < Model.ListItemViewModels.Count; i++) { <div class="item">
+            <div class="inner-card">
+                <div class="product-info">
+                    <span>Name</span>
+                    <span class="price">Price</span>
+                </div>
 
-                <input type="hidden" asp-for="ListItemViewModels[i].ItemId"  />
-                <input type="checkbox" asp-for="ListItemViewModels[i].IsSelected"  />
-                <label for="select-@i"><strong>Select</strong></label>
+                <input type="hidden" asp-for="ListItemViewModels[i].Price" />
+                <input type="hidden" asp-for="ListItemViewModels[i].ItemId" />
 
-                <input type="number" asp-for="ListItemViewModels[i].Quantity" min="1" value="1" class="quantity-box" />
+                <div class="select-container">
+                    <input type="checkbox" asp-for="ListItemViewModels[i].IsSelected" id="select-@i" />
+                    <label for="select-@i"><strong>Select</strong></label>
+                    <input type="number" asp-for="ListItemViewModels[i].Quantity" min="1" value="1"
+                        class="quantity-box" />
+                </div>
             </div>
-        }
     </div>
 
-    <button type="submit">Checkout</button>
+    }
+    </div>
+
+    <button type="submit" class="allbtn">Checkout</button>
 </form> *@
 <div class="container mt-4">
     <form id="itemForm" method="post" action="/your-submit-endpoint">
 
         <!-- Filters Section -->
-        <div class="row mb-3">
+        <div class="row mb-3 filters-container">
             <div class="col-md-3">
                 <label for="searchBox" class="form-label">Search Item</label>
                 <input type="text" id="searchBox" class="form-control" placeholder="Search by item name">
             </div>
 
-            <div class="col-md-3">
+           @*  <div class="col-md-3">
                 <label for="businessType" class="form-label">Business Type</label>
                 <select id="businessType" class="form-select">
                     <option value="">Select Business Type</option>
@@ -68,46 +296,71 @@
                     <option value="2">Wholesale</option>
                     <option value="3">Manufacturing</option>
                 </select>
-            </div>
+            </div> *@
 
-           
+
             <div class="col-md-2 d-flex align-items-end">
                 <button type="button" id="filterBtn" class="btn btn-primary w-100">Filter</button>
             </div>
         </div>
 
-        <!-- DataTable -->
-        <table id="ItemDataTable" class="display nowrap table table-bordered" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Item ID</th>
-                    <th>Item Name</th>
-                    <th>Price</th>
-                    <th>Hidden Price</th>
-                    <th>Hidden Item ID</th>
-                    <th>Select</th>
-                    <th>Quantity</th>
-                </tr>
-            </thead>
-        </table>
+        <!-- DataTable
+            <table id="ItemDataTable" class="display nowrap table table-bordered item-table" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Item ID</th>
+                        <th>Item Name</th>
+                        <th>Price</th>
+                        <th>Hidden Price</th>
+                        <th>Hidden Item ID</th>
+                        <th>Select</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
 
+
+
+
+        </tbody>
+            </table> -->
+
+        <div class="maincard" id="item-container">
+            <div class="product-card">
+                <img src="https://rockingdeals.in/wp-content/uploads/2024/12/R-3901-03-1-400x400.png"
+                     alt="Product Image" class="product-image" style="max-width: 200px;">
+                <div class="product-details">
+                    <h3 class="product-name">Product Name</h3>
+                    <p class="product-description">Short description of the product goes here.</p>
+                    <span class="product-price">₹5000</span>
+                    <div class="product-actions">
+
+                        <div class="select-container">
+                            <input type="checkbox" id="select-product">
+                            <label for="select-product"><strong>Select</strong></label>
+                        </div>
+                        <input type="number" class="quantity-box" min="1" value="1">
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Submit Button -->
         <div class="mt-3 text-end">
-            <button type="submit" class="btn btn-success">Submit Selected Items</button>
+            <button type="submit" class="btn btn-success allbtn">Submit Selected Items</button>
         </div>
 
     </form>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-@* 
+
 <script>
     $(document).ready(function () {
         var userId = '@loginVM.BusinessCustomerViewModel.BusinessCustomerId';
-        var searchValue = ''; 
-        var url = "@URLPrefixforProd/api/ListPage/GetItems?customerid=" + userId + "&searchValue=" + searchValue + "&businessTypeId=" + businessTypeId;
+        var searchValue = '';
+        var url = "@URLPrefixforProd/api/ListPage/GetItems?customerid=" + userId + "&searchValue=" + searchValue;
 
-       
+
         console.log(url);
         // Load items via AJAX
         $.ajax({
@@ -142,7 +395,7 @@
         });
     });
 </script>
- *@
+@* 
 <script>
     $(document).ready(function () {
         var userId = '@loginVM.BusinessCustomerViewModel.BusinessCustomerId';
@@ -164,7 +417,7 @@
                         customerid: userId,
                         searchValue: searchValue,
                         businessTypeId: businessTypeId
-                      
+
                     }
                 },
                 "columns": [
@@ -223,7 +476,7 @@
         $('#filterBtn').on('click', function () {
             var searchValue = $('#searchBox').val();
             var businessTypeId = $('#businessType').val();
-            
+
 
             loadTable(searchValue, businessTypeId);
         });
@@ -246,4 +499,4 @@
             });
         });
     });
-</script>
+</script> *@

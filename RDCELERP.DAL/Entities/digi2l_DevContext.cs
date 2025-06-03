@@ -59,6 +59,8 @@ namespace RDCELERP.DAL.Entities
         public virtual DbSet<TblBusinessType> TblBusinessTypes { get; set; } = null!;
         public virtual DbSet<TblBusinessTypeMapping> TblBusinessTypeMappings { get; set; } = null!;
         public virtual DbSet<TblBusinessUnit> TblBusinessUnits { get; set; } = null!;
+        public virtual DbSet<TblCatBrandSweetener> TblCatBrandSweeteners { get; set; } = null!;
+        public virtual DbSet<TblCatBrandSweetenerMapping> TblCatBrandSweetenerMappings { get; set; } = null!;
         public virtual DbSet<TblCategory> TblCategories { get; set; } = null!;
         public virtual DbSet<TblCity> TblCities { get; set; } = null!;
         public virtual DbSet<TblCompany> TblCompanies { get; set; } = null!;
@@ -2268,11 +2270,33 @@ namespace RDCELERP.DAL.Entities
 
                 entity.ToTable("tblBookingItem");
 
+                entity.Property(e => e.BillingAmount).HasColumnType("decimal(10, 2)");
+
                 entity.Property(e => e.BookingPrice).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Consignee).HasMaxLength(500);
+
+                entity.Property(e => e.ConsigneeName).HasMaxLength(500);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.DeliveryDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EanNo).HasMaxLength(500);
+
+                entity.Property(e => e.ItemCode).HasMaxLength(500);
+
+                entity.Property(e => e.ItemMrp)
+                    .HasColumnType("decimal(10, 2)")
+                    .HasColumnName("ItemMRP");
+
+                entity.Property(e => e.ItemStatus).HasMaxLength(500);
+
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OrderNo).HasMaxLength(500);
+
+                entity.Property(e => e.ProjectCode).HasMaxLength(500);
 
                 entity.Property(e => e.Qccheck).HasColumnName("QCCheck");
 
@@ -2280,25 +2304,27 @@ namespace RDCELERP.DAL.Entities
 
                 entity.Property(e => e.TotalPrice).HasColumnType("decimal(10, 2)");
 
+                entity.Property(e => e.WhCode).HasMaxLength(500);
+
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblBookingItemCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__tblBookin__Creat__4E298478");
+                    .HasConstraintName("FK__tblBookin__Creat__7DA38D70");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.TblBookingItems)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__tblBookin__Custo__4D35603F");
+                    .HasConstraintName("FK__tblBookin__Custo__7E97B1A9");
 
                 entity.HasOne(d => d.Item)
                     .WithMany(p => p.TblBookingItems)
                     .HasForeignKey(d => d.ItemId)
-                    .HasConstraintName("FK__tblBookin__ItemI__4C413C06");
+                    .HasConstraintName("FK__tblBookin__ItemI__7F8BD5E2");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblBookingItemModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__tblBookin__Modif__4F1DA8B1");
+                    .HasConstraintName("FK__tblBookin__Modif__007FFA1B");
             });
 
             modelBuilder.Entity<TblBpbuassociation>(entity =>
@@ -2889,6 +2915,8 @@ namespace RDCELERP.DAL.Entities
 
                 entity.Property(e => e.IsSponsorNumberRequiredOnUi).HasColumnName("IsSponsorNumberRequiredOnUI");
 
+                entity.Property(e => e.IsVoucherAfterQc).HasColumnName("IsVoucherAfterQC");
+
                 entity.Property(e => e.LogoName)
                     .HasMaxLength(200)
                     .IsUnicode(false);
@@ -2935,6 +2963,103 @@ namespace RDCELERP.DAL.Entities
                     .WithMany(p => p.TblBusinessUnitMarginTypeNavigations)
                     .HasForeignKey(d => d.MarginType)
                     .HasConstraintName("Fk_tblBusinessUnit_MarginType");
+            });
+
+            modelBuilder.Entity<TblCatBrandSweetener>(entity =>
+            {
+                entity.HasKey(e => e.CatBrandSweetenerId)
+                    .HasName("PK__tblCatBrandSweetener__3214EC07BF1A99F2");
+
+                entity.ToTable("tblCatBrandSweetener");
+
+                entity.Property(e => e.Code).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Description).HasMaxLength(255);
+
+                entity.Property(e => e.ModelName).HasMaxLength(255);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.SweetenerBp)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("SweetenerBP");
+
+                entity.Property(e => e.SweetenerBu)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("SweetenerBU");
+
+                entity.Property(e => e.SweetenerOwn).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.SweetnerForDtc)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("SweetnerForDTC");
+
+                entity.Property(e => e.SweetnerForDtd)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("SweetnerForDTD");
+
+                entity.HasOne(d => d.Brand)
+                    .WithMany(p => p.TblCatBrandSweeteners)
+                    .HasForeignKey(d => d.BrandId)
+                    .HasConstraintName("FK__tblCatBrandSweetener__Brand__2B0A656D");
+
+                entity.HasOne(d => d.BusinessPartner)
+                    .WithMany(p => p.TblCatBrandSweeteners)
+                    .HasForeignKey(d => d.BusinessPartnerId)
+                    .HasConstraintName("FK__tblCatBra__Busin__65CC03DF");
+
+                entity.HasOne(d => d.BusinessUnit)
+                    .WithMany(p => p.TblCatBrandSweeteners)
+                    .HasForeignKey(d => d.BusinessUnitId)
+                    .HasConstraintName("FK__tblCatBra__Busin__66C02818");
+
+                entity.HasOne(d => d.ProductCategory)
+                    .WithMany(p => p.TblCatBrandSweeteners)
+                    .HasForeignKey(d => d.ProductCategoryId)
+                    .HasConstraintName("FK__tblCatBrandSweetener__ProductCat__2B0A656D");
+
+                entity.HasOne(d => d.ProductType)
+                    .WithMany(p => p.TblCatBrandSweeteners)
+                    .HasForeignKey(d => d.ProductTypeId)
+                    .HasConstraintName("FK__tblCatBrandSweetener__ProductType__2B0A656D");
+            });
+
+            modelBuilder.Entity<TblCatBrandSweetenerMapping>(entity =>
+            {
+                entity.ToTable("tblCatBrandSweetenerMapping");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.SweetenerBp)
+                    .HasColumnType("decimal(15, 2)")
+                    .HasColumnName("SweetenerBP");
+
+                entity.Property(e => e.SweetenerBu).HasColumnType("decimal(15, 2)");
+
+                entity.Property(e => e.SweetenerOwn).HasColumnType("decimal(15, 2)");
+
+                entity.HasOne(d => d.Brand)
+                    .WithMany(p => p.TblCatBrandSweetenerMappings)
+                    .HasForeignKey(d => d.BrandId)
+                    .HasConstraintName("FK__tblCatBra__Brand__6D6D25A7");
+
+                entity.HasOne(d => d.BusinessPartner)
+                    .WithMany(p => p.TblCatBrandSweetenerMappings)
+                    .HasForeignKey(d => d.BusinessPartnerId)
+                    .HasConstraintName("FK__tblCatBra__Busin__6F556E19");
+
+                entity.HasOne(d => d.BusinessUnit)
+                    .WithMany(p => p.TblCatBrandSweetenerMappings)
+                    .HasForeignKey(d => d.BusinessUnitId)
+                    .HasConstraintName("FK__tblCatBra__Busin__6E6149E0");
+
+                entity.HasOne(d => d.CatBrandSweetener)
+                    .WithMany(p => p.TblCatBrandSweetenerMappings)
+                    .HasForeignKey(d => d.CatBrandSweetenerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tblCatBra__CatBr__70499252");
             });
 
             modelBuilder.Entity<TblCategory>(entity =>
@@ -4644,36 +4769,86 @@ namespace RDCELERP.DAL.Entities
 
                 entity.ToTable("tblItem");
 
-                entity.Property(e => e.Brand).HasMaxLength(1000);
+                entity.Property(e => e.AvailableStock).HasMaxLength(250);
+
+                entity.Property(e => e.Brand).HasMaxLength(250);
+
+                entity.Property(e => e.Colour).HasMaxLength(250);
+
+                entity.Property(e => e.Condition).HasMaxLength(250);
+
+                entity.Property(e => e.CostPrice).HasColumnType("decimal(10, 2)");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.Department).HasMaxLength(250);
+
+                entity.Property(e => e.Division).HasMaxLength(250);
+
+                entity.Property(e => e.Ean)
+                    .HasMaxLength(500)
+                    .HasColumnName("EAN");
+
+                entity.Property(e => e.ExpiryDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Gender).HasMaxLength(250);
+
+                entity.Property(e => e.Hsn)
+                    .HasMaxLength(250)
+                    .HasColumnName("HSN");
+
+                entity.Property(e => e.Hsnid)
+                    .HasMaxLength(250)
+                    .HasColumnName("HSNID");
+
                 entity.Property(e => e.ImageName).HasMaxLength(1000);
+
+                entity.Property(e => e.Itemcode).HasMaxLength(500);
+
+                entity.Property(e => e.LocationCode).HasMaxLength(500);
+
+                entity.Property(e => e.ManageBatchItem).HasMaxLength(250);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Name).HasMaxLength(250);
+                entity.Property(e => e.Mrp)
+                    .HasColumnType("decimal(10, 2)")
+                    .HasColumnName("MRP");
 
-                entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.PendingDispatch).HasMaxLength(250);
 
-                entity.Property(e => e.Sku)
-                    .HasMaxLength(500)
-                    .HasColumnName("SKU");
+                entity.Property(e => e.Qty).HasMaxLength(250);
+
+                entity.Property(e => e.Rsp)
+                    .HasMaxLength(250)
+                    .HasColumnName("RSP");
+
+                entity.Property(e => e.Section).HasMaxLength(250);
+
+                entity.Property(e => e.Size).HasMaxLength(250);
+
+                entity.Property(e => e.Sno).HasColumnName("SNo");
+
+                entity.Property(e => e.SubCat).HasMaxLength(250);
+
+                entity.Property(e => e.Uom)
+                    .HasMaxLength(250)
+                    .HasColumnName("UOM");
 
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblItemCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__tblItem__Created__32816A03");
+                    .HasConstraintName("FK__tblItem__Created__78DED853");
 
                 entity.HasOne(d => d.ItemTypeNavigation)
                     .WithMany(p => p.TblItems)
                     .HasForeignKey(d => d.ItemType)
-                    .HasConstraintName("FK__tblItem__ItemTyp__5E5FEC41");
+                    .HasConstraintName("FK__tblItem__ItemTyp__79D2FC8C");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblItemModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__tblItem__Modifie__33758E3C");
+                    .HasConstraintName("FK__tblItem__Modifie__7AC720C5");
             });
 
             modelBuilder.Entity<TblLoV>(entity =>

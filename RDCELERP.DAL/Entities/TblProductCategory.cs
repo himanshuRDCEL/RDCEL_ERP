@@ -14,6 +14,7 @@ namespace RDCELERP.DAL.Entities
             TblBrandSmartBuys = new HashSet<TblBrandSmartBuy>();
             TblBuproductCategoryMappingOldProductCats = new HashSet<TblBuproductCategoryMapping>();
             TblBuproductCategoryMappingProductCats = new HashSet<TblBuproductCategoryMapping>();
+            TblCatBrandSweeteners = new HashSet<TblCatBrandSweetener>();
             TblEvcPartnerPreferences = new HashSet<TblEvcPartnerPreference>();
             TblImageLabelMasters = new HashSet<TblImageLabelMaster>();
             TblModelNumbers = new HashSet<TblModelNumber>();
@@ -57,6 +58,7 @@ namespace RDCELERP.DAL.Entities
         public virtual ICollection<TblBrandSmartBuy> TblBrandSmartBuys { get; set; }
         public virtual ICollection<TblBuproductCategoryMapping> TblBuproductCategoryMappingOldProductCats { get; set; }
         public virtual ICollection<TblBuproductCategoryMapping> TblBuproductCategoryMappingProductCats { get; set; }
+        public virtual ICollection<TblCatBrandSweetener> TblCatBrandSweeteners { get; set; }
         public virtual ICollection<TblEvcPartnerPreference> TblEvcPartnerPreferences { get; set; }
         public virtual ICollection<TblImageLabelMaster> TblImageLabelMasters { get; set; }
         public virtual ICollection<TblModelNumber> TblModelNumbers { get; set; }

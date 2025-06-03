@@ -17,6 +17,8 @@ namespace RDCELERP.DAL.Entities
             TblBuconfigurationMappings = new HashSet<TblBuconfigurationMapping>();
             TblBuproductCategoryMappings = new HashSet<TblBuproductCategoryMapping>();
             TblBusinessPartners = new HashSet<TblBusinessPartner>();
+            TblCatBrandSweetenerMappings = new HashSet<TblCatBrandSweetenerMapping>();
+            TblCatBrandSweeteners = new HashSet<TblCatBrandSweetener>();
             TblCompanies = new HashSet<TblCompany>();
             TblCouponMasters = new HashSet<TblCouponMaster>();
             TblExchangeOrders = new HashSet<TblExchangeOrder>();
@@ -96,6 +98,7 @@ namespace RDCELERP.DAL.Entities
         public bool? IsBucatIdOn { get; set; }
         public bool? IsProductSerialNumberRequired { get; set; }
         public bool? IsSfidrequired { get; set; }
+        public bool? IsVoucherAfterQc { get; set; }
 
         public virtual TblLoV? GsttypeNavigation { get; set; }
         public virtual Login? Login { get; set; }
@@ -110,6 +113,8 @@ namespace RDCELERP.DAL.Entities
         public virtual ICollection<TblBuconfigurationMapping> TblBuconfigurationMappings { get; set; }
         public virtual ICollection<TblBuproductCategoryMapping> TblBuproductCategoryMappings { get; set; }
         public virtual ICollection<TblBusinessPartner> TblBusinessPartners { get; set; }
+        public virtual ICollection<TblCatBrandSweetenerMapping> TblCatBrandSweetenerMappings { get; set; }
+        public virtual ICollection<TblCatBrandSweetener> TblCatBrandSweeteners { get; set; }
         public virtual ICollection<TblCompany> TblCompanies { get; set; }
         public virtual ICollection<TblCouponMaster> TblCouponMasters { get; set; }
         public virtual ICollection<TblExchangeOrder> TblExchangeOrders { get; set; }

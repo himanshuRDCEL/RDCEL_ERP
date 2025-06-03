@@ -150,6 +150,8 @@ namespace RDCELERP.Model.Base
         public string AiSensyApiURL { get; set; }
         public string AiSensyApiKey { get; set; }
 
+        public string SynchronizedAPIKey { get; set; }
+        public string synchronizedBaseURL { get; set; }
         public string JWTKey { get; set; }
         public string JWTIssuer { get; set; }
 

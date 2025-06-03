@@ -433,6 +433,7 @@ namespace RDCELERP.Core.App
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IBookingItemRepository, BookingItemRepository>();
             services.AddScoped<IBusinessCustomerDashboardManager, BusinessCustomerDashboardManager>();
+            services.AddScoped<ISynchronizedManager, SynchronizedManager>();
             //ecom voucher sa
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IEcomVoucherRepository, EcomVoucherRepository>();

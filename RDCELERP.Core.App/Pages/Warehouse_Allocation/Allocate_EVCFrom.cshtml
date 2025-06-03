@@ -211,7 +211,7 @@ htmlAttributes: new { @class = "custom-select my-1 mr-sm-2 form-select", @Onchan
        // var ExPrice = $("#TxtExPrice_" + i).text();
         var ExPrice = $("#TxtExPrice_" + i).val("");
         if (item > 0) {
-            $.get("@URLPrefixforProd/EVC_Allocation/Allocate_EVCFrom?handler=EVCDetailsByEVCRegNo&evcPartnerId=" + $("#DropEvc_" + i).val() + "&orderTransId=" + orderTransId).done(function (data) {
+            $.get("@URLPrefixforProd/Warehouse_Allocation/Allocate_EVCFrom?handler=EVCDetailsByEVCRegNo&evcPartnerId=" + $("#DropEvc_" + i).val() + "&orderTransId=" + orderTransId).done(function (data) {
                 $("#txtEVCRNo_" + i).val(data.evcregdNo);
                 $("#txtEVCPin_" + i).val(data.pinCode);
                 $("#txtEVCCity_" + i).val(data.cityName);

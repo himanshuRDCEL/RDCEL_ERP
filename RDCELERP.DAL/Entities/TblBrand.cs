@@ -8,6 +8,8 @@ namespace RDCELERP.DAL.Entities
         public TblBrand()
         {
             TblBrandSmartBuys = new HashSet<TblBrandSmartBuy>();
+            TblCatBrandSweetenerMappings = new HashSet<TblCatBrandSweetenerMapping>();
+            TblCatBrandSweeteners = new HashSet<TblCatBrandSweetener>();
             TblCategories = new HashSet<TblCategory>();
             TblEcomVouchers = new HashSet<TblEcomVoucher>();
             TblExchangeOrders = new HashSet<TblExchangeOrder>();
@@ -31,6 +33,8 @@ namespace RDCELERP.DAL.Entities
 
         public virtual TblBusinessUnit? BusinessUnit { get; set; }
         public virtual ICollection<TblBrandSmartBuy> TblBrandSmartBuys { get; set; }
+        public virtual ICollection<TblCatBrandSweetenerMapping> TblCatBrandSweetenerMappings { get; set; }
+        public virtual ICollection<TblCatBrandSweetener> TblCatBrandSweeteners { get; set; }
         public virtual ICollection<TblCategory> TblCategories { get; set; }
         public virtual ICollection<TblEcomVoucher> TblEcomVouchers { get; set; }
         public virtual ICollection<TblExchangeOrder> TblExchangeOrders { get; set; }

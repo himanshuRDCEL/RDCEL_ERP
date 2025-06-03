@@ -126,13 +126,14 @@
 
                                   <div class="col-md-4 mb-3">
                                         <label>Category<span style="color:red;">*</span></label>
-                                        <select id="categoryDropdown" class="form-control" asp-for="EcomVoucherViewModel.SelectedCategoryIds" multiple>
+                                            <select id="categoryDropdown" class="form-control" asp-for="EcomVoucherViewModel.SelectedCategoryIds" asp-items="@(ViewData["CategoryLists"] as List<SelectListItem>)" multiple>
                                             <option value="">Select Category</option>
                                         </select>
                                             <span id="categoryError" class="text-danger"></span>
 
-                                    </div> 
-                                     
+                                    </div>
+
+
                                     </div>
                                             <div class="col-md-4 mb-3" id="import" style= "display:none;margin-top:29px;">
                                 <button type = "button"id="importPhoneNoBtn" type="button"> Import Phone No.</button>
@@ -253,7 +254,66 @@
         </div>
     </div>
 </div>
+<!-- jQuery first -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JS (required for dropdowns) -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Bootstrap Multiselect Plugin -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-multiselect@1.1.0/dist/js/bootstrap-multiselect.min.js"></script>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+<!-- Bootstrap Multiselect CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-multiselect@1.1.0/dist/css/bootstrap-multiselect.css" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Initialize the multiselect
+        $('#categoryDropdown').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            buttonWidth: '100%',
+            maxHeight: 300,
+            nonSelectedText: 'Select Category'
+        });
+
+        $('#brandDropdown').change(function () {
+            var brandId = $(this).val();
+
+            if (brandId) {
+                $.ajax({
+                    url: './Manage?handler=GetCategoriesByBrand',
+                    type: 'GET',
+                    data: { brandId: brandId },
+                    success: function (response) {
+                        $('#categoryDropdown').empty(); // clear old
+
+                        $.each(response, function (index, category) {
+                            $('#categoryDropdown').append(
+                                $('<option></option>').val(category.value).text(category.text)
+                            );
+                        });
+
+                        // Refresh multiselect
+                        $('#categoryDropdown').multiselect('rebuild');
+                    },
+                    error: function () {
+                        alert('Failed to retrieve categories.');
+                    }
+                });
+            } else {
+                $('#categoryDropdown').empty();
+                $('#categoryDropdown').multiselect('rebuild');
+            }
+        });
+    });
+</script>
+
 
 <script>
     $(document).ready(function () {
@@ -300,7 +360,6 @@
     });
 
 </script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function () {
     function toggleFields() {
@@ -326,7 +385,7 @@ $(document).ready(function () {
             $("#voucherCount").removeAttr("required");
             $("#brandCategoryFields").show();
             $("#brandDropdown, #categoryDropdown").attr("required", true);
-                $("#Phone").hide();
+                $("#Phone").show();
                 $("#import").hide();
                 $("#code").show();
                 $("#voucherstatus").show();
@@ -462,15 +521,20 @@ $(document).ready(function () {
                     type: 'GET',
                     data: { brandId: brandId },
                     success: function (response) {
+                        console.log(response);
+
                         // Clear existing categories
                         $('#categoryDropdown').empty();
-                        $('#categoryDropdown').append('<option value="">--Select Category--</option>');
-
-                        // Populate new categories
-                        $.each(response, function (index, category) {
-                            console.log(category);
-                            $('#categoryDropdown').append('<option value="' + category.value + '">' + category.text + '</option>');
-                        });
+                        if (response && response.length > 0) {
+                            $('#categoryDropdown').append('<option value="">--Select Category--</option>');
+                          
+                            // Populate new categories
+                            $.each(response, function (index, category) {
+                                $('#categoryDropdown').append('<option value="' + category.value + '">' + category.text + '</option>');
+                            });
+                        }else{
+                            $('#categoryDropdown').append('<option value="">No category available</option>');
+                        }
                     },
                     error: function () {
                         alert('Failed to retrieve categories.');

@@ -28,6 +28,7 @@ using RDCELERP.Model.EVCdispute;
 using RDCELERP.Model.ExchangeOrder;
 using RDCELERP.Model.LGC;
 using TblUser = RDCELERP.DAL.Entities.TblUser;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace RDCELERP.Core.App.Controller
@@ -838,16 +839,16 @@ namespace RDCELERP.Core.App.Controller
                 }
                 #endregion
                 IQueryable<TblWalletTransaction> query = _context.TblWalletTransactions
-                    //.Include(x => x.Evcregistration)
-                    //.Include(x => x.Evcpartner)
-                    //.Include(x => x.OrderTrans).ThenInclude(x => x.Exchange).ThenInclude(x => x.ProductType).ThenInclude(x => x.ProductCat)
-                    //.Include(x => x.OrderTrans).ThenInclude(x => x.Exchange).ThenInclude(x => x.CustomerDetails)
+                    .Include(x => x.Evcregistration)
+                    .Include(x => x.Evcpartner)
+                    .Include(x => x.OrderTrans).ThenInclude(x => x.Exchange).ThenInclude(x => x.ProductType).ThenInclude(x => x.ProductCat)
+                    .Include(x => x.OrderTrans).ThenInclude(x => x.Exchange).ThenInclude(x => x.CustomerDetails)
                     //.Include(x => x.OrderTrans).ThenInclude(x => x.Abbredemption).ThenInclude(x => x.Abbregistration).ThenInclude(x => x.NewProductCategory)
                     //.Include(x => x.OrderTrans).ThenInclude(x => x.Abbredemption).ThenInclude(x => x.Abbregistration).ThenInclude(x => x.NewProductCategoryTypeNavigation)
                     //.Include(x => x.OrderTrans).ThenInclude(x => x.Abbredemption).ThenInclude(x => x.CustomerDetails)
                     //.Include(x => x.OrderTrans).ThenInclude(x => x.Abbredemption).ThenInclude(x => x.Abbregistration).ThenInclude(x => x.BusinessUnit)
                     .Where(x => x.IsActive == true
-                    /*&& x.OrderTrans.StatusId == Convert.ToInt32(OrderStatusEnum.EVCAllocationcompleted) && x.ModifiedDate != null && x.OrderofAssignDate != null*/);
+                     && x.OrderTrans.StatusId == Convert.ToInt32(OrderStatusEnum.EVCAllocationcompleted) && x.ModifiedDate != null && x.OrderofAssignDate != null);
 
                 if (orderStartDate != null && orderEndDate != null)
                 {
@@ -939,7 +940,15 @@ namespace RDCELERP.Core.App.Controller
                     string actionURL1 = "<button onclick='ReassignOrder(" + oAssignOrderViewModel.OrderTransId + ")' class=''><i class='fa-solid fa-repeat'></i>&nbsp; Re-assign</button>";
                     oAssignOrderViewModel.Edit = actionURL1;
 
-                    TblWalletTransaction orderDetails = tblWalletTransactions.FirstOrDefault(x => x.OrderTransId == oAssignOrderViewModel.OrderTransId);
+                    //  TblWalletTransaction orderDetails = tblWalletTransactions.FirstOrDefault(x => x.OrderTransId == oAssignOrderViewModel.OrderTransId);
+
+
+                    // Assuming your DbContext is named _context
+                    var orderDetails = _context.TblWalletTransactions
+                        .Include(x => x.OrderTrans)
+                        .FirstOrDefault(x => x.OrderTransId == oAssignOrderViewModel.OrderTransId);
+
+
 
                     if (orderDetails != null)
                     {

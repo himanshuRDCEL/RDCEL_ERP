@@ -16,11 +16,13 @@ namespace RDCELERP.Core.App.Pages.BusinessCustomer
     {
         IItemBookingManager _itemBookingManager;
         IItemManager _itemManager;
-        public ItemListModel( IItemManager itemManager,IItemBookingManager itemBookingManager, IOptions<ApplicationSettings> config)
+        ISynchronizedManager _syncManager;
+        public ItemListModel( IItemManager itemManager,IItemBookingManager itemBookingManager, IOptions<ApplicationSettings> config,ISynchronizedManager synchronizedManager)
       : base(config)
         {
             _itemBookingManager = itemBookingManager;  
             _itemManager= itemManager;
+            _syncManager= synchronizedManager;
         }
 
 
@@ -30,6 +32,8 @@ namespace RDCELERP.Core.App.Pages.BusinessCustomer
         public IActionResult OnGet()
         {
             ListItemViewModels = _itemManager.GetItemList();
+
+           // _syncManager.FetchAndSaveStockDataAsync();
 
             if (_loginSession == null)
             {

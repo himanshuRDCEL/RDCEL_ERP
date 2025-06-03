@@ -119,5 +119,9 @@ namespace RDCELERP.Common.Constant
 
         public const string SmartBuy_otp_30012024 = "Dear Customer, The OTP for your SmartBuy registration is [OTP], Team Rocking Deals.";
 
+        //sa
+        public const string send_voucher_generationcashe = "send_voucher_generationcashe";
+
+
     }
 }

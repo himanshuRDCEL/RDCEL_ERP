@@ -5349,7 +5349,7 @@ namespace RDCELERP.Core.App.Controller
             // Apply search filter if searchValue is provided
             if (!string.IsNullOrEmpty(searchValue))
             {
-                itemsQuery = itemsQuery.Where(x => x.item.Name.ToLower().Contains(searchValue.ToLower()));
+                itemsQuery = itemsQuery.Where(x => x.item.ItemDesc.ToLower().Contains(searchValue.ToLower()));
             }
 
             // Apply businessType filter
@@ -5362,10 +5362,9 @@ namespace RDCELERP.Core.App.Controller
                 .Select(x => new
                 {
                     x.item.ItemId,
-                    x.item.Name,
+                    x.item.ItemDesc,
                     ImageUrl = baseUrl + x.item.ImageName,
-                    x.item.Price,
-                    x.item.Description,
+                    x.item.Mrp,
                     IsSelected = false // Default value
                 })
                 .ToListAsync();

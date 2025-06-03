@@ -161,7 +161,7 @@
 <script src="~/js/compressor.js"></script>
 <script type="text/javascript">
     $("#ddlevcid").change(function () {
-        $.get("@URLPrefixforProd/EVC_Dispute/EVC_DisputeForm?handler=GetOrderByEVCID&EVCDisputeViewModels.EvcregistrationId=" + $(this).val()).done(function (data) {
+        $.get("@URLPrefixforProd/Warehouse_Dispute/Warehouse_DisputeForm?handler=GetOrderByEVCID&EVCDisputeViewModels.EvcregistrationId=" + $(this).val()).done(function (data) {
             $("#ddlordid").empty(); // Clear the plese wait
             $("#ddlordid").append($("<option></option>").val('').html('Select OrderID'));
             $.each(data, function (i, Orders) {
@@ -178,7 +178,7 @@
         }
         else {
             $("#txtOrdertransh").val(" ");
-           $.get("@URLPrefixforProd/EVC_Dispute/EVC_DisputeForm?handler=ProductDetailsByTransId&EVCDisputeViewModels.orderTransId=" + $(this).val()).done(function (data) {
+            $.get("@URLPrefixforProd/Warehouse_Dispute/Warehouse_DisputeForm?handler=ProductDetailsByTransId&EVCDisputeViewModels.orderTransId=" + $(this).val()).done(function (data) {
                 $("#txtProTypeName").val(data.productTypeName);
                 $("#txtProcatName").val(data.productCatName);
             });

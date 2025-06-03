@@ -48,6 +48,8 @@ using Mailjet.Client.TransactionalEmails.Response;
 using Login = RDCELERP.DAL.Entities.Login;
 using RDCELERP.Model.MobileApplicationModel.LGC;
 using Microsoft.Owin.Security.Notifications;
+using RDCELERP.Model.VoucherRedemption;
+using static RDCELERP.Model.VoucherRedemption.WhatsappDataContract;
 
 namespace RDCELERP.BAL.MasterManager
 {
@@ -2622,7 +2624,96 @@ namespace RDCELERP.BAL.MasterManager
             return result;
         }
         #endregion
+
+
+        #region
+        public bool SendVoucherAfterQC(TblExchangeOrder exchangeOrderDC)
+        {
+            bool flag = false;
+            try
+            {
+              TblBusinessUnit  businessUnit = _businessUnitRepository.GetSingle(x => x.BusinessUnitId == exchangeOrderDC.BusinessUnitId && x.IsActive == true);
+
+                if (businessUnit != null)
+                {
+                    TblCustomerDetail customerDetail = _customerDetailsRepository.GetSingle(x => x.IsActive == true && x.Id == exchangeOrderDC.CustomerDetailsId);
+
+                    #region  sa code to send whatsappNotification For Voucher Generation for csh voucher
+                    WhatsappTemplatecashvoucher whatsappObj = new WhatsappTemplatecashvoucher();
+                    whatsappObj.userDetails = new RDCELERP.Model.VoucherRedemption.WhatsappDataContract.UserDetails();
+                    whatsappObj.notification = new NotificationForCash();
+                    whatsappObj.notification.@params = new SendCashVoucherOnWhatssapp();
+                    whatsappObj.userDetails.number = customerDetail.PhoneNumber;
+                    //cash_voucher_
+                    whatsappObj.notification.templateId = NotificationConstants.Send_Voucher_Code_Template;
+                    whatsappObj.notification.@params.voucherAmount = exchangeOrderDC.ExchangePrice.ToString();
+                    whatsappObj.notification.@params.VoucherExpiry = Convert.ToDateTime(exchangeOrderDC.VoucherCodeExpDate).ToString("dd/MM/yyyy");
+                    whatsappObj.notification.@params.voucherCode = exchangeOrderDC.VoucherCode.ToString();
+                    whatsappObj.notification.@params.BrandName = businessUnit.Name.ToString();
+                    whatsappObj.notification.@params.VoucherLink = _config.Value.BaseURL + "Home/V/" + exchangeOrderDC.Id;
+
+                    // Step 2: Convert WhatsappTemplate data into templateParams List
+                    List<string> templateParams = new List<string>
+{
+    whatsappObj.notification.@params.voucherAmount,   // Price
+    whatsappObj.notification.@params.BrandName,       // Brand Name
+    whatsappObj.notification.@params.voucherCode,     // Code
+    whatsappObj.notification.@params.VoucherExpiry,   // Validity
+    whatsappObj.notification.@params.VoucherLink      // Download URL
+};
+
+                    // Send WhatsApp message
+                    HttpResponseDetails response = _whatsappNotificationManager.SendWhatsAppMessageAsync(
+             whatsappObj.notification.templateId,
+                                        whatsappObj.userDetails.number,
+                                templateParams
+                    ).GetAwaiter().GetResult();
+
+                    string ResponseCode = response.Response.StatusCode.ToString();
+                    string WhatssAppStatusEnum = ExchangeOrderManager.GetEnumDescription(WhatsappEnum.SuccessCode);
+
+
+                    if (ResponseCode == WhatssAppStatusEnum)
+                    {
+                        string responseforWhatasapp = response.Content;
+                        if (responseforWhatasapp != null)
+                        {
+                            WhatasappResponse whatssappresponseDC = JsonConvert.DeserializeObject<WhatasappResponse>(responseforWhatasapp);
+                            TblWhatsAppMessage whatsapObj = new TblWhatsAppMessage();
+                            whatsapObj.TemplateName = NotificationConstants.send_voucher_generationcashe;
+                            whatsapObj.IsActive = true;
+                            whatsapObj.PhoneNumber = customerDetail.PhoneNumber;
+                            whatsapObj.SendDate = DateTime.Now;
+                            whatsapObj.MsgId = whatssappresponseDC.msgId;
+                            _WhatsAppMessageRepository.Create(whatsapObj);
+                            _WhatsAppMessageRepository.SaveChanges();
+                        }
+                        else
+                        {
+                            string JsonObjectForExchangeOrder = JsonConvert.SerializeObject(exchangeOrderDC);
+                            _logging.WriteErrorToDB("ExchangeOrderManager", JsonObjectForExchangeOrder, null);
+                        }
+                    }
+                    else
+                    {
+                        string JsonObjectForExchangeOrder = JsonConvert.SerializeObject(exchangeOrderDC);
+                        _logging.WriteErrorToDB("ExchangeOrderManager", JsonObjectForExchangeOrder, null);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logging.WriteErrorToDB("ExchangeOrderManager", "SendVoucherAfterQC", ex);
+            }
+            
+            #endregion
+
+
+            return flag;
+        }
+        #endregion
     }
 }
 
 #endregion
+

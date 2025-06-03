@@ -91,7 +91,7 @@ namespace RDCELERP.Core.App.Pages.EcomVoucher
                 }
                 EcomVoucherViewModel.EcomVoucherTypeList = GetVoucherTypeList(Convert.ToInt32(EcomVoucherViewModel.EcomVoucherType));
 
-                EcomVoucherViewModel.EcomVoucherValueTypeList = GetVoucherValueTypeList(Convert.ToInt32(EcomVoucherViewModel.EcomVoucherType));
+                EcomVoucherViewModel.EcomVoucherValueTypeList = GetVoucherValueTypeList(Convert.ToInt32(EcomVoucherViewModel.ValueType));
 
 
 
@@ -164,7 +164,7 @@ namespace RDCELERP.Core.App.Pages.EcomVoucher
             return enumValues.Select(e => new SelectListItem
             {
                 Value = ((int)e).ToString(),
-                Text = GetEnumDescription(e),  // Fetch Description attribute
+                Text = GetEnumDescription(e), 
                 Selected = (int)e == selectedVoucherType
             }).ToList();
         }
@@ -173,15 +173,15 @@ namespace RDCELERP.Core.App.Pages.EcomVoucher
         /// </summary>
         /// <param name="selectedVoucherType"></param>
         /// <returns></returns>
-        public List<SelectListItem> GetVoucherValueTypeList(int selectedVoucherType)
+        public List<SelectListItem> GetVoucherValueTypeList(int selectedvalueType)
         {
             var enumValues = Enum.GetValues(typeof(EcomVoucherValueTypeEnum)).Cast<EcomVoucherValueTypeEnum>();
 
             return enumValues.Select(e => new SelectListItem
             {
                 Value = ((int)e).ToString(),
-                Text = GetEnumDescription(e),  // Fetch Description attribute
-                Selected = (int)e == selectedVoucherType
+                Text = GetEnumDescription(e),  
+                Selected = (int)e == selectedvalueType
             }).ToList();
         }
 

@@ -51,7 +51,7 @@ namespace RDCELERP.BAL.MasterManager
                         TblBookingItem.ItemId= model.ItemId;
                         TblBookingItem.CustomerId = userid;
                         TblBookingItem.Quantity = model.Quantity;
-                        TblBookingItem.TotalPrice = model.Quantity * model.Price;
+                        TblBookingItem.TotalPrice = model.Quantity * model.Mrp;
 
                   //Code to Insert the object
                         TblBookingItem.IsActive = true;

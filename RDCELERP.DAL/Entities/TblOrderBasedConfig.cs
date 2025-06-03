@@ -15,6 +15,7 @@ namespace RDCELERP.DAL.Entities
         public bool? IsActive { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
+        public bool? IsOldProductBaseSweetener { get; set; }
 
         public virtual TblBrand? Brand { get; set; }
         public virtual TblBusinessPartner? BusinessPartner { get; set; }
