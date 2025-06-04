@@ -279,7 +279,7 @@
     <button type="submit" class="allbtn">Checkout</button>
 </form> *@
 <div class="container mt-4">
-    <form id="itemForm" method="post" action="/your-submit-endpoint">
+    <form id="itemForm" method="post">
 
         <!-- Filters Section -->
         <div class="row mb-3 filters-container">
@@ -395,108 +395,4 @@
         });
     });
 </script>
-@* 
-<script>
-    $(document).ready(function () {
-        var userId = '@loginVM.BusinessCustomerViewModel.BusinessCustomerId';
-        var table;
 
-        // Function to initialize DataTable
-        function loadTable(searchValue = '', businessTypeId = '') {
-            if ($.fn.DataTable.isDataTable('#ItemDataTable')) {
-                $('#ItemDataTable').DataTable().destroy();
-            }
-
-            table = $('#ItemDataTable').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "ajax": {
-                    "url": "@URLPrefixforProd/api/ListPage/GetItems",
-                    "type": "POST",
-                    "data": {
-                        customerid: userId,
-                        searchValue: searchValue,
-                        businessTypeId: businessTypeId
-
-                    }
-                },
-                "columns": [
-                    { "data": "itemId", "visible": false }, // Hidden Item ID
-                    { "data": "name", "name": "ItemName" }, // Item Name
-                    {
-                        "data": "price",
-                        "render": function (data) {
-                            return `₹${data}`;
-                        }
-                    }, // Price Display
-                    {
-                        "data": "price",
-                        "render": function (data, type, row, meta) {
-                            return `<input type="hidden" name="ListItemViewModels[${meta.row}].Price" value="${data}" />`;
-                        },
-                        "orderable": false,
-                        "searchable": false
-                    }, // Hidden Price Input
-                    {
-                        "data": "itemId",
-                        "render": function (data, type, row, meta) {
-                            return `<input type="hidden" name="ListItemViewModels[${meta.row}].ItemId" value="${data}" />`;
-                        },
-                        "orderable": false,
-                        "searchable": false
-                    }, // Hidden Item ID Input
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return `<input type="checkbox" name="ListItemViewModels[${meta.row}].IsSelected" value="true" />`;
-                        },
-                        "orderable": false,
-                        "searchable": false
-                    }, // Checkbox for Selection
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return `<input type="number" name="ListItemViewModels[${meta.row}].Quantity" min="1" value="1" class="quantity-box" />`;
-                        },
-                        "orderable": false,
-                        "searchable": false
-                    } // Quantity Input
-                ],
-                "oLanguage": {
-                    "sEmptyTable": "No items found."
-                },
-                "responsive": true
-            });
-        }
-
-        // Initial table load
-        loadTable();
-
-        // Filter button click event
-        $('#filterBtn').on('click', function () {
-            var searchValue = $('#searchBox').val();
-            var businessTypeId = $('#businessType').val();
-
-
-            loadTable(searchValue, businessTypeId);
-        });
-
-        // Handle form submission
-        $('#itemForm').on('submit', function (e) {
-            e.preventDefault(); // Prevent default form submission
-
-            $.ajax({
-                url: $(this).attr('action'),
-                method: 'POST',
-                data: $(this).serialize(),
-                success: function (response) {
-                    alert('Items submitted successfully!');
-                    console.log(response);
-                },
-                error: function (error) {
-                    console.error('Submission Error:', error);
-                }
-            });
-        });
-    });
-</script> *@

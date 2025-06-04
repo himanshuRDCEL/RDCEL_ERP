@@ -4,6 +4,7 @@ using RDCELERP.Common.Constant;
 using RDCELERP.Common.Helper;
 using RDCELERP.DAL.Entities;
 using RDCELERP.DAL.IRepository;
+using RDCELERP.DAL.Repository;
 using RDCELERP.Model.BusinessCustomer;
 using System;
 using System.Collections.Generic;
@@ -70,6 +71,26 @@ namespace RDCELERP.BAL.MasterManager
             }
 
             return flag;
+        }
+
+
+        public BookingItemViewModel GetBookingItemDetailByCustomerId(int customerid)
+        {
+            TblBookingItem TblBookingItem = null;
+            BookingItemViewModel BookingItemViewModel = null;
+            try
+            {
+                TblBookingItem = _BookingItemRepository.GetSingle(x=>x.CustomerId == customerid && x.IsActive==true);
+                if (TblBookingItem != null)
+                {
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                _logging.WriteErrorToDB("LogisticManager", "GetServicePartnerDetails", ex);
+            }
+            return BookingItemViewModel;
         }
     }
 }
