@@ -1,7 +1,64 @@
 @charset "UTF-8";
 
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+/*car css*/
+.cart-container {
+    padding: 40px 15px;
+}
 
+.cart-item {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+    .cart-item:hover {
+        transform: translateY(-2px);
+    }
+
+.cart-img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #dee2e6;
+}
+
+.quantity-box {
+    width: 70px;
+}
+
+.cart-summary {
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+    .cart-summary h5 {
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+.btn-checkout {
+    background: #E30613 !important;
+    color: #fff!important;
+    font-weight: bold;
+    border: none;
+    transition: background 0.3s ease;
+}
+
+
+
+.quantity-input {
+    width: 12% !important;
+    padding: 8px 7px !important;
+    text-align: center;
+}
+/*cart css end*/
 
 .actionbtns {
     display: flex;

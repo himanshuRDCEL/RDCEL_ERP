@@ -159,7 +159,7 @@
 
     /* Product Card Container */
     .product-card {
-        width: 250px;
+        width: auto;
         background: #fff;
         border-radius: 10px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -248,6 +248,53 @@
         align-items: center;
         justify-content: center;
     }
+
+    .ellipsis-multiline{
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .addtocartbtn{
+        border: 1px solid #000;
+        width: 100%;
+        font-weight: bold;
+    }
+    .addtocartbtn:hover{
+        background:#000;
+        color:#fff;
+    }
+     
+   .h-search-form input{
+     width: 47%;
+    padding: 0 30px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+    text-transform: capitalize;
+    position: relative;
+    color: #333;
+    height: 54px;
+   }
+   .h-search-form button{
+         position: relative;
+    right: 110px;
+    height: 36px;
+    color: #fff;
+    background: #000;
+    top: 1px;
+    border-radius: 50px;
+    border: none;
+    width: 100px;
+    font-weight: 600;
+    text-transform: capitalize;
+   }
+   .h-search-form button:hover{
+      background: darkblue;
+   }
+
+
 </style>
 <!-- Welcome Message -->
 <div class="welcome" id="welcomeText"></div>
@@ -283,10 +330,17 @@
 
         <!-- Filters Section -->
         <div class="row mb-3 filters-container">
-            <div class="col-md-3">
-                <label for="searchBox" class="form-label">Search Item</label>
-                <input type="text" id="searchBox" class="form-control" placeholder="Search by item name">
-            </div>
+            <div class="h-search-form">
+   <form action="#">
+      <input type="search" name="search" placeholder="Search..">
+      <button>Filter</button>
+   </form>
+</div>
+ 
+            @* <div class="col-md-3"> *@
+            @*     <label for="searchBox" class="form-label">Search Item</label> *@
+            @*     <input type="text" id="searchBox" class="form-control" placeholder="Search by item name"> *@
+            @* </div> *@
 
            @*  <div class="col-md-3">
                 <label for="businessType" class="form-label">Business Type</label>
@@ -299,9 +353,9 @@
             </div> *@
 
 
-            <div class="col-md-2 d-flex align-items-end">
-                <button type="button" id="filterBtn" class="btn btn-primary w-100">Filter</button>
-            </div>
+            @* <div class="col-md-2 d-flex align-items-end"> *@
+            @*     <button type="button" id="filterBtn" class="btn btn-primary w-100">Filter</button> *@
+            @* </div> *@
         </div>
 
         <!-- DataTable
@@ -324,30 +378,16 @@
 
         </tbody>
             </table> -->
-
-        <div class="maincard" id="item-container">
-            <div class="product-card">
-                <img src="https://rockingdeals.in/wp-content/uploads/2024/12/R-3901-03-1-400x400.png"
-                     alt="Product Image" class="product-image" style="max-width: 200px;">
-                <div class="product-details">
-                    <h3 class="product-name">Product Name</h3>
-                    <p class="product-description">Short description of the product goes here.</p>
-                    <span class="product-price">₹5000</span>
-                    <div class="product-actions">
-
-                        <div class="select-container">
-                            <input type="checkbox" id="select-product">
-                            <label for="select-product"><strong>Select</strong></label>
-                        </div>
-                        <input type="number" class="quantity-box" min="1" value="1">
-                    </div>
-                </div>
-            </div>
+        <div class="container">
+            <div class="row" id="item-container">
+        
+            
+        </div>
         </div>
         <!-- Submit Button -->
-        <div class="mt-3 text-end">
+       @*  <div class="mt-3 text-end">
             <button type="submit" class="btn btn-success allbtn">Submit Selected Items</button>
-        </div>
+        </div> *@
 
     </form>
 </div>
@@ -386,7 +426,26 @@
                         container.append(html);
                     });
                 } else {
-                    container.append('<p>No items found.</p>');
+                        container.append(`
+      <p>No items found.</p>
+      <div class="col-md-4 mb-4">
+        <div class="product-card bg-white p-3 border rounded">
+          <img src="https://limegreen-whale-280151.hostingersite.com/wp-content/uploads/2025/05/coffee-maker_6-300x300.jpg" alt="Static Product" class="product-img w-100 mb-3">
+          <h5>Coffee Maker</h5>
+          <p class="text-muted small ellipsis-multiline">Morphy Richard</p>
+          <p class="fw-bold text-primary mb-2">₹5000</p>
+
+          <input type="hidden" name="ListItemViewModels[0].Price" value="500">
+          <input type="hidden" name="ListItemViewModels[0].ItemId" value="101">
+
+          <div class="mb-2">
+              <a href="#" class="btn addtocartbtn">ADD TO CART</a>
+
+          </div>
+        </div>
+      </div>
+    `);
+    
                 }
             },
             error: function (xhr, status, error) {
