@@ -25,6 +25,8 @@
     <link href="~/newlayout/css/v2.0.css" rel="stylesheet" />
 
     <script src="~/NewLayout/vendor/jquery/jquery-3.6.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
     <script src="~/NewLayout/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/NewLayout/vendor/@@popperjs/core/dist/umd/popper.min.js"></script>
 
@@ -52,7 +54,7 @@
     //    button = "Ok!";
     //}
 
-    if (loginVM != null && loginVM.RoleViewModel.CompanyId == null || loginVM.RoleViewModel.CompanyId == 0)
+    if ((loginVM != null && loginVM.RoleViewModel.CompanyId == null || loginVM.RoleViewModel.CompanyId == 0) && (loginVM.RoleViewModel.RoleId!= 3089))
     {
         if (ViewBag.UrlNew != null && ViewBag.UrlNew != "/Company/SelectCompany")
         {

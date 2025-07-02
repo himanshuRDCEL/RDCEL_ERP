@@ -40,5 +40,21 @@ namespace RDCELERP.Model.BusinessCustomer
         public int? ItemType { get; set; }
         public bool IsSelected { get; set; }
         public int Quantity { get; set; }
+        public int ItemMasterId { get; set; }
+        public string? ItemImage1 { get; set; }
+
+        public decimal? B2bPrice { get; set; }
+
+    }
+
+    public  class CartItemViewModel
+    {
+        public int ItemId { get; set; }
+        public int ItemMasterId { get; set; }
+        public string Name { get; set; }
+        public string ImageUrl { get; set; }
+        public string Brand { get; set; }
+        public decimal B2BPrice { get; set; }
+        public int Quantity { get; set; } = 1;
     }
 }

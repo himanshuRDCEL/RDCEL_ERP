@@ -1,0 +1,96 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.B2BItems.OrderListModel
+@{
+
+    ViewData["Title"] = "Order List";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int i = 0;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="page-container">
+    <div class="row">
+        <div class="page-container__title">
+            <h1>Order History</h1>
+
+        </div>
+    </div>
+
+    <div class="page-container__main data-table-rows">
+        <table id="orderDatatable" class="table dataTable">
+            <thead>
+                <tr>
+                    <th>
+                        BookingItemId
+                    </th>
+                    <th>
+                        Order No
+                    </th>
+                    <th>
+                        Item Desc
+                    </th>
+
+                    <th>
+                        Created Date
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>Actions</th>
+
+                </tr>
+            </thead>
+        </table>
+
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+       
+        // var url = "";
+        var url = "@URLPrefixforProd/api/ListPage/GetAllItemBooking" ;
+        console.log(url);
+
+        $('#orderDatatable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "filter": true,
+            "oLanguage": {
+                "sEmptyTable": "No Order Found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": true,
+                "searchable": true
+            }],
+            "dom": '<"filters"lfi><"separator">tp',
+            "responsive": true,
+            "columns": [
+                { "data": "bookingItemId", "name": "BookingItemId", "autoWidth": true, "orderable": false },
+                { "data": "orderNo", "name": "OrderNo", "autoWidth": true, "orderable": false },
+                { "data": "itemDesc", "name": "ItemDesc", "autoWidth": true, "orderable": true },
+                { "data": "createdDateString", "name": "CreatedDateString", "autoWidth": true, "orderable": false },
+                { "data": "itemStatusName", "name": "ItemStatusName", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Actions", "autoWidth": true, "orderable": false },
+
+            ]
+        });
+
+    });</script>

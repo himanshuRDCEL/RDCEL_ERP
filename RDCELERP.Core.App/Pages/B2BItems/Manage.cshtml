@@ -1,0 +1,374 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.B2BItem.ManageModel
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Layout";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+}
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+           alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 mb-0 card-title">
+                                    <a href="#"></a> Item Info
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="row detailed-reporting">
+                               
+
+                                <input type="hidden" asp-for="ItemMasterViewModel.ItemMasterId" id="hdnItemMasterId" />
+                                <input type="hidden" asp-for="ItemMasterViewModel.CreatedBy" />
+                                <input type="hidden" asp-for="ItemMasterViewModel.CreatedDate" />
+                                <input type="hidden" asp-for="ItemMasterViewModel.IsActive" />
+                                <input type="hidden" asp-for="ItemMasterViewModel.ModifiedBy" />
+                                <input type="hidden" asp-for="ItemMasterViewModel.ModifiedDate" />
+                                
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Item </label>
+                                    <input asp-for="ItemMasterViewModel.ItemDesc" class="form-control"  />
+                                    <span asp-validation-for="ItemMasterViewModel.ItemDesc" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="col-md-4 mb-4">
+                                    <label for="">B2B Price</label>
+                                    <input type="text" asp-for="ItemMasterViewModel.B2bPrice" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.B2bPrice" class="text-danger"></span>
+                                    <span class="text-danger" id="message"></span>
+                                </div>
+
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Location Code </label>
+                                    <input asp-for="ItemMasterViewModel.LocationCode" class="form-control"  />
+                                    <span asp-validation-for="ItemMasterViewModel.LocationCode" class="text-danger"></span>
+                                </div>
+
+                                
+                                     <div class="col-md-4 mb-4">
+                                    <label for="">Item Code</label>
+                                    <input type="text" asp-for="ItemMasterViewModel.Itemcode" class="form-control"  />
+                                    <span asp-validation-for="ItemMasterViewModel.Itemcode" class="text-danger"></span>
+                                    <span class="text-danger" id="message"></span>
+                                </div>
+    
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Phone </label>
+                                    <input asp-for="ItemMasterViewModel.Ean" class="form-control"  />
+                                    <span asp-validation-for="ItemMasterViewModel.Ean" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Mrp </label>
+                                    <input asp-for="ItemMasterViewModel.Mrp" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.Mrp" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+
+                                 <div class="col-md-4 mb-3">
+                                    <label for="">Mrp </label>
+                                    <input asp-for="ItemMasterViewModel.Qty" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.Qty" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+                                
+                                 <div class="col-md-4 mb-3">
+                                    <label for="">Mrp </label>
+                                    <input asp-for="ItemMasterViewModel.Brand" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.Brand" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+
+                               <div class="col-md-4 mb-3">
+                                    <label for="">SubCat </label>
+                                    <input asp-for="ItemMasterViewModel.SubCat" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.SubCat" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+
+                             <div class="col-md-4 mb-3">
+                                    <label for="">Size </label>
+                                    <input asp-for="ItemMasterViewModel.Size" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.Size" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+
+                              <div class="col-md-4 mb-3">
+                                    <label for="">Colour </label>
+                                    <input asp-for="ItemMasterViewModel.Colour" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.Colour" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+                                    <div class="col-md-4 mb-3">
+                                    <label for="">Condition </label>
+                                    <input asp-for="ItemMasterViewModel.Condition" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.Condition" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+                               
+                                    <div class="col-md-4 mb-3">
+                                <label for="">Gender </label>
+                                <input asp-for="ItemMasterViewModel.Gender" class="form-control" />
+                                <span asp-validation-for="ItemMasterViewModel.Gender" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+
+                                
+                                    <div class="col-md-4 mb-3">
+                                    <label for="">Division </label>
+                                    <input asp-for="ItemMasterViewModel.Division" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.Division" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+                                  <div class="col-md-4 mb-3">
+                                    <label for="">Section </label>
+                                    <input asp-for="ItemMasterViewModel.Section" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.Section" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+                                
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Department </label>
+                                    <input asp-for="ItemMasterViewModel.Department" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.Department" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+                                  
+                                <div class="col-md-4 mb-3">
+                                    <label for="">CostPrice </label>
+                                    <input asp-for="ItemMasterViewModel.CostPrice" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.CostPrice" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+
+                                 <div class="col-md-4 mb-3">
+                                    <label for="">Rsp </label>
+                                    <input asp-for="ItemMasterViewModel.Rsp" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.Rsp" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+                                 <div class="col-md-4 mb-3">
+                                    <label for="">ExpiryDate </label>
+                                    <input asp-for="ItemMasterViewModel.ExpiryDate" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.ExpiryDate" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+                                  <div class="col-md-4 mb-3">
+                                    <label for="">Uom </label>
+                                    <input asp-for="ItemMasterViewModel.Uom" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.Uom" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+                                 <div class="col-md-4 mb-3">
+                                    <label for="">Hsn </label>
+                                    <input asp-for="ItemMasterViewModel.Hsn" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.Hsn" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+                                 <div class="col-md-4 mb-3">
+                                    <label for="">Hsnid </label>
+                                    <input asp-for="ItemMasterViewModel.Hsnid" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.Hsnid" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Quantity </label>
+                                    <input asp-for="ItemMasterViewModel.ItemViewModel[0].Qty" class="form-control" />
+                                  
+                                </div>
+                                 
+                                  <div class="col-md-4 mb-3">
+                                    <label for="">ItemImage1 </label>
+                                    <input id="imageUrlInput"  asp-for="ItemMasterViewModel.ItemImage1" class="form-control" />
+                                    <span  asp-validation-for="ItemMasterViewModel.ItemImage1" class="text-danger"></span>
+                                    <span class="text-danger" id="messages"></span>
+                                </div>
+                                @if (Model.ItemMasterViewModel.ItemImage1 != null && Model.ItemMasterViewModel.ItemImage1 != "")
+                                {
+                                    <img id="imagePreview" src="@Model.ItemMasterViewModel.ItemImage1" alt="Image Preview" style="max-width: 300px;margin-top:10px;" />
+                                }
+                                else
+                                {
+                                    <img id="imagePreview" src="" alt="Image Preview" style="max-width: 300px; display:none; margin-top:10px;" />
+                                }
+                               
+                                <p id="errorText" style="color:red;"></p>
+
+                                  <div class="col-md-4 mb-3">
+                                    <label for="">ItemImage2 </label>
+                                    <input id="imageUrlInput2" asp-for="ItemMasterViewModel.ItemImage2" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.ItemImage2" class="text-danger"></span>
+                                    <span class="text-danger" id="messages2"></span>
+                                </div>
+                                @if (Model.ItemMasterViewModel.ItemImage2 != null && Model.ItemMasterViewModel.ItemImage2!="")
+                                {
+                                    <img id="imagePreview2" src="@Model.ItemMasterViewModel.ItemImage2" alt="Image Preview" style="max-width: 300px;margin-top:10px;" />
+                                }
+                                else
+                                {
+                                    <img id="imagePreview2" src="" alt="Image Preview" style="max-width: 300px; display:none; margin-top:10px;" />
+                                }
+
+                                <p id="errorText2" style="color:red;"></p>
+                                <div class="col-md-4 mb-3">
+                                    <label for="">ItemImage3 </label>
+                                    <input id="imageUrlInput3" asp-for="ItemMasterViewModel.ItemImage3" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.ItemImage3" class="text-danger"></span>
+                                    <span class="text-danger" id="messages3"></span>
+                                </div>
+                                @if (Model.ItemMasterViewModel.ItemImage3 != null && Model.ItemMasterViewModel.ItemImage3 != "")
+                                {
+                                    <img id="imagePreview3" src="@Model.ItemMasterViewModel.ItemImage3" alt="Image Preview" style="max-width: 300px;margin-top:10px;" />
+                                }
+                                else
+                                {
+                                    <img id="imagePreview3" src="" alt="Image Preview" style="max-width: 300px; display:none; margin-top:10px;" />
+                                }
+                                <p id="errorText3" style="color:red;"></p>
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="">ItemImage4 </label>
+                                    <input id="imageUrlInput4" asp-for="ItemMasterViewModel.ItemImage4" class="form-control" />
+                                    <span asp-validation-for="ItemMasterViewModel.ItemImage4" class="text-danger"></span>
+                                    <span class="text-danger" id="messages4"></span>
+                                </div>
+                                @if (Model.ItemMasterViewModel.ItemImage4 != null && Model.ItemMasterViewModel.ItemImage4 != "")
+                                {
+                                    <img id="imagePreview4" src="@Model.ItemMasterViewModel.ItemImage4" alt="Image Preview" style="max-width: 300px;margin-top:10px;" />
+                                }
+                                else
+                                {
+                                    <img id="imagePreview4" src="" alt="Image Preview" style="max-width: 300px; display:none; margin-top:10px;" />
+                                }
+                                <p id="errorText4" style="color:red;"></p>
+
+                            </div>
+
+                   
+                            <div class="row">
+                               
+                                <div class="col-6 text-end">
+                                  
+                                        <input type="submit" id="Savebtn" value="Save" class="btn btn-primary mainshadow" />
+                                  
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $('#imageUrlInput').on('input', function () {
+        var url = $(this).val().trim();
+        var img = $('#imagePreview');
+        var error = $('#errorText');
+
+        // Check for valid image URL format
+        if (url.match(/\.(jpeg|jpg|gif|png|webp|bmp|svg)$/i)) {
+            img.attr('src', url).show();
+            error.text('');
+        } else {
+            img.hide().attr('src', '');
+            error.text('Please enter a valid image URL (e.g., jpg, png).');
+        }
+
+        // Optional: Handle broken image link
+        img.off('error').on('error', function () {
+            $(this).hide().attr('src', '');
+            error.text('Image could not be loaded. Please check the URL.');
+        });
+    });
+</script>
+
+<script>
+    $('#imageUrlInput2').on('input', function () {
+        var url = $(this).val().trim();
+        var img = $('#imagePreview2');
+        var error = $('#errorText2');
+
+        console.log(url);
+        // Check for valid image URL format
+        if (url.match(/\.(jpeg|jpg|gif|png|webp|bmp|svg)$/i)) {
+            img.attr('src', url).show();
+            error.text('');
+        } else {
+            img.hide().attr('src', '');
+            error.text('Please enter a valid image URL (e.g., jpg, png).');
+        }
+
+        // Optional: Handle broken image link
+        img.off('error').on('error', function () {
+            $(this).hide().attr('src', '');
+            error.text('Image could not be loaded. Please check the URL.');
+        });
+    });
+</script>
+
+<script>
+    $('#imageUrlInput3').on('input', function () {
+        var url = $(this).val().trim();
+        var img = $('#imagePreview3');
+        var error = $('#errorText3');
+
+        // Check for valid image URL format
+        if (url.match(/\.(jpeg|jpg|gif|png|webp|bmp|svg)$/i)) {
+            img.attr('src', url).show();
+            error.text('');
+        } else {
+            img.hide().attr('src', '');
+            error.text('Please enter a valid image URL (e.g., jpg, png).');
+        }
+
+        // Optional: Handle broken image link
+        img.off('error').on('error', function () {
+            $(this).hide().attr('src', '');
+            error.text('Image could not be loaded. Please check the URL.');
+        });
+    });
+</script>
+<script>
+    $('#imageUrlInput4').on('input', function () {
+        var url = $(this).val().trim();
+        var img = $('#imagePreview4');
+        var error = $('#errorText4');
+
+        // Check for valid image URL format
+        if (url.match(/\.(jpeg|jpg|gif|png|webp|bmp|svg)$/i)) {
+            img.attr('src', url).show();
+            error.text('');
+        } else {
+            img.hide().attr('src', '');
+            error.text('Please enter a valid image URL (e.g., jpg, png).');
+        }
+
+        // Optional: Handle broken image link
+        img.off('error').on('error', function () {
+            $(this).hide().attr('src', '');
+            error.text('Image could not be loaded. Please check the URL.');
+        });
+    });
+</script>

@@ -1,0 +1,36 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.BusinessCustomer.OrderHistDetailModel
+@{
+    ViewData["Title"] = "Order History ";
+    Layout = "_B2BCustomerLayout";
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+
+}
+@foreach (var order in Model.OrderHistoryList)
+{
+    <div class="order-card">
+        <h3>Order No: @order.OrderId</h3>
+        <p>Date: @order.BookingDate</p>
+
+        <h4>Items:</h4>
+        <ul>
+            @foreach (var item in order.Items)
+            {
+                <li style="margin-bottom: 10px;">
+                    <b>@item.ItemName</b> - Qty: @item.Quantity<br />
+                    <span>Status: @item.BookingStatusSummary</span>
+                </li>
+            }
+        </ul>
+
+        @if (order.Payment != null)
+        {
+            <div style="margin-top: 10px;">
+                <b>Payment:</b> ₹@order.Payment.Amount - 
+                @order.Payment.PaymentStatus (@order.Payment.PaymentMode)
+            </div>
+        }
+
+        <hr style="margin: 20px 0;" />
+    </div>
+}

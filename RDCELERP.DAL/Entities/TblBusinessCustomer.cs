@@ -7,8 +7,15 @@ namespace RDCELERP.DAL.Entities
     {
         public TblBusinessCustomer()
         {
-            TblBookingItems = new HashSet<TblBookingItem>();
+            TblBookingItemCreatedByNavigations = new HashSet<TblBookingItem>();
+            TblBookingItemCustomers = new HashSet<TblBookingItem>();
+            TblBookingItemModifiedByNavigations = new HashSet<TblBookingItem>();
+            TblBtoBpayments = new HashSet<TblBtoBpayment>();
             TblCustomerCompanies = new HashSet<TblCustomerCompany>();
+            TblItemCarts = new HashSet<TblItemCart>();
+            TblItemMasterCreatedByNavigations = new HashSet<TblItemMaster>();
+            TblItemMasterModifiedByNavigations = new HashSet<TblItemMaster>();
+            TblItems = new HashSet<TblItem>();
         }
 
         public int BusinessCustomerId { get; set; }
@@ -38,10 +45,22 @@ namespace RDCELERP.DAL.Entities
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? LastLogin { get; set; }
+        public string? ShippingZip { get; set; }
+        public string? ShippingStreet { get; set; }
+        public string? ShippingCity { get; set; }
+        public string? ShippingCountry { get; set; }
+        public string? ShippingState { get; set; }
 
         public virtual TblUser? CreatedByNavigation { get; set; }
         public virtual TblUser? ModifiedByNavigation { get; set; }
-        public virtual ICollection<TblBookingItem> TblBookingItems { get; set; }
+        public virtual ICollection<TblBookingItem> TblBookingItemCreatedByNavigations { get; set; }
+        public virtual ICollection<TblBookingItem> TblBookingItemCustomers { get; set; }
+        public virtual ICollection<TblBookingItem> TblBookingItemModifiedByNavigations { get; set; }
+        public virtual ICollection<TblBtoBpayment> TblBtoBpayments { get; set; }
         public virtual ICollection<TblCustomerCompany> TblCustomerCompanies { get; set; }
+        public virtual ICollection<TblItemCart> TblItemCarts { get; set; }
+        public virtual ICollection<TblItemMaster> TblItemMasterCreatedByNavigations { get; set; }
+        public virtual ICollection<TblItemMaster> TblItemMasterModifiedByNavigations { get; set; }
+        public virtual ICollection<TblItem> TblItems { get; set; }
     }
 }

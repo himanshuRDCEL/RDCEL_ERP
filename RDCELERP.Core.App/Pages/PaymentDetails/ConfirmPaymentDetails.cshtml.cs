@@ -55,10 +55,11 @@ namespace RDCELERP.Core.App.Pages.PaymentDetails
         IEVCManager _EVCManager;
         IOptions<ApplicationSettings> _config;
         IWebHostEnvironment _webHostEnvironment;
+        IRazorpayXService _razorpayXService;
         #endregion
 
         #region Constructor
-        public ConfirmPaymentDetailsModel(IQCCommentManager qcCommentManager, ICustomerDetailsRepository customerDetailsRepository, IUPIIdVerification upiverification, ICashfreePayoutCall cashfreePayoutCall, ILogging logging, IExchangeABBStatusHistoryRepository exchangeABBStatusHistoryRepository, IDropdownManager dropdownManager, IOrderTransRepository orderTransRepository, IOrderQCRepository orderQCRepository, IBusinessPartnerRepository businessPartnerRepository, ICommonManager commonManager, IExchangeOrderRepository exchangeOrderRepository, IABBRedemptionRepository aBBRedemptionRepository, IAbbRegistrationRepository abbRegistrationRepository, IEVCManager eVCManager, IOptions<ApplicationSettings> config, IWebHostEnvironment webHostEnvironment)
+        public ConfirmPaymentDetailsModel(IQCCommentManager qcCommentManager, ICustomerDetailsRepository customerDetailsRepository, IUPIIdVerification upiverification, ICashfreePayoutCall cashfreePayoutCall, ILogging logging, IExchangeABBStatusHistoryRepository exchangeABBStatusHistoryRepository, IDropdownManager dropdownManager, IOrderTransRepository orderTransRepository, IOrderQCRepository orderQCRepository, IBusinessPartnerRepository businessPartnerRepository, ICommonManager commonManager, IExchangeOrderRepository exchangeOrderRepository, IABBRedemptionRepository aBBRedemptionRepository, IAbbRegistrationRepository abbRegistrationRepository, IEVCManager eVCManager, IOptions<ApplicationSettings> config, IWebHostEnvironment webHostEnvironment,IRazorpayXService razorpayXService)
         {
             _QcCommentManager = qcCommentManager;
             _customerDetailsRepository = customerDetailsRepository;
@@ -77,6 +78,7 @@ namespace RDCELERP.Core.App.Pages.PaymentDetails
             _EVCManager = eVCManager;
             _config = config;
             _webHostEnvironment = webHostEnvironment;
+            _razorpayXService = razorpayXService;   
         }
         #endregion
 
@@ -335,7 +337,7 @@ namespace RDCELERP.Core.App.Pages.PaymentDetails
             #endregion
             return Page();
         }
-        public IActionResult OnPostAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
             try
             {
@@ -422,107 +424,212 @@ namespace RDCELERP.Core.App.Pages.PaymentDetails
                                     #endregion
                                 }
                             }
+                            //if (UpiNoViewModel.UPIId != null)
+                            //{
+                            //    cashfreeAuthCall = _cashfreePayoutCall.CashFreeAuthCall();
+                            //    cashfreeAuthCall.subCode = subcode;
+                            //    if (cashfreeAuthCall.subCode == subcode)
+                            //    {
+                            //        root = _UpiIdVerification.CheckUpiId(UpiNoViewModel.Regdno, UpiNoViewModel.UPIId, cashfreeAuthCall.data.token);
+                            //        root.subCode = "200";
+                            //        if (root.subCode == subcode )//&& root.data.accountExists == "YES")
+                            //            {
+                            //            int statusid = !String.IsNullOrEmpty(HttpContext.Request.Query["status"]) ? Convert.ToInt32(HttpContext.Request.Query["status"]) : 0;
+
+                            //            if ((statusid == (int?)OrderStatusEnum.Waitingforcustapproval || statusid == (int?)OrderStatusEnum.QCByPass))
+                            //            {
+                            //                UpiNoViewModel.StatusId 
+                            //                    = Convert.ToInt32(HttpContext.Request.Query["status"]);
+                            //                UpiNoViewModel.Userid = UpiNoViewModel.Userid == 0 || UpiNoViewModel.Userid == null ? 3 : UpiNoViewModel.Userid;
+                            //                result = _QcCommentManager.SaveUpino(UpiNoViewModel);
+                            //                if (result > 0)
+                            //                {
+                            //                   beneficiaryResponse = AddBeneficiary(UpiNoViewModel, tblOrderTran, cashfreeAuthCall);
+                            //                   beneficiaryResponse.subCode = subcode;
+                            //                    if (beneficiaryResponse.subCode == subcode)
+                            //                    {
+                            //                        string beneficiaryResponseMsg = beneficiaryResponse.message;
+                            //                        ViewData["Message"] = beneficiaryResponseMsg;
+
+                            //                        Exception e = new Exception(beneficiaryResponseMsg);
+                            //                        _logging.WriteErrorToDB("ConfirmPaymentDetailsModel", "OnPostAsync", e);
+
+                            //                        if (enableEvcAutoAllocation == true)
+                            //                        {
+                            //                            #region warehouse Auto-Allocation Phase II
+                            //                            return RedirectToPage("/Warehouse_Allocation/AutoAllocation", new { orderTransId = tblOrderTran.OrderTransId });
+                            //                            #endregion
+                            //                        }
+                            //                        else
+                            //                        {
+                            //                            return RedirectToPage("/ThankYouPage/ThankYou");
+                            //                        }
+                            //                    }
+                            //                    else
+                            //                    {
+                            //                        string beneficiaryResponseMsg = beneficiaryResponse.message;
+                            //                        ViewData["Message"] = beneficiaryResponseMsg;
+
+                            //                        Exception e = new Exception(beneficiaryResponseMsg);
+                            //                        _logging.WriteErrorToDB("ConfirmPaymentDetailsModel", "OnPostAsync", e);
+                            //                        return RedirectToPage("/ThankYouPage/ThankYou");
+                            //                    }
+                            //                }
+                            //                else
+                            //                    return Page();
+                            //            }
+                            //            else
+                            //            {
+                            //                UpiNoViewModel.Userid = Convert.ToInt32(HttpContext.Request.Query["userid"]);
+                            //                result = _QcCommentManager.SaveUPIIdByExchangemanage(UpiNoViewModel);
+                            //                if (result > 0)
+                            //                    return RedirectToPage("/ThankYouPage/ThankYou");
+                            //                else
+                            //                    return Page();
+                            //            }
+                            //        }
+
+                            //        else if (subcode==root.subCode && string.IsNullOrEmpty(root.data.nameAtBank)&& root.data.accountExists=="NO")
+
+                            //        {
+                            //            var timeslot = _dropdownManager.GetTimeSlot();
+                            //            if (timeslot != null)
+                            //            {
+                            //                ViewData["timeslot"] = new SelectList(timeslot, "Value", "Text");
+                            //            }
+                            //            ViewData["Message"] = "Upi id is not valid";
+                            //            IsUPIQrRequired = _config.Value.IsUPIQrRequired;
+                            //        }
+                            //        else
+                            //        {
+                            //            if (root.message != null && root.message.Contains("Please provide a valid Name"))
+                            //            {
+                            //                InvalidName = root.message;
+                            //                InvalidName = "Please provide a valid Name";
+                            //                ViewData["Message"] = "Please provide a valid Name";
+                            //            }
+
+                            //            var timeslot = _dropdownManager.GetTimeSlot();
+                            //            if (timeslot != null)
+                            //            {
+                            //                ViewData["timeslot"] = new SelectList(timeslot, "Value", "Text");
+                            //            }
+                            //            string invalidupiid = root.message;
+                            //            ViewData["Message"] = invalidupiid;
+                            //            IsUPIQrRequired = _config.Value.IsUPIQrRequired;
+                            //        }
+                            //    }
+                            //    else
+                            //    {
+                            //        string cashfreeAuthCallMsg = cashfreeAuthCall.message;
+                            //        ViewData["Message"] = cashfreeAuthCallMsg;
+                            //    }
+                            //}
+
                             if (UpiNoViewModel.UPIId != null)
                             {
-                                cashfreeAuthCall = _cashfreePayoutCall.CashFreeAuthCall();
-                                cashfreeAuthCall.subCode = subcode;
-                                if (cashfreeAuthCall.subCode == subcode)
+                                tblExchangeOrder = _exchangeOrderRepository.GetExchOrderByRegdNo(UpiNoViewModel.Regdno);
+                                if (tblExchangeOrder != null)
                                 {
-                                    //root = _UpiIdVerification.CheckUpiId(UpiNoViewModel.Regdno, UpiNoViewModel.UPIId, cashfreeAuthCall.data.token);
-                                    root.subCode = "200";
-                                    if (root.subCode == subcode )//&& root.data.accountExists == "YES")
+                                    tblCustomerDetail = _customerDetailsRepository.GetCustDetails(tblExchangeOrder.CustomerDetailsId);
+                                    if (tblCustomerDetail != null)
+                                    {
+                                        UpiNoViewModel.CustomerEmail = tblCustomerDetail.Email;
+                                        UpiNoViewModel.CustomerPhone = tblCustomerDetail.PhoneNumber;
+                                        UpiNoViewModel.CustomerFirstName = tblCustomerDetail.FirstName;
+                                        UpiNoViewModel.CustomerLastName = tblCustomerDetail.LastName;
+                                    }
+                                }
+                                    // Create Razorpay Contact
+                                    var contactPayload = new
+                                {
+                                    name = $"{UpiNoViewModel.CustomerFirstName} {UpiNoViewModel.CustomerLastName}",
+                                    email = UpiNoViewModel.CustomerEmail,
+                                    contact = UpiNoViewModel.CustomerPhone,
+                                    type = "customer",
+                                    reference_id = UpiNoViewModel.Regdno
+                                };
+
+                                var contactResponse = await  _razorpayXService.CreateContactAsync(contactPayload);
+                                if (contactResponse == null || string.IsNullOrEmpty(contactResponse.id.ToString()))
+                                {
+                                    ViewData["Message"] = "Failed to create RazorpayX contact";
+                                    return Page();
+                                }
+
+                                // Create Razorpay Fund Account (VPA/UPI)
+                                var fundAccountPayload = new
+                                {
+                                    contact_id = contactResponse.id,
+                                    account_type = "vpa",
+                                    vpa = new
+                                    {
+                                        address = UpiNoViewModel.UPIId
+                                    }
+                                };
+
+                                var fundAccountResponse = await _razorpayXService.CreateFundAccountAsync(fundAccountPayload);
+                                if (fundAccountResponse == null || string.IsNullOrEmpty(fundAccountResponse.id.ToString()))
+                                {
+                                    ViewData["Message"] = "Failed to create RazorpayX UPI fund account";
+                                    return Page();
+                                }
+
+
+                                tblCustomerDetail = _customerDetailsRepository.GetCustDetails(tblExchangeOrder.CustomerDetailsId);
+                                if (tblCustomerDetail != null)
+                                {
+                                    tblCustomerDetail.RazorPayxContactId = contactResponse.id;
+                                    tblCustomerDetail.RazorPayxFundAccountId = fundAccountResponse.id;
+                                    tblCustomerDetail.ModifiedBy = UpiNoViewModel.Userid ?? 3;
+                                    tblCustomerDetail.ModifiedDate = DateTime.Now;
+
+                                    _customerDetailsRepository.Update(tblCustomerDetail);
+                                    _customerDetailsRepository.SaveChanges();
+                                }
+
+
+                                int statusid = !String.IsNullOrEmpty(HttpContext.Request.Query["status"]) ? Convert.ToInt32(HttpContext.Request.Query["status"]) : 0;
+
+                                if (statusid == (int?)OrderStatusEnum.Waitingforcustapproval || statusid == (int?)OrderStatusEnum.QCByPass)
+                                {
+                                    UpiNoViewModel.StatusId = statusid;
+                                    UpiNoViewModel.Userid = UpiNoViewModel.Userid == 0 || UpiNoViewModel.Userid == null ? 3 : UpiNoViewModel.Userid;
+
+                                    result = _QcCommentManager.SaveUpino(UpiNoViewModel);
+                                    if (result > 0)
+                                    {
+                                        ViewData["Message"] = "RazorpayX beneficiary added successfully.";
+
+                                        if (enableEvcAutoAllocation == true)
                                         {
-                                        int statusid = !String.IsNullOrEmpty(HttpContext.Request.Query["status"]) ? Convert.ToInt32(HttpContext.Request.Query["status"]) : 0;
-                                       
-                                        if ((statusid == (int?)OrderStatusEnum.Waitingforcustapproval || statusid == (int?)OrderStatusEnum.QCByPass))
-                                        {
-                                            UpiNoViewModel.StatusId 
-                                                = Convert.ToInt32(HttpContext.Request.Query["status"]);
-                                            UpiNoViewModel.Userid = UpiNoViewModel.Userid == 0 || UpiNoViewModel.Userid == null ? 3 : UpiNoViewModel.Userid;
-                                            result = _QcCommentManager.SaveUpino(UpiNoViewModel);
-                                            if (result > 0)
-                                            {
-                                               //beneficiaryResponse = AddBeneficiary(UpiNoViewModel, tblOrderTran, cashfreeAuthCall);
-                                               beneficiaryResponse.subCode = subcode;
-                                                if (beneficiaryResponse.subCode == subcode)
-                                                {
-                                                    string beneficiaryResponseMsg = beneficiaryResponse.message;
-                                                    ViewData["Message"] = beneficiaryResponseMsg;
-
-                                                    Exception e = new Exception(beneficiaryResponseMsg);
-                                                    _logging.WriteErrorToDB("ConfirmPaymentDetailsModel", "OnPostAsync", e);
-
-                                                    if (enableEvcAutoAllocation == true)
-                                                    {
-                                                        #region warehouse Auto-Allocation Phase II
-                                                        return RedirectToPage("/Warehouse_Allocation/AutoAllocation", new { orderTransId = tblOrderTran.OrderTransId });
-                                                        #endregion
-                                                    }
-                                                    else
-                                                    {
-                                                        return RedirectToPage("/ThankYouPage/ThankYou");
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    string beneficiaryResponseMsg = beneficiaryResponse.message;
-                                                    ViewData["Message"] = beneficiaryResponseMsg;
-
-                                                    Exception e = new Exception(beneficiaryResponseMsg);
-                                                    _logging.WriteErrorToDB("ConfirmPaymentDetailsModel", "OnPostAsync", e);
-                                                    return RedirectToPage("/ThankYouPage/ThankYou");
-                                                }
-                                            }
-                                            else
-                                                return Page();
+                                            return RedirectToPage("/Warehouse_Allocation/AutoAllocation", new { orderTransId = tblOrderTran.OrderTransId });
                                         }
                                         else
                                         {
-                                            UpiNoViewModel.Userid = Convert.ToInt32(HttpContext.Request.Query["userid"]);
-                                            result = _QcCommentManager.SaveUPIIdByExchangemanage(UpiNoViewModel);
-                                            if (result > 0)
-                                                return RedirectToPage("/ThankYouPage/ThankYou");
-                                            else
-                                                return Page();
+                                            return RedirectToPage("/ThankYouPage/ThankYou");
                                         }
-                                    }
-
-                                    else if (subcode==root.subCode && string.IsNullOrEmpty(root.data.nameAtBank)&& root.data.accountExists=="NO")
-                                  
-                                    {
-                                        var timeslot = _dropdownManager.GetTimeSlot();
-                                        if (timeslot != null)
-                                        {
-                                            ViewData["timeslot"] = new SelectList(timeslot, "Value", "Text");
-                                        }
-                                        ViewData["Message"] = "Upi id is not valid";
-                                        IsUPIQrRequired = _config.Value.IsUPIQrRequired;
                                     }
                                     else
                                     {
-                                        if (root.message != null && root.message.Contains("Please provide a valid Name"))
-                                        {
-                                            InvalidName = root.message;
-                                            InvalidName = "Please provide a valid Name";
-                                            ViewData["Message"] = "Please provide a valid Name";
-                                        }
-
-                                        var timeslot = _dropdownManager.GetTimeSlot();
-                                        if (timeslot != null)
-                                        {
-                                            ViewData["timeslot"] = new SelectList(timeslot, "Value", "Text");
-                                        }
-                                        string invalidupiid = root.message;
-                                        ViewData["Message"] = invalidupiid;
-                                        IsUPIQrRequired = _config.Value.IsUPIQrRequired;
+                                        return Page();
                                     }
                                 }
                                 else
                                 {
-                                    string cashfreeAuthCallMsg = cashfreeAuthCall.message;
-                                    ViewData["Message"] = cashfreeAuthCallMsg;
+                                    UpiNoViewModel.Userid = Convert.ToInt32(HttpContext.Request.Query["userid"]);
+                                    result = _QcCommentManager.SaveUPIIdByExchangemanage(UpiNoViewModel);
+                                    if (result > 0)
+                                    {
+                                        return RedirectToPage("/ThankYouPage/ThankYou");
+                                    }
+                                    else
+                                    {
+                                        return Page();
+                                    }
                                 }
                             }
+
                         }
                         else
                         {

@@ -1,0 +1,159 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.B2BItem.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    RDCELERP.Model.Base.AccessRuleViewModel accessRule = (RDCELERP.Model.Base.AccessRuleViewModel)ViewBag.AccessRule;
+    int i = 0;
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+
+@if (ViewData["UserAuth"] != null)
+{
+    <script type="text/javascript">
+        alert("@ViewData["UserAuth"]");
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">Item List</h2>
+                            </div>
+                            <div class="col text-end">
+                               @*add new *@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row datefilter mt-2 mb-4">
+                            <div class="col-md-4 mb-2">
+                            </div>
+
+                        </div>
+                        <div class="table-responsive">
+                            <table id="productCategoryDatatable" class="table align-items-center table-flush" border="1">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="all">Id</th>
+                                        <th class="all">ItemDesc</th>
+                                        <th class="all">Brand</th>
+                                        <th class="all">Action</th>
+
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="delete-conformation" tabindex="-1" role="dialog" aria-labelledby="deleteconformation">
+    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#d9534f;color:white;">
+                <h4 class="modal-title" id="delete-conformation">
+                    Inactive Confirmation
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+
+                    <div class="row">
+                        <div class="form-group">
+                            @*  <input type="hidden" asp-for="tble.Id" id="hdnId" /> *@
+                            <div class="col-sm-12">
+                                <span>
+                                    Are you sure you want to make this item Inactive ?
+                                </span>
+                                @*<strong class="deletedValueName">
+                                </strong>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" asp-page-handler="Delete" class="btn btn-danger" value="Make Inactive" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/NewLayout/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/NewLayout/vendor/jquery-ui/jquery-ui.js"></script>
+<script src="~/NewLayout/assets/js/exportTable.js"></script>
+<script type="text/javascript">
+    var table = null;
+    $(document).ready(function () {
+
+        var url = "@URLPrefixforProd/api/ListPage/GetItemMaster";
+       
+        DataTable(url);
+
+       
+        console.log(url);
+
+       
+    });
+
+
+
+    function deleteConfirmProductCategory(_Id) {
+        // alert(_dealId);
+        $('#hdnId').val(_Id);
+        $('#delete-conformation').modal('show');
+    }
+
+   
+    //data table
+    function DataTable(url) {
+
+        table = $('#productCategoryDatatable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "scrollX": true,
+            "paging": true,
+            "filter": true,
+            // "lengthMenu": [[10, 25, 50, 10000], [10, 25, 50, "All"]],
+
+            "oLanguage": {
+                "sEmptyTable": "No Voucher found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json",
+
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }],
+            "responsive": true,
+            "columns": [
+                { "data": "itemMasterId", "name": "ItemMasterId", "autoWidth": true, "orderable": false },
+                { "data": "itemDesc", "name": "ItemDesc", "autoWidth": true, "orderable": true },
+                { "data": "brand", "name": "Brand", "autoWidth": true, "orderable": true },
+                { "data": "action", "name": "Actions", "autoWidth": true, "orderable": false },
+
+            ]
+        });
+    }
+
+</script>
+
+
+

@@ -158,6 +158,8 @@ namespace RDCELERP.Model.Base
         public string JWTAudience { get; set; }
         public string JWTUserName { get; set; }
         public string JWTPassword { get; set; }
+        public string RazorPayKey_Id { get; set; }
+        public string RazorPaykey_secret { get; set; }
 
 
     }

@@ -50,6 +50,7 @@ namespace RDCELERP.DAL.Entities
         public virtual DbSet<TblBrand> TblBrands { get; set; } = null!;
         public virtual DbSet<TblBrandGroup> TblBrandGroups { get; set; } = null!;
         public virtual DbSet<TblBrandSmartBuy> TblBrandSmartBuys { get; set; } = null!;
+        public virtual DbSet<TblBtoBpayment> TblBtoBpayments { get; set; } = null!;
         public virtual DbSet<TblBubasedSweetnerValidation> TblBubasedSweetnerValidations { get; set; } = null!;
         public virtual DbSet<TblBuconfiguration> TblBuconfigurations { get; set; } = null!;
         public virtual DbSet<TblBuconfigurationMapping> TblBuconfigurationMappings { get; set; } = null!;
@@ -99,6 +100,8 @@ namespace RDCELERP.DAL.Entities
         public virtual DbSet<TblImage> TblImages { get; set; } = null!;
         public virtual DbSet<TblImageLabelMaster> TblImageLabelMasters { get; set; } = null!;
         public virtual DbSet<TblItem> TblItems { get; set; } = null!;
+        public virtual DbSet<TblItemCart> TblItemCarts { get; set; } = null!;
+        public virtual DbSet<TblItemMaster> TblItemMasters { get; set; } = null!;
         public virtual DbSet<TblLoV> TblLoVs { get; set; } = null!;
         public virtual DbSet<TblLoginMobile> TblLoginMobiles { get; set; } = null!;
         public virtual DbSet<TblLogistic> TblLogistics { get; set; } = null!;
@@ -2270,9 +2273,15 @@ namespace RDCELERP.DAL.Entities
 
                 entity.ToTable("tblBookingItem");
 
+                entity.Property(e => e.B2bPrice)
+                    .HasColumnType("decimal(10, 2)")
+                    .HasColumnName("B2B_Price");
+
                 entity.Property(e => e.BillingAmount).HasColumnType("decimal(10, 2)");
 
                 entity.Property(e => e.BookingPrice).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.BookingStatus).HasMaxLength(200);
 
                 entity.Property(e => e.Consignee).HasMaxLength(500);
 
@@ -2296,11 +2305,17 @@ namespace RDCELERP.DAL.Entities
 
                 entity.Property(e => e.OrderNo).HasMaxLength(500);
 
+                entity.Property(e => e.PaymentDate).HasColumnType("datetime");
+
                 entity.Property(e => e.ProjectCode).HasMaxLength(500);
 
                 entity.Property(e => e.Qccheck).HasColumnName("QCCheck");
 
                 entity.Property(e => e.QcverifiedQunatity).HasColumnName("QCVerifiedQunatity");
+
+                entity.Property(e => e.RazorOrderId).HasMaxLength(500);
+
+                entity.Property(e => e.SyncOrderNo).HasMaxLength(200);
 
                 entity.Property(e => e.TotalPrice).HasColumnType("decimal(10, 2)");
 
@@ -2309,10 +2324,10 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.TblBookingItemCreatedByNavigations)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__tblBookin__Creat__7DA38D70");
+                    .HasConstraintName("FK__tblBookin__Creat__6A5BAED2");
 
                 entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.TblBookingItems)
+                    .WithMany(p => p.TblBookingItemCustomers)
                     .HasForeignKey(d => d.CustomerId)
                     .HasConstraintName("FK__tblBookin__Custo__7E97B1A9");
 
@@ -2324,7 +2339,7 @@ namespace RDCELERP.DAL.Entities
                 entity.HasOne(d => d.ModifiedByNavigation)
                     .WithMany(p => p.TblBookingItemModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__tblBookin__Modif__007FFA1B");
+                    .HasConstraintName("FK__tblBookin__Modif__7C7A5F0D");
             });
 
             modelBuilder.Entity<TblBpbuassociation>(entity =>
@@ -2499,6 +2514,42 @@ namespace RDCELERP.DAL.Entities
                     .WithMany(p => p.TblBrandSmartBuys)
                     .HasForeignKey(d => d.ProductCategoryId)
                     .HasConstraintName("FK_tblBrandSmartBuy_tblProductCategory");
+            });
+
+            modelBuilder.Entity<TblBtoBpayment>(entity =>
+            {
+                entity.HasKey(e => e.PaymentId)
+                    .HasName("PK__tblBtoBP__9B556A38E36B7798");
+
+                entity.ToTable("tblBtoBPayment");
+
+                entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Method).HasMaxLength(500);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OrderNo).HasMaxLength(500);
+
+                entity.Property(e => e.PaymentStatus).HasMaxLength(500);
+
+                entity.Property(e => e.RazorpayOrderId).HasMaxLength(500);
+
+                entity.Property(e => e.RazorpayPaymentId).HasMaxLength(500);
+
+                entity.Property(e => e.RazorpaySignature).HasMaxLength(500);
+
+                entity.HasOne(d => d.BookingItem)
+                    .WithMany(p => p.TblBtoBpayments)
+                    .HasForeignKey(d => d.BookingItemId)
+                    .HasConstraintName("FK__tblBtoBPa__Booki__593122D0");
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.TblBtoBpayments)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("FK__tblBtoBPa__Creat__583CFE97");
             });
 
             modelBuilder.Entity<TblBubasedSweetnerValidation>(entity =>
@@ -2693,6 +2744,26 @@ namespace RDCELERP.DAL.Entities
                 entity.Property(e => e.Password).HasMaxLength(1000);
 
                 entity.Property(e => e.PhoneNo).HasMaxLength(1000);
+
+                entity.Property(e => e.ShippingCity)
+                    .HasMaxLength(200)
+                    .HasColumnName("Shipping_City");
+
+                entity.Property(e => e.ShippingCountry)
+                    .HasMaxLength(200)
+                    .HasColumnName("Shipping_Country");
+
+                entity.Property(e => e.ShippingState)
+                    .HasMaxLength(200)
+                    .HasColumnName("Shipping_State");
+
+                entity.Property(e => e.ShippingStreet)
+                    .HasMaxLength(200)
+                    .HasColumnName("Shipping_Street");
+
+                entity.Property(e => e.ShippingZip)
+                    .HasMaxLength(200)
+                    .HasColumnName("Shipping_Zip");
 
                 entity.Property(e => e.Type).HasMaxLength(500);
 
@@ -3398,6 +3469,10 @@ namespace RDCELERP.DAL.Entities
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PhoneNumber).HasMaxLength(255);
+
+                entity.Property(e => e.RazorPayxContactId).HasMaxLength(500);
+
+                entity.Property(e => e.RazorPayxFundAccountId).HasMaxLength(500);
 
                 entity.Property(e => e.SponsorRefId).HasMaxLength(400);
 
@@ -4836,19 +4911,166 @@ namespace RDCELERP.DAL.Entities
                     .HasColumnName("UOM");
 
                 entity.HasOne(d => d.CreatedByNavigation)
-                    .WithMany(p => p.TblItemCreatedByNavigations)
+                    .WithMany(p => p.TblItems)
                     .HasForeignKey(d => d.CreatedBy)
-                    .HasConstraintName("FK__tblItem__Created__78DED853");
+                    .HasConstraintName("FK__tblItem__Created__02333863");
+
+                entity.HasOne(d => d.ItemMaster)
+                    .WithMany(p => p.TblItems)
+                    .HasForeignKey(d => d.ItemMasterId)
+                    .HasConstraintName("FK__tblItem__ItemMas__302F0D3D");
 
                 entity.HasOne(d => d.ItemTypeNavigation)
                     .WithMany(p => p.TblItems)
                     .HasForeignKey(d => d.ItemType)
                     .HasConstraintName("FK__tblItem__ItemTyp__79D2FC8C");
+            });
+
+            modelBuilder.Entity<TblItemCart>(entity =>
+            {
+                entity.HasKey(e => e.ItemCartId)
+                    .HasName("PK__tblItemC__C2A60CA5F1467809");
+
+                entity.ToTable("tblItemCart");
+
+                entity.Property(e => e.B2bPrice)
+                    .HasColumnType("decimal(10, 2)")
+                    .HasColumnName("B2B_Price");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Ean)
+                    .HasMaxLength(1000)
+                    .HasColumnName("EAN");
+
+                entity.Property(e => e.Itemcode).HasMaxLength(1000);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Mrp)
+                    .HasColumnType("decimal(10, 2)")
+                    .HasColumnName("MRP");
+
+                entity.Property(e => e.PurchaseQty).HasColumnName("Purchase_Qty");
+
+                entity.Property(e => e.SubTotalPrice).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(10, 2)");
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.TblItemCarts)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("FK__tblItemCa__Creat__452A2A23");
+
+                entity.HasOne(d => d.Item)
+                    .WithMany(p => p.TblItemCarts)
+                    .HasForeignKey(d => d.ItemId)
+                    .HasConstraintName("FK__tblItemCa__ItemI__443605EA");
+
+                entity.HasOne(d => d.ItemMaster)
+                    .WithMany(p => p.TblItemCarts)
+                    .HasForeignKey(d => d.ItemMasterId)
+                    .HasConstraintName("FK__tblItemCa__ItemM__2E46C4CB");
+            });
+
+            modelBuilder.Entity<TblItemMaster>(entity =>
+            {
+                entity.HasKey(e => e.ItemMasterId)
+                    .HasName("PK__tblItemM__66EDB11D8D0DC2D9");
+
+                entity.ToTable("tblItemMaster");
+
+                entity.Property(e => e.B2bPrice)
+                    .HasColumnType("decimal(10, 2)")
+                    .HasColumnName("B2B_Price");
+
+                entity.Property(e => e.Brand).HasMaxLength(100);
+
+                entity.Property(e => e.Colour).HasMaxLength(100);
+
+                entity.Property(e => e.Condition).HasMaxLength(100);
+
+                entity.Property(e => e.CostPrice).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Department).HasMaxLength(100);
+
+                entity.Property(e => e.Division).HasMaxLength(100);
+
+                entity.Property(e => e.Ean)
+                    .HasMaxLength(100)
+                    .HasColumnName("EAN");
+
+                entity.Property(e => e.ExpiryDate).HasColumnType("date");
+
+                entity.Property(e => e.Gender).HasMaxLength(20);
+
+                entity.Property(e => e.Hsn)
+                    .HasMaxLength(100)
+                    .HasColumnName("HSN");
+
+                entity.Property(e => e.Hsnid)
+                    .HasMaxLength(100)
+                    .HasColumnName("HSNID");
+
+                entity.Property(e => e.ItemDesc).HasMaxLength(255);
+
+                entity.Property(e => e.ItemImage1)
+                    .HasMaxLength(200)
+                    .HasColumnName("Item_Image1");
+
+                entity.Property(e => e.ItemImage2)
+                    .HasMaxLength(200)
+                    .HasColumnName("Item_Image2");
+
+                entity.Property(e => e.ItemImage3)
+                    .HasMaxLength(200)
+                    .HasColumnName("Item_Image3");
+
+                entity.Property(e => e.ItemImage4)
+                    .HasMaxLength(200)
+                    .HasColumnName("Item_Image4");
+
+                entity.Property(e => e.ItemImage5)
+                    .HasMaxLength(200)
+                    .HasColumnName("Item_Image5");
+
+                entity.Property(e => e.Itemcode).HasMaxLength(100);
+
+                entity.Property(e => e.LocationCode).HasMaxLength(100);
+
+                entity.Property(e => e.ManageBatchItem).HasMaxLength(10);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Mrp).HasColumnName("MRP");
+
+                entity.Property(e => e.Rsp)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("RSP");
+
+                entity.Property(e => e.Section).HasMaxLength(100);
+
+                entity.Property(e => e.Size).HasMaxLength(100);
+
+                entity.Property(e => e.Sno).HasColumnName("SNo");
+
+                entity.Property(e => e.SubCat).HasMaxLength(100);
+
+                entity.Property(e => e.Uom)
+                    .HasMaxLength(20)
+                    .HasColumnName("UOM");
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.TblItemMasterCreatedByNavigations)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("FK_tblItemMasters_BusinessCustomer");
 
                 entity.HasOne(d => d.ModifiedByNavigation)
-                    .WithMany(p => p.TblItemModifiedByNavigations)
+                    .WithMany(p => p.TblItemMasterModifiedByNavigations)
                     .HasForeignKey(d => d.ModifiedBy)
-                    .HasConstraintName("FK__tblItem__Modifie__7AC720C5");
+                    .HasConstraintName("FK__tblItemMa__Modif__7E62A77F");
             });
 
             modelBuilder.Entity<TblLoV>(entity =>

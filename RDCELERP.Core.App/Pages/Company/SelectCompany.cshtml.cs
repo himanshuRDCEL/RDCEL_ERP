@@ -50,7 +50,7 @@ namespace RDCELERP.Core.App.Pages.Company
             else
             {
                 CompanyVM = _companyManager.GetAllCompany(_loginSession.RoleViewModel.CompanyId, _loginSession.RoleViewModel.RoleId, _loginSession.UserViewModel.UserId);
-                if (CompanyVM != null && CompanyVM.Count == 1)
+                if (CompanyVM != null && CompanyVM[0]!=null && CompanyVM.Count == 1)
                 {
                     TblCompanyObj.CompanyName = CompanyVM[0].CompanyName;
                     TblCompanyObj.CompanyId = CompanyVM[0].CompanyId;

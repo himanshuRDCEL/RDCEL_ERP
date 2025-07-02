@@ -5,6 +5,11 @@ namespace RDCELERP.DAL.Entities
 {
     public partial class TblBookingItem
     {
+        public TblBookingItem()
+        {
+            TblBtoBpayments = new HashSet<TblBtoBpayment>();
+        }
+
         public int BookingItemId { get; set; }
         public int? CustomerId { get; set; }
         public int? ItemId { get; set; }
@@ -30,10 +35,23 @@ namespace RDCELERP.DAL.Entities
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public bool? IsAdvcPayment { get; set; }
+        public int? UnderPicking { get; set; }
+        public int? PickedQty { get; set; }
+        public int? DispatchedQty { get; set; }
+        public int? AdjustedQty { get; set; }
+        public int? PendingQty { get; set; }
+        public string? RazorOrderId { get; set; }
+        public string? SyncOrderNo { get; set; }
+        public bool? IsPaymentDone { get; set; }
+        public DateTime? PaymentDate { get; set; }
+        public string? BookingStatus { get; set; }
+        public decimal? B2bPrice { get; set; }
 
-        public virtual TblUser? CreatedByNavigation { get; set; }
+        public virtual TblBusinessCustomer? CreatedByNavigation { get; set; }
         public virtual TblBusinessCustomer? Customer { get; set; }
         public virtual TblItem? Item { get; set; }
-        public virtual TblUser? ModifiedByNavigation { get; set; }
+        public virtual TblBusinessCustomer? ModifiedByNavigation { get; set; }
+        public virtual ICollection<TblBtoBpayment> TblBtoBpayments { get; set; }
     }
 }

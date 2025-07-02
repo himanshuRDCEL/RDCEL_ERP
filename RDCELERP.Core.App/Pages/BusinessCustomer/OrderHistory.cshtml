@@ -1,0 +1,82 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.BusinessCustomer.OrderHistoryModel
+@{
+    ViewData["Title"] = "List";
+    Layout = "_B2BCustomerLayout";
+    var URLPrefixforProd = ViewData["URLPrefixforProd"];
+}
+<div class="page-container">
+    <div class="row">
+        <div class="page-container__title">
+            <h1>Order History</h1>
+           
+        </div>
+    </div>
+   
+    <div class="page-container__main data-table-rows">
+        <table id="usersDatatable" class="table dataTable">
+            <thead>
+                <tr>
+                    <th>
+                        BookingItemId
+                    </th>
+                    <th>
+                        Order No
+                    </th>
+                    <th>
+                        Item Desc
+                    </th>
+
+                    <th>
+                        Created Date
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>Actions</th>
+
+                </tr>
+            </thead>
+        </table>
+
+    </div>
+  
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        var url = "@URLPrefixforProd/api/ListPage/GetItemBooking?customerid=" + @Model.BusinessCustomerId;
+
+        $('#usersDatatable').dataTable({
+            "order": [[0, 'desc']],
+            "processing": true,
+            "serverSide": true,
+            "filter": true,
+            "oLanguage": {
+                "sEmptyTable": "No Order Found"
+            },
+            "ajax": {
+                "url": url,
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "visible": true,
+                "searchable": true
+            }],
+            "dom": '<"filters"lfi><"separator">tp',
+            "responsive": true,
+            "columns": [
+                { "data": "bookingItemId", "name": "BookingItemId", "autoWidth": true, "orderable": false },
+                { "data": "orderNo", "name": "OrderNo", "autoWidth": true, "orderable": false },
+                { "data": "itemDesc", "name": "ItemDesc", "autoWidth": true, "orderable": true },
+                { "data": "createdDateString", "name": "CreatedDateString", "autoWidth": true, "orderable": false },
+                { "data": "itemStatusName", "name": "ItemStatusName", "autoWidth": true, "orderable": false },
+                { "data": "action", "name": "Actions", "autoWidth": true, "orderable": false },
+                
+            ]
+        });
+
+    });</script>

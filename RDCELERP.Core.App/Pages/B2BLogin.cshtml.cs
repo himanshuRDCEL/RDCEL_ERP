@@ -20,21 +20,24 @@ namespace RDCELERP.Core.App.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly IUserManager _userManager;
+        private readonly IItemManager _itemManager;
         private readonly IBusinessCustomerManager _businessCustManager;
         private readonly IRoleManager _roleManager;
         public readonly IOptions<ApplicationSettings> _config;
-        public B2BLoginModel(ILogger<IndexModel> logger, IUserManager userManager, IRoleManager roleManager, IBusinessCustomerManager businessCustManager, IOptions<ApplicationSettings> config)
+
+        public B2BLoginModel(ILogger<IndexModel> logger, IUserManager userManager, IRoleManager roleManager, IBusinessCustomerManager businessCustManager, IOptions<ApplicationSettings> config, IItemManager itemManager)
         {
             _logger = logger;
             _userManager = userManager;
             _roleManager = roleManager;
             _config = config;
             _businessCustManager = businessCustManager;
+            _itemManager = itemManager;
         }
 
         [BindProperty(SupportsGet = true)]
         public UserLoginModel UserViewModel { get; set; }
-        public IActionResult OnGet()
+        public  ActionResult OnGet()
         {
             LoginViewModel loginVM = SessionHelper.GetObjectFromJson<LoginViewModel>(HttpContext.Session, "LoginUser");
             if (loginVM != null)
@@ -44,6 +47,8 @@ namespace RDCELERP.Core.App.Pages
                     loginVM.RoleViewModel = _roleManager.GetRoleByUserId(loginVM.UserViewModel.UserId);
                 }
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "LoginUser", loginVM);
+
+               
 
                 return RedirectToPage("B2BLogin");
                 //Redirect("Company/SelectCompany");
@@ -61,7 +66,7 @@ namespace RDCELERP.Core.App.Pages
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (!string.IsNullOrEmpty(UserViewModel.Email) && !string.IsNullOrEmpty(UserViewModel.Password))
             {
@@ -75,6 +80,8 @@ namespace RDCELERP.Core.App.Pages
                 {
 
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "LoginUser", loginVM);
+
+                    //await _itemManager.SyncStockReportDataAsync(loginVM.BusinessCustomerViewModel.BusinessCustomerId);
 
                     return new RedirectToPageResult("BusinessCustomerDashboard/Dashboard");
 

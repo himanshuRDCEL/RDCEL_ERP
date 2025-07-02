@@ -296,6 +296,10 @@ namespace RDCELERP.BAL.Common
             CreateMap<TblItem,ItemViewModel>().ReverseMap();
             CreateMap<TblEcomVoucher,EcomVoucherViewModel>().ReverseMap();
             CreateMap<TblEcomPhoneSpecific,EcomPhoneSpecificsViewModel>().ReverseMap();
+            CreateMap<TblItemCart,ItemCartViewModel>().ReverseMap();
+            CreateMap<TblBookingItem,BookingItemViewModel>().ReverseMap();
+            CreateMap<TblItemMaster,ItemMasterViewModel>().ReverseMap();
+            CreateMap<TblBtoBpayment,BtoBPaymentViewModel>().ReverseMap();
 
         }
     }

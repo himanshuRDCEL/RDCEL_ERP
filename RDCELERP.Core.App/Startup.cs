@@ -434,11 +434,20 @@ namespace RDCELERP.Core.App
             services.AddScoped<IBookingItemRepository, BookingItemRepository>();
             services.AddScoped<IBusinessCustomerDashboardManager, BusinessCustomerDashboardManager>();
             services.AddScoped<ISynchronizedManager, SynchronizedManager>();
+            services.AddScoped<IItemCartManager, ItemCartManager>();
+            services.AddScoped<IItemCartRepository, ItemCartRepository>();
+            services.AddScoped<IItemMasterManager, ItemMasterManager>();
+            services.AddScoped<IItemMasterRepository, ItemMasterRepository>();
+            services.AddScoped<IRazorPayManager, RazorPayManager>();
+            services.AddScoped<IPaymentManager, PaymentManager>();
+            services.AddScoped<IRazorpayXService, RazorpayXService>();
+           
             //ecom voucher sa
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IEcomVoucherRepository, EcomVoucherRepository>();
             services.AddScoped<IEcomVoucherManager, EcomVoucherManager>();
             services.AddScoped<IEcomPhoneSpecificsRepository, EcomPhoneSpecificsRepository>();
+            services.AddScoped<IBtoBpaymentRepository, BtoBpaymentRepository>();
             #endregion
         }
 

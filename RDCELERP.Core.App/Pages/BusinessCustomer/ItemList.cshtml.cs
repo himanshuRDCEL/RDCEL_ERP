@@ -50,7 +50,7 @@ namespace RDCELERP.Core.App.Pages.BusinessCustomer
 
             bool flag = false;
 
-            flag =  await _itemBookingManager.AddBookingItem(selectedItems, _loginSession.BusinessCustomerViewModel.BusinessCustomerId);
+           // flag =  await _itemBookingManager.AddBookingItem(selectedItems, _loginSession.BusinessCustomerViewModel.BusinessCustomerId);
             if (flag)
             {
                 return new RedirectToPageResult("Checkout");

@@ -8,6 +8,7 @@ namespace RDCELERP.DAL.Entities
         public TblItem()
         {
             TblBookingItems = new HashSet<TblBookingItem>();
+            TblItemCarts = new HashSet<TblItemCart>();
         }
 
         public int ItemId { get; set; }
@@ -44,10 +45,12 @@ namespace RDCELERP.DAL.Entities
         public DateTime? ModifiedDate { get; set; }
         public bool? IsHotDeals { get; set; }
         public int? ItemType { get; set; }
+        public int? ItemMasterId { get; set; }
 
-        public virtual TblUser? CreatedByNavigation { get; set; }
+        public virtual TblBusinessCustomer? CreatedByNavigation { get; set; }
+        public virtual TblItemMaster? ItemMaster { get; set; }
         public virtual TblBusinessType? ItemTypeNavigation { get; set; }
-        public virtual TblUser? ModifiedByNavigation { get; set; }
         public virtual ICollection<TblBookingItem> TblBookingItems { get; set; }
+        public virtual ICollection<TblItemCart> TblItemCarts { get; set; }
     }
 }

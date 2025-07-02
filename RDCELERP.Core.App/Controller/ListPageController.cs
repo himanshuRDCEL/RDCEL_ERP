@@ -57,6 +57,7 @@ using RDCELERP.Model.VehicleIncentive;
 using RDCELERP.Model.EcomVoucher;
 using System.ComponentModel;
 using System.Reflection;
+using RDCELERP.Model.BusinessCustomer;
 
 namespace RDCELERP.Core.App.Controller
 {
@@ -5334,42 +5335,270 @@ namespace RDCELERP.Core.App.Controller
         #endregion
 
         #region B2B
-        [HttpGet]
-        public async Task<IActionResult> GetItems(int customerid, string? searchValue,int businessTypeId)
+       
+        public async Task<IActionResult> GetItemMaster()
         {
-            string baseUrl = "";
-            var itemsQuery = _context.TblItems
-       .Join(_context.TblBusinessTypeMappings,
-             item => item.ItemType,
-             mapping => mapping.BusinessTypeId,
-             (item, mapping) => new { item, mapping })
-       .Where(x => x.mapping.BussinessCustomerId == customerid
-                   && x.item.IsActive == true);
-
-            // Apply search filter if searchValue is provided
-            if (!string.IsNullOrEmpty(searchValue))
+            List<TblItemMaster> TblItems = null;
+            try
             {
-                itemsQuery = itemsQuery.Where(x => x.item.ItemDesc.ToLower().Contains(searchValue.ToLower()));
-            }
+                string URL = _config.Value.URLPrefixforProd;
 
-            // Apply businessType filter
-            if (businessTypeId!=null&& businessTypeId >0)
-            {
-                itemsQuery = itemsQuery.Where(x => x.item.ItemType == businessTypeId);
-            }
+                var draw = Request.Form["draw"].FirstOrDefault();
+                var start = Request.Form["start"].FirstOrDefault();
+                var length = Request.Form["length"].FirstOrDefault();
+                var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+                var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+                var searchValue = Request.Form["search[value]"].FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+                int recordsTotal = 0;
+                _context = new Digi2l_DevContext();
 
-            var items = await itemsQuery
-                .Select(x => new
+                TblItems = await _context.TblItemMasters.Where(x =>
+                        (string.IsNullOrEmpty(searchValue) || x.ItemDesc.ToLower().Contains(searchValue.ToLower().Trim())) || x.IsActive == true).ToListAsync();
+
+
+                recordsTotal = TblItems != null ? TblItems.Count : 0;
+                if (TblItems != null)
                 {
-                    x.item.ItemId,
-                    x.item.ItemDesc,
-                    ImageUrl = baseUrl + x.item.ImageName,
-                    x.item.Mrp,
-                    IsSelected = false // Default value
-                })
-                .ToListAsync();
+                    TblItems = sortColumnDirection.Equals(SortingOrder.ASCENDING) ? TblItems.OrderBy(o => o.GetType().GetProperty(sortColumn).GetValue(o, null)).ToList() : TblItems.OrderByDescending(o => o.GetType().GetProperty(sortColumn).GetValue(o, null)).ToList();
+                    TblItems = TblItems.Skip(skip).Take(pageSize).ToList();
+                }
+                else
+                    TblItems = new List<TblItemMaster>();
 
-            return new JsonResult(items);
+                List<ItemMasterViewModel> itemList = _mapper.Map<List<TblItemMaster>, List<ItemMasterViewModel>>(TblItems);
+
+                string actionURL = string.Empty;
+
+                foreach (ItemMasterViewModel item in itemList)
+                {
+                   
+
+                        actionURL = "<div class='actionbtns'>";
+                        actionURL = actionURL + "<a href=' " + URL + "/B2BItems/Manage?id=" + _protector.Encode(item.ItemMasterId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='Edit' class=''><i class='fa-solid fa-eye'></i></a> " +
+                            "<a href='javascript: void(0)' onclick='deleteConfirmEcomVoucher(" + item.ItemMasterId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Inactive'><i class='fa-solid fa-trash'></i></a>";
+                        actionURL = actionURL + " </div>";
+
+                   
+                    item.Action = actionURL;
+
+                }
+
+                var data = itemList;
+                var jsonData = new { recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
+                return Ok(jsonData);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
+        public async Task<ActionResult> GetItems(int customerid, string? searchValue)
+        {
+            string URL = _config.Value.URLPrefixforProd;
+            List<TblItem> TblItems = null;
+            try
+            {
+                //var draw = Request.Form["draw"].FirstOrDefault();
+                //var start = Request.Form["start"].FirstOrDefault();
+                //var length = Request.Form["length"].FirstOrDefault();
+                //var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+                //var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+                //var searchValue = Request.Form["search[value]"].FirstOrDefault();
+                //int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                //int skip = start != null ? Convert.ToInt32(start) : 0;
+                int recordsTotal = 0;
+                _context = new Digi2l_DevContext();
+
+                TblItems = await _context.TblItems.Where(x =>
+                        (string.IsNullOrEmpty(searchValue) || x.ItemDesc.ToLower().Contains(searchValue.ToLower().Trim())) || x.IsActive == true).ToListAsync();
+              
+
+                recordsTotal = TblItems != null ? TblItems.Count : 0;
+                if (TblItems != null)
+                {
+                   // TblItems = sortColumnDirection.Equals(SortingOrder.ASCENDING) ? TblItems.OrderBy(o => o.GetType().GetProperty(sortColumn).GetValue(o, null)).ToList() : TblItems.OrderByDescending(o => o.GetType().GetProperty(sortColumn).GetValue(o, null)).ToList();
+                    //TblItems = TblItems.Skip(skip).Take(pageSize).ToList();
+                }
+                else
+                    TblItems = new List<TblItem>();
+
+                List<ItemViewModel> itemList = _mapper.Map<List<TblItem>, List<ItemViewModel>>(TblItems);
+
+                string actionURL = string.Empty;
+
+                foreach (ItemViewModel item in itemList)
+                {
+                    TblItemMaster tblItemMaster = _context.TblItemMasters.FirstOrDefault(X => X.ItemMasterId == item.ItemMasterId);
+
+                    if (tblItemMaster != null)
+                    {
+                        item.B2bPrice = tblItemMaster.B2bPrice;
+                        item.ItemImage1 = tblItemMaster.ItemImage1;
+                    }
+
+                    if (item.IsActive == true)
+
+                    {
+
+                        actionURL = "<div class='actionbtns'>";
+                        actionURL = actionURL + "<a href=' " + URL + "/EcomVoucher/Manage?id=" + _protector.Encode(item.ItemMasterId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='View' class=''><i class='fa-solid fa-eye'></i></a> " +
+                            "<a href='javascript: void(0)' onclick='deleteConfirmEcomVoucher(" + item.ItemMasterId + ")' class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Inactive'><i class='fa-solid fa-trash'></i></a>";
+                        actionURL = actionURL + " </div>";
+
+                    }
+                    else
+                    {
+
+                        actionURL = "<div class='actionbtns'>";
+                        actionURL = actionURL + "<a href=' " + URL + "/EcomVoucher/Manage?id=" + _protector.Encode(item.ItemMasterId) + "' data-bs-toggle='tooltip' data-bs-placement='top' title='view' class=''><i class='fa-solid fa-eye'></i></a> " +
+                            "<a href='javascript: void(0)' onclick='activeConfirmProductCategoryEcomVoucher(" + item.ItemMasterId + ")'  class='' data-bs-toggle='tooltip' data-bs-placement='top' title='Active'><i class='fa-solid fa-circle-check text-white'></i></a>";
+                        actionURL = actionURL + " </div>";
+                    }
+
+                    item.Action = actionURL;
+                  
+                }
+
+                var data = itemList;
+                var jsonData = new {  recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
+                return Ok(jsonData);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        public async Task<ActionResult> GetItemBooking(int? customerid)
+        {
+            List<TblBookingItem> TblBookingItem = null;
+            try
+            {
+                var draw = Request.Form["draw"].FirstOrDefault();
+                var start = Request.Form["start"].FirstOrDefault();
+                var length = Request.Form["length"].FirstOrDefault();
+                var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+                var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+                var searchValue = Request.Form["search[value]"].FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+                int recordsTotal = 0;
+
+
+                TblBookingItem = await _context.TblBookingItems
+                .Include(t => t.CreatedByNavigation)
+                .Include(t => t.ModifiedByNavigation)
+                .Where(x => x.IsActive == true  && x.CustomerId != Convert.ToInt32(customerid)
+                    && (string.IsNullOrEmpty(searchValue) || x.Item.ItemDesc.ToLower().Contains(searchValue.ToLower()))).ToListAsync();
+
+
+                recordsTotal = TblBookingItem.Count;
+                TblBookingItem = sortColumnDirection.Equals(SortingOrder.ASCENDING) ? TblBookingItem.OrderBy(o => o.GetType().GetProperty(sortColumn).GetValue(o, null)).ToList() : TblBookingItem.OrderByDescending(o => o.GetType().GetProperty(sortColumn).GetValue(o, null)).ToList();
+                TblBookingItem = TblBookingItem.Skip(skip).Take(pageSize).ToList();
+
+                List<BookingItemViewModel> userList = _mapper.Map<List<TblBookingItem>, List<BookingItemViewModel>>(TblBookingItem);
+                string actionURL = string.Empty;
+
+                foreach (BookingItemViewModel item in userList)
+                {
+                    actionURL = " <ul class='actions'>";
+                    TblItem itemObj = _context.TblItems.FirstOrDefault(x => x.ItemId == item.ItemId);
+                    
+                    item.ItemDesc = itemObj.ItemDesc;
+
+
+                    int qty = Convert.ToInt32(item.Quantity) ;
+                    int picked = item.PickedQty ?? 0;
+
+                    item.ItemStatusName = picked >= qty ? "Picked" : "Pending";
+
+                    actionURL = actionURL + "<li><a href='/BusinessCustomer/OrderHistDetail' class='glyph-icon simple-icon-pencil' data-toggle='tooltip' data-placement ='top' title='Edit'></a></li>";
+
+                    item.CreatedDateString = Convert.ToDateTime(item.CreatedDate).ToString("yyyy-MM-dd HH:mm:ss");
+                    actionURL = actionURL + " </ul>";
+                    item.Action = actionURL;
+                }
+
+                var data = userList;
+                var jsonData = new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
+                return Ok(jsonData);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<ActionResult> GetAllItemBooking()
+        {
+            try
+            {
+                string URL = _config.Value.URLPrefixforProd;
+
+                var draw = Request.Form["draw"].FirstOrDefault();
+                var start = Request.Form["start"].FirstOrDefault();
+                var length = Request.Form["length"].FirstOrDefault();
+                var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+                var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+                var searchValue = Request.Form["search[value]"].FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+
+                var bookingItems = await _context.TblBookingItems
+                    .Include(x => x.Item)
+                    .Where(x => x.IsActive == true &&
+                        (string.IsNullOrEmpty(searchValue) || x.Item.ItemDesc.ToLower().Contains(searchValue.ToLower())))
+                    .ToListAsync();
+
+                var grouped = bookingItems
+                    .GroupBy(x => x.OrderNo)
+                    .Select(group =>
+                    {
+                        var first = group.First();
+                        var totalQty = group.Sum(i => i.Quantity ?? 0);
+                        var totalPicked = group.Sum(i => i.PickedQty ?? 0);
+
+                        string status = totalPicked >= totalQty ? "Picked" : "Pending";
+
+                        return new BookingItemViewModel
+                        {
+                            OrderNo = first.OrderNo,
+                            CreatedDate = first.CreatedDate,
+                            CreatedDateString = first.CreatedDate?.ToString("yyyy-MM-dd HH:mm:ss"),
+                            ItemDesc = string.Join(", ", group.Select(i => i.Item.ItemDesc).Distinct()),
+                            ItemStatusName = status,
+                            Action = $"<ul class='actions'><a href='{URL}/B2BItems/OrderDetail?orderNo={_protector.Encode(first.OrderNo)}' data-bs-toggle='tooltip' data-bs-placement='top' title='View'><i class='fa-solid fa-eye'></i></a></ul>"
+                        };
+                    })
+                    .ToList();
+
+                
+                if (!string.IsNullOrEmpty(sortColumn) && !string.IsNullOrEmpty(sortColumnDirection))
+                {
+                    grouped = sortColumnDirection == "asc"
+                        ? grouped.OrderBy(x => x.GetType().GetProperty(sortColumn).GetValue(x)).ToList()
+                        : grouped.OrderByDescending(x => x.GetType().GetProperty(sortColumn).GetValue(x)).ToList();
+                }
+
+                int recordsTotal = grouped.Count;
+                var pagedData = grouped.Skip(skip).Take(pageSize).ToList();
+
+                var jsonData = new
+                {
+                    draw = draw,
+                    recordsFiltered = recordsTotal,
+                    recordsTotal = recordsTotal,
+                    data = pagedData
+                };
+
+                return Ok(jsonData);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
 

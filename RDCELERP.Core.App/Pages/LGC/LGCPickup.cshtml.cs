@@ -212,7 +212,7 @@ namespace RDCELERP.Core.App.Pages.LGC
 
         public IActionResult OnPostSendOTP(string mobnumber, string tempaltename)
         {
-            mobnumber = "918962537774";
+           // mobnumber = "918962537774";
             WhatasappResponse whatasappResponse = new WhatasappResponse();
             TblWhatsAppMessage tblwhatsappmessage = null;
             bool flag = false;

@@ -10,6 +10,7 @@ namespace RDCELERP.Common.Constant
     {
         public const string ImportData = "ImportOrders";
         public const string GetItemList = "StockReportData";
+        public const string ItemMaster = "ItemMaster";
 
     }
 }

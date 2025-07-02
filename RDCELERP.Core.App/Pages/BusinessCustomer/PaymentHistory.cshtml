@@ -1,0 +1,19 @@
+﻿@page
+@model RDCELERP.Core.App.Pages.BusinessCustomer.PaymentHistoryModel
+@{
+    ViewData["Title"] = "Payment History";
+    Layout = "_B2BCustomerLayout";
+}
+
+@foreach (var p in Model.PaymentList)
+{
+    <div class="payment-card">
+        <h4>Order: @p.OrderNo</h4>
+        <p><b>Date:</b> @p.PaymentDateFormatted</p>
+        <p><b>Amount:</b> ₹@p.Amount</p>
+        <p><b>Status:</b> <span style="color:@(p.PaymentStatus == "Paid" ? "green" : "red")">@p.PaymentStatus</span></p>
+        <p><b>Mode:</b> @p.PaymentMode</p>
+        <p><b>Transaction ID:</b> @p.TransactionId</p>
+        <hr />
+    </div>
+}

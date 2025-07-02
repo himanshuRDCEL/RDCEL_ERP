@@ -37,6 +37,8 @@ namespace RDCELERP.Common.Enums
         QcAdmin = 13,
         [Description("QC")]
         QC = 14,
-      
+        [Description("B2BAdmin")]
+        b2badmin = 3089,
+
     }
 }

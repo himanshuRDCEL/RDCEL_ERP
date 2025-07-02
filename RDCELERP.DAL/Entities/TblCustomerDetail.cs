@@ -34,6 +34,8 @@ namespace RDCELERP.DAL.Entities
         public string? AreaLocality { get; set; }
         public int? AreaLocalityId { get; set; }
         public int? OrderTransId { get; set; }
+        public string? RazorPayxContactId { get; set; }
+        public string? RazorPayxFundAccountId { get; set; }
 
         public virtual TblOrderTran? OrderTrans { get; set; }
         public virtual ICollection<TblAbbredemption> TblAbbredemptions { get; set; }

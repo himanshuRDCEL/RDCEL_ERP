@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
 using RDCELERP.BAL.Interface;
 using RDCELERP.Model.Base;
 using RDCELERP.Core.App.Pages.Base;
 using RDCELERP.DAL.Entities;
-using RDCELERP.Model.ItemBooking;
 using RDCELERP.Model.BusinessCustomer;
+using static Org.BouncyCastle.Math.EC.ECCurve;
+
+
 
 namespace RDCELERP.Core.App.Pages.BusinessCustomer
 {
@@ -15,42 +16,75 @@ namespace RDCELERP.Core.App.Pages.BusinessCustomer
         #region Variable Declaration
         private readonly IItemBookingManager _ItemBookingManager;
         private readonly Digi2l_DevContext _context;
+        IItemCartManager _itemCartManager;
+        IBusinessCustomerManager _businessCustomerManager;
+        IRazorPayManager _paymentManager;
         #endregion
 
-        public CheckoutModel(IItemBookingManager ItemBookingManager, Digi2l_DevContext context, IOptions<ApplicationSettings> config)
+        public CheckoutModel(IItemBookingManager ItemBookingManager, Digi2l_DevContext context, IOptions<ApplicationSettings> config, IItemCartManager itemCartManager, IBusinessCustomerManager businessCustomerManager, IRazorPayManager paymentManager)
         : base(config)
         {
             _ItemBookingManager = ItemBookingManager;
             _context = context;
+            _itemCartManager = itemCartManager;
+            _businessCustomerManager = businessCustomerManager;
+            _paymentManager = paymentManager;
         }
 
         [BindProperty(SupportsGet = true)]
-        public BookingItemViewModel ItemBookingViewModel { get; set; }
+        public List<BookingItemViewModel> ItemBookingListViewModel { get; set; }
+       // public BookingItemViewModel ItemBookingViewModel { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public List<ItemCartViewModel> ItemCartViewModelList { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public BusinessCustomerViewModel BusinessCustomerViewModel { get; set; }
+        [BindProperty(SupportsGet = true)]
 
-        public IActionResult OnGet(int? id)
+        public decimal GrandTotalAmount { get; set; }
+        public string RazorpayKey { get; set; }
+        public string RazorpayOrderId { get; set; }
+        [BindProperty(SupportsGet = true)]
+
+        public ItemCartViewModel ItemCartViewModel { get; set; }
+
+        public IActionResult OnGet(string razorpayOrderId)
         {
-            if (id != null)
+            
+            if (_loginSession != null)
             {
-                ItemBookingViewModel = _ItemBookingManager.GetItemBookingById(Convert.ToInt32(id));
-                var BusinessUnit = _context.TblBusinessUnits.Where(x => x.BusinessUnitId == ItemBookingViewModel.BusinessUnitId && x.IsActive == true).FirstOrDefault();
-                if (BusinessUnit != null)
+                int customerid = _loginSession.BusinessCustomerViewModel.BusinessCustomerId;
+
+                // Get Booking items and cart items
+                
+               //ItemBookingListViewModel = _ItemBookingManager.GetBookingItemDetailByCustomerId(customerid);
+                ItemCartViewModelList = _itemCartManager.GetItemCartList(customerid);
+                if (ItemCartViewModelList != null && ItemCartViewModelList.Any())
                 {
-                    ItemBookingViewModel.BusinessUnitName = BusinessUnit.Name;
+                    decimal subtotal = ItemCartViewModelList.Sum(item => Convert.ToDecimal(item.Mrp) * Convert.ToDecimal(item.PurchaseQty));
+                    decimal b2bsubtotal = ItemCartViewModelList.Sum(item => Convert.ToDecimal(item.B2bPrice) * Convert.ToDecimal(item.PurchaseQty));
+
+                     ItemCartViewModel = new ItemCartViewModel
+                    {
+                        SubTotalPrice = subtotal,
+                        TotalPrice = subtotal, // or subtotal + shipping, if applicable
+                        B2BTotalPrice = b2bsubtotal,
+                    };
                 }
+                // Get customer
+                BusinessCustomerViewModel = _businessCustomerManager.GetCustomerById(customerid);
+
+                // Calculate grand total
+              //  GrandTotalAmount = ItemCartViewModelList?.Sum(x => x.TotalPrice) ?? 0;
+
+                RazorpayOrderId = razorpayOrderId;
+
             }
 
+            if (ItemBookingListViewModel == null)
+                ItemBookingListViewModel = new List<BookingItemViewModel>();
 
-
-            if (ItemBookingViewModel == null)
-                ItemBookingViewModel = new ItemBookingViewModel();
-
-            //ViewData["CountryList"] = new SelectList(_countryManager.GetAllCountries(), "CountryId", "Name");
-            if (!string.IsNullOrEmpty(ItemBookingViewModel.ItemBookingLogoUrl))
-            {
-
-                ItemBookingViewModel.ItemBookingLogoUrlLink = _baseConfig.Value.BaseURL + "/DBFiles/ItemBooking/" + ItemBookingViewModel.ItemBookingLogoUrl;
-            }
+            RazorpayKey = _baseConfig.Value.RazorPayKey_Id;
 
             if (_loginSession == null)
             {
@@ -62,33 +96,40 @@ namespace RDCELERP.Core.App.Pages.BusinessCustomer
             }
         }
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public IActionResult OnPostAsync(IFormFile ItemBookingLogo)
+        public async Task<IActionResult> OnPostAsync()
         {
             int result = 0;
+            bool flag = false;
 
-            if (ItemBookingLogo != null)
+            //decimal totalAmount = await _ItemBookingManager.AddBookingItem(ItemCartViewModelList, _loginSession.UserViewModel.UserId);
+
+            //totalAmount = 10000;
+
+            //if (totalAmount > 0)
+            //{
+            //    var orderModel = _paymentManager.CreateOrder((int)totalAmount, "Test User", "test@gmail.com", "9999999999");
+
+            //    return Page();
+            //}
+            //else
+            //{
+            //    return RedirectToPage("Checkout");
+            //}
+
+            var razorpayOrderId = await _ItemBookingManager.AddBookingItem(ItemCartViewModelList,  BusinessCustomerViewModel,_loginSession.BusinessCustomerViewModel.BusinessCustomerId);
+
+            if (!string.IsNullOrEmpty(razorpayOrderId))
             {
-                string fileName = Guid.NewGuid().ToString("N") + ItemBookingLogo.FileName;
-                //var filePath = string.Concat(_webHostEnvironment.WebRootPath, "\\", @"\DBFiles\ItemBooking");
-                //var fileNameWithPath = string.Concat(filePath, "\\", fileName);
-                var filePath = Path.Combine("wwwroot\\DBFiles\\ItemBooking");
-                string fileNameWithPath = Path.Combine(filePath, fileName);
-                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-                {
-                    ItemBookingLogo.CopyTo(stream);
-                    ItemBookingViewModel.ItemBookingLogoUrl = fileName;
-                }
+                // Redirect to Payment Page with Razorpay Order ID
+                return RedirectToPage("checkout", new { razorpayOrderId = razorpayOrderId });
             }
-
-            result = _ItemBookingManager.ManageItemBooking(ItemBookingViewModel, _loginSession.UserViewModel.UserId);
-            if (result > 0)
-                return RedirectToPage("Index");
-            //return RedirectToPage("Manage", new { id = result });
-
             else
-                return RedirectToPage("Manage");
+            {
+                TempData["Error"] = "Failed to create Razorpay order.";
+                return RedirectToPage("Checkout");
+            }
         }
+
 
 
     }

@@ -76,6 +76,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\B2BLogout.cshtml" />
+    <Content Remove="Pages\BusinessCustomer\PaymentHistory.cshtml" />
     <Content Remove="Pages\EcomVoucher\Index.cshtml" />
     <Content Remove="Pages\PriceMasterMapping\Delete.cshtml" />
     <Content Remove="Pages\PriceMasterMapping\Details.cshtml" />
@@ -165,8 +167,10 @@
     <None Include="Pages\AccessList\Details.cshtml" />
     <None Include="Pages\AccessList\Edit.cshtml" />
     <None Include="Pages\AccessList\Index.cshtml" />
+    <None Include="Pages\B2BLogout.cshtml" />
     <None Include="Pages\Bulk_Order\Acceptance.cshtml" />
     <None Include="Pages\Bulk_Order\Bulk_Upload.cshtml" />
+    <None Include="Pages\BusinessCustomer\PaymentHistory.cshtml" />
     <None Include="Pages\BusinessPartner\Delete.cshtml" />
     <None Include="Pages\BusinessPartner\Index.cshtml" />
     <None Include="Pages\BusinessPartner\Manage.cshtml" />
@@ -516,7 +520,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\B2BLogout.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\BusinessCustomer\PaymentHistory.cshtml" />
     <_ContentIncludedByDefault Remove="Pages\EcomVoucher\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\B2BLogout.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\BusinessCustomer\PaymentHistory.cshtml" />
   </ItemGroup>
 
 </Project>

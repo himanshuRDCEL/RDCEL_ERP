@@ -297,7 +297,7 @@
 
 </style>
 <!-- Welcome Message -->
-<div class="welcome" id="welcomeText"></div>
+<div class="welcome" id="welcomeText">hellol</div>
 @*
 <form method="post">
     <div class="ListItemViewModels-container">
@@ -396,54 +396,49 @@
 
 <script>
     $(document).ready(function () {
+     
         var userId = '@loginVM.BusinessCustomerViewModel.BusinessCustomerId';
         var searchValue = '';
         var url = "@URLPrefixforProd/api/ListPage/GetItems?customerid=" + userId + "&searchValue=" + searchValue;
 
-
-        console.log(url);
         // Load items via AJAX
         $.ajax({
             url: url, // Update with your actual controller route
             type: 'GET',
-            success: function (data) {
+            success: function (response) {
                 var container = $('#item-container');
                 container.empty(); // Clear any existing data
+               
+                if (response && response.data && response.data.length > 0) {
+                    $.each(response.data, function (index, item) {
+                        let isOutOfStock = item.qty == 0 || item.qty === "0";
+                        let buttonHtml = isOutOfStock
+                            ? `<span class="badge bg-danger">OUT OF STOCK</span>`
+                            : `<a href="#" class="btn addtocartbtn">ADD TO CART</a>`;
 
-                if (data && data.length > 0) {
-                    $.each(data, function (index, item) {
-                        var html = `
-                                <div class="item">
-                                    <h3>${item.name}</h3>
-                                    <p>Price: ₹${item.price}</p>
-                                    <input type="hidden" name="ListItemViewModels[${index}].Price" value="${item.price}" />
-                                    <input type="hidden" name="ListItemViewModels[${index}].ItemId" value="${item.itemId}" />
-                                     <input type="checkbox" name="ListItemViewModels[${index}].IsSelected" value="true" />
+                        container.append(`
+            <div class="col-md-4 mb-4">
+                <div class="product-card bg-white p-3 border rounded">
+                    <img src="${item.itemImage1}" alt="Product" class="product-img w-100 mb-3">
+                    <h5>${item.itemDesc}</h5>
+                    <p class="text-muted small ellipsis-multiline">${item.brand}</p>
+                    <p class="fw-bold text-primary mb-2">${item.b2bPrice}</p>
 
-                                    <label for="select-${index}"><strong>Select</strong></label>
-                                    <input type="number" name="ListItemViewModels[${index}].Quantity" min="1" value="1" class="quantity-box" />
-                                </div>`;
-                        container.append(html);
+                    <input type="hidden" class="item-masterid" value="${item.itemMasterId}">
+                    <input type="hidden" class="item-id" value="${item.itemId}">
+
+                    <div class="mb-2">
+                        ${buttonHtml}
+                    </div>
+                </div>
+            </div>
+        `);
                     });
+                    ;
                 } else {
                         container.append(`
       <p>No items found.</p>
-      <div class="col-md-4 mb-4">
-        <div class="product-card bg-white p-3 border rounded">
-          <img src="https://limegreen-whale-280151.hostingersite.com/wp-content/uploads/2025/05/coffee-maker_6-300x300.jpg" alt="Static Product" class="product-img w-100 mb-3">
-          <h5>Coffee Maker</h5>
-          <p class="text-muted small ellipsis-multiline">Morphy Richard</p>
-          <p class="fw-bold text-primary mb-2">₹5000</p>
-
-          <input type="hidden" name="ListItemViewModels[0].Price" value="500">
-          <input type="hidden" name="ListItemViewModels[0].ItemId" value="101">
-
-          <div class="mb-2">
-              <a href="#" class="btn addtocartbtn">ADD TO CART</a>
-
-          </div>
-        </div>
-      </div>
+ 
     `);
     
                 }
@@ -452,6 +447,58 @@
                 console.error('Error:', error);
             }
         });
+    });
+</script>
+
+<script>
+    $(document).on('click', '.addtocartbtn', function (e) {
+       
+        //e.preventDefault();
+
+      
+        const productCard = $(this).closest('.product-card');
+
+        // const itemCartViewModel = {
+        //     ItemMasterId: parseInt(productCard.find('.item-masterid').val()),
+        //     ItemDesc: productCard.find('h5').text().trim(),
+        //   //  ImageUrl: productCard.find('img').attr('src'),
+        //     Brand: productCard.find('.text-muted').text().trim(),
+        //     B2bPrice: parseFloat(productCard.find('.fw-bold').text().trim()),
+        //     PurchaseQty: 1
+        // };
+        // console.log(itemCartViewModel);
+        const item = {
+            ItemMasterId: parseInt(productCard.find('.item-masterid').val()),
+            ItemId: parseInt(productCard.find('.item-id').val()),
+            Name: productCard.find('h5').text().trim(),
+            ImageUrl: productCard.find('img').attr('src'),
+            Brand: productCard.find('.text-muted').text().trim(),
+            B2BPrice: parseFloat(productCard.find('.fw-bold').text().trim()),
+            Quantity: 1
+        };
+        console.log("Sending item:", JSON.stringify(item)); // ✅ check if all values are valid
+        $.ajax({
+            type: "POST",
+            url: "/BusinessCustomer/Cart?handler=AddToCart", // 
+            contentType: "application/json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: JSON.stringify(item),
+
+            success: function (response) {
+                if (response.status === true) {
+                    location.reload(); // Page reloads if status is true
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function (xhr) {
+                alert("Error: " + xhr.status);
+            }
+        });
+        
     });
 </script>
 

@@ -25,8 +25,6 @@ namespace RDCELERP.DAL.Entities
             TblAddressUsers = new HashSet<TblAddress>();
             TblApicallCreatedByNavigations = new HashSet<TblApicall>();
             TblApicallModifiedByNavigations = new HashSet<TblApicall>();
-            TblBookingItemCreatedByNavigations = new HashSet<TblBookingItem>();
-            TblBookingItemModifiedByNavigations = new HashSet<TblBookingItem>();
             TblBppincodeMappingCreatedByNavigations = new HashSet<TblBppincodeMapping>();
             TblBppincodeMappingModifiedByNavigations = new HashSet<TblBppincodeMapping>();
             TblBrandGroupCreatedbyNavigations = new HashSet<TblBrandGroup>();
@@ -92,8 +90,6 @@ namespace RDCELERP.DAL.Entities
             TblExchangeOrderModifiedByNavigations = new HashSet<TblExchangeOrder>();
             TblImageLabelMasterCreatedByNavigations = new HashSet<TblImageLabelMaster>();
             TblImageLabelMasterModifiedbyNavigations = new HashSet<TblImageLabelMaster>();
-            TblItemCreatedByNavigations = new HashSet<TblItem>();
-            TblItemModifiedByNavigations = new HashSet<TblItem>();
             TblLoginMobiles = new HashSet<TblLoginMobile>();
             TblLogisticCreatedByNavigations = new HashSet<TblLogistic>();
             TblLogisticModifiedbyNavigations = new HashSet<TblLogistic>();
@@ -209,8 +205,6 @@ namespace RDCELERP.DAL.Entities
         public virtual ICollection<TblAddress> TblAddressUsers { get; set; }
         public virtual ICollection<TblApicall> TblApicallCreatedByNavigations { get; set; }
         public virtual ICollection<TblApicall> TblApicallModifiedByNavigations { get; set; }
-        public virtual ICollection<TblBookingItem> TblBookingItemCreatedByNavigations { get; set; }
-        public virtual ICollection<TblBookingItem> TblBookingItemModifiedByNavigations { get; set; }
         public virtual ICollection<TblBppincodeMapping> TblBppincodeMappingCreatedByNavigations { get; set; }
         public virtual ICollection<TblBppincodeMapping> TblBppincodeMappingModifiedByNavigations { get; set; }
         public virtual ICollection<TblBrandGroup> TblBrandGroupCreatedbyNavigations { get; set; }
@@ -276,8 +270,6 @@ namespace RDCELERP.DAL.Entities
         public virtual ICollection<TblExchangeOrder> TblExchangeOrderModifiedByNavigations { get; set; }
         public virtual ICollection<TblImageLabelMaster> TblImageLabelMasterCreatedByNavigations { get; set; }
         public virtual ICollection<TblImageLabelMaster> TblImageLabelMasterModifiedbyNavigations { get; set; }
-        public virtual ICollection<TblItem> TblItemCreatedByNavigations { get; set; }
-        public virtual ICollection<TblItem> TblItemModifiedByNavigations { get; set; }
         public virtual ICollection<TblLoginMobile> TblLoginMobiles { get; set; }
         public virtual ICollection<TblLogistic> TblLogisticCreatedByNavigations { get; set; }
         public virtual ICollection<TblLogistic> TblLogisticModifiedbyNavigations { get; set; }

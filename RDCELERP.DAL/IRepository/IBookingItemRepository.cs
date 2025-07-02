@@ -10,5 +10,13 @@ namespace RDCELERP.DAL.IRepository
 {
     public interface IBookingItemRepository :IAbstractRepository<TblBookingItem>
     {
+        public  Task<List<TblBookingItem>> GetAllBookingItemsByCustomerAsync(int? customerId);
+
+        public  Task<TblBtoBpayment?> GetPaymentByOrderNoAsync(string orderNo);
+
+
+        Task<List<TblBookingItem>> GetOrderItemsAsync(string orderNo);
+        
+
     }
 }

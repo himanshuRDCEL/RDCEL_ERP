@@ -31,7 +31,11 @@ namespace RDCELERP.Model.BusinessCustomer
         public string? OtherStreet { get; set; }
         public string? UnEncPassword { get; set; }
         public string? OtherZip { get; set; }
-
+        public string? ShippingZip { get; set; }
+        public string? ShippingStreet { get; set; }
+        public string? ShippingCity { get; set; }
+        public string? ShippingCountry { get; set; }
+        public string? ShippingState { get; set; }
         public string? ImageName {  get; set; }
     }
 }

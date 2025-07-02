@@ -87,6 +87,29 @@ namespace RDCELERP.BAL.MasterManager
                 _logging.WriteErrorToDB("BusinessCustomerManager", "GetCustomerByLogin", ex);
             }
             return loginVM;
+        }  
+        public BusinessCustomerViewModel GetCustomerById(int id)
+        {
+            BusinessCustomerViewModel UserVM = null;
+            TblBusinessCustomer TblBusinessCustomer = null;
+            LoginViewModel loginVM = null;
+            try
+            {
+               
+                TblBusinessCustomer = _businessCustomerRepository.GetSingle(x => x.IsActive == true && x.BusinessCustomerId==id);
+                if (TblBusinessCustomer != null)
+                {
+
+                    UserVM = _mapper.Map<TblBusinessCustomer, BusinessCustomerViewModel>(TblBusinessCustomer);
+                  
+                    UserVM.Email= SecurityHelper.DecryptString(UserVM.Email, _config.Value.SecurityKey);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logging.WriteErrorToDB("BusinessCustomerManager", "GetCustomerById", ex);
+            }
+            return UserVM;
         }
         /// <summary>
         /// method to manager zoho customer

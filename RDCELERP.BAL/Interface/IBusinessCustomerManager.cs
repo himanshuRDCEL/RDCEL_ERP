@@ -25,5 +25,9 @@ namespace RDCELERP.BAL.Interface
         /// <param name="companyId"></param>
         /// <returns></returns>
         public int ManageBusinessCustomer(BusinessCustomerViewModel bussinessCustomerViewModelVM);
+
+
+        public BusinessCustomerViewModel GetCustomerById(int id);
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using RDCELERP.DAL.AbstractRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using RDCELERP.DAL.AbstractRepository;
 using RDCELERP.DAL.Entities;
 using RDCELERP.DAL.IRepository;
 using System;
@@ -17,7 +18,10 @@ namespace RDCELERP.DAL.Repository
         {
             _db = dbContext;
         }
+        public IQueryable<TblItem> Query()
+        {
+            return _db.Set<TblItem>().AsQueryable();
+        }
 
-    
     }
 }

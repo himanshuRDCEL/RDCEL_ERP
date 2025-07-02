@@ -11,5 +11,7 @@ namespace RDCELERP.DAL.IRepository
     
       public  interface IItemRepository : IAbstractRepository<TblItem>
     {
+        IQueryable<TblItem> Query();
+
     }
 }

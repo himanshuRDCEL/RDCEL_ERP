@@ -3456,13 +3456,16 @@ namespace RDCELERP.BAL.MasterManager
                     #endregion
 
                     #region EVC Details
-                    lGCOrderViewModel.Tblevcregistration = tblWalletTransaction.Evcregistration;
-                    if (tblWalletTransaction.Evcpartner != null)
+                    if (tblWalletTransaction != null)
                     {
-                        evcPartnerDetailsVM = _mapper.Map<TblEvcPartner,EVC_PartnerViewModel>(tblWalletTransaction.Evcpartner);
-                        lGCOrderViewModel.evcPartnerDetailsVM = evcPartnerDetailsVM;
-                        lGCOrderViewModel.evcPartnerDetailsVM.CityName = tblWalletTransaction.Evcpartner?.City?.Name;
-                        lGCOrderViewModel.evcPartnerDetailsVM.StateName = tblWalletTransaction.Evcpartner?.State?.Name;
+                        lGCOrderViewModel.Tblevcregistration = tblWalletTransaction.Evcregistration;
+                        if (tblWalletTransaction.Evcpartner != null)
+                        {
+                            evcPartnerDetailsVM = _mapper.Map<TblEvcPartner, EVC_PartnerViewModel>(tblWalletTransaction.Evcpartner);
+                            lGCOrderViewModel.evcPartnerDetailsVM = evcPartnerDetailsVM;
+                            lGCOrderViewModel.evcPartnerDetailsVM.CityName = tblWalletTransaction.Evcpartner?.City?.Name;
+                            lGCOrderViewModel.evcPartnerDetailsVM.StateName = tblWalletTransaction.Evcpartner?.State?.Name;
+                        }
                     }
                     #endregion
                 }

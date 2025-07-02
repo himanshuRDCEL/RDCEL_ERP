@@ -1,8 +1,10 @@
 ﻿@page
 @model RDCELERP.Core.App.Pages.BusinessCustomer.CheckoutModel
 @{
-    ViewData["Title"] = "Item List";
+    ViewData["Title"] = "Checkout";
     Layout = "_B2BCustomerLayout";
+    ViewBag.RazorPayOrderId = Model.RazorpayOrderId;
+
 }
 
 
@@ -16,64 +18,47 @@
     
     <div class="container">
       <div class="row">
-        
+        <form method="post">
         <div class="col-md-4 order-2">
           <h4 class="d-flex justify-content-between align-items-center mb-3">
             <span class=text-muted>Your Cart</span>
-            <span class="badge rounded-pill bg-secondary">3</span>
+             @if(Model.ItemCartViewModelList!=null && Model.ItemCartViewModelList.Count > 0)
+            {
+            <span class="badge rounded-pill bg-secondary">@Model.ItemCartViewModelList.Count</span>
+            }
           </h4>
           
-          <div class="card" style="">
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Product name</h6>
-                <small class="text-muted">Brief description</small>
-              </div>
-              <span class="text-muted">$12</span>
-            </li>
-          </div>
-          
-          <li class="list-group-item d-flex justify-content-between lh-condensed">
-            <div>
-              <h6 class="my-0">Second product</h6>
-              <small class="text-muted">Brief description</small>
-            </div>
-            <span class="text-muted">$8</span>
-          </li>
-          
-          <li class="list-group-item d-flex justify-content-between lh-condensed">
-            <div>
-              <h6 class="my-0">Third item</h6>
-              <small class="text-muted">Brief description</small>
-            </div>
-            <span class="text-muted">$5</span>
-          </li>
-          
-          <li class="list-group-item d-flex justify-content-between bg-light">
-            <div class="text-success">
-              <h6 class="my-0">Promo code</h6>
-              <small>EXAMPLECODE</small>
-            </div>
-            <span class="text-success">-$5</span>
-          </li>
-          
+            @if(Model.ItemCartViewModelList!=null && Model.ItemCartViewModelList.Count > 0)
+            {
+                    @for (int i = 0; i < Model.ItemCartViewModelList.Count; i++)
+                    {
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <input type="hidden" name="ItemCartViewModelList[@i].ItemId" value="@Model.ItemCartViewModelList[i].ItemId" />
+                                <input type="hidden" name="ItemCartViewModelList[@i].SubTotalPrice" value="@Model.ItemCartViewModelList[i].SubTotalPrice" />
+                                <input type="hidden" name="ItemCartViewModelList[@i].TotalPrice" value="@Model.ItemCartViewModel.TotalPrice" />
+                                <input type="hidden" name="ItemCartViewModelList[@i].B2BTotalPrice" value="@Model.ItemCartViewModel.B2BTotalPrice" />
+                                <input type="hidden" name="ItemCartViewModelList[@i].Itemcode" value="@Model.ItemCartViewModelList[i].Itemcode" />
+                                <input type="hidden" name="ItemCartViewModelList[@i].ItemDesc" value="@Model.ItemCartViewModelList[i].ItemDesc" />
+                                <input type="hidden" name="ItemCartViewModelList[@i].PurchaseQty" value="@Model.ItemCartViewModelList[i].PurchaseQty" />
+                                <input type="hidden" name="ItemCartViewModelList[@i].Brand" value="@Model.ItemCartViewModelList[i].Brand" />
+
+                                <h6 class="my-0">@Model.ItemCartViewModelList[i].ItemDesc</h6>
+                                <h5>@Model.ItemCartViewModelList[i].PurchaseQty</h5>
+                                <small class="text-muted">@Model.ItemCartViewModelList[i].Brand</small>
+                            </div>
+                            <span class="text-muted">@Model.ItemCartViewModelList[i].SubTotalPrice</span>
+                        </li>
+                    }
+
+
+            }
           
           <div class="card-footer d-flex justify-content-between">
-            <span>Total (USD)</span>
-            <strong>$20</strong>
+            <span>Total</span>
+                <strong>₹@Model.ItemCartViewModel.TotalPrice</strong>
           </div>
-          
-          <form class="card p-2">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Promo code">
-              <div class="input-group-append">
-                <button type="submit" class="btn btn-secondary">
-                  Redeem
-                </button>
-              </div>
-            </div>
-          </form>
-          
+       
         </div>
          
         <div class="col-md-8 order-1">
@@ -81,27 +66,28 @@
           <div class="row">
             <div class="col mb-4">
               <label for="First name"> First Name </label>
-              <input type="text" class="form-control" placeholder="First name" aria-label="First name">
+              <input type="text" class="form-control"asp-for="@Model.BusinessCustomerViewModel.FirstName"  placeholder="First name" aria-label="First name">
             </div>
             <div class="col mb-4">
               <label for="La\st name"> Last Name </label>
-              <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
+                    <input type="text" class="form-control" asp-for="@Model.BusinessCustomerViewModel.LastName" placeholder="Last name" aria-label="Last name">
             </div>
           </div>
-          
-          <div class="input-group col mb-4">
-           
-            <input type="text" class="form-control" placeholder="Username">
-          </div>
+         
           
           <div class="mb-4">
-            <label for="email">Email (optional)</label>
-            <input type="text" class="form-control" placeholder="you@example.com" aria-label="email">
+            <label for="email">Email</label>
+                <input type="text" class="form-control" asp-for="@Model.BusinessCustomerViewModel.Email" placeholder="you@example.com" aria-label="email" readonly="readonly">
+        </div>
+
+           <div class="mb-4">
+            <label for="email">Phone No.</label>
+                <input type="text" class="form-control" asp-for="@Model.BusinessCustomerViewModel.PhoneNo" placeholder="you@example.com" aria-label="email" readonly="readonly">
         </div>
           
           <div class="mb-4">
             <label for="Address">Address</label>
-            <input type="text" class="form-control" placeholder="1234 Main St" aria-label="Address">
+                <input type="text" class="form-control"  placeholder="1234 Main St" aria-label="Address">
           </div>
           
           <div class="mb-4">
@@ -170,52 +156,99 @@
               </label>
             </div>
             
-            <div class="row">
-              <div class="col mb-4">
-                <label for="Card1">
-                  Name on card
-                </label>
-                <input type="text" class="form-control"aria-label="card1">
-                <small class="text-muted">
-                  Full name, as displayed on the card
-                </small>
-              </div>
-              
-              <div class="col mb-4">
-                <label for="Card2">
-                  Credit card Nummber
-                </label>
-                <input type="text" class="form-control" placeholder"1234-5678-9012" aria-label="Card2">
-              </div>
-            </div>
-            
-            <div class="row">
-              <div class="col mb-3">
-                <label for="Card3">
-                  Expiry Date
-                </label>
-                <input type="text" class="form-control"aria-label="card3">
-              </div>
-              
-              <div class="col mb-3">
-                <label for="Card4">
-                  CVV
-                </label>
-                <input type="text" class="form-control"  aria-label="Card4">
-              </div>
-            </div>
-            
+          
           </div>
         
         <hr class="mb-4">
         
         <div class="d-grid gap-2">
-          <button class="btn btn-primary btn-lg" type="button">
+          <button class="btn btn-primary btn-lg" type="submit">
             Continue to Checkout
           </button>
+
+              
         </div>
         
       </div>
+      </form>
     </div>
-  </div>
-    
+
+   @*  <button onclick="testSavePayment()">Test Save Razorpay Payment</button>
+
+    <script>
+        function testSavePayment() {
+            $.ajax({
+                type: "POST",
+                url: "/BusinessCustomer/Payment?handler=SavePayment",
+                        data: JSON.stringify({
+                    paymentId: "pay_Qig5HGZ4FMrnY6",   // Replace with actual
+                    orderId: "order_QiYyVkSIY7gk6t"       // Replace with actual
+                }),
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                contentType: "application/json",
+                success: function (res) {
+                    console.log(res);
+                    alert("Success: Payment saved.");
+                    window.location.href = "/BusinessCustomer/PaymentSuccess";
+
+                },
+                error: function (err) {
+                    console.error(err);
+                    alert("Error saving payment.");
+                }
+            });
+        }
+    </script>
+ *@
+     @if (ViewBag.RazorPayOrderId != null)
+    {
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+        <script>
+            var options = {
+                "key": "@Model.RazorpayKey",
+                "amount": "@((int)(Model.GrandTotalAmount * 100))",
+                "currency": "INR",
+                "name": "ROCKINGDEALS",
+                "description": "Checkout Payment",
+                "order_id": "@ViewBag.RazorPayOrderId",
+                "handler": function (response) {
+                    $.ajax({
+                        type: "POST",
+    url: "/BusinessCustomer/Payment?handler=SavePayment",
+
+                        data: JSON.stringify({
+                            paymentId: response.razorpay_payment_id,
+                            orderId: "@ViewBag.RazorPayOrderId"
+                        }),
+    beforeSend: function (xhr) {
+    xhr.setRequestHeader("XSRF-TOKEN",
+    $('input:hidden[name="__RequestVerificationToken"]').val());
+    },
+                        contentType: "application/json",
+                        success: function (res) {
+                            console.log(res);
+                            if (res.success) {
+                                window.location.href = "/BusinessCustomer/Payment?paymentId=" + response.razorpay_payment_id;
+                            } else {
+                                alert("Payment failed: " + res.message);
+                            }
+                        },
+                        error: function () {
+                            alert("Server error occurred.");
+                        }
+                    });
+                }
+            };
+
+            var rzp1 = new Razorpay(options);
+            window.onload = function () {
+                rzp1.open();
+            };
+        </script>
+    }
+
+ 

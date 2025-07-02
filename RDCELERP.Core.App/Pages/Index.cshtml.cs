@@ -62,7 +62,7 @@ namespace RDCELERP.Core.App.Pages
             {
               
                
-               string de = SecurityHelper.DecryptString("1lBw2PgFbMTm9x95p/ZWw80FMcPuxY2mpks1bQ7+PyZYAazKHeWdeXX9IG+cNuxX\r\n1lBw2PgFbMTm9x95p/ZWw80FMcPuxY2mpks1bQ7+PyZYAazKHeWdeXX9IG+cNuxX", _config.Value.SecurityKey);
+               string de = SecurityHelper.DecryptString("+vzf0EXLX/+LEJ+Ux1U+2CNLzhtdSPuSuBaH0ThLYf0RVAOFFjXk36IXWroU7kBG", _config.Value.SecurityKey);
                 UserViewModel.Email = SecurityHelper.EncryptString(UserViewModel.Email, _config.Value.SecurityKey);
                 UserViewModel.Password = SecurityHelper.EncryptString(UserViewModel.Password, _config.Value.SecurityKey);
                 LoginViewModel loginVM = _userManager.GetUserByLogin(UserViewModel.Email.Trim(), UserViewModel.Password);
@@ -75,15 +75,16 @@ namespace RDCELERP.Core.App.Pages
                         SessionHelper.SetObjectAsJson(HttpContext.Session, "LoginUser", loginVM);
 
                         if (loginVM.RoleViewModel.RoleName == Common.Constant.RoleConstant.RoleEVPPortal)
-                           return new RedirectToPageResult("/Warehouse_Portal/Warehouse_Dashboard");
-                        //else if (loginVM.RoleViewModel.RoleName == Common.Constant.RoleConstant.RoleLGCAdmin)
-                        //    return new RedirectToPageResult("/LGC/LogiPickDrop");
-                        //else
-                        //   return new RedirectToPageResult("Company/SelectCompany");
+                        {
+                            return new RedirectToPageResult("/Warehouse_Portal/Warehouse_Dashboard");
+                        }
+                        if (loginVM.RoleViewModel.RoleId == Convert.ToInt32(RoleEnum.b2badmin))
+                        {
+                            return RedirectToPage("/B2BItems/Index");
 
-                        
 
-                            return new RedirectToPageResult("Company/SelectCompany");
+                        }
+                        return new RedirectToPageResult("Company/SelectCompany");
                        
                     }
                     else

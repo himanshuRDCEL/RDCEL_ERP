@@ -24,7 +24,10 @@
 
     <link href="~/newlayout/css/v2.0.css" rel="stylesheet" />
 
+
     <script src="~/NewLayout/vendor/jquery/jquery-3.6.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
     <script src="~/NewLayout/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/NewLayout/vendor/@@popperjs/core/dist/umd/popper.min.js"></script>
 
@@ -164,7 +167,7 @@
                         </a>
                       
                         <div class="logoutwrapper">
-                            <a asp-page="/Logout" id="logoutbtnwrap1" class="logoutbtn">
+                            <a asp-page="/B2BLogout" id="logoutbtnwrap1" class="logoutbtn">
 
                                 <i data-feather="log-out" style="color: #f05a29"></i>
                             </a>
@@ -216,26 +219,18 @@
                                     <span class="sidebar-text">All Items</span>
                                 </a>
                             </li>
-                        <li class="nav-item">
-                            <a href="@URLPrefixforProd/BusinessCustomer/Itemlist" class="nav-link">
-                                <span class="sidebar-text">Hot Deals</span>
-                            </a>
-                        </li>
+                        
                             <li class="nav-item">
-                            <a href="@URLPrefixforProd/BusinessCustomer/BookingList" class="nav-link">
-                                    <span class="sidebar-text">Order</span>
+                            <a href="@URLPrefixforProd/BusinessCustomer/OrderHistDetail" class="nav-link">
+                                    <span class="sidebar-text">Order History</span>
                                 </a>
                             </li>
                         <li class="nav-item">
-                            <a href="@URLPrefixforProd/BusinessCustomer/BookingList" class="nav-link">
+                            <a href="@URLPrefixforProd/BusinessCustomer/PaymentHistory" class="nav-link">
                                 <span class="sidebar-text">Payment History</span>
                             </a>
                         </li>
-                            <li class="nav-item">
-                            <a href="@URLPrefixforProd/Users/SendEmailtoUser" class="nav-link">
-                                    <span class="sidebar-text">Send Email to Users</span>
-                                </a>
-                            </li>
+                           
                         </ul>
                         <ul>
                         </ul>

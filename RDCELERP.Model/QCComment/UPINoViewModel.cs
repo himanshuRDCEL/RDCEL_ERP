@@ -34,6 +34,8 @@ namespace RDCELERP.Model.QCComment
         [Display(Name = "Customer Name")]
         public string? CustomerFirstName { get; set; }
         public string? CustomerLastName { get; set; }
+        public string? CustomerEmail { get; set; }
+        public string? CustomerPhone { get; set; }
         public int CustomerId { get; set; }
     }
 }
