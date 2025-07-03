@@ -5352,7 +5352,6 @@ namespace RDCELERP.Core.App.Controller
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
-                _context = new Digi2l_DevContext();
 
                 TblItems = await _context.TblItemMasters.Where(x =>
                         (string.IsNullOrEmpty(searchValue) || x.ItemDesc.ToLower().Contains(searchValue.ToLower().Trim())) || x.IsActive == true).ToListAsync();
@@ -5410,7 +5409,6 @@ namespace RDCELERP.Core.App.Controller
                 //int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 //int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
-                _context = new Digi2l_DevContext();
 
                 TblItems = await _context.TblItems.Where(x =>
                         (string.IsNullOrEmpty(searchValue) || x.ItemDesc.ToLower().Contains(searchValue.ToLower().Trim())) || x.IsActive == true).ToListAsync();

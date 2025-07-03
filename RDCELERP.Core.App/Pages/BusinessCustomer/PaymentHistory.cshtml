@@ -5,6 +5,8 @@
     Layout = "_B2BCustomerLayout";
 }
 
+@if(Model.PaymentList!=null && Model.PaymentList.Count>0){
+
 @foreach (var p in Model.PaymentList)
 {
     <div class="payment-card">
@@ -16,4 +18,5 @@
         <p><b>Transaction ID:</b> @p.TransactionId</p>
         <hr />
     </div>
+}
 }

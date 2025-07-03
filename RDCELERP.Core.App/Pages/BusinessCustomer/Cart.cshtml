@@ -127,6 +127,7 @@
         const $btn = $(this);
         const $cartItem = $btn.closest('.cart-item');
         const itemId = $cartItem.data('itemid');
+            const itemCartId = $cartItem.data('itemcartid');
 
         if (!confirm("Are you sure you want to remove this item?")) return;
 
@@ -138,7 +139,7 @@
                 xhr.setRequestHeader("XSRF-TOKEN",
                     $('input:hidden[name="__RequestVerificationToken"]').val());
             },
-            data: JSON.stringify({ ItemId: itemId }),
+                data: JSON.stringify({ ItemId: itemId, ItemCartId: itemCartId}),
             success: function (response) {
                 if (response.success) {
                     $cartItem.remove(); // Remove from UI

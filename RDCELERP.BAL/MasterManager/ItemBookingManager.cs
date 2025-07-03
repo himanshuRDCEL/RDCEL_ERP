@@ -79,7 +79,7 @@ namespace RDCELERP.BAL.MasterManager
                     //  Save bookings in DB
                     foreach (var model in itemlistVM)
                     {
-                        var tblitemMaster = _ItemMasterRepository.GetSingle(x => x.Itemcode == model.Itemcode);
+                        var tblitemMaster = _ItemMasterRepository.GetSingle(x => x.ItemMasterId == model.ItemMasterId);
                         if (tblitemMaster == null) continue;
                         var tblItem = _ItemRepository.GetSingle(x => x.ItemId == model.ItemId);
                         if (tblItem == null) continue;
