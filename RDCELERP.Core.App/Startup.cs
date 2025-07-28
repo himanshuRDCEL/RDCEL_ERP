@@ -441,6 +441,8 @@ namespace RDCELERP.Core.App
             services.AddScoped<IRazorPayManager, RazorPayManager>();
             services.AddScoped<IPaymentManager, PaymentManager>();
             services.AddScoped<IRazorpayXService, RazorpayXService>();
+            services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+            services.AddScoped<IInvoiceManager, InvoiceManager>();
            
             //ecom voucher sa
             services.AddScoped<ICategoryRepository, CategoryRepository>();

@@ -12,6 +12,9 @@ namespace RDCELERP.DAL.Entities
             TblBookingItemModifiedByNavigations = new HashSet<TblBookingItem>();
             TblBtoBpayments = new HashSet<TblBtoBpayment>();
             TblCustomerCompanies = new HashSet<TblCustomerCompany>();
+            TblInvoiceCreatedByNavigations = new HashSet<TblInvoice>();
+            TblInvoiceCustomers = new HashSet<TblInvoice>();
+            TblInvoiceModifiedByNavigations = new HashSet<TblInvoice>();
             TblItemCarts = new HashSet<TblItemCart>();
             TblItemMasterCreatedByNavigations = new HashSet<TblItemMaster>();
             TblItemMasterModifiedByNavigations = new HashSet<TblItemMaster>();
@@ -58,6 +61,9 @@ namespace RDCELERP.DAL.Entities
         public virtual ICollection<TblBookingItem> TblBookingItemModifiedByNavigations { get; set; }
         public virtual ICollection<TblBtoBpayment> TblBtoBpayments { get; set; }
         public virtual ICollection<TblCustomerCompany> TblCustomerCompanies { get; set; }
+        public virtual ICollection<TblInvoice> TblInvoiceCreatedByNavigations { get; set; }
+        public virtual ICollection<TblInvoice> TblInvoiceCustomers { get; set; }
+        public virtual ICollection<TblInvoice> TblInvoiceModifiedByNavigations { get; set; }
         public virtual ICollection<TblItemCart> TblItemCarts { get; set; }
         public virtual ICollection<TblItemMaster> TblItemMasterCreatedByNavigations { get; set; }
         public virtual ICollection<TblItemMaster> TblItemMasterModifiedByNavigations { get; set; }

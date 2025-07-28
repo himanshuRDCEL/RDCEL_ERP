@@ -99,6 +99,7 @@ namespace RDCELERP.DAL.Entities
         public virtual DbSet<TblHistory> TblHistories { get; set; } = null!;
         public virtual DbSet<TblImage> TblImages { get; set; } = null!;
         public virtual DbSet<TblImageLabelMaster> TblImageLabelMasters { get; set; } = null!;
+        public virtual DbSet<TblInvoice> TblInvoices { get; set; } = null!;
         public virtual DbSet<TblItem> TblItems { get; set; } = null!;
         public virtual DbSet<TblItemCart> TblItemCarts { get; set; } = null!;
         public virtual DbSet<TblItemMaster> TblItemMasters { get; set; } = null!;
@@ -4835,6 +4836,52 @@ namespace RDCELERP.DAL.Entities
                     .WithMany(p => p.TblImageLabelMasters)
                     .HasForeignKey(d => d.ProductTypeId)
                     .HasConstraintName("FK__tblImageL__Produ__1A9EF37A");
+            });
+
+            modelBuilder.Entity<TblInvoice>(entity =>
+            {
+                entity.HasKey(e => e.InvoiceId)
+                    .HasName("PK__tblInvoi__D796AAB5A8E3BCA7");
+
+                entity.ToTable("tblInvoice");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.DiscountAmount).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.InvoiceDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.InvoiceNumber).HasMaxLength(50);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OrderNo).HasMaxLength(50);
+
+                entity.Property(e => e.PaymentStatus).HasMaxLength(20);
+
+                entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.TblInvoiceCreatedByNavigations)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("FK__tblInvoic__Creat__1DDB52D8");
+
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.TblInvoiceCustomers)
+                    .HasForeignKey(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tblInvoic__Custo__1CE72E9F");
+
+                entity.HasOne(d => d.ModifiedByNavigation)
+                    .WithMany(p => p.TblInvoiceModifiedByNavigations)
+                    .HasForeignKey(d => d.ModifiedBy)
+                    .HasConstraintName("FK__tblInvoic__Modif__1ECF7711");
             });
 
             modelBuilder.Entity<TblItem>(entity =>
